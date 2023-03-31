@@ -18,12 +18,12 @@ class User < ApplicationRecord
   has_secure_password
 
   STATUS = [
-    "online",
-    "offline",
-    "idle",
-    "busy",
-    "invisible"
-  ]
+    "Offline",
+    "Online",
+    "Idle",
+    "Do Not Disturb",
+    "Invisible"
+  ].freeze
 
   validates :email, :session_token, 
     presence: true, 
@@ -52,8 +52,10 @@ class User < ApplicationRecord
 
   after_validation :custom_status, :online_status,
     presence: true
-  after_validation :online_status, :set_online_status,
+  after_validation :online_status,
     inclusion: { in: STATUS, message: "'%{value}' is not a valid status"}
+  after_validation :custom_status,
+    inclusion: { in: STATUS[1..-1], message: "'%{value}' is not a valid status"}
 
   def self.find_by_credentials(credential, password)
     user = URI::MailTo::EMAIL_REGEXP.match(credential) ? User.find_by(email: credential) : User.find_by(username: credential)
