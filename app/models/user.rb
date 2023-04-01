@@ -8,7 +8,7 @@
 #  password_digest     :string           not null
 #  session_token       :string           not null
 #  online_status       :string           default("offline"), not null
-#  set_online_status   :string
+#  set_online_status   :string           default("online"), not null
 #  custom_status       :string           default(""), not null
 #  profile_picture_url :string           default(""), not null
 #  created_at          :datetime         not null
@@ -50,15 +50,15 @@ class User < ApplicationRecord
   before_create :add_tag_number
   before_update :ensure_unique_tag_username
 
-  after_validation :custom_status, :online_status,
+  after_validation :custom_status, :online_status, :set_online_status,
     presence: true
   after_validation :online_status,
     inclusion: { in: STATUS, message: "'%{value}' is not a valid status"}
-  after_validation :custom_status,
+  after_validation :set_online_status,
     inclusion: { in: STATUS[1..-1], message: "'%{value}' is not a valid status"}
 
-  def self.find_by_credentials(credential, password)
-    user = URI::MailTo::EMAIL_REGEXP.match(credential) ? User.find_by(email: credential) : User.find_by(username: credential)
+  def self.find_by_credentials(email, password)
+    user = User.find_by(email: email)
     return user && user.authenticate(password) ? user : nil
   end
 
