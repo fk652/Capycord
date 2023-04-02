@@ -12,7 +12,7 @@ body {
   background-color: #313338;
   border-radius: 5px;
   padding: 32px;
-  width: 410px;
+  width: 414px;
   animation: enter 0.2s ease;
 }
 
@@ -74,6 +74,8 @@ input {
   background: #1e1f22;
   color: white;
   margin-bottom: 20px;
+  font-family: 'gg sans', 'Noto Sans', Helvetica;
+  font-size: 16px;
 }
 
 input:focus {
