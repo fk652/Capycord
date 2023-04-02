@@ -18,7 +18,7 @@ const LoginForm = () => {
     dispatch(removeErrors());
   }, [dispatch])
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/home" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,6 +43,16 @@ const LoginForm = () => {
       });
   };
 
+  const demoLogin = (e, user) => {
+    e.preventDefault();
+
+    const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com'
+    return dispatch(login({
+      email,
+      password: 'password123'
+    }))
+  }
+
   return (
     <div className="form-container">
       <form className="login-signup" onSubmit={handleSubmit}>
@@ -62,7 +72,6 @@ const LoginForm = () => {
           <input
             type="email"
             name="email"
-            autoComplete="off"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -83,6 +92,10 @@ const LoginForm = () => {
             required
           />
           <button type="submit">Log In</button>
+          <div className="demo-container">
+            <button className="demo-button" onClick={e => demoLogin(e, 1)}>Login as Demo 1</button>
+            <button className="demo-button" onClick={e => demoLogin(e, 2)}>Login as Demo 2</button>
+          </div>
           <span className="signup-link">Need an account? <Link to="/signup">Register</Link></span>
         </div>
       </form>

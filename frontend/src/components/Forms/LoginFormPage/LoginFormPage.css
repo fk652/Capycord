@@ -3,3 +3,12 @@
   margin-top: 4px;
   color: #949ba4;
 }
+
+.demo-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.demo-button {
+  width: 45%;
+}

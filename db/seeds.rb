@@ -7,11 +7,19 @@ ApplicationRecord.transaction do
 
   puts "Creating users..."
   User.create!(
-    username: 'Capy-Khan', 
+    username: 'Capybaby', 
     email: 'capybara@gmail.com', 
     password: 'password123',
     custom_status: 'CAPYBARA CAPYBARA CAPYBARA 🦫',
     profile_picture_url: 'https://www.rainforest-alliance.org/wp-content/uploads/2021/06/capybara-square-1.jpg.optimal.jpg'
+  )
+
+  User.create!(
+    username: 'SSJ Capy', 
+    email: 'capybara2@gmail.com', 
+    password: 'password123',
+    custom_status: 'CAPYBARA OVER 9000 💢',
+    profile_picture_url: 'https://cdn.drawception.com/images/panels/2017/5-4/wR4kkj9B1j-2.png'
   )
 
   10.times do 
