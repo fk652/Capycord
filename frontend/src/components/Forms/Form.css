@@ -1,0 +1,125 @@
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #6167f4;
+	color: #f2f3f5;
+  background-image: url("../../assets/background.jpg");
+  background-size: 600px;
+}
+
+.form-container {
+  background-color: #313338;
+  border-radius: 5px;
+  padding: 32px;
+  width: 410px;
+  animation: enter 0.2s ease;
+}
+
+.login-signup {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.form-header {
+  text-align: center;
+}
+
+.form-header h1 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.form-header span {
+  font-size: 16px;
+  color: #b5bac1;
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+label {
+  flex-direction: column;
+  font-weight: 900;
+  font-size: 12px;
+  margin-bottom: 8px;
+  color: #b5bac1;
+}
+
+label.error {
+  color: #fa777c;
+}
+
+.errorMessage {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.required {
+  color: #f23f42;
+  padding-left: 4px;
+}
+
+input {
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  background: #1e1f22;
+  color: white;
+  margin-bottom: 20px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  background: #5865f2;
+  font-family: 'gg sans', 'Noto Sans', Helvetica;
+  font-size: 16px;
+  font-weight: bold;
+  color: #f2f3f5;
+  border-radius: 3px;
+  border: none;
+  padding: 2px 16px;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+button:hover {
+  background: #4752c4;
+  font-size: 16px;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(-80px);
+    scale: 1.1;
+  };
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+  };
+}
+
+@keyframes exit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+  };
+  to {
+    opacity: 0;
+    transform: translateY(-100px);
+    scale: 1.1;
+  };
+}

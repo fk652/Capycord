@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
-import LoginFormPage from "./components/LoginFormPage";
+import SignupFormPage from "./components/Forms/SignupFormPage";
+import LoginFormPage from "./components/Forms/LoginFormPage";
 import HomePage from "./components/HomePage";
 import SplashPage from "./components/SplashPage";
 

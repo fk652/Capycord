@@ -25,7 +25,7 @@ class User < ApplicationRecord
     "Invisible"
   ].freeze
 
-  validates :email, :session_token, 
+  validates :session_token, 
     presence: true, 
     uniqueness: true
   validates :username,
@@ -39,23 +39,23 @@ class User < ApplicationRecord
   #   format: { without: /(^everyone$)|(^here$)/, message: "can't be 'everyone' or 'here'"}
   validates :email, 
     length: { in: 3..255 }, 
-    format: { with: URI::MailTo::EMAIL_REGEXP }
+    format: { with: URI::MailTo::EMAIL_REGEXP },
+    uniqueness: true
   validates :password, 
-    length: { in: 8..128 }, 
+    length: {
+      minimum: 8,
+      maximum: 72,
+      too_short: "Must be at least 8 characters long",
+      too_long: "Must be 72 or fewer in length"
+    }, 
     allow_nil: true
   validates :custom_status,
     length: { maximum: 128 }
+  validate :validate_username
 
   before_validation :ensure_session_token
+  # before_create :validate_username
   before_create :add_tag_number
-  # before_create :username, 
-  #   length: { in: 2..32 }, 
-  #   format: { without: URI::MailTo::EMAIL_REGEXP, message: "can't be email" }
-  # before_create :username,
-  #   format: { without: /@|#|:|```|discord/, message: "can't include @, #, :, ```, discord"}
-  # before_create :username,
-  #   format: { without: /(^everyone$)|(^here$)/, message: "can't be 'everyone' or 'here'"}
-  before_create :validate_username
   before_update :ensure_unique_tag_username
 
   after_validation :custom_status, :online_status, :set_online_status,
@@ -104,14 +104,7 @@ class User < ApplicationRecord
 
   def ensure_unique_tag_username
     if self.username_changed?
-      username = self.username.split("#")
-      if (username.length > 2)
-        errors.add(:username, "can't include #")
-        return
-      end
-
-      username = username[0]
-      validate_username(username)
+      validate_username()
 
       while User.exists?(self.username)
         tag = generate_random_tag_number
@@ -120,18 +113,20 @@ class User < ApplicationRecord
     end
   end
 
-  def validate_username(username = self.username)
+  def validate_username
+    username = self.username
+    if self.persisted?
+      username = self.username.rpartition("#")[0]
+    end
+
     if username.length < 2 || username.length > 32
-      errors.add(:username, "must be 2 to 32 characters long")
-    end
-    if URI::MailTo::EMAIL_REGEXP.match(username)
-      errors.add(:username, "can't be email")
-    end
-    if /@|#|:|```|discord/.match(username)
-      errors.add(:username, "can't include @, #, :, ```, discord")
-    end
-    if /(^everyone$)|(^here$)/.match(username)
-      errors.add(:username, "can't be 'everyone' or 'here'")
+      errors.add(:username, "Must between 2 and 32 characters in length")
+    elsif URI::MailTo::EMAIL_REGEXP.match(username)
+      errors.add(:username, "Can't be an email")
+    elsif /@|#|:|```|discord/.match(username)
+      errors.add(:username, "Can't include: @ # : ``` discord")
+    elsif /(^everyone$)|(^here$)/.match(username)
+      errors.add(:username, "Can't be 'everyone' or 'here'")
     end
   end
 end

@@ -1,9 +1,10 @@
+import '../Form.css';
 import './SignupFormPage.css';
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+import * as sessionActions from "../../../store/session";
 
 const SignupFormPage = () => {
   const dispatch = useDispatch();
@@ -23,10 +24,9 @@ const SignupFormPage = () => {
       .catch(async (res) => {
       let data;
       try {
-        // .clone() essentially allows you to read the response body twice
         data = await res.clone().json();
       } catch {
-        data = await res.text(); // Will hit this case if the server is down
+        data = await res.text();
       }
       if (data?.errors) setErrors(data.errors);
       else if (data) setErrors([data]);
@@ -37,14 +37,19 @@ const SignupFormPage = () => {
   return (
     <div className="form-container">
       <form className="login-signup" onSubmit={handleSubmit}>
-        <div className="header">
+        <div className="form-header">
           <h1>Create an account</h1>
         </div>
-        <ul>
-          {errors.map(error => <li key={error}>{error}</li>)}
-        </ul>
-        <div className="body">
-          <label for="email">EMAIL</label>
+        {/* {console.log(errors)} */}
+        <div className="form-body">
+          <label htmlFor="email" className={errors.email ? "error" : ""}>
+            EMAIL
+            { 
+              errors.email
+                ? <span className="errorMessage"> - {errors.email}</span>
+                : ''
+            }
+          </label>
           <input
             type="email"
             name="email"
@@ -52,7 +57,14 @@ const SignupFormPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label for="username">USERNAME</label>
+          <label htmlFor="username" className={errors.username ? "error" : ""}>
+            USERNAME
+            { 
+              errors.username 
+                ? <span className="errorMessage"> - {errors.username}</span>
+                : ''
+            }
+          </label>
           <input
             type="text"
             name="username"
@@ -60,7 +72,14 @@ const SignupFormPage = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-          <label for="password">PASSWORD</label>
+          <label htmlFor="password" className={errors.password ? "error" : ""}>
+            PASSWORD
+            { 
+              errors.password 
+                ? <span className="errorMessage"> - {errors.password}</span>
+                : ''
+            }
+          </label>
           <input
             type="password"
             name="password"

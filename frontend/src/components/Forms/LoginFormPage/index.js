@@ -1,7 +1,8 @@
+import '../Form.css';
 import "./LoginFormPage.css";
 
-import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
+import { useState } from "react";
+import * as sessionActions from "../../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
@@ -10,7 +11,7 @@ const LoginForm = () => {
   const sessionUser = useSelector(state => state.session.user);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -21,10 +22,9 @@ const LoginForm = () => {
       .catch(async (res) => {
         let data;
         try {
-          // .clone() essentially allows you to read the response body twice
           data = await res.clone().json();
         } catch {
-          data = await res.text(); // Will hit this case if the server is down
+          data = await res.text();
         }
         if (data?.errors) setErrors(data.errors);
         else if (data) setErrors([data]);
@@ -35,17 +35,19 @@ const LoginForm = () => {
   return (
     <div className="form-container">
       <form className="login-signup" onSubmit={handleSubmit}>
-        <div className="header">
+        <div className="form-header">
           <h1>Welcome back!</h1>
           <span>We're capy excited to see you again!</span>
         </div>
-        <ul>
-          {errors.map(error => <li key={error}>{error}</li>)}
-        </ul>
-        <div className="body">
-          <label for="email">
+        {/* {console.log(errors)} */}
+        <div className="form-body">
+          <label htmlFor="email" className={errors.login ? "error" : ""}>
             EMAIL
-            <span className="required">*</span>
+            {
+              errors.login
+                ? <span className="errorMessage"> - {errors.login}</span>
+                : <span className="required">*</span>
+            }
           </label>
           <input
             type="email"
@@ -55,9 +57,13 @@ const LoginForm = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label for="password">
+          <label htmlFor="password" className={errors.login ? "error" : ""}>
             PASSWORD
-            <span className="required">*</span>
+            {
+              errors.login 
+                ? <span className="errorMessage"> - {errors.login}</span>
+                : <span className="required">*</span>
+            }
           </label>
           <input
             type="password"
