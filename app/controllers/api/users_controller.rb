@@ -4,7 +4,7 @@ class Api::UsersController < ApplicationController
   wrap_parameters include: User.attribute_names + ['password']
 
   def create
-    @user = User.new(user_params)
+    @user = User.new(create_params)
     if @user.save
       login!(@user)
       render :show
@@ -14,7 +14,7 @@ class Api::UsersController < ApplicationController
   end
 
   private
-  def user_params
-    params.require(:user).permit(:email, :username, :password)
+  def create_params
+    params.require(:user).permit(:username, :email, :password)
   end
 end

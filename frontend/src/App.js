@@ -20,7 +20,7 @@ function App() {
         </Route>
         <Route exact path="/">
           {/* <SplashPage /> */}
-          <LoginFormPage />
+          <HomePage />
         </Route>
       </Switch>
     </>
