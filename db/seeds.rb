@@ -10,7 +10,8 @@ ApplicationRecord.transaction do
     username: 'Capy-Khan', 
     email: 'capybara@gmail.com', 
     password: 'password123',
-    custom_status: 'CAPYBARA CAPYBARA CAPYBARA 🦫'
+    custom_status: 'CAPYBARA CAPYBARA CAPYBARA 🦫',
+    profile_picture_url: 'https://www.rainforest-alliance.org/wp-content/uploads/2021/06/capybara-square-1.jpg.optimal.jpg'
   )
 
   10.times do 
