@@ -14,10 +14,14 @@ class ApplicationController < ActionController::API
   
   def login!(user)
     session[:session_token] = user.reset_session_token!
+    user.online_status = user.set_online_status
+    user.save!
   end
   
   def logout!
     current_user.reset_session_token!
+    current_user.online_status = "offline";
+    current_user.save!
     session[:session_token] = nil
     @current_user = nil
   end

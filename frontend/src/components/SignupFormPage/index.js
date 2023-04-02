@@ -35,41 +35,46 @@ const SignupFormPage = () => {
   };
 
   return (
-    <form className="submit-form" onSubmit={handleSubmit}>
-      <h1>Create an account</h1>
-      <ul>
-        {errors.map(error => <li key={error}>{error}</li>)}
-      </ul>
-      <label>
-        Email
-        <input
-          type="text"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Username
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Password
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <button type="submit">Continue</button>
-      <Link to="/login">Already have an account?</Link>
-    </form>
+    <div className="form-container">
+      <form className="login-signup" onSubmit={handleSubmit}>
+        <div className="header">
+          <h1>Create an account</h1>
+        </div>
+        <ul>
+          {errors.map(error => <li key={error}>{error}</li>)}
+        </ul>
+        <div className="body">
+          <label for="email">EMAIL</label>
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <label for="username">USERNAME</label>
+          <input
+            type="text"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <label for="password">PASSWORD</label>
+          <input
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button type="submit">Continue</button>
+          <div className="login-link">
+            <Link to="/login">Already have an account?</Link>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 

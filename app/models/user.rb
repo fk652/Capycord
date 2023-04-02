@@ -72,7 +72,7 @@ class User < ApplicationRecord
 
   def reset_session_token!
     self.session_token = generate_unique_session_token()
-    self.save!
+    # self.save!
     return self.session_token
   end
 
@@ -109,7 +109,7 @@ class User < ApplicationRecord
         errors.add(:username, "can't include #")
         return
       end
-      
+
       username = username[0]
       validate_username(username)
 
