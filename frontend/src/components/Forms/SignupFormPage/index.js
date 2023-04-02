@@ -1,26 +1,30 @@
 import '../Form.css';
 import './SignupFormPage.css';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-import * as sessionActions from "../../../store/session";
+import { signup } from "../../../store/session";
+import { addErrors, getErrors, removeErrors } from '../../../store/errors';
 
 const SignupFormPage = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
+  const errors = useSelector(getErrors);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+
+  useEffect(() => {
+    dispatch(removeErrors());
+  }, [dispatch])
 
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    setErrors([]);
-    return dispatch(sessionActions.signup({ email, username, password }))
+    return dispatch(signup({ email, username, password }))
       .catch(async (res) => {
       let data;
       try {
@@ -28,9 +32,16 @@ const SignupFormPage = () => {
       } catch {
         data = await res.text();
       }
-      if (data?.errors) setErrors(data.errors);
-      else if (data) setErrors([data]);
-      else setErrors([res.statusText]);
+
+      const errors = {
+        status: res.status,
+        messages: null
+      }
+      if (data?.errors) errors.messages = data.errors;
+      // else if (data) errors.messages = [data];
+      // else errors.messages = [res.statusText];
+
+      dispatch(addErrors(errors));
     });
   };
 
@@ -40,12 +51,11 @@ const SignupFormPage = () => {
         <div className="form-header">
           <h1>Create an account</h1>
         </div>
-        {/* {console.log(errors)} */}
         <div className="form-body">
-          <label htmlFor="email" className={errors.email ? "error" : ""}>
+          <label htmlFor="email" className={errors?.email ? "error" : ""}>
             EMAIL
             { 
-              errors.email
+              errors?.email
                 ? <span className="errorMessage"> - {errors.email}</span>
                 : ''
             }
@@ -57,10 +67,10 @@ const SignupFormPage = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label htmlFor="username" className={errors.username ? "error" : ""}>
+          <label htmlFor="username" className={errors?.username ? "error" : ""}>
             USERNAME
             { 
-              errors.username 
+              errors?.username 
                 ? <span className="errorMessage"> - {errors.username}</span>
                 : ''
             }
@@ -72,10 +82,10 @@ const SignupFormPage = () => {
             onChange={(e) => setUsername(e.target.value)}
             required
           />
-          <label htmlFor="password" className={errors.password ? "error" : ""}>
+          <label htmlFor="password" className={errors?.password ? "error" : ""}>
             PASSWORD
             { 
-              errors.password 
+              errors?.password 
                 ? <span className="errorMessage"> - {errors.password}</span>
                 : ''
             }

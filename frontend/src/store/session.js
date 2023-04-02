@@ -1,20 +1,17 @@
 import csrfFetch from './csrf';
+import { removeErrors } from './errors';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
 const REMOVE_CURRENT_USER = 'session/removeCurrentUser';
 
-const setCurrentUser = (user) => {
-  return {
-    type: SET_CURRENT_USER,
-    payload: user
-  };
-};
+const setCurrentUser = (user) => ({
+  type: SET_CURRENT_USER,
+  user
+});
 
-const removeCurrentUser = () => {
-  return {
-    type: REMOVE_CURRENT_USER
-  };
-};
+const removeCurrentUser = () => ({
+  type: REMOVE_CURRENT_USER
+});
 
 const storeCSRFToken = response => {
   const csrfToken = response.headers.get("X-CSRF-Token");
@@ -22,8 +19,9 @@ const storeCSRFToken = response => {
 }
 
 const storeCurrentUser = user => {
-  if (user) sessionStorage.setItem("currentUser", JSON.stringify(user));
-  else sessionStorage.removeItem("currentUser");
+  user 
+    ? sessionStorage.setItem("currentUser", JSON.stringify(user))
+    : sessionStorage.removeItem("currentUser")
 }
 
 export const login = ({ email, password }) => async dispatch => {
@@ -35,6 +33,7 @@ export const login = ({ email, password }) => async dispatch => {
   const data = await response.json();
   storeCurrentUser(data.user);
   dispatch(setCurrentUser(data.user));
+  dispatch(removeErrors());
   return response;
 };
 
@@ -52,6 +51,7 @@ export const signup = (user) => async (dispatch) => {
   const data = await response.json();
   storeCurrentUser(data.user);
   dispatch(setCurrentUser(data.user));
+  dispatch(removeErrors());
   return response;
 };
 
@@ -67,7 +67,7 @@ export const logout = () => async (dispatch) => {
 
 export const restoreSession = () => async dispatch => {
   const response = await csrfFetch("/api/session");
-  
+
   storeCSRFToken(response);
   const data = await response.json();
   storeCurrentUser(data.user);
@@ -82,7 +82,7 @@ const initialState = {
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CURRENT_USER:
-      return { ...state, user: action.payload };
+      return { ...state, user: action.user };
     case REMOVE_CURRENT_USER:
       return { ...state, user: null };
     default:
