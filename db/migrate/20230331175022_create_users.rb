@@ -5,8 +5,8 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :username, null: false
       t.string :password_digest, null: false
       t.string :session_token, null: false
-      t.string :online_status, null: false, default: "offline"
-      t.string :set_online_status, null: false, default: "online"
+      t.string :online_status, null: false, default: "Offline"
+      t.string :set_online_status, null: false, default: "Online"
       t.string :custom_status, null: false, default: ""
       t.string :profile_picture_url, null: false, default: ""
 

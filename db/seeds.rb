@@ -19,7 +19,8 @@ ApplicationRecord.transaction do
     email: 'capybara2@gmail.com', 
     password: 'password123',
     custom_status: 'CAPYBARA OVER 9000 💢',
-    profile_picture_url: 'https://cdn.drawception.com/images/panels/2017/5-4/wR4kkj9B1j-2.png'
+    profile_picture_url: 'https://cdn.drawception.com/images/panels/2017/5-4/wR4kkj9B1j-2.png',
+    set_online_status: 'Idle'
   )
 
   10.times do 

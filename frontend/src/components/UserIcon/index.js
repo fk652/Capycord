@@ -8,19 +8,19 @@ const UserIcon = ({picture_url, status}) => {
 
   let icon_url;
   switch (status) {
-    case "offline":
+    case "Offline":
       icon_url = offlineIcon;
       break;
-    case "online":
+    case "Online":
       icon_url = onlineIcon;
       break;
-    case "idle":
+    case "Idle":
       icon_url = idleIcon;
       break;
-    case "do not disturb":
+    case "Do Not Disturb":
       icon_url = busyIcon;
       break;
-    case "invisible":
+    case "Invisible":
       icon_url = offlineIcon;
       break;
     default:

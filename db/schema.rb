@@ -19,8 +19,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_31_175022) do
     t.string "username", null: false
     t.string "password_digest", null: false
     t.string "session_token", null: false
-    t.string "online_status", default: "offline", null: false
-    t.string "set_online_status", default: "online", null: false
+    t.string "online_status", default: "Offline", null: false
+    t.string "set_online_status", default: "Online", null: false
     t.string "custom_status", default: "", null: false
     t.string "profile_picture_url", default: "", null: false
     t.datetime "created_at", null: false
