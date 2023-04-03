@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: capycord_production
-  username: capycord
-  password: <%= ENV["CAPYCORD_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
