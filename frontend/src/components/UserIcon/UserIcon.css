@@ -1,0 +1,21 @@
+/* .user-icon {
+  width: 40px;
+  height: 40px;
+} */
+
+.user-profile-pic {
+  width: 32px;
+  height: 32px;
+  border-radius: 100%;
+  position: relative;
+}
+
+.status-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  position: relative;
+  z-index: 2;
+  bottom: 0;
+  right: 10px;
+}

@@ -1,23 +1,20 @@
 import "./HomePage.css"
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+import HomeSideBar from "../HomeSideBar";
+import ServerBar from "../ServerBar";
+import FriendsDisplay from "../FriendsDisplay";
 
 const HomePage = () => {
-  const dispatch = useDispatch();
   const sessionUser = useSelector(state => state.session.user);
   if (!sessionUser) return <Redirect to="/login" />
 
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
-
   return (
     <div className="home">
-      <h1>Home Page</h1>
-      <button onClick={logout}>Log Out</button>
+      <ServerBar />
+      <HomeSideBar />
+      <FriendsDisplay />
     </div>
   )
 }

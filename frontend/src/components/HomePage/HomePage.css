@@ -1,0 +1,9 @@
+/* body {
+  justify-content: center;
+  background: none;
+} */
+
+.home {
+  display: flex;
+  width: 100vw;
+}

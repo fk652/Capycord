@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/Forms/SignupFormPage";
 import LoginFormPage from "./components/Forms/LoginFormPage";
 import HomePage from "./components/HomePage";
@@ -15,12 +15,15 @@ function App() {
         <Route exact path="/login">
           <LoginFormPage />
         </Route>
-        <Route path="/home">
+        <Route exact path="/home">
           <HomePage />
         </Route>
         <Route exact path="/">
           {/* <SplashPage /> */}
-          <HomePage />
+          <Redirect to="/login" />
+        </Route>
+        <Route path="">
+          <Redirect to="/login" />
         </Route>
       </Switch>
     </>
