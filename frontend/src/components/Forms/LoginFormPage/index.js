@@ -54,51 +54,53 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="form-container">
-      <form className="login-signup" onSubmit={handleSubmit}>
-        <div className="form-header">
-          <h1>Welcome back!</h1>
-          <span>We're capy excited to see you again!</span>
-        </div>
-        <div className="form-body">
-          <label htmlFor="email" className={errors?.login ? "error" : ""}>
-            EMAIL
-            {
-              errors?.login
-                ? <span className="errorMessage"> - {errors.login}</span>
-                : <span className="required">*</span>
-            }
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label htmlFor="password" className={errors?.login ? "error" : ""}>
-            PASSWORD
-            {
-              errors?.login 
-                ? <span className="errorMessage"> - {errors.login}</span>
-                : <span className="required">*</span>
-            }
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Log In</button>
-          <div className="demo-container">
-            <button className="demo-button" onClick={e => demoLogin(e, 1)}>Login as Demo 1</button>
-            <button className="demo-button" onClick={e => demoLogin(e, 2)}>Login as Demo 2</button>
+    <div className="form-wrapper">
+      <div className="form-container">
+        <form className="login-signup" onSubmit={handleSubmit}>
+          <div className="form-header">
+            <h1>Welcome back!</h1>
+            <span>We're capy excited to see you again!</span>
           </div>
-          <span className="signup-link">Need an account? <Link to="/signup">Register</Link></span>
-        </div>
-      </form>
+          <div className="form-body">
+            <label htmlFor="email" className={errors?.login ? "error" : ""}>
+              EMAIL
+              {
+                errors?.login
+                  ? <span className="errorMessage"> - {errors.login}</span>
+                  : <span className="required">*</span>
+              }
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="password" className={errors?.login ? "error" : ""}>
+              PASSWORD
+              {
+                errors?.login 
+                  ? <span className="errorMessage"> - {errors.login}</span>
+                  : <span className="required">*</span>
+              }
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Log In</button>
+            <div className="demo-container">
+              <button className="demo-button" onClick={e => demoLogin(e, 1)}>Login as Demo 1</button>
+              <button className="demo-button" onClick={e => demoLogin(e, 2)}>Login as Demo 2</button>
+            </div>
+            <span className="signup-link">Need an account? <Link to="/signup">Register</Link></span>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

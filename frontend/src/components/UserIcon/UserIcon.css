@@ -11,11 +11,11 @@
 }
 
 .status-icon {
-  width: 10px;
-  height: 10px;
+  width: 13px;
+  height: 13px;
   border-radius: 100%;
   position: relative;
   z-index: 2;
-  bottom: 0;
+  bottom: -3px;
   right: 10px;
 }

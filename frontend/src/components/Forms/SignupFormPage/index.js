@@ -46,63 +46,65 @@ const SignupFormPage = () => {
   };
 
   return (
-    <div className="form-container">
-      <form className="login-signup" onSubmit={handleSubmit}>
-        <div className="form-header">
-          <h1>Create an account</h1>
-        </div>
-        <div className="form-body">
-          <label htmlFor="email" className={errors?.email ? "error" : ""}>
-            EMAIL
-            { 
-              errors?.email
-                ? <span className="errorMessage"> - {errors.email}</span>
-                : ''
-            }
-          </label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <label htmlFor="username" className={errors?.username ? "error" : ""}>
-            USERNAME
-            { 
-              errors?.username 
-                ? <span className="errorMessage"> - {errors.username}</span>
-                : ''
-            }
-          </label>
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-          <label htmlFor="password" className={errors?.password ? "error" : ""}>
-            PASSWORD
-            { 
-              errors?.password 
-                ? <span className="errorMessage"> - {errors.password}</span>
-                : ''
-            }
-          </label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit">Continue</button>
-          <div className="login-link">
-            <Link to="/login">Already have an account?</Link>
+    <div className="form-wrapper">
+      <div className="form-container">
+        <form className="login-signup" onSubmit={handleSubmit}>
+          <div className="form-header">
+            <h1>Create an account</h1>
           </div>
-        </div>
-      </form>
+          <div className="form-body">
+            <label htmlFor="email" className={errors?.email ? "error" : ""}>
+              EMAIL
+              { 
+                errors?.email
+                  ? <span className="errorMessage"> - {errors.email}</span>
+                  : ''
+              }
+            </label>
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label htmlFor="username" className={errors?.username ? "error" : ""}>
+              USERNAME
+              { 
+                errors?.username 
+                  ? <span className="errorMessage"> - {errors.username}</span>
+                  : ''
+              }
+            </label>
+            <input
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+            <label htmlFor="password" className={errors?.password ? "error" : ""}>
+              PASSWORD
+              { 
+                errors?.password 
+                  ? <span className="errorMessage"> - {errors.password}</span>
+                  : ''
+              }
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit">Continue</button>
+            <div className="login-link">
+              <Link to="/login">Already have an account?</Link>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

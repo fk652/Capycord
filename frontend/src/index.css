@@ -29,4 +29,6 @@ body {
   height: 100vh;
   min-height: 100vh;
   font-family: 'gg sans', 'Noto Sans', Helvetica;
+  background-color: #6167f4;
+	color: #f2f3f5;
 }
