@@ -1,9 +1,11 @@
 /* body {
   justify-content: center;
-  background: none;
+  background: #313338;
 } */
 
 .home {
   display: flex;
   width: 100vw;
+  height: 100vh;
+  background: #313338;
 }
