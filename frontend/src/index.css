@@ -1,12 +1,14 @@
 @font-face {
-  font-family: Whitney;
-  src: url('./assets/fonts/whitneylight.otf');
+  font-family: 'gg sans';
+  src: url('./assets/fonts/gg sans Regular.ttf');
 }
 
 @font-face {
   font-family: 'gg sans';
-  src: url('./assets/fonts/gg sans Regular.ttf');
+  src: url('./assets/fonts/gg sans Medium.ttf');
+  font-weight: 500;
 }
+
 
 @font-face {
   font-family: 'gg sans';
