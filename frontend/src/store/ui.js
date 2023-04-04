@@ -26,7 +26,7 @@ export const getSelectedServer = (state) => {
 
 const initialState = {
   selectedFriendNavTab: "friends-online",
-  selectedServer: "hom" // home
+  selectedServer: "home" // home
 }
 
 const uiReducer = (state = initialState, action) => {

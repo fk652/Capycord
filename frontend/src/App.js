@@ -18,6 +18,9 @@ function App() {
         <Route exact path="/home">
           <HomePage />
         </Route>
+        {/* <Route path="/server/:id">
+          <ServerPage />
+        </Route> */}
         <Route exact path="/">
           {/* <SplashPage /> */}
           <Redirect to="/login" />
