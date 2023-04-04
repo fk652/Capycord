@@ -1,5 +1,6 @@
 import csrfFetch from './csrf';
 import { removeErrors } from './errors';
+import { resetUi } from './ui';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
 const REMOVE_CURRENT_USER = 'session/removeCurrentUser';
@@ -62,6 +63,8 @@ export const logout = () => async (dispatch) => {
 
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
+  dispatch(removeErrors());
+  dispatch(resetUi());
   return response;
 };
 

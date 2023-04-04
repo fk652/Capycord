@@ -8,19 +8,19 @@ import FriendsAll from './FriendsAll';
 import FriendsBlocked from './FriendsBlocked';
 import FriendsOnline from './FriendsOnline';
 import FriendsPending from './FriendsPending';
-import { useState } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { getSelectedFriendNavTab, setFriendNav } from '../../store/ui';
 
 const FriendsDisplay = () => {
+  const selected = useSelector(getSelectedFriendNavTab);
 
-  // might convert this into uiReducer later, and seperate navbar
-  const [selected, setSelected] = useState("friends-online");
-
+  const dispatch = useDispatch();
   const toggleSelected = (e) => {
-    if (e.target.id) setSelected(e.target.id);
+    if (e.target.id) dispatch(setFriendNav(e.target.id));
   }
 
   const checkSelected = (id) => {
-    if (selected === id) return "selected" // change to dispatch uiReducer action later
+    if (selected === id) return "selected"
     return ""
   }
 

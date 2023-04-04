@@ -26,7 +26,7 @@ const errorReducer = (state = initialState, action) => {
     case ADD_ERRORS:
       return {...action.errors}
     case REMOVE_ERRORS:
-      return initialState;
+      return {...initialState};
     default:
       return state;
   }
