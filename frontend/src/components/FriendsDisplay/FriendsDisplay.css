@@ -3,6 +3,7 @@
   background: #313338;
   /* width: 100%; */
   flex-basis: 100%;
+  overflow: hidden;
 }
 
 .friends-nav-bar {
@@ -31,8 +32,9 @@
 }
 
 .friends-nav-icon {
-  width: 21px;
-  height: 16px;
+  /* width: 21px;
+  height: 16px; */
+  color: #80848e;
 }
 
 .nav-divider {
@@ -97,9 +99,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #b5bac1;
 }
 
-.message-icon {
+.icon-wrapper:hover {
+  color: #dbdee1;
+  cursor: pointer;
+}
+
+/* .message-icon {
   height: 24px;
   width: 24px;
 }
@@ -107,4 +115,87 @@
 .inbox-icon {
   height: 18px;
   width: 18px;
+} */
+
+
+/* move these later? */
+.search-bar-wrapper {
+  margin: 14px 20px 8px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.friend-search-input {
+  height: 34px;
+  padding: 0 10px;
+  margin: 1px 0px 1px 1px;
+  font-size: 16px;
+  line-height: 32px;
+  flex-basis: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.friend-search-input::placeholder {
+  color: #949ba4;
+  opacity: 1;
+}
+
+.friend-search-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color:#949ba4;
+}
+
+.friend-search-input::-ms-input-placeholder { /* Microsoft Edge */
+  color: #949ba4;
+}
+
+.search-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e1f22;
+  height: 34px;
+  color: #b5bac1;
+  width: 34px;
+  margin: 1px 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-right: 1px;
+}
+
+.search-icon {
+  height: 20px;
+  width: 20px;
+}
+
+.friend-count {
+  margin: 25px 20px 8px 30px;
+  color: #b5bac1;
+  font-size: 12px;
+  font-weight: bold;
+  height: 16px;
+  letter-spacing: .02em;
+}
+
+.friend-display-wrapper {
+  overflow: hidden scroll;
+  overflow-y: scroll;
+  scrollbar-width: 8px;
+  scrollbar-color: #1a1b1e;
+  height: 100%;
+}
+
+.friend-display-wrapper::-webkit-scrollbar {
+  width: 8px;
+  border-radius: 10px;
+}
+
+.friend-display-wrapper::-webkit-scrollbar-thumb {
+  background: #1a1b1e;
+  border-radius: 10px;
+}
+
+.friend-display-wrapper::-webkit-scrollbar-track {
+  background: #2b2d31;
+  border-radius: 10px;
 }
