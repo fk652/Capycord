@@ -20,7 +20,7 @@ const FriendsDisplay = () => {
   }
 
   const checkSelected = (id) => {
-    if (selected === id) return "selected"
+    if (selected === id) return "selected" // change to dispatch uiReducer action later
     return ""
   }
 
