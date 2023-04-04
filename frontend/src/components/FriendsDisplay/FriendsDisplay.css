@@ -110,6 +110,10 @@
   cursor: pointer;
 }
 
+.icon-wrapper.no-hover:hover {
+  cursor: auto;
+}
+
 /* .message-icon {
   height: 24px;
   width: 24px;
