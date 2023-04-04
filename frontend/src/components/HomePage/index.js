@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <div className="home">
-      <ServerBar />
+      {/* <ServerBar /> */}
       <HomeSideBar />
       <FriendsDisplay />
     </div>
