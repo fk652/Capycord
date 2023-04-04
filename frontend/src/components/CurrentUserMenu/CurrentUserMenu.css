@@ -50,9 +50,9 @@
   height: 25px;
   margin: 0;
   padding: 2px 10px;
-  background-color: #248046;
+  background-color: #da373c;
 }
 
 .logout-button:hover {
-  background-color: #2dc770;
+  background-color: #a12828;
 }
