@@ -7,8 +7,8 @@
 #  username            :string           not null
 #  password_digest     :string           not null
 #  session_token       :string           not null
-#  online_status       :string           default("offline"), not null
-#  set_online_status   :string           default("online"), not null
+#  online_status       :string           default("Offline"), not null
+#  set_online_status   :string           default("Online"), not null
 #  custom_status       :string           default(""), not null
 #  profile_picture_url :string           default(""), not null
 #  created_at          :datetime         not null
@@ -64,6 +64,11 @@ class User < ApplicationRecord
     inclusion: { in: STATUS, message: "'%{value}' is not a valid status"}
   after_validation :set_online_status,
     inclusion: { in: STATUS[1..-1], message: "'%{value}' is not a valid status"}
+
+  # has_many :memberships, inverse_of: :member, dependent: :destroy
+  # has_many :server_memberships, through: :memberships, source: :server
+  # has_many :messages, inverse_of: :author, dependent: :destroy
+  # has_many :servers, inverse_of: :owner, dependent: :destroy
 
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)

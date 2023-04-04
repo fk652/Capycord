@@ -4,10 +4,13 @@ import SignupFormPage from "./components/Forms/SignupFormPage";
 import LoginFormPage from "./components/Forms/LoginFormPage";
 import HomePage from "./components/HomePage";
 import SplashPage from "./components/SplashPage";
+import ServerBar from "./components/ServerBar";
 
 function App() {
   return (
     <>
+      {/* conditionally add serverbar here later */}
+      {/* <ServerBar /> */}
       <Switch>
         <Route exact path="/signup">
           <SignupFormPage />
