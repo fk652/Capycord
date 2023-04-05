@@ -65,10 +65,29 @@ class User < ApplicationRecord
   after_validation :set_online_status,
     inclusion: { in: STATUS[1..-1], message: "'%{value}' is not a valid status"}
 
-  # has_many :memberships, inverse_of: :member, dependent: :destroy
-  # has_many :server_memberships, through: :memberships, source: :server
-  # has_many :messages, inverse_of: :author, dependent: :destroy
-  # has_many :servers, inverse_of: :owner, dependent: :destroy
+  has_many :memberships, 
+    inverse_of: :member, 
+    foreign_key: :member_id,
+    dependent: :destroy
+  has_many :messages, 
+    inverse_of: :author,
+    foreign_key: :author_id,
+    dependent: :destroy
+  has_many :servers, 
+    inverse_of: :owner, 
+    foreign_key: :owner_id,
+    dependent: :destroy
+  has_many :friendships1,
+    foreign_key: :user1_id,
+    class_name: :Friend,
+    dependent: :destroy
+  has_many :friendships2,
+    foreign_key: :user2_id,
+    class_name: :Friend,
+    dependent: :destroy
+  has_many :friends1, through: :friendships1, source: :user2
+  has_many :friends2, through: :friendships2, source: :user1
+  has_many :server_memberships, through: :memberships, source: :server
 
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)

@@ -17,15 +17,16 @@ ApplicationRecord.transaction do
   
   puts "Creating users..."
   users = []
-  users << User.create!(
+  demo_1 = User.create!(
     username: 'Capybaby', 
     email: 'capybara@gmail.com', 
     password: 'password123',
     custom_status: 'CAPYBARA CAPYBARA CAPYBARA 🦫',
     profile_picture_url: 'https://images.fineartamerica.com/images-medium-large-5/baby-capybara-m-watson.jpg'
   )
+  users << demo_1
 
-  users << User.create!(
+  demo_2 = User.create!(
     username: 'SSJ Capy', 
     email: 'capybara2@gmail.com', 
     password: 'password123',
@@ -33,7 +34,8 @@ ApplicationRecord.transaction do
     profile_picture_url: 'https://cdn.drawception.com/images/panels/2017/5-4/wR4kkj9B1j-2.png',
     set_online_status: 'Idle'
   )
-
+  users << demo_2
+  
   10.times do 
     users << User.create!({
       username: Faker::Internet.unique.username(specifier: 3),
@@ -54,7 +56,8 @@ ApplicationRecord.transaction do
     servers << Server.create!({
       name: Faker::Games::Pokemon.unique.location,
       owner_id: user.id,
-      picture_url: "https://www.travelandleisure.com/thmb/R2kb6GuJwF4wVJhRVevV-FqOVao=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/el-yunque-national-rainforest-tropical-puerto-rico-TROPICALPLANTS0617-d3ccb18a16064e42bdd626cdf7a8cb68.jpg"
+      # picture_url: "https://www.travelandleisure.com/thmb/R2kb6GuJwF4wVJhRVevV-FqOVao=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/el-yunque-national-rainforest-tropical-puerto-rico-TROPICALPLANTS0617-d3ccb18a16064e42bdd626cdf7a8cb68.jpg"
+      picture_url: Faker::LoremFlickr.image
     })
   end
 
@@ -77,7 +80,7 @@ ApplicationRecord.transaction do
   servers.each do |server|
     users_copy = User.where.not(id: server.owner.id).to_a
     memberships[server.id] = [];
-    
+
     rand(5..users_copy.length).times do 
       rand_user = users_copy.delete_at(rand(users_copy.length))
       memberships[server.id] << Membership.create!({
@@ -92,7 +95,21 @@ ApplicationRecord.transaction do
   messages = []
   channels.each do |channel|
     rand(10..20).times do
-
+      user_id = channel.server.members.sample().id
+      messages << Message.create!({
+        body: [
+          Faker::Quote.famous_last_words,
+          Faker::Quote.jack_handey,
+          Faker::Quote.matz,
+          Faker::Quote.most_interesting_man_in_the_world,
+          Faker::Quote.robin,
+          Faker::Quote.singular_siegler,
+          Faker::Quote.yoda
+        ].sample(),
+        author_id: user_id,
+        channel_id: channel.id,
+        status: Message::STATUS.sample()
+      })
     end
   end
 
@@ -101,10 +118,16 @@ ApplicationRecord.transaction do
   # should only be invites to and from demo users
 
   puts "Creating friendships..."
-  user_pairs = []
-  (0...users.length-1).each do |i|
-    (i+1...users.length).each do |j|
-      user_pairs << [users[i].id, users[j].id]
+  friendships = []
+  [demo_1.id, demo_2.id].each do |demo_id|
+    users_copy = User.where.not(id: demo_id).to_a
+
+    rand(2..5).times do 
+      rand_user = users_copy.delete_at(rand(users_copy.length))
+      friendships << Friend.create!({
+        user1_id: demo_id,
+        user2_id: rand_user.id
+      })
     end
   end
 

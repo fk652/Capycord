@@ -19,7 +19,9 @@ class Server < ApplicationRecord
 
   belongs_to :owner, class_name: :User
   has_many :channels, inverse_of: :server, dependent: :destroy
+  has_many :memberships, inverse_of: :server, dependent: :destroy
   has_many :messages, through: :channels, source: :messages
+  has_many :members, through: :memberships, source: :member
 
   private
   def add_invite_link
