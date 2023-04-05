@@ -1,4 +1,4 @@
-const ServerListIcon = ({id, image_url}) => {
+const ServerListIcon = ({id, image_url, name}) => {
 
   return (
     <>
@@ -13,6 +13,7 @@ const ServerListIcon = ({id, image_url}) => {
           alt="server-icon"
           data-key={id}
         />
+        <span class="tooltip">{name}</span>
       </div>
       <div className="tab-selector-wrapper">
         <span className="tab-selector" />

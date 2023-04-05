@@ -1,8 +1,21 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   namespace :api, defaults: { format: :json } do
-    resources :users, only: :create
     resource :session, only: [:show, :create, :destroy]
+
+    resources :users, only: [:create, :show, :update]
+
+    resources :servers, only: [:index, :show, :create, :destroy, :update] do 
+      resources :channels, only: [:create, :index]
+    end
+
+    resources :channels, only: [:show, :destroy, :update] do 
+      resources :messages, only: [:create, :index]
+    end
+
+    resources :messages, only: [:show, :destroy, :update]
+    resources :friends, only: [:index, :create, :destroy]
+    resources :memberships, only: [:create, :destroy, :update]
   end
   
   # Defines the root path route ("/")

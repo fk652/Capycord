@@ -3,11 +3,13 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import errorReducer from './errors';
 import uiReducer from './ui';
+import serversReducer from './servers';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   errors: errorReducer,
-  ui: uiReducer
+  ui: uiReducer,
+  servers: serversReducer
 });
 
 let enhancer;

@@ -1,6 +1,7 @@
 import "./FriendsOnline.css";
 
 const FriendsOnline = () => {
+  
 
   return (
     <div className="friends-online-display">
