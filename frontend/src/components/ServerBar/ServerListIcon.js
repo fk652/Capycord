@@ -1,4 +1,4 @@
-const ServerListIcon = ({id, image_url, name}) => {
+const ServerListIcon = ({id, image, name}) => {
 
   return (
     <>
@@ -7,13 +7,17 @@ const ServerListIcon = ({id, image_url, name}) => {
         data-key={id}
         className={`server-icon-wrapper`} 
       >
-        <img 
-          className="server-icon"
-          src={image_url}
-          alt="server-icon"
-          data-key={id}
-        />
-        <span class="tooltip">{name}</span>
+        {
+          image 
+            ? <img 
+                className="server-icon"
+                src={image}
+                alt="server-icon"
+                data-key={id}
+              />
+            : <div className="server-icon filler">{name[0].toUpperCase()}</div>
+        }
+        <span className="tooltip">{name}</span>
       </div>
       <div className="tab-selector-wrapper">
         <span className="tab-selector" />

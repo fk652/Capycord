@@ -19,8 +19,9 @@ const CurrentUserMenu = () => {
     <div className="current-user-menu">
       <div className="current-user-display">
         <UserIcon 
-          picture_url={sessionUser.profilePictureUrl}
+          picture={sessionUser.profilePictureUrl}
           status={sessionUser.onlineStatus}
+          name={sessionUser.username.split("#")[0]}
         />
         <div className="username-container">
           <span className="username">{username}</span>

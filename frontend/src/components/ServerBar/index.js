@@ -16,7 +16,7 @@ const ServerBar = () => {
     dispatch(fetchServers())
   }, [dispatch])
 
-  console.log("servers", servers);
+  // console.log("servers", servers);
 
   const toggleSelected = (e) => {
     // console.log(e);
@@ -41,6 +41,15 @@ const ServerBar = () => {
     dummies.push(i)
   }
 
+  const pictures = [
+    "https://pbs.twimg.com/profile_images/1076326143660298245/iaMMNWg9_400x400.jpg",
+    "https://metroflowermarket.com/wp-content/uploads/2023/01/RosesRed_Freedom.png",
+    "https://s.hdnux.com/photos/01/12/66/62/19623053/4/rawImage.jpg",
+    "https://images.immediate.co.uk/production/volatile/sites/7/2021/09/GettyImages-1279734279-24aade8.jpg",
+    "https://www.tripsavvy.com/thmb/qFqPcg6Wo24Hu4fLokNfAZdC-xQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/fuji-mountain-in-autumn-822273028-5a6a8a9c3418c600363958d3.jpg",
+    null
+  ]
+
   return (
     <div className="server-bar" onClick={toggleSelected}>
       <div className={`server-item-wrapper ${checkSelected("home")}`}>
@@ -55,7 +64,7 @@ const ServerBar = () => {
             </path>
           </svg>
 
-          <span class="tooltip">Direct Messages</span>
+          <span className="tooltip">Direct Messages</span>
         </div>
         <div className="tab-selector-wrapper">
           <span className="tab-selector" />
@@ -69,8 +78,8 @@ const ServerBar = () => {
         servers.map(server => {
           // console.log("server", server)
           return (
-            <div className={`server-item-wrapper ${checkSelected(server.id)}`}>
-              <ServerListIcon id={server.id} image_url={server.pictureUrl} name={server.name} />
+            <div className={`server-item-wrapper ${checkSelected(server.id)}`} key={server.id}>
+              <ServerListIcon id={server.id} image={server.pictureUrl} name={server.name} />
             </div>
           )
         })
@@ -79,8 +88,8 @@ const ServerBar = () => {
       {
         dummies.map(dummyId => {
           return (
-            <div className={`server-item-wrapper ${checkSelected(dummyId)}`}>
-              <ServerListIcon id={dummyId} image_url="https://pbs.twimg.com/profile_images/1076326143660298245/iaMMNWg9_400x400.jpg" name="dummy" />
+            <div className={`server-item-wrapper ${checkSelected(dummyId)}`} key={dummyId}>
+              <ServerListIcon id={dummyId} image={pictures[Math.floor(Math.random()*pictures.length)]} name="dummy" />
             </div>
           )
         })

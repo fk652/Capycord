@@ -10,11 +10,20 @@ import FriendsOnline from './FriendsOnline';
 import FriendsPending from './FriendsPending';
 import { useDispatch, useSelector } from "react-redux";
 import { getSelectedFriendNavTab, setFriendNav } from '../../store/ui';
+import { fetchFriends, getFriends } from '../../store/friends';
+import { useEffect } from 'react';
 
 const FriendsDisplay = () => {
   const selected = useSelector(getSelectedFriendNavTab);
+  const friends = useSelector(getFriends)
 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchFriends());
+  }, [dispatch])
+
+  
+
   const toggleSelected = (e) => {
     if (e.target.id) dispatch(setFriendNav(e.target.id));
   }
@@ -27,9 +36,9 @@ const FriendsDisplay = () => {
   const getDisplay = () => {
     switch (selected) {
       case "friends-online": 
-        return <FriendsOnline />;
+        return <FriendsOnline friends={friends.filter(friend => friend.onlineStatus !== "Offline")} />;
       case "friends-all":
-        return <FriendsAll />;
+        return <FriendsAll friends={friends}/>;
       case "friends-pending":
         return <FriendsPending />;
       case "friends-blocked":
@@ -122,13 +131,10 @@ const FriendsDisplay = () => {
           </svg>
         </div>
       </div>
-      <div className="friend-count-wrapper">
-        <h2 className="friend-count">ONLINE — -1</h2>
-      </div>
 
-      <div className="friend-display-wrapper">
+      {/* <div className="friend-display-wrapper"> */}
         {getDisplay()}
-      </div>
+      {/* </div> */}
     </div>
   )
 }

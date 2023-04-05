@@ -106,6 +106,10 @@
   transition: min-height .2s ease-out, min-width .2s ease-out;
 }
 
+.server-icon-wrapper:hover {
+  cursor: pointer;
+}
+
 .server-icon-wrapper:hover ~ .tab-selector-wrapper > .tab-selector {
   min-width: 8px;
   min-height: 20px;
@@ -158,4 +162,8 @@
 .server-item-wrapper:hover .tooltip {
   visibility: visible;
   /* transition: height .2s ease-in, width .2s ease-in; */
+}
+
+.server-icon.filler {
+  background: #666060;
 }

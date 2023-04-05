@@ -4,7 +4,7 @@ import onlineIcon from "../../assets/status_icons/online.png";
 import busyIcon from "../../assets/status_icons/busy.png";
 import idleIcon from "../../assets/status_icons/idle.png";
 
-const UserIcon = ({picture_url, status}) => {
+const UserIcon = ({picture, status, name}) => {
 
   let icon_url;
   switch (status) {
@@ -29,8 +29,21 @@ const UserIcon = ({picture_url, status}) => {
 
   return (
     <div className="user-icon">
-      <img className="user-profile-pic" src={picture_url} alt="user profile icon" />
-      <img className="status-icon" src={icon_url} alt="status"/>
+      {
+        picture 
+          ? (
+            <>
+              <img className="user-profile-pic" src={picture} alt="user profile icon" />
+              <img className="status-icon" src={icon_url} alt="status"/>
+            </>
+          )
+          : (
+            <div className="filler-container">
+              <div className="filler-profile-pic">{name[0].toUpperCase()}</div>
+              <img className="filler-status-icon" src={icon_url} alt="status"/>
+            </div>
+          )
+      }
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import csrfFetch from './csrf';
 import { removeErrors } from './errors';
+import { resetFriends } from './friends';
 import { resetServers } from './servers';
 import { resetUi } from './ui';
 
@@ -67,6 +68,7 @@ export const logout = () => async (dispatch) => {
   dispatch(removeErrors());
   dispatch(resetUi());
   dispatch(resetServers());
+  dispatch(resetFriends())
   return response;
 };
 

@@ -1,0 +1,120 @@
+.friend-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 10px;
+  margin: 0 10px 0 20px;
+
+  border-top: 1px solid #4e50584c;
+  border-radius: 8px;
+  max-height: 30px;
+
+  /* position: relative;
+  z-index: 5; */
+  /* overflow: visible; */
+}
+
+.friend-list-item:hover {
+  border-color: transparent;
+  background: #4e50584c;
+  cursor: pointer;
+}
+
+.friend-list-item:hover .friend-item-tag {
+  visibility: visible;
+}
+
+.friend-item-display {
+  display: flex;
+  justify-content: baseline;
+}
+
+.friend-item-tag {
+  visibility: hidden;
+  color: #b5bac1;
+}
+
+.friend-item-username {
+  font-weight: 900;
+  color: #f2f3f5;
+}
+
+.friend-item-status {
+  color: #b5bac1;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.friend-item-options {
+  display: flex;
+  justify-content: center;
+  /* margin-left: 8px; */
+}
+
+.friend-item-action {
+  margin-left: 10px;
+  min-height: 36px;
+  min-width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  background: #2b2d31;
+  position: relative;
+}
+
+.friend-list-item:hover .friend-item-action {
+  background: #1f2023;
+}
+
+.action-icon {
+  max-height: 20px;
+  min-height: 20px;
+  color: #b5bac1;
+}
+
+.friend-item-action:hover .action-icon {
+  color: #dbdee1;
+}
+
+.friend-item-action .action-tooltip {
+  visibility: hidden;
+  /* width: 80px; */
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 14px;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  bottom: 120%;
+  left: 115%;
+  margin-left: -60px;
+}
+
+.friend-item-action:hover .action-tooltip {
+  visibility: visible;
+}
+
+.action-tooltip:before{
+  content:'';
+  display: block;
+  width:0;
+  height:0;
+  position:absolute;
+  z-index: 4;
+
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-top:8px solid black;
+  left: 40%;
+  top: 85%;
+}
+
+.friend-item-action:hover .action-tooltip {
+  visibility: visible;
+  /* transition: height .2s ease-in, width .2s ease-in; */
+}
