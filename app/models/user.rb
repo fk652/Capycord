@@ -65,6 +65,8 @@ class User < ApplicationRecord
   after_validation :set_online_status,
     inclusion: { in: STATUS[1..-1], message: "'%{value}' is not a valid status"}
 
+  has_one_attached :photo
+
   has_many :memberships, 
     inverse_of: :member, 
     foreign_key: :member_id,

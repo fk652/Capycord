@@ -54,14 +54,14 @@ const ActionIcon = ({actionType, itemId}) => {
       tooltipText = "Remove Friend";
       clickHandler = null; //replace later with correct dispatch
       break;
-    case "ignoreRequest":
-      icon = deleteIcon;
-      tooltipText = "Ignore";
-      clickHandler = null; //replace later with correct dispatch
-      break;
     case "acceptRequest":
       icon = acceptIcon;
       tooltipText = "Accept";
+      clickHandler = null; //replace later with correct dispatch
+      break;
+    case "ignoreRequest":
+      icon = deleteIcon;
+      tooltipText = "Ignore";
       clickHandler = null; //replace later with correct dispatch
       break;
     case "cancelRequest":
@@ -70,7 +70,9 @@ const ActionIcon = ({actionType, itemId}) => {
       clickHandler = null; //replace later with correct dispatch
       break;
     default:
-
+      icon = moreIcon;
+      tooltipText = "More";
+      clickHandler = null; //replace later with correct dispatch
   }
 
   return (

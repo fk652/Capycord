@@ -17,6 +17,8 @@ class Server < ApplicationRecord
   before_create :add_invite_link
   after_create :add_owner_membership
 
+  has_one_attached :photo
+
   belongs_to :owner, class_name: :User
   has_many :channels, inverse_of: :server, dependent: :destroy
   has_many :memberships, inverse_of: :server, dependent: :destroy
