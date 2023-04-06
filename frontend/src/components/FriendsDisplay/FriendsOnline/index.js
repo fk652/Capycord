@@ -51,11 +51,13 @@ const FriendsOnline = () => {
         {
           friends.map(friend => {
             return <FriendListItem 
+                      userId={friend.id}
                       name={friend.username} 
                       status={friend.onlineStatus} 
                       customStatus={friend.customStatus}
                       picture={friend.profilePictureUrl}
                       display="online"
+                      actions="friendItem"
                       key={friend.id}
                   />
           })
@@ -64,11 +66,13 @@ const FriendsOnline = () => {
         {
           dummies.map(dummyId => {
             return <FriendListItem 
+                      userId={dummyId}
                       name={"dummy#dumdum"} 
                       status={status[Math.floor(Math.random()*status.length)]} 
                       customStatus={customStatus[Math.floor(Math.random()*customStatus.length)]}
                       picture={pictures[Math.floor(Math.random()*pictures.length)]}
                       key={dummyId}
+                      actions="friendItem"
                   />
           })
         }
