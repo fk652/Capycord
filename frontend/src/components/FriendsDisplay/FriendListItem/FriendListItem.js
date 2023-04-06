@@ -1,12 +1,12 @@
 import UserIcon from '../../UserIcon';
 import './FriendListItem.css'
 
-const FriendListItem = ({name, status, customStatus, picture}) => {
+const FriendListItem = ({name, status, customStatus, picture, display}) => {
   // console.log(picture_url);
   const [username, tag] = name.split("#");
 
   return (
-    <div className={`friend-list-item ${status}`}>
+    <div className={`friend-list-item ${display} ${status}`}>
       <div className="friend-item-display">
         <UserIcon picture={picture} status={status} name={username} />
         <div className="friend-item-details">

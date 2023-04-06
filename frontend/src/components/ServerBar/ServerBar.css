@@ -5,8 +5,10 @@
   background-color: #1e1f22;
 
   /* overflow-y: hidden scroll; */
-  overflow: visible scroll;
-  overflow-x: visible;
+  overflow: clip scroll;
+  /* overflow-x: visible; */
+  /* overflow-y: scroll; */
+  overflow-clip-margin: 200px;
 
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */

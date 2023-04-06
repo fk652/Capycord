@@ -6,25 +6,27 @@ import idleIcon from "../../assets/status_icons/idle.png";
 
 const UserIcon = ({picture, status, name}) => {
 
-  let icon_url;
+  let iconUrl;
+  let noStatus = false;
   switch (status) {
     case "Offline":
-      icon_url = offlineIcon;
+      iconUrl = offlineIcon;
       break;
     case "Online":
-      icon_url = onlineIcon;
+      iconUrl = onlineIcon;
       break;
     case "Idle":
-      icon_url = idleIcon;
+      iconUrl = idleIcon;
       break;
     case "Do Not Disturb":
-      icon_url = busyIcon;
+      iconUrl = busyIcon;
       break;
     case "Invisible":
-      icon_url = offlineIcon;
+      iconUrl = offlineIcon;
       break;
     default:
-      icon_url = offlineIcon;
+      iconUrl = offlineIcon;
+      noStatus = true;
   }
 
   return (
@@ -34,13 +36,18 @@ const UserIcon = ({picture, status, name}) => {
           ? (
             <>
               <img className="user-profile-pic" src={picture} alt="user profile icon" />
-              <img className="status-icon" src={icon_url} alt="status"/>
+              <img className="status-icon" src={iconUrl} alt="status"/>
             </>
           )
           : (
             <div className="filler-container">
               <div className="filler-profile-pic">{name[0].toUpperCase()}</div>
-              <img className="filler-status-icon" src={icon_url} alt="status"/>
+              <img 
+                className="filler-status-icon" 
+                src={iconUrl} 
+                alt="status" 
+                visibility={noStatus ? "hidden" : "visible"}
+              />
             </div>
           )
       }
