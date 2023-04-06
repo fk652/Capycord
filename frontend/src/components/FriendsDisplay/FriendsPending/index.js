@@ -1,6 +1,10 @@
 import "./FriendsPending.css";
+import FriendListItem from "../FriendListItem/FriendListItem";
 
 const FriendsPending= () => {
+
+  const incomingMessage = "Incoming Friend Request";
+  const outgoingMessage = "Outgoing Friend Request";
 
   return (
     <>
@@ -13,9 +17,29 @@ const FriendsPending= () => {
           </svg>
         </div>
       </div>
-      
+
+      <h2 className="friend-count">PENDING — {2}</h2>
+
       <div className="friends-pending-display">
-        Who would ever accept your friend requests?
+        <FriendListItem 
+            userId={1}
+            name={"dummy#dumdum"}
+            customStatus={incomingMessage}
+            picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
+            display="pending"
+            key={1}
+            actions="incomingItem"
+        />
+
+        <FriendListItem 
+            userId={1}
+            name={"dummy#dumdum"}
+            customStatus={outgoingMessage}
+            picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
+            display="pending"
+            key={1}
+            actions="outgoingItem"
+        />
       </div>
     </>
   )

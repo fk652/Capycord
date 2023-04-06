@@ -35,7 +35,7 @@ const UserIcon = ({picture, status, name}) => {
         picture 
           ? (
             <>
-              <img className="user-profile-pic" src={picture} alt="user profile icon" />
+              <img className="user-profile-pic" src={picture} alt="" />
               <img className="status-icon" src={iconUrl} alt="status"/>
             </>
           )

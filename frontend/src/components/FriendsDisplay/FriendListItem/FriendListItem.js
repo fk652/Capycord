@@ -13,7 +13,7 @@ const FriendListItem = ({itemId, name, status, customStatus, picture, display, a
 
   // might make seperate components for actions with props to determine event handler
   // also pass in id and necessary form information as props
-  
+
 
   return (
     <div className={`friend-list-item-wrapper`}>
@@ -32,12 +32,12 @@ const FriendListItem = ({itemId, name, status, customStatus, picture, display, a
 
             {
               actions === "friendItem"
-              ? <span className="friend-item-status">
+              ? <div className="friend-item-status">
                   {customStatus ? customStatus : status}
-                </span>
-              : <span className="friend-request-message">
+                </div>
+              : <div className="friend-request-message">
                   {customStatus}
-                </span> 
+                </div> 
             }
           </div>
         </div>
@@ -46,24 +46,16 @@ const FriendListItem = ({itemId, name, status, customStatus, picture, display, a
           {
             actions === "friendItem"
             ? <>
-                {/* {messageAction} */}
-                {/* {deleteRequestAction} */}
                 <ActionIcon actionType="message" itemId={itemId} />
                 <ActionIcon actionType="deleteFriend" itemId={itemId} />
               </>
               : actions === "incomingItem"
                 ? <>
-                    {/* {acceptRequestAction} */}
-                    {/* {deleteRequestAction} */}
                     <ActionIcon actionType="acceptRequest" itemId={itemId} />
                     <ActionIcon actionType="ignoreRequest" itemId={itemId} />
                   </>
                 : <ActionIcon actionType="cancelRequest" itemId={itemId} />
           }
-          {/* {messageAction}
-          {moreAction}
-          {deleteRequestAction}
-          {acceptRequestAction} */}
         </div>
       </div>
     </div>
