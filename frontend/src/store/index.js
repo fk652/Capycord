@@ -5,13 +5,15 @@ import errorReducer from './errors';
 import uiReducer from './ui';
 import serversReducer from './servers';
 import friendsReducer from './friends';
+import friendRequestsReducer from './friendRequests';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   errors: errorReducer,
   ui: uiReducer,
   servers: serversReducer,
-  friends: friendsReducer
+  friends: friendsReducer,
+  friendRequests: friendRequestsReducer
 });
 
 let enhancer;

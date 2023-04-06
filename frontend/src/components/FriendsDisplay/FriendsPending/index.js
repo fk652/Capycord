@@ -1,7 +1,19 @@
 import "./FriendsPending.css";
 import FriendListItem from "../FriendListItem/FriendListItem";
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFriendRequests, getFriendRequests } from "../../../store/friendRequests";
+
 
 const FriendsPending= () => {
+  const requests = useSelector(getFriendRequests);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchFriendRequests())
+  }, [dispatch])
+
+  // console.log("requests", requests);
 
   const incomingMessage = "Incoming Friend Request";
   const outgoingMessage = "Outgoing Friend Request";
@@ -19,10 +31,37 @@ const FriendsPending= () => {
       </div>
 
       <h2 className="friend-count">PENDING — {2}</h2>
+      <div className="friend-display-wrapper">
+        {
+          requests[1].map(received => {
+            return <FriendListItem 
+              itemId={received.id}
+              name={received.username}
+              customStatus={incomingMessage}
+              picture={received.profilePictureUrl}
+              display="pending"
+              key={received.id}
+              actions="incomingItem"
+            />
+          })
+        }
 
-      <div className="friends-pending-display">
-        <FriendListItem 
-            userId={1}
+        {
+          requests[0].map(sent => {
+            return <FriendListItem 
+              itemId={sent.id}
+              name={sent.username}
+              customStatus={outgoingMessage}
+              picture={sent.profilePictureUrl}
+              display="pending"
+              key={sent.id}
+              actions="outgoingItem"
+            />
+          })
+        }
+
+        {/* <FriendListItem 
+            itemId={1}
             name={"dummy#dumdum"}
             customStatus={incomingMessage}
             picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
@@ -32,14 +71,14 @@ const FriendsPending= () => {
         />
 
         <FriendListItem 
-            userId={1}
+            itemId={2}
             name={"dummy#dumdum"}
             customStatus={outgoingMessage}
             picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
             display="pending"
-            key={1}
+            key={2}
             actions="outgoingItem"
-        />
+        /> */}
       </div>
     </>
   )

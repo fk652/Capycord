@@ -87,8 +87,19 @@ class User < ApplicationRecord
     foreign_key: :user2_id,
     class_name: :Friend,
     dependent: :destroy
+  has_many :sent_friend_requests,
+    foreign_key: :sender_id,
+    class_name: :FriendRequest,
+    dependent: :destroy
+  has_many :received_friend_requests,
+    foreign_key: :receiver_id,
+    class_name: :FriendRequest,
+    dependent: :destroy
+
   has_many :friends1, through: :friendships1, source: :user2
   has_many :friends2, through: :friendships2, source: :user1
+  has_many :friend_requesters, through: :received_friend_requests, source: :sender
+  has_many :requested_friends, through: :sent_friend_requests, source: :receiver
   has_many :server_memberships, through: :memberships, source: :server
 
   def self.find_by_credentials(email, password)

@@ -120,7 +120,7 @@ ApplicationRecord.transaction do
   puts "Creating friendships..."
   friendships = []
   [demo_1.id, demo_2.id].each do |demo_id|
-    users_copy = User.where.not(id: demo_id).to_a
+    users_copy = User.where.not(id: [demo_1.id, demo_2.id]).to_a
 
     rand(2..5).times do 
       rand_user = users_copy.delete_at(rand(users_copy.length))
@@ -132,8 +132,10 @@ ApplicationRecord.transaction do
   end
 
   puts "Creating friend requests..."
-  # to do later
-  # should only be invites to and from demo users
+  FriendRequest.create!({
+    sender_id: demo_1.id,
+    receiver_id: demo_2.id
+  })
 
   puts "Done seeding."
 end
