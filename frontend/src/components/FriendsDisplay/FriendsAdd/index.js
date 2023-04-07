@@ -35,17 +35,10 @@ const FriendsAdd = () => {
   }
 
   const dispatch = useDispatch();
+  let ref = useRef();
   useEffect(() => {
     dispatch(removeErrors());
 
-    return () => {
-      dispatch(setAddFriendResult(false));
-      dispatch(removeErrors());
-    }
-  }, [dispatch])
-  
-  let ref = useRef();
-  useEffect(() => {
     ref.button = document.querySelector(".add-friend-button");
     const input = document.querySelector(".add-friend-input");
     const inputContainer = document.querySelector(".add-friend-input-container");
@@ -65,7 +58,12 @@ const FriendsAdd = () => {
             ? inputContainer.style.borderColor = "#2dc770"
             : inputContainer.style.borderColor = "#1e1f22"
     })
-  }, [])
+
+    return () => {
+      dispatch(setAddFriendResult(false));
+      dispatch(removeErrors());
+    }
+  }, [dispatch])
 
   const handleChange = (e) => {
     e.target.value ? ref.button.disabled = false : ref.button.disabled = true;

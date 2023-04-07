@@ -94,12 +94,15 @@ const initialState = {
 }
 
 const friendRequestsReducer = (state = initialState, action) => {
-  const newState = {sent: {...state.sent}, received: {...state.received}}
+  let newState = {sent: {...state.sent}, received: {...state.received}}
   switch (action.type) {
     case RESET_FRIEND_REQUESTS:
       return initialState
     case SET_FRIEND_REQUESTS:
-      return {sent: {...action.requests.sent}, received: {...action.requests.received}}
+      action.requests 
+        ? newState = {sent: {...action.requests.sent}, received: {...action.requests.received}}
+        : newState = initialState
+      return newState
     case ADD_SENT_REQUEST:
       newState.sent[action.request.requestId] = action.request;
       return newState;
