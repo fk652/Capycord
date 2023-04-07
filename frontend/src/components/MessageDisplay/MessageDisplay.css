@@ -1,0 +1,12 @@
+.message-display {
+  height: 100vh;
+  background: #313338;
+  width: 100%;
+  flex-basis: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

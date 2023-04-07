@@ -13,7 +13,6 @@ const CurrentUserMenu = () => {
     e.preventDefault();
     dispatch(logout());
   };
-  // console.log(sessionUser);
 
   return (
     <div className="current-user-menu">

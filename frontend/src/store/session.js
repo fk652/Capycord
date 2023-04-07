@@ -1,3 +1,4 @@
+import { resetChannels } from './channels';
 import csrfFetch from './csrf';
 import { removeErrors } from './errors';
 import { resetFriendRequests } from './friendRequests';
@@ -69,6 +70,7 @@ export const logout = () => async (dispatch) => {
   dispatch(resetServers());
   dispatch(resetFriends());
   dispatch(resetFriendRequests());
+  dispatch(resetChannels());
   return response;
 };
 

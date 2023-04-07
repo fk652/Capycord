@@ -16,6 +16,7 @@ class Server < ApplicationRecord
 
   before_create :add_invite_link
   after_create :add_owner_membership
+  after_create :create_first_channel
 
   has_one_attached :photo
 
@@ -38,6 +39,14 @@ class Server < ApplicationRecord
       member_id: owner_id,
       server_id: self.id,
       position: "owner"
+    })
+  end
+
+  def create_first_channel
+    Channel.create!({
+      name: "general",
+      server_id: self.id,
+      first: true
     })
   end
 end

@@ -14,6 +14,8 @@ class Api::FriendsController < ApplicationController
     # for deleting friends
     @friend = Friend.find(params[:id])
 
+    # error handle check if user is friend
+
     if @friend
       if @friend.destroy
         head :no_content

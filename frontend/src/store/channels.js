@@ -1,0 +1,45 @@
+import csrfFetch from "./csrf";
+
+const RESET_CHANNELS = 'channels/resetChannels';
+const SET_CHANNELS = 'channels/setChannels';
+const ADD_CHANNEL = 'channels/addChannel';
+const REMOVE_CHANNEL = 'channels/removeChannel';
+
+export const resetChannels = () => ({
+  type: RESET_CHANNELS
+})
+
+const setChannels = (channels) => ({
+  type: SET_CHANNELS,
+  channels
+})
+
+export const getChannels = (state) => {
+  // console.log("channelState", Object.values(state.channels));
+  return state.channels ? Object.values(state.channels) : [];
+}
+
+export const fetchChannels = (serverId) => async dispatch => {
+  const response = await csrfFetch(`/api/servers/${serverId}/channels`);
+
+  if (response.ok) {
+    const data = await response.json();
+    // console.log("channelData", data);
+    dispatch(setChannels(data.channels));
+  }
+}
+
+const initialState = {}
+
+const channelsReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case RESET_CHANNELS:
+      return initialState;
+    case SET_CHANNELS:
+      return {...action.channels};
+    default:
+      return state;
+  }
+}
+
+export default channelsReducer;

@@ -23,7 +23,9 @@ const ServerBar = () => {
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {
       dispatch(setSelectedServer(e.target.dataset.key));
-      history.push(`/${e.target.dataset.key}`);  // might change to wrap links around server-icon-wrappers
+
+      if(e.target.dataset.key === "home") history.push(`/home`)
+      else history.push(`/server/${e.target.dataset.key}`);  // might change to wrap links around server-icon-wrappers
     }
   }
 

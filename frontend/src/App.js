@@ -6,13 +6,13 @@ import LoginFormPage from "./components/Forms/LoginFormPage";
 import HomePage from "./components/HomePage";
 import SplashPage from "./components/SplashPage";
 import ServerBar from "./components/ServerBar";
+import ServerPage from "./components/ServerPage";
 
 function App() {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
     <div className="app-container">
-      {/* conditionally add serverbar here later */}
       {
         sessionUser 
           ? <ServerBar />
@@ -28,9 +28,12 @@ function App() {
         <Route exact path="/home">
           <HomePage />
         </Route>
-        {/* <Route path="/server/:id">
+        <Route exact path="/server/:serverId">
           <ServerPage />
-        </Route> */}
+        </Route>
+        <Route exact path="/server/:serverId/:channelId">
+          <ServerPage />
+        </Route>
         <Route exact path="/">
           {/* <SplashPage /> */}
           <Redirect to="/login" />

@@ -16,6 +16,10 @@ export const getServers = (state) => {
   return state.servers ? Object.values(state.servers) : [];
 }
 
+export const getServer = (serverId) => (state) => {
+  return state.servers ? state.servers[serverId] : null;
+}
+
 export const fetchServers = () => async dispatch => {
   const response = await csrfFetch('/api/servers');
 

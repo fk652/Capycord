@@ -28,6 +28,8 @@ class Api::FriendRequestsController < ApplicationController
     # cancel sent request
     @request = FriendRequest.find(params[:id])
 
+    # error handle, check if current user is sender
+
     if @request
       if @request.destroy
         head :no_content

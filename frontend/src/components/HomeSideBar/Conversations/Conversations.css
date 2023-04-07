@@ -46,7 +46,7 @@
 
 .conversation-list {
   overflow: hidden scroll;
-  scrollbar-width: 1px;
+  scrollbar-width: 5px;
   scrollbar-color: #1a1b1e;
 }
 
@@ -55,7 +55,7 @@
 }
 
 .conversation-list::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
   border-radius: 10px;
 }
 

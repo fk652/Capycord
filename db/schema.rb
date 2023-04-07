@@ -46,6 +46,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
     t.string "name", null: false
     t.bigint "server_id", null: false
     t.string "channel_type", default: "text", null: false
+    t.string "description"
+    t.boolean "first", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["server_id"], name: "index_channels_on_server_id"
