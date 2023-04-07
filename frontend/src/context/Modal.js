@@ -22,12 +22,16 @@ export function ModalProvider({ children }) {
   );
 }
 
-export function ServerToolTip({ top, children }) {
+export function ServerToolTip({ top, onClose, children }) {
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(
-    <div className="server-tooltip" style={{top: top}}>
+    <div 
+      className="server-tooltip" 
+      onMouseEnter={onClose}
+      style={{top: top}}
+    >
       {children}
     </div>,
     modalNode

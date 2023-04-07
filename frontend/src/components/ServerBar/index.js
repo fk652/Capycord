@@ -85,7 +85,7 @@ const ServerBar = () => {
         </div>
 
         {showModal && currentModal === "home" && (
-          <ServerToolTip top={top}>
+          <ServerToolTip top={top} onClose={() => setShowModal(false)}>
             <span className="tooltip">Direct Messages</span>
           </ServerToolTip>
         )}
@@ -106,7 +106,7 @@ const ServerBar = () => {
             >
               <ServerListIcon id={server.id} image={server.pictureUrl} name={server.name} />
               {showModal && currentModal===server.id && (
-                <ServerToolTip top={top}>
+                <ServerToolTip top={top} onClose={() => setShowModal(false)}>
                   <span className="tooltip">{server.name}</span>
                 </ServerToolTip>
               )}
