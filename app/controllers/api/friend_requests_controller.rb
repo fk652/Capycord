@@ -7,17 +7,17 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def create
-    @receiver = User.find_by(username: create_params[:friend_request][:receiver_username])
+    @receiver = User.find_by(username: params[:username])
     if (@receiver)
-      @friend_request = friend_request.new(
-        sender_id: create_params[:friend_request][:sender_id],
-        receiver_id: receiver.id
+      @friend_request = FriendRequest.new(
+        sender_id: current_user.id,
+        receiver_id: @receiver.id
       )
 
       if @friend_request.save
         render :show
       else
-        render json: { errors: @user.errors }, status: :unprocessable_entity
+        render json: { errors: @friend_request.errors }, status: :unprocessable_entity
       end
     else
       render json: { errors: { error: "User not found"} }, status: :unprocessable_entity
@@ -25,17 +25,17 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def destroy 
-
+    # cancel sent request
   end
 
   def update
-    # if accepted, return new friend
+    # if accepted update status and return new friend
 
-    # if ignored, delete request
+    # if ignored, only update request status
   end
 
   private
   def create_params
-    params.require(:friend_request).permit(:sender_id, :receiver_username)
+    params.require(:friend_request).permit(:username)
   end
 end

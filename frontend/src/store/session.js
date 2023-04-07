@@ -1,5 +1,6 @@
 import csrfFetch from './csrf';
 import { removeErrors } from './errors';
+import { resetFriendRequests } from './friendRequests';
 import { resetFriends } from './friends';
 import { resetServers } from './servers';
 import { resetUi } from './ui';
@@ -36,7 +37,6 @@ export const login = ({ email, password }) => async dispatch => {
   const data = await response.json();
   storeCurrentUser(data.user);
   dispatch(setCurrentUser(data.user));
-  dispatch(removeErrors());
   return response;
 };
 
@@ -54,7 +54,6 @@ export const signup = (user) => async (dispatch) => {
   const data = await response.json();
   storeCurrentUser(data.user);
   dispatch(setCurrentUser(data.user));
-  dispatch(removeErrors());
   return response;
 };
 
@@ -68,7 +67,8 @@ export const logout = () => async (dispatch) => {
   dispatch(removeErrors());
   dispatch(resetUi());
   dispatch(resetServers());
-  dispatch(resetFriends())
+  dispatch(resetFriends());
+  dispatch(resetFriendRequests());
   return response;
 };
 

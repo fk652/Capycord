@@ -1,5 +1,6 @@
 const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
+const SET_ADD_FRIEND_RESULT = "io/setAddFriendResult";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -10,6 +11,11 @@ export const setFriendNav = (selectedTab) => ({
 export const setSelectedServer = (selectedServer) => ({
   type: SET_SELECTED_SERVER,
   selectedServer
+})
+
+export const setAddFriendResult = (result) => ({
+  type: SET_ADD_FRIEND_RESULT,
+  result
 })
 
 export const resetUi = () => ({
@@ -24,9 +30,14 @@ export const getSelectedServer = (state) => {
   return state.ui.selectedServer;
 }
 
+export const getAddFriendResult = (state) => {
+  return state.ui.addFriendResult
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
-  selectedServer: "home" // home
+  selectedServer: "home",
+  addFriendResult: false
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -35,6 +46,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, selectedFriendNavTab: action.selectedTab}
     case SET_SELECTED_SERVER:
       return {...state, selectedServer: action.selectedServer}
+    case SET_ADD_FRIEND_RESULT:
+      return {...state, addFriendResult: action.result}
     case RESET_UI:
       return {...initialState}
     default:

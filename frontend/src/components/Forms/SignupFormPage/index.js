@@ -17,6 +17,8 @@ const SignupFormPage = () => {
 
   useEffect(() => {
     dispatch(removeErrors());
+
+    return () => dispatch(removeErrors());
   }, [dispatch])
 
   if (sessionUser) return <Redirect to="/home" />;

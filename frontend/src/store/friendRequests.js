@@ -1,9 +1,12 @@
 import csrfFetch from "./csrf";
+import { setAddFriendResult } from "./ui";
 
 const RESET_FRIEND_REQUESTS = 'friendRequests/resetFriendRequests';
 const SET_FRIEND_REQUESTS = 'friendRequests/setFriendRequests';
 const ADD_SENT_REQUEST = 'friendRequests/addSentRequest';
+const REMOVE_SENT_REQUEST = 'friendRequests/removeSentRequest';
 const ADD_RECEIVED_REQUEST = 'friendRequests/addReceivedRequest'; // to be used later
+const REMOVE_RECEIVED_REQUEST = 'friendRequests/removeReceivedRequest';
 
 export const resetFriendRequests = () => ({
   type: RESET_FRIEND_REQUESTS
@@ -19,9 +22,19 @@ export const addSentRequest = (request) => ({
   request
 })
 
+const removeSentRequest = (requestId) => ({
+  type: REMOVE_SENT_REQUEST,
+  requestId
+})
+
 export const addReceivedRequest = (request) => ({
   type: ADD_RECEIVED_REQUEST,
   request
+})
+
+const removeReceivedRequest = (requestId) => ({
+  type: REMOVE_RECEIVED_REQUEST,
+  requestId
 })
 
 export const getFriendRequests = (state) => {
@@ -42,17 +55,64 @@ export const fetchFriendRequests = () => async dispatch => {
   }
 }
 
+export const createFriendRequest = (username) => async dispatch => {
+  const response = await csrfFetch('/api/friend_requests', {
+    method: 'POST',
+    body: JSON.stringify({username}),
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  })
+
+  // if (response.ok) {
+
+  // } else {
+  //   console.log("error")
+  // }
+
+  const data = await response.json();
+  dispatch(addSentRequest(data.friendRequest));
+  dispatch(setAddFriendResult(true));
+  return response;
+}
+
+export const cancelSentRequest = (requestId) => async dispatch => {
+
+}
+
+export const acceptReceivedRequest = (requestId) => async dispatch => {
+
+}
+
+export const ignoreReceivedRequest = (requestId) => async dispatch => {
+
+}
+
 const initialState = {
   sent: {},
   received: {}
 }
 
 const friendRequestsReducer = (state = initialState, action) => {
+  const newState = {sent: {...state.sent}, received: {...state.received}}
   switch (action.type) {
     case RESET_FRIEND_REQUESTS:
       return initialState
     case SET_FRIEND_REQUESTS:
       return {sent: {...action.requests.sent}, received: {...action.requests.received}}
+    case ADD_SENT_REQUEST:
+      newState.sent[action.request.requestId] = action.request;
+      return newState;
+    case REMOVE_SENT_REQUEST:
+      delete newState.sent[action.requestId]
+      return newState;
+    // received to be used later for live action cable updates
+    case ADD_RECEIVED_REQUEST:
+      newState.received[action.request.requestId] = action.request;
+      return newState
+    case REMOVE_RECEIVED_REQUEST:
+      delete newState.received[action.requestId]
+      return newState;
     default:
       return state;
   }

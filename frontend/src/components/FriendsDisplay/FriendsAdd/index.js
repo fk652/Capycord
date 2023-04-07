@@ -1,32 +1,85 @@
-import { useState } from "react";
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addErrors, getErrors, removeErrors } from "../../../store/errors";
+import { createFriendRequest } from "../../../store/friendRequests";
+import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
 import "./FriendsAdd.css";
 
 const FriendsAdd = () => {
+  const errors = useSelector(getErrors);
+  const friendResult = useSelector(getAddFriendResult);
+  const [username, setUsername] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    // will dispatch friend request here later
+    e.preventDefault();
+    
+    return dispatch(createFriendRequest(username))
+    .catch(async (res) => {
+      let data;
+      try {
+        data = await res.clone().json();
+      } catch {
+        data = await res.text();
+      }
+
+      const errors = {
+        status: res.status,
+        messages: null
+      }
+      if (data?.errors) errors.messages = data.errors;
+
+      dispatch(addErrors(errors));
+      
+      if (errors && errors.success) dispatch(setAddFriendResult(true));
+    });
   }
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(removeErrors());
+
+    return () => {
+      dispatch(setAddFriendResult(false));
+      dispatch(removeErrors());
+    }
+  }, [dispatch])
   
   let ref = useRef();
   useEffect(() => {
     ref.button = document.querySelector(".add-friend-button");
     const input = document.querySelector(".add-friend-input");
     const inputContainer = document.querySelector(".add-friend-input-container");
+    
     input.addEventListener("focus", () => {
-      inputContainer.style.borderColor = "#00a8fc";
+      errors?.error 
+        ? inputContainer.style.borderColor = "#fa777c"
+        : errors?.success || friendResult
+            ? inputContainer.style.borderColor = "#2dc770"
+            : inputContainer.style.borderColor = "#00a8fc"
     })
+
     input.addEventListener("focusout", () => {
-      inputContainer.style.borderColor = "#1e1f22";
+      errors?.error 
+        ? inputContainer.style.borderColor = "#fa777c"
+          : errors?.success || friendResult
+            ? inputContainer.style.borderColor = "#2dc770"
+            : inputContainer.style.borderColor = "#1e1f22"
     })
   }, [])
 
-  const [username, setUsername] = useState('');
   const handleChange = (e) => {
     e.target.value ? ref.button.disabled = false : ref.button.disabled = true;
     setUsername(e.target.value);
+    if (errors) dispatch(removeErrors());
+    if (friendResult) dispatch(setAddFriendResult(false));
+  }
+
+  const getStatus = () => {
+    if (errors && errors.error) return 'error';
+    else if ((errors && errors.success) || friendResult) {
+      return 'success';
+    }
+    else return '';
   }
 
   return (
@@ -34,16 +87,16 @@ const FriendsAdd = () => {
       <h2 className="add-friend-title">ADD FRIEND</h2>
 
       <form className="add-friend-form" autoComplete="off" onSubmit={handleSubmit}>
-        <span className="add-friend-form-span">
+        <div className="add-friend-form-span">
           You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!
-        </span>
-        <div className="add-friend-input-container">
+        </div>
+        <div className={`add-friend-input-container ${getStatus()}`}>
           <div className="add-friend-input-wrapper">
             <input 
               className="add-friend-input" 
               type="text"
               placeholder="Enter a Username#0000"
-              value={username}
+              value={errors?.success ? '' : username}
               onChange={handleChange}
             />
           </div>
@@ -51,6 +104,19 @@ const FriendsAdd = () => {
             Send Friend Request
           </button>
         </div>
+        {
+          errors?.error 
+            ? <div className="add-friend-result error">
+                {errors.error}
+              </div>
+            : errors?.success || friendResult
+              ? <div className="add-friend-result success">
+                  Success! Your friend request to 
+                  <span className="bold"> {username} </span> 
+                  was sent.
+                </div>
+              : ''
+        }
       </form>
     </div>
   )

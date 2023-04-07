@@ -132,6 +132,7 @@ ApplicationRecord.transaction do
   end
 
   puts "Creating friend requests..."
+  # replace with friend requests to and from other non-demo users
   FriendRequest.create!({
     sender_id: demo_1.id,
     receiver_id: demo_2.id

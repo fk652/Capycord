@@ -30,17 +30,18 @@ const FriendsPending= () => {
         </div>
       </div>
 
-      <h2 className="friend-count">PENDING — {2}</h2>
+      <h2 className="friend-count">PENDING — {requests[0].length + requests[1].length}</h2>
       <div className="friend-display-wrapper">
         {
           requests[1].map(received => {
             return <FriendListItem 
-              itemId={received.id}
+              itemId={received.requestId}
+              userId={received.userId}
               name={received.username}
               customStatus={incomingMessage}
               picture={received.profilePictureUrl}
               display="pending"
-              key={received.id}
+              key={received.requestId}
               actions="incomingItem"
             />
           })
@@ -49,12 +50,13 @@ const FriendsPending= () => {
         {
           requests[0].map(sent => {
             return <FriendListItem 
-              itemId={sent.id}
+              itemId={sent.requestId}
+              userId={sent.userId}
               name={sent.username}
               customStatus={outgoingMessage}
               picture={sent.profilePictureUrl}
               display="pending"
-              key={sent.id}
+              key={sent.requestId}
               actions="outgoingItem"
             />
           })

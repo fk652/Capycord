@@ -2,18 +2,8 @@ import UserIcon from '../../UserIcon';
 import './FriendListItem.css'
 import ActionIcon from './ActionIcon';
 
-const FriendListItem = ({itemId, name, status, customStatus, picture, display, actions}) => {
-  // console.log(picture_url);
+const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {
   const [username, tag] = name.split("#");
-
-  // add onClick handlers for actions here later
-  // use userId when dispatching actions to remove friend
-
-  //make seperate click handlers for pending request removal or accepts
-
-  // might make seperate components for actions with props to determine event handler
-  // also pass in id and necessary form information as props
-
 
   return (
     <div className={`friend-list-item-wrapper`}>
