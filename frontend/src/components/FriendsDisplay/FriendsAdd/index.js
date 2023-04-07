@@ -94,7 +94,7 @@ const FriendsAdd = () => {
               className="add-friend-input" 
               type="text"
               placeholder="Enter a Username#0000"
-              value={errors?.success ? '' : username}
+              value={errors?.success || friendResult ? '' : username}
               onChange={handleChange}
             />
           </div>
