@@ -1,5 +1,4 @@
 const ServerListIcon = ({id, image, name}) => {
-
   return (
     <>
       <div 
@@ -17,7 +16,6 @@ const ServerListIcon = ({id, image, name}) => {
               />
             : <div className="server-icon filler">{name[0].toUpperCase()}</div>
         }
-        <span className="tooltip">{name}</span>
       </div>
       <div className="tab-selector-wrapper">
         <span className="tab-selector" />

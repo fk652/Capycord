@@ -4,12 +4,7 @@
   height: calc(100vh - 12px);
   background-color: #1e1f22;
 
-  /* overflow-y: hidden scroll; */
-  overflow: clip scroll;
-  /* overflow-x: visible; */
-  /* overflow-y: scroll; */
-  overflow-clip-margin: 200px;
-
+  overflow: hidden scroll;
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
   display: flex;
@@ -127,43 +122,6 @@
   min-width: 8px;
   min-height: 40px;
   transition: min-height .2s ease-in, min-width .2s ease-in;
-}
-
-.server-item-wrapper .tooltip {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  
-  position: absolute;
-  z-index: 5;
-  top: 20%;
-  left: 140%;
-
-  font-weight: bold;
-}
-
-.server-item-wrapper .tooltip:before{
-  content:'';
-  display:block;
-  width:0;
-  height:0;
-  position:absolute;
-  z-index: 4;
-
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right:8px solid black;
-  left: -3%;
-  top: 20%;
-}
-
-.server-item-wrapper:hover .tooltip {
-  visibility: visible;
-  /* transition: height .2s ease-in, width .2s ease-in; */
 }
 
 .server-icon.filler {
