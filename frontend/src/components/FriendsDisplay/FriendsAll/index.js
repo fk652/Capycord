@@ -30,13 +30,14 @@ const FriendsAll = () => {
         {
           friends.map(friend => {
             return <FriendListItem 
-                      userId={friend.id}
+                      itemId={friend.friendshipId}
+                      userId={friend.userId}
                       name={friend.username} 
                       status={friend.onlineStatus} 
                       customStatus={friend.customStatus}
                       picture={friend.profilePictureUrl}
                       display="all"
-                      key={friend.id}
+                      key={friend.friendshipId}
                       actions="friendItem"
                   />
           })

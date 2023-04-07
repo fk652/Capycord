@@ -58,14 +58,10 @@ export const fetchFriendRequests = () => async dispatch => {
 export const createFriendRequest = (username) => async dispatch => {
   const response = await csrfFetch('/api/friend_requests', {
     method: 'POST',
-    body: JSON.stringify({username}),
-    headers: {
-      'Content-Type': 'application/json'
-    }
+    body: JSON.stringify({username})
   })
 
   // if (response.ok) {
-
   // } else {
   //   console.log("error")
   // }
@@ -77,7 +73,15 @@ export const createFriendRequest = (username) => async dispatch => {
 }
 
 export const cancelSentRequest = (requestId) => async dispatch => {
+  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+    method: "DELETE"
+  })
 
+  if (response.ok) {
+    dispatch(removeSentRequest(requestId))
+  } else {
+    return response;
+  }
 }
 
 export const acceptReceivedRequest = (requestId) => async dispatch => {

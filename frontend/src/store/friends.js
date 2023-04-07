@@ -2,6 +2,7 @@ import csrfFetch from "./csrf";
 
 const RESET_FRIENDS = 'friends/resetFriends';
 const SET_FRIENDS = 'friends/setFriends';
+const REMOVE_FRIEND = 'friends/removeFriend';
 
 export const resetFriends = () => ({
   type: RESET_FRIENDS
@@ -10,6 +11,11 @@ export const resetFriends = () => ({
 const setFriends = (friends) => ({
   type: SET_FRIENDS,
   friends
+})
+
+const removeFriend = (friendshipId) => ({
+  type: REMOVE_FRIEND,
+  friendshipId
 })
 
 export const getFriends = (state) => {
@@ -25,6 +31,18 @@ export const fetchFriends = () => async dispatch => {
   }
 }
 
+export const deleteFriend = (friendshipId) => async dispatch => {
+  const response = await csrfFetch(`/api/friends/${friendshipId}`, {
+    method: "DELETE"
+  })
+
+  if (response.ok) {
+    dispatch(removeFriend(friendshipId));
+  } else {
+    return response;
+  }
+} 
+
 const initialState = {}
 
 const friendsReducer = (state = initialState, action) => {
@@ -33,6 +51,10 @@ const friendsReducer = (state = initialState, action) => {
       return initialState
     case SET_FRIENDS:
       return {...action.friends}
+    case REMOVE_FRIEND:
+      const newState = {...state}
+      delete newState[action.friendshipId]
+      return newState;
     default:
       return state;
   }

@@ -1,8 +1,8 @@
 class Api::FriendsController < ApplicationController
   def index
     # might change the table to have user1 and user2 reversed as well
-    @friends1 = current_user.friends1
-    @friends2 = current_user.friends2
+    @friendships1 = current_user.friendships1.includes(:user2)
+    @friendships2 = current_user.friendships2.includes(:user1)
     render :index
   end
 
@@ -11,6 +11,17 @@ class Api::FriendsController < ApplicationController
   end
 
   def destroy 
+    # for deleting friends
+    @friend = Friend.find(params[:id])
 
+    if @friend
+      if @friend.destroy
+        head :no_content
+      else 
+        render json: { errors: @friend.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Friendship not found"} }, status: :unprocessable_entity
+    end
   end
 end

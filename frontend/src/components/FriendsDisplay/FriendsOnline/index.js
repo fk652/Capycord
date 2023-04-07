@@ -50,15 +50,17 @@ const FriendsOnline = () => {
       <div className="friend-display-wrapper">
         {
           friends.map(friend => {
+            // console.log(friend);
             return <FriendListItem 
-                      userId={friend.id}
+                      itemId={friend.friendshipId}
+                      userId={friend.userId}
                       name={friend.username} 
                       status={friend.onlineStatus} 
                       customStatus={friend.customStatus}
                       picture={friend.profilePictureUrl}
                       display="online"
                       actions="friendItem"
-                      key={friend.id}
+                      key={friend.friendshipId}
                   />
           })
         }
@@ -66,6 +68,7 @@ const FriendsOnline = () => {
         {
           dummies.map(dummyId => {
             return <FriendListItem 
+                      itemId={dummyId}
                       userId={dummyId}
                       name={"dummy#dumdum"} 
                       status={status[Math.floor(Math.random()*status.length)]} 

@@ -1,15 +1,26 @@
+import { useDispatch } from 'react-redux';
+import { cancelSentRequest } from '../../../store/friendRequests';
+import { deleteFriend } from '../../../store/friends';
 import './FriendListItem.css'
 
 const ActionIcon = ({actionType, itemId}) => {
+  const dispatch = useDispatch();
+
   // delete friend handler
+  const deleteFriendHandler = (e) => {
+    e.preventDefault();
+    dispatch(deleteFriend(itemId));
+  }
 
   // ignore friend request handler
 
   // accept friend request handler
 
   // cancel friend request handler (might be same as ignore)
-
-
+  const cancelRequestHandler = (e) => {
+    e.preventDefault();
+    dispatch(cancelSentRequest(itemId));
+  }
 
   const messageIcon = (
     <svg className="action-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -52,7 +63,7 @@ const ActionIcon = ({actionType, itemId}) => {
     case "deleteFriend":
       icon = deleteIcon;
       tooltipText = "Remove Friend";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = deleteFriendHandler;
       break;
     case "acceptRequest":
       icon = acceptIcon;
@@ -67,12 +78,12 @@ const ActionIcon = ({actionType, itemId}) => {
     case "cancelRequest":
       icon = deleteIcon;
       tooltipText = "Cancel";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = cancelRequestHandler;
       break;
     default:
       icon = moreIcon;
       tooltipText = "More";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = null;
   }
 
   return (

@@ -1,18 +1,24 @@
 json.friends do 
-  @friends1.each do |friend|
-    json.set! friend.id do
-      status = friend.online_status === "Offline" ? "Offline" : friend.set_online_status
+  @friendships1.each do |friendship|
+    json.set! friendship.id do
+      friend = friendship.user2
 
-      json.extract! friend, :id, :username, :custom_status, :profile_picture_url
+      json.friendshipId friendship.id 
+      json.userId friend.id
+      json.extract! friend, :username, :custom_status, :profile_picture_url
+      status = friend.online_status === "Offline" ? "Offline" : friend.set_online_status
       json.online_status status
     end
   end
 
-  @friends2.each do |friend|
-    json.set! friend.id do
-      status = friend.online_status === "Offline" ? "Offline" : friend.set_online_status
+  @friendships2.each do |friendship|
+    json.set! friendship.id do
+      friend = friendship.user1
 
-      json.extract! friend, :id, :username, :custom_status, :profile_picture_url
+      json.friendshipId friendship.id 
+      json.userId friend.id
+      json.extract! friend, :username, :custom_status, :profile_picture_url
+      status = friend.online_status === "Offline" ? "Offline" : friend.set_online_status
       json.online_status status
     end
   end

@@ -26,6 +26,17 @@ class Api::FriendRequestsController < ApplicationController
 
   def destroy 
     # cancel sent request
+    @request = FriendRequest.find(params[:id])
+
+    if @request
+      if @request.destroy
+        head :no_content
+      else 
+        render json: { errors: @request.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Friend request not found"} }, status: :unprocessable_entity
+    end
   end
 
   def update
