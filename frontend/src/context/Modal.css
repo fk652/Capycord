@@ -9,22 +9,21 @@
   justify-content: center;
   align-items: center;
 
-  background-color: black;
-  color: #fff;
+  font-weight: bold;
+  color: #dbdee1;
   text-align: center;
+  background-color: black;
   border-radius: 6px;
   padding: 10px 10px;
 
-  font-weight: bold;
-  color: #dbdee1;
 }
 
-.server-tooltip:after{
+.server-tooltip:before{
   content:'';
   display:block;
   width:0;
   height:0;
-  position:absolute;
+  position: fixed;
   z-index: 4;
 
   border-top: 8px solid transparent;
@@ -32,4 +31,41 @@
   border-right:8px solid black;
   left: -6px;
   top: 10px;
+}
+
+.action-tooltip {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  background-color: black;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.action-tooltip:before{
+  content:'';
+  display: block;
+  width:0;
+  height:0;
+  position: fixed;
+  z-index: 4;
+
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-top:8px solid black;
+  left: -5px;
+  top: 85%;
+
+  left: 40%;
+  top: 85%;
 }

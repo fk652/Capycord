@@ -33,3 +33,18 @@ export function ServerToolTip({ top, children }) {
     modalNode
   );
 }
+
+export function ActionToolTip({ top, left, onClose, children }) {
+  const modalNode = useContext(ModalContext);
+  if (!modalNode) return null;
+
+  return ReactDOM.createPortal(
+    <div 
+      className="action-tooltip" style={{top: top, left: left}}
+      onMouseEnter={onClose}
+    >
+      {children}
+    </div>,
+    modalNode
+  );
+}

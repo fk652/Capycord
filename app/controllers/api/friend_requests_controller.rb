@@ -20,7 +20,7 @@ class Api::FriendRequestsController < ApplicationController
         render json: { errors: @friend_request.errors }, status: :unprocessable_entity
       end
     else
-      render json: { errors: { error: "User not found"} }, status: :unprocessable_entity
+      render json: { errors: { error: "Hm, didn't work. Double check that the capitalization, spelling, any space, and numbers are correct."} }, status: :unprocessable_entity
     end
   end
 

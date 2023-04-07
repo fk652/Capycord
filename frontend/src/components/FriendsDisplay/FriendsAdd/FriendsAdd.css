@@ -29,6 +29,7 @@
   align-items: center;
   border-radius: 8px;
   border: 1px solid #1e1f22;
+  overflow: clip;
 }
 
 .add-friend-input-wrapper {

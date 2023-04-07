@@ -19,7 +19,7 @@
 
   /* position: relative;
   z-index: 5; */
-  /* overflow: visible; */
+  /* overflow: clip; */
 }
 
 .friend-list-item:hover {
@@ -38,6 +38,7 @@
 .friend-item-display {
   display: flex;
   justify-content: baseline;
+  overflow: hidden;
 }
 
 .friend-item-tag {
@@ -60,6 +61,9 @@
 .friend-item-options {
   display: flex;
   justify-content: center;
+  
+  /* min-width: 100px; */
+  /* flex-basis: 100%; */
   /* margin-left: 8px; */
 }
 
@@ -97,9 +101,8 @@
   color: #f23f42;
 }
 
-.friend-item-action .action-tooltip {
+/* .friend-item-action .action-tooltip {
   visibility: hidden;
-  /* width: 80px; */
   background-color: black;
   color: #fff;
   text-align: center;
@@ -107,7 +110,6 @@
   padding: 5px 10px;
   font-size: 14px;
   
-  /* Position the tooltip */
   position: absolute;
   z-index: 1;
   bottom: 120%;
@@ -117,7 +119,7 @@
 
 .friend-item-action:hover .action-tooltip {
   visibility: visible;
-}
+} */
 
 .action-tooltip:before{
   content:'';
@@ -181,5 +183,6 @@
     opacity: 0%;
     padding-top: 0;
     padding-bottom: 0;
+    visibility: hidden;
   }
 }
