@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { cancelSentRequest } from '../../../store/friendRequests';
+import { acceptReceivedRequest, cancelSentRequest, ignoreReceivedRequest } from '../../../store/friendRequests';
 import { deleteFriend } from '../../../store/friends';
 import './FriendListItem.css'
 
@@ -13,8 +13,16 @@ const ActionIcon = ({actionType, itemId}) => {
   }
 
   // ignore friend request handler
+  const ignoreRequestHandler = (e) => {
+    e.preventDefault();
+    dispatch(ignoreReceivedRequest(itemId));
+  }
 
   // accept friend request handler
+  const acceptRequestHandler = (e) => {
+    e.preventDefault();
+    dispatch(acceptReceivedRequest(itemId));
+  }
 
   // cancel friend request handler (might be same as ignore)
   const cancelRequestHandler = (e) => {
@@ -68,12 +76,12 @@ const ActionIcon = ({actionType, itemId}) => {
     case "acceptRequest":
       icon = acceptIcon;
       tooltipText = "Accept";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = acceptRequestHandler;
       break;
     case "ignoreRequest":
       icon = deleteIcon;
       tooltipText = "Ignore";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = ignoreRequestHandler;
       break;
     case "cancelRequest":
       icon = deleteIcon;

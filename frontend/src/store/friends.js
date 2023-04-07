@@ -2,6 +2,7 @@ import csrfFetch from "./csrf";
 
 const RESET_FRIENDS = 'friends/resetFriends';
 const SET_FRIENDS = 'friends/setFriends';
+const ADD_FRIEND = 'friends/addFriend';
 const REMOVE_FRIEND = 'friends/removeFriend';
 
 export const resetFriends = () => ({
@@ -11,6 +12,11 @@ export const resetFriends = () => ({
 const setFriends = (friends) => ({
   type: SET_FRIENDS,
   friends
+})
+
+export const addFriend = (friend) => ({
+  type: ADD_FRIEND,
+  friend
 })
 
 const removeFriend = (friendshipId) => ({
@@ -51,6 +57,8 @@ const friendsReducer = (state = initialState, action) => {
       return initialState
     case SET_FRIENDS:
       return {...action.friends}
+    case ADD_FRIEND:
+      return {...state, [action.friend.friendshipId]: action.friend}
     case REMOVE_FRIEND:
       const newState = {...state}
       delete newState[action.friendshipId]

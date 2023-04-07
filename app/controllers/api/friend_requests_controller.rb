@@ -1,7 +1,7 @@
 class Api::FriendRequestsController < ApplicationController
   def index 
-    @sent_requests = current_user.sent_friend_requests.includes(:receiver)
-    @received_requests = current_user.received_friend_requests.includes(:sender)
+    @sent_requests = current_user.sent_friend_requests.where("status='pending'").includes(:receiver)
+    @received_requests = current_user.received_friend_requests.where("status='pending'").includes(:sender)
 
     render :index
   end
@@ -31,6 +31,7 @@ class Api::FriendRequestsController < ApplicationController
     if @request
       if @request.destroy
         head :no_content
+        return
       else 
         render json: { errors: @request.errors }, status: :unprocessable_entity
       end
@@ -40,9 +41,27 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def update
-    # if accepted update status and return new friend
+    @request = FriendRequest.find(params[:id])
 
-    # if ignored, only update request status
+    if @request 
+      if @request.update(status: params[:status])
+        
+        if params[:status] === "ignore" || params[:status] === "pending"
+          # if ignored, only update request status
+          head :no_content
+          return
+        elsif params[:status] === "accepted"
+          # if accepted update status and return new friend
+          @friendship = Friend.find_by(user1_id: @request.sender.id, user2_id: current_user.id)
+          render 'api/friends/show'
+          return
+        end
+      else
+        render json: { errors: @request.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Friend request not found"} }, status: :unprocessable_entity
+    end
   end
 
   private

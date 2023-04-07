@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { addFriend } from "./friends";
 import { setAddFriendResult } from "./ui";
 
 const RESET_FRIEND_REQUESTS = 'friendRequests/resetFriendRequests';
@@ -85,11 +86,31 @@ export const cancelSentRequest = (requestId) => async dispatch => {
 }
 
 export const acceptReceivedRequest = (requestId) => async dispatch => {
+  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+    method: "PATCH",
+    body: JSON.stringify({status: "accepted"})
+  })
 
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(removeReceivedRequest(requestId));
+    dispatch(addFriend(data.friend));
+  } else {
+    return response;
+  }
 }
 
 export const ignoreReceivedRequest = (requestId) => async dispatch => {
+  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+    method: "PATCH",
+    body: JSON.stringify({status: "ignored"})
+  })
 
+  if (response.ok) {
+    dispatch(removeReceivedRequest(requestId));
+  } else {
+    return response;
+  }
 }
 
 const initialState = {
