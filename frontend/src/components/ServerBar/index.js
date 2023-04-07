@@ -71,7 +71,6 @@ const ServerBar = () => {
         onMouseEnter={showHandler("home")}
         onMouseLeave={leaveHandler}
       >
-        {/* <Link to="/home"> */}
         <div 
           id="home"
           data-key="home"
@@ -91,7 +90,6 @@ const ServerBar = () => {
             <span className="tooltip">Direct Messages</span>
           </ServerToolTip>
         )}
-        {/* </Link> */}
       </div>
 
       <div className="server-divider" />

@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams, Link, Redirect } from 'react-router-dom';
-import { fetchChannels, getChannels, resetChannels } from '../../store/channels';
+import { useSelector } from 'react-redux';
+import { useParams, Redirect } from 'react-router-dom';
+import { getChannels } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
 import './ChannelSideBar.css'
@@ -10,7 +9,6 @@ const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
   let channels = useSelector(getChannels);
   const serverInfo = useSelector(getServer(serverId));
-  const history = useHistory();
 
   // const dispatch = useDispatch();
   // useEffect(() => {
@@ -24,16 +22,11 @@ const ChannelSideBar = () => {
   //   //   dispatch(resetChannels());
   //   // }
   // }, [dispatch, serverId, channelId])
-  
 
-  // if (!serverInfo) return <Redirect to={`/home`} />;
-  // if (channelId === undefined && (channels && channels.length)) return <Redirect to={`/server/${serverId}/${channels[0].id}`} />
   if (!serverInfo) return <Redirect to={`/login`} />;
 
   const checkSelected = (id) => {
-    // console.log("id", id, "channelId", channelId);
-    if (!id || !channelId) return "";
-    else if (id.toString() === channelId.toString()) return "selected"
+    if (id.toString() === channelId) return "selected"
     else return ""
   }
 
@@ -70,8 +63,6 @@ const ChannelSideBar = () => {
             )
           })
         }
-
-
       </div>
     </div>
   )

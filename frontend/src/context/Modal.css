@@ -15,7 +15,7 @@
   background-color: black;
   border-radius: 6px;
   padding: 10px 10px;
-
+  animation: tooltip .2s ease-in;
 }
 
 .server-tooltip:before{
@@ -43,13 +43,14 @@
   justify-content: center;
   align-items: center;
   
-  color: #fff;
+  color: #dbdee1;
   font-weight: bold;
   text-align: center;
   background-color: black;
   border-radius: 6px;
   padding: 8px 10px;
   font-size: 14px;
+  animation: tooltip .2s ease-in;
 }
 
 .action-tooltip:before{
@@ -68,4 +69,13 @@
 
   left: 40%;
   top: 85%;
+}
+
+@keyframes tooltip {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
 }

@@ -15,7 +15,6 @@ const setChannels = (channels) => ({
 })
 
 export const getChannels = (state) => {
-  // console.log("channelState", Object.values(state.channels));
   return state.channels ? Object.values(state.channels) : [];
 }
 
@@ -24,7 +23,6 @@ export const fetchChannels = (serverId) => async dispatch => {
 
   if (response.ok) {
     const data = await response.json();
-    // console.log("channelData", data);
     dispatch(setChannels(data.channels));
   }
 }

@@ -1,11 +1,7 @@
 const ServerListIcon = ({id, image, name}) => {
   return (
     <>
-      <div 
-        id={id}
-        data-key={id}
-        className={`server-icon-wrapper`} 
-      >
+      <div id={id} data-key={id} className={`server-icon-wrapper`}>
         {
           image 
             ? <img 
