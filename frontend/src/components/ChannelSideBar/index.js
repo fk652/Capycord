@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { fetchChannels, getChannels } from '../../store/channels';
+import { fetchChannels, getChannels, getChannelServerId } from '../../store/channels';
 import { fetchMembers } from '../../store/members';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
@@ -10,6 +10,7 @@ import './ChannelSideBar.css'
 const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
   let channels = useSelector(getChannels);
+  let channelServerId = useSelector(getChannelServerId);
   const serverInfo = useSelector(getServer(serverId));
   const history = useHistory();
 
@@ -32,12 +33,13 @@ const ChannelSideBar = () => {
       history.push('/home');
     });
 
-    // if (channelId === undefined && (channels && channels.length)) {
-    //   history.push(`/server/${serverId}/${channels[0].id}`);
-    // }
+    console.log(channelServerId, serverId);
+    if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
+      history.push(`/server/${serverId}/${channels[0].id}`);
+    }
 
     dispatch(fetchMembers(serverId));
-  }, [dispatch, serverId])
+  }, [dispatch, serverId, channelServerId])
 
 
   // if (!serverInfo) return <Redirect to={`/home`} />;

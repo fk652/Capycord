@@ -2,7 +2,7 @@ import './ServerPage.css'
 import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { resetChannels } from '../../store/channels';
 import { resetMembers } from '../../store/members';

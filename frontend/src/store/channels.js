@@ -9,17 +9,24 @@ export const resetChannels = () => ({
   type: RESET_CHANNELS
 })
 
-const setChannels = (channels) => ({
+const setChannels = (serverId, channels) => ({
   type: SET_CHANNELS,
-  channels
+  payload: {
+    serverId,
+    channels
+  }
 })
 
 export const getChannels = (state) => {
-  return state.channels ? Object.values(state.channels) : [];
+  return state.channels ? Object.values(state.channels.channelList) : [];
 }
 
 export const getChannel = (id) => (state) => {
-  return state.channels ? state.channels[id] : null;
+  return state.channels ? state.channels.channelList[id] : null;
+}
+
+export const getChannelServerId = (state) => {
+  return state.channels ? state.channels.serverId : null;
 }
 
 export const fetchChannels = (serverId) => async dispatch => {
@@ -27,7 +34,7 @@ export const fetchChannels = (serverId) => async dispatch => {
 
   if (response.ok) {
     const data = await response.json();
-    dispatch(setChannels(data.channels));
+    dispatch(setChannels(serverId, data.channels));
   }
 }
 
@@ -43,14 +50,17 @@ export const deleteChannel = (channelId) => async dispatch => {
 
 }
 
-const initialState = {}
+const initialState = {
+  serverId: -1,
+  channelList: {}
+}
 
 const channelsReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_CHANNELS:
       return initialState;
     case SET_CHANNELS:
-      return {...action.channels};
+      return {serverId: action.payload.serverId, channelList: {...action.payload.channels}};
     default:
       return state;
   }
