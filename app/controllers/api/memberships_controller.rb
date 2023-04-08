@@ -9,7 +9,7 @@ class Api::MembershipsController < ApplicationController
       render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
       return
     else
-      @members = server.members
+      @memberships = server.memberships.includes(:member)
       render :index
     end
   end

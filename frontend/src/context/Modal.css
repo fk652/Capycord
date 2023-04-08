@@ -73,6 +73,45 @@
   top: 85%;
 }
 
+.nav-tooltip {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  color: #dbdee1;
+  font-weight: bold;
+  text-align: center;
+  background-color: black;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  animation: tooltip .2s ease-in;
+}
+
+.nav-tooltip:before{
+  content:'';
+  display: block;
+  width:0;
+  height:0;
+  position: absolute;
+  z-index: 4;
+
+  border-right: 8px solid transparent;
+  border-left: 8px solid transparent;
+  border-top:8px solid black;
+  left: -5px;
+  top: 85%;
+
+  left: 40%;
+  top: 85%;
+}
+
 @keyframes tooltip {
   0% {
     opacity: 0%;

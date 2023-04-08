@@ -1,6 +1,7 @@
-import { useSelector } from 'react-redux';
-import { useParams, Redirect } from 'react-router-dom';
-import { getChannels } from '../../store/channels';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { fetchChannels, getChannels, resetChannels } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
 import './ChannelSideBar.css'
@@ -9,21 +10,35 @@ const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
   let channels = useSelector(getChannels);
   const serverInfo = useSelector(getServer(serverId));
+  const history = useHistory();
 
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   if (channelId === undefined && (channels && channels.length)) {
-  //     dispatch(fetchChannels(serverId));
-  //     console.log("channels", channels);
-  //     history.push(`/server/${serverId}/${channels[0].id}`);
-  //   }
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchChannels(serverId))
+    .catch(async (res) => {
+      let data;
+      try {
+        data = await res.clone().json();
+      } catch {
+        data = await res.text();
+      }
 
-  //   // return () => {
-  //   //   dispatch(resetChannels());
-  //   // }
-  // }, [dispatch, serverId, channelId])
+      const errors = {
+        status: res.status,
+        messages: null
+      }
+      if (data?.errors) errors.messages = data.errors;
+      history.push('/home');
+    });
 
-  if (!serverInfo) return <Redirect to={`/home`} />;
+    // if (channelId === undefined && (channels && channels.length)) {
+    //   history.push(`/server/${serverId}/${channels[0].id}`);
+    // }
+  }, [dispatch, serverId])
+
+
+  // if (!serverInfo) return <Redirect to={`/home`} />;
+  if (!serverInfo) return <div className="channel-side-bar" />;
 
   const checkSelected = (id) => {
     if (id.toString() === channelId) return "selected"

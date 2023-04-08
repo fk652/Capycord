@@ -1,11 +1,11 @@
 .channel-side-bar {
   background: #2b2d31;
   color: #949ba1;
-  /* overflow: hidden; */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100%;
+  height: 100vh;
 }
 
 .server-settings-dropdown {

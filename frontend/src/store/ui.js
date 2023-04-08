@@ -1,6 +1,7 @@
 const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
+const SET_SHOW_MEMBERS = "ui/setShowMembers";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -11,6 +12,11 @@ export const setFriendNav = (selectedTab) => ({
 export const setSelectedServer = (selectedServer) => ({
   type: SET_SELECTED_SERVER,
   selectedServer
+})
+
+export const setShowMembers = (toggle) => ({
+  type: SET_SHOW_MEMBERS,
+  toggle
 })
 
 export const setAddFriendResult = (result) => ({
@@ -34,6 +40,10 @@ export const getAddFriendResult = (state) => {
   return state.ui.addFriendResult
 }
 
+export const getShowMembersToggle = (state) => {
+  return state.ui.showMembers
+}
+
 export const getChannelReset = (state) => {
   return state.ui.channelReset
 }
@@ -41,7 +51,8 @@ export const getChannelReset = (state) => {
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
-  addFriendResult: false
+  addFriendResult: false,
+  showMembers: false
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -52,6 +63,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, selectedServer: action.selectedServer}
     case SET_ADD_FRIEND_RESULT:
       return {...state, addFriendResult: action.result}
+    case SET_SHOW_MEMBERS:
+      return {...state, showMembers: action.toggle}
     case RESET_UI:
       return {...initialState}
     default:

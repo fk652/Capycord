@@ -2,7 +2,7 @@ import './ServerBar.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getSelectedServer, setSelectedServer } from '../../store/ui';
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory, useParams } from "react-router-dom";
 import ServerListIcon from './ServerListIcon';
 import { fetchServers, getServers } from '../../store/servers';
 import { ServerToolTip } from "../../context/Modal";
@@ -19,6 +19,11 @@ const ServerBar = () => {
   useEffect(() => {
     dispatch(fetchServers())
   }, [dispatch])
+
+  // let selected;
+  // const {serverId} = useParams();
+  // serverId ? selected = serverId.toString() : selected = "home"
+  // console.log(serverId);
 
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {
