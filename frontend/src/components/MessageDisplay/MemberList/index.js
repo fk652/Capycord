@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchMembers, getMembers } from '../../store/members';
-import { getShowMembersToggle } from '../../store/ui';
+import { fetchMembers, getMembers } from '../../../store/members';
+import { getShowMembersToggle } from '../../../store/ui';
 import MemberItem from './MemberItem';
-import './MemberList.css'
+import './MemberList.css';
 
 const MemberList = () => {
   const {serverId} = useParams();

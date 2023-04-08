@@ -1,9 +1,9 @@
 import './MessageNavBar.css';
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getShowMembersToggle, setShowMembers } from "../../store/ui";
+import { getShowMembersToggle, setShowMembers } from "../../../store/ui";
 import { useParams } from 'react-router-dom';
-import { getChannel } from '../../store/channels';
+import { getChannel } from '../../../store/channels';
 
 export const MessageNavBar = () => {
   const {channelId} = useParams();

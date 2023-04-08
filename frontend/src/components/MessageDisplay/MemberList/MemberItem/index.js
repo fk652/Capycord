@@ -1,4 +1,4 @@
-import UserIcon from '../UserIcon';
+import UserIcon from '../../../UserIcon';
 import './MemberItem.css'
 
 const MemberItem = ({name, status, customStatus, picture}) => {
