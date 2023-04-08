@@ -11,10 +11,10 @@ const MemberList = () => {
   const members = useSelector(getMembers);
   const showMembers = useSelector(getShowMembersToggle);
 
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchMembers(serverId));
-  }, [dispatch, serverId])
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   dispatch(fetchMembers(serverId));
+  // }, [dispatch, serverId])
 
   const membersSorted = {
     owner: null,

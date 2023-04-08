@@ -1,8 +1,8 @@
 import './ServerBar.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedServer, setSelectedServer } from '../../store/ui';
-import { Link, Redirect, useHistory, useParams } from "react-router-dom";
+import { getSelectedServer } from '../../store/ui';
+import { useHistory } from "react-router-dom";
 import ServerListIcon from './ServerListIcon';
 import { fetchServers, getServers } from '../../store/servers';
 import { ServerToolTip } from "../../context/Modal";
@@ -20,17 +20,10 @@ const ServerBar = () => {
     dispatch(fetchServers())
   }, [dispatch])
 
-  // let selected;
-  // const {serverId} = useParams();
-  // serverId ? selected = serverId.toString() : selected = "home"
-  // console.log(serverId);
-
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {
-      dispatch(setSelectedServer(e.target.dataset.key));
-
       if(e.target.dataset.key === "home") history.push(`/home`)
-      else history.push(`/server/${e.target.dataset.key}`);  // might change to wrap links around server-icon-wrappers
+      else history.push(`/server/${e.target.dataset.key}`);
     }
   }
 

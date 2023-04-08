@@ -1,6 +1,6 @@
 import './MessageItem.css'
 
-const MessageItem = () => {
+const MessageItem = ({message, user}) => {
 
   return (
     <div className="message-item">

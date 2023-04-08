@@ -6,11 +6,14 @@ import { Redirect, useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { resetChannels } from '../../store/channels';
 import { resetMembers } from '../../store/members';
+import { setSelectedServer } from '../../store/ui';
 
 const ServerPage = () => {
   const {serverId, channelId} = useParams();
 
   const dispatch = useDispatch();
+  dispatch(setSelectedServer(serverId));
+
   useEffect(() => {
     dispatch(resetChannels());
     dispatch(resetMembers());
@@ -25,7 +28,7 @@ const ServerPage = () => {
       {
         channelId 
           ? <MessageDisplay />
-          : <> </>
+          : null
       }
     </div>
   )

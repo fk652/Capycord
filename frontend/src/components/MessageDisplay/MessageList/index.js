@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import { getMembers } from '../../../store/members';
 import { fetchMessages, getMessages, resetMessages } from '../../../store/messages';
 import './MessageList.css'
 
@@ -8,6 +9,7 @@ const MessageList = () => {
   const history = useHistory();
   const {serverId, channelId} = useParams();
   const messages = useSelector(getMessages);
+  const members = useSelector(getMembers);
   
   const dispatch = useDispatch();
   useEffect(() => {

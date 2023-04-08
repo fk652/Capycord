@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
-import { fetchChannels, getChannels, resetChannels } from '../../store/channels';
+import { useParams, useHistory } from 'react-router-dom';
+import { fetchChannels, getChannels } from '../../store/channels';
+import { fetchMembers } from '../../store/members';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
 import './ChannelSideBar.css'
@@ -34,6 +35,8 @@ const ChannelSideBar = () => {
     // if (channelId === undefined && (channels && channels.length)) {
     //   history.push(`/server/${serverId}/${channels[0].id}`);
     // }
+
+    dispatch(fetchMembers(serverId));
   }, [dispatch, serverId])
 
 
