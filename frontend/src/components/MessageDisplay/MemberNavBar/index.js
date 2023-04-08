@@ -4,12 +4,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { getShowMembersToggle, setShowMembers } from "../../../store/ui";
 import { useParams } from 'react-router-dom';
 import { getChannel } from '../../../store/channels';
+import { NavToolTip } from '../../../context/Modal';
 
 export const MessageNavBar = () => {
   const {channelId} = useParams();
   const channelInfo = useSelector(getChannel(channelId));
   const showMembers = useSelector(getShowMembersToggle);
   const [searchInput, setSearchInput] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
+  const [top, setTop] = useState(0);
+  const [left, setLeft] = useState(0);
+  const [currentModal, setCurrentModal] = useState(null);
+
+  const showHandler = (id) => (e) => {
+    let offsets = [0, 0];
+    if (currentModal === "member") offsets = [55, 30];
+    else if (currentModal === "inbox") offsets = [15, 30]
+    e.preventDefault();
+    setCurrentModal(id);
+    setShowModal(true);
+
+    const rect = e.target.getBoundingClientRect();
+    setLeft(rect.x - offsets[0])
+    setTop(rect.y + offsets[1])
+  }
+
+  const leaveHandler = (e) => {
+    e.preventDefault();
+    setCurrentModal(null);
+    setShowModal(false);
+  }
   
   const handleSearchClear = (e) => {
     e.preventDefault();
@@ -111,7 +136,23 @@ export const MessageNavBar = () => {
       </div>
 
       <div className="actions-container">
-        <div className={`icon-wrapper ${showMembers === true ? 'selected' : ''}`}>
+        <div 
+          className={`icon-wrapper ${showMembers === true ? 'selected' : ''}`}
+          onMouseEnter={showHandler("member")}
+          onMouseLeave={leaveHandler}
+        >
+          {showModal && currentModal === "member" && (
+            <NavToolTip top={top} left={left} onClose={() => setShowModal(false)}>
+              <span className="tooltip">
+                {
+                showMembers === true 
+                  ? "Hide Member List"
+                  : "Show Member List"
+                }
+              </span>
+            </NavToolTip>
+          )}
+
           <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24" onClick={handleMemberToggle}>
             <path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z">
             </path>
@@ -138,7 +179,16 @@ export const MessageNavBar = () => {
           </div>
         </div>
 
-        <div className="icon-wrapper">
+        <div 
+          className="icon-wrapper"
+          onMouseEnter={showHandler("inbox")}
+          onMouseLeave={leaveHandler}
+        >
+          {showModal && currentModal === "inbox" && (
+            <NavToolTip top={top} left={left} onClose={() => setShowModal(false)}>
+              <span className="tooltip">Inbox</span>
+            </NavToolTip>
+          )}
           <svg x="0" y="0" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor">
             </path>

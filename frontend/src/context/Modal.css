@@ -20,18 +20,14 @@
 }
 
 .server-tooltip:before{
-  content:'';
-  display:block;
-  width:0;
-  height:0;
+  content: " ";
   position: absolute;
-  z-index: 4;
-
-  border-top: 8px solid transparent;
-  border-bottom: 8px solid transparent;
-  border-right:8px solid black;
-  left: -6px;
-  top: 10px;
+  top: 50%;
+  right: 100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
 }
 
 .action-tooltip {
@@ -56,21 +52,14 @@
 }
 
 .action-tooltip:before{
-  content:'';
-  display: block;
-  width:0;
-  height:0;
+  content: " ";
   position: absolute;
-  z-index: 4;
-
-  border-right: 8px solid transparent;
-  border-left: 8px solid transparent;
-  border-top:8px solid black;
-  left: -5px;
-  top: 85%;
-
-  left: 40%;
-  top: 85%;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
 }
 
 .nav-tooltip {
@@ -95,21 +84,14 @@
 }
 
 .nav-tooltip:before{
-  content:'';
-  display: block;
-  width:0;
-  height:0;
+  content: "";
   position: absolute;
-  z-index: 4;
-
-  border-right: 8px solid transparent;
-  border-left: 8px solid transparent;
-  border-top:8px solid black;
-  left: -5px;
-  top: 85%;
-
-  left: 40%;
-  top: 85%;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;
 }
 
 @keyframes tooltip {
