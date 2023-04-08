@@ -8,6 +8,7 @@ import friendsReducer from './friends';
 import friendRequestsReducer from './friendRequests';
 import channelsReducer from './channels';
 import messagesReducer from './messages';
+import membersReducer from './members';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   friends: friendsReducer,
   friendRequests: friendRequestsReducer,
   channels: channelsReducer,
-  messages: messagesReducer
+  messages: messagesReducer,
+  members: membersReducer
 });
 
 let enhancer;

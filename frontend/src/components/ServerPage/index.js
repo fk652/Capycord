@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { useEffect } from 'react';
 import { fetchChannels, resetChannels } from '../../store/channels';
+import { fetchMembers } from '../../store/members';
 
 const ServerPage = () => {
   const {serverId, channelId} = useParams();
@@ -33,8 +34,11 @@ const ServerPage = () => {
       history.push('/home');
     });
 
+    dispatch(fetchMembers(serverId));
+
     return () => {
       dispatch(resetChannels());
+
     }
   }, [dispatch, serverId])
 

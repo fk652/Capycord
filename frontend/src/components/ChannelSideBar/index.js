@@ -30,6 +30,11 @@ const ChannelSideBar = () => {
     else return ""
   }
 
+  const dummies = [];
+  for (let i = 1000; i < 1050; i++) {
+    dummies.push(i);
+  }
+
   return (
     <div className="channel-side-bar">
       <div className="server-settings-dropdown">
@@ -61,6 +66,18 @@ const ChannelSideBar = () => {
                 key={channel.id}
               />
             )
+          })
+        }
+
+        {
+          dummies.map(dummy => {
+            return <ChannelListItem 
+              id={dummy} 
+              name={"dummy"} 
+              type={["text", "voice", "privateText", "privateVoice"][Math.floor(Math.random()*4)]}
+              selected={checkSelected(dummy)}
+              key={dummy}
+            />
           })
         }
       </div>

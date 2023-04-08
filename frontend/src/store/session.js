@@ -3,6 +3,7 @@ import csrfFetch from './csrf';
 import { removeErrors } from './errors';
 import { resetFriendRequests } from './friendRequests';
 import { resetFriends } from './friends';
+import { resetMembers } from './members';
 import { resetMessages } from './messages';
 import { resetServers } from './servers';
 import { resetUi } from './ui';
@@ -73,6 +74,7 @@ export const logout = () => async (dispatch) => {
   dispatch(resetFriendRequests());
   dispatch(resetChannels());
   dispatch(resetMessages());
+  dispatch(resetMembers());
   return response;
 };
 

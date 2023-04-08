@@ -9,13 +9,15 @@ Rails.application.routes.draw do
       resources :channels, only: [:create, :index] do 
         resources :messages, only: [:create, :index]
       end
+
+      resources :memberships, only: [:index]
     end
 
     resources :channels, only: [:show, :destroy, :update]
     resources :messages, only: [:show, :destroy, :update]
     resources :friends, only: [:index, :destroy]
-    resources :memberships, only: [:create, :destroy, :update]
     resources :friend_requests, only: [:index, :create, :destroy, :update]
+    resources :memberships, only: [:create, :destroy, :update]
   end
   
   # Defines the root path route ("/")

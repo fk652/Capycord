@@ -4,6 +4,7 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { fetchMessages, getMessages, resetMessages } from '../../store/messages';
 import { getChannel } from '../../store/channels';
 import './MessageDisplay.css';
+import membersReducer, { getMembers } from '../../store/members';
 
 const MessageDisplay = () => {
   // get channelid
@@ -13,6 +14,7 @@ const MessageDisplay = () => {
   const {serverId, channelId} = useParams();
   const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
+  const members = useSelector(getMembers);
   const [searchInput, setSearchInput] = useState('');
   
   const dispatch = useDispatch();
@@ -35,14 +37,14 @@ const MessageDisplay = () => {
       // else errors.messages = [res.statusText];
 
       // dispatch(addErrors(errors));
-      console.log(data.errors);
+      // console.log(data.errors);
       history.push('/home');
     });
     
     return () => dispatch(resetMessages());
   }, [dispatch, serverId, channelId])
   
-  console.log(messages);
+  // console.log(messages);
   
   const handleSearchClear = (e) => {
     e.preventDefault();
@@ -61,7 +63,7 @@ const MessageDisplay = () => {
 
     const searchEmptyIcon = document.querySelector(".message-search-empty")
     const searchClearIcon = document.querySelector(".message-search-clear")
-    console.log(searchClearIcon, searchEmptyIcon);
+    // console.log(searchClearIcon, searchEmptyIcon);
 
     if (e.target.value) {
       searchEmptyIcon.style.display = 'none';
@@ -106,7 +108,7 @@ const MessageDisplay = () => {
       </path>
     </svg>
   )
-  
+
   if (!channelInfo) return <Redirect to={`/login`} />;
 
   switch (channelInfo.channelType) {
@@ -178,11 +180,25 @@ const MessageDisplay = () => {
       </div>
 
       <div className="messages-container">
-        <div className="messages-list">
+        <div className="message-wrapper">
+          <div className="messages-list">
 
+          </div>
+          <div className="message-box">
+            {
+              messages.map(message => {
+                return <div>{message.body}</div>
+              })
+            }
+          </div>
         </div>
-        <div className="member-list-container">
 
+        <div className="member-list-container">
+            {
+              members.map(member => {
+                return <div>{member.username}</div>
+              })
+            }
         </div>
       </div>
     </div>
