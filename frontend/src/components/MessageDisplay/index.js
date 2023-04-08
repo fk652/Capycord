@@ -183,14 +183,14 @@ const MessageDisplay = () => {
       <div className="messages-container">
         <div className="message-wrapper">
           <div className="messages-list">
-
-          </div>
-          <div className="message-box">
             {
               messages.map(message => {
                 return <div>{message.body}</div>
               })
             }
+          </div>
+          <div className="message-box">
+            
           </div>
         </div>
 
