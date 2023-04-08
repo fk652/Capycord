@@ -1,5 +1,5 @@
 import "./FriendsOnline.css";
-import FriendListItem from "../FriendListItem/FriendListItem";
+import FriendListItem from "../FriendListItem";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFriends, getFriends } from '../../../store/friends';
 import { useEffect } from 'react';

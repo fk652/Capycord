@@ -4,7 +4,8 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { fetchMessages, getMessages, resetMessages } from '../../store/messages';
 import { getChannel } from '../../store/channels';
 import './MessageDisplay.css';
-import membersReducer, { getMembers } from '../../store/members';
+import { getMembers } from '../../store/members';
+import FriendListItem from '../FriendsDisplay/FriendListItem';
 
 const MessageDisplay = () => {
   // get channelid
@@ -196,7 +197,16 @@ const MessageDisplay = () => {
         <div className="member-list-container">
             {
               members.map(member => {
-                return <div>{member.username}</div>
+                // return <div>{member.username}</div>
+                return <FriendListItem
+                      itemId={member.id}
+                      userId={member.id}
+                      name={member.username} 
+                      status={member.onlineStatus} 
+                      customStatus={member.customStatus}
+                      picture={member.profilePictureUrl}
+                      key={member.id}
+                  />
               })
             }
         </div>
