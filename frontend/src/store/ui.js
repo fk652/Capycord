@@ -1,6 +1,6 @@
 const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
-const SET_ADD_FRIEND_RESULT = "io/setAddFriendResult";
+const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -32,6 +32,10 @@ export const getSelectedServer = (state) => {
 
 export const getAddFriendResult = (state) => {
   return state.ui.addFriendResult
+}
+
+export const getChannelReset = (state) => {
+  return state.ui.channelReset
 }
 
 const initialState = {

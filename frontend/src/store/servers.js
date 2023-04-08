@@ -29,6 +29,18 @@ export const fetchServers = () => async dispatch => {
   }
 }
 
+export const createServer = (serverData) => async dispatch => {
+
+}
+
+export const updateServer = (serverData) => async dispatch => {
+
+}
+
+export const deleteServer = (serverId) => async dispatch => {
+
+}
+
 const initialState = {}
 
 const serversReducer = (state = initialState, action) => {

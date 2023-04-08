@@ -23,7 +23,7 @@ const ChannelSideBar = () => {
   //   // }
   // }, [dispatch, serverId, channelId])
 
-  if (!serverInfo) return <Redirect to={`/login`} />;
+  if (!serverInfo) return <Redirect to={`/home`} />;
 
   const checkSelected = (id) => {
     if (id.toString() === channelId) return "selected"

@@ -18,6 +18,10 @@ export const getChannels = (state) => {
   return state.channels ? Object.values(state.channels) : [];
 }
 
+export const getChannel = (id) => (state) => {
+  return state.channels ? state.channels[id] : null;
+}
+
 export const fetchChannels = (serverId) => async dispatch => {
   const response = await csrfFetch(`/api/servers/${serverId}/channels`);
 
@@ -25,6 +29,18 @@ export const fetchChannels = (serverId) => async dispatch => {
     const data = await response.json();
     dispatch(setChannels(data.channels));
   }
+}
+
+export const createChannel = (channelData) => async dispatch => {
+
+}
+
+export const updateChannel = (channelData) => async dispatch => {
+
+}
+
+export const deleteChannel = (channelId) => async dispatch => {
+
 }
 
 const initialState = {}
