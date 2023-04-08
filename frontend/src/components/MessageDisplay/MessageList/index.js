@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { getMembers } from '../../../store/members';
 import { fetchMessages, getMessages, resetMessages } from '../../../store/messages';
+import MessageInput from './MessageInput';
+import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import './MessageList.css'
 
 const MessageList = () => {
@@ -37,14 +39,13 @@ const MessageList = () => {
     <div className="message-list-wrapper">
       <div className="messages-list">
         {
-          messages.map(message => {
-            return <div>{message.body}</div>
+          messages.map((message, index) => {
+            return <SimpleMessageItem message={message} />
           })
         }
       </div>
-      <div className="message-box">
-
-      </div>
+      
+      <MessageInput />
     </div>
   )
 }

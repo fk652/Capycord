@@ -67,3 +67,18 @@ export function NavToolTip({ top, left, onClose, children }) {
     modalNode
   );
 }
+
+export function TimeToolTip({ top, left, onClose, children }) {
+  const modalNode = useContext(ModalContext);
+  if (!modalNode) return null;
+
+  return ReactDOM.createPortal(
+    <div 
+      className="time-tooltip" style={{top: top, left: left}}
+      onMouseEnter={onClose}
+    >
+      {children}
+    </div>,
+    modalNode
+  );
+}

@@ -1,0 +1,37 @@
+.message-item-wrapper {
+  width: calc(100% - 20px);
+  display: flex;
+  justify-content: baseline;
+  align-items: baseline;
+  padding: 0 10px;
+}
+
+.message-time {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  min-width: 55px;
+  margin-right: 1px;
+  text-align: center;
+  color: #949ba4;
+  visibility: hidden;
+
+  position: relative;
+  top: -5px;
+}
+
+.message-item-wrapper:hover {
+  background: #2e3035;
+}
+
+.message-item-wrapper:hover .message-time {
+  visibility: visible;
+}
+
+.message-body {
+  padding: 5px 0;
+  font-size: 16px;
+  color: #dbdee1;
+  flex-basis: 90%;
+  line-height: 1.6;
+  margin-left: 5px;
+}

@@ -19,7 +19,7 @@
   animation: tooltip .2s ease-in;
 }
 
-.server-tooltip:before{
+.server-tooltip:after{
   content: " ";
   position: absolute;
   top: 50%;
@@ -51,7 +51,7 @@
   animation: tooltip .2s ease-in;
 }
 
-.action-tooltip:before{
+.action-tooltip:after{
   content: " ";
   position: absolute;
   top: 100%;
@@ -83,7 +83,7 @@
   animation: tooltip .2s ease-in;
 }
 
-.nav-tooltip:before{
+.nav-tooltip:after{
   content: "";
   position: absolute;
   bottom: 100%;
@@ -92,6 +92,40 @@
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent black transparent;
+}
+
+.time-tooltip {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  color: #dbdee1;
+  font-weight: bold;
+  text-align: center;
+  background-color: black;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
+  animation: tooltip .4s ease-in;
+
+  font-size: 14px;
+}
+
+.time-tooltip:after{
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
 }
 
 @keyframes tooltip {
