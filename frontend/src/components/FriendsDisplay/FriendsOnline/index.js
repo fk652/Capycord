@@ -1,22 +1,16 @@
 import "./FriendsOnline.css";
+
+import { useSelector } from "react-redux";
+
 import FriendListItem from "../FriendListItem";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFriends, getFriends } from '../../../store/friends';
-import { useEffect } from 'react';
+import { getFriends } from '../../../store/friends';
 
 const FriendsOnline = () => {
-  // const friends = useSelector(getFriends).filter(friend => friend.onlineStatus !== "Offline");
   const friends = useSelector(getFriends);
-  // console.log("online", friends);
   let count = 0;
   friends.forEach(friend => {
     if (friend.onlineStatus !== "Offline") count++ 
   })
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFriends());
-  }, [dispatch])
 
   const dummies = [];
   for (let i = 1000; i < 1050; i++) {
@@ -28,9 +22,6 @@ const FriendsOnline = () => {
     "https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png",
     "https://media.tenor.com/GryShD35-psAAAAC/troll-face-creepy-smile.gif",
     "https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif",
-    // "https://assets.stickpng.com/thumbs/588359d52c9eb99faafea8bd.png",
-    // "https://assets.stickpng.com/thumbs/58716c647b7f6103e35c6c9b.png",
-    // "https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2a32.png",
     null
   ]
 
@@ -50,7 +41,6 @@ const FriendsOnline = () => {
       <div className="friend-display-wrapper">
         {
           friends.map(friend => {
-            // console.log(friend);
             return <FriendListItem 
                       itemId={friend.friendshipId}
                       userId={friend.userId}

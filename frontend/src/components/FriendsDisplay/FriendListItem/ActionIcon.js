@@ -1,9 +1,11 @@
 import './FriendListItem.css'
+
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { acceptReceivedRequest, cancelSentRequest, ignoreReceivedRequest } from '../../../store/friendRequests';
 import { deleteFriend } from '../../../store/friends';
 import { ActionToolTip } from '../../../context/Modal';
-import { useState } from 'react';
 
 const ActionIcon = ({actionType, itemId}) => {
   const [showModal, setShowModal] = useState(false);
@@ -29,25 +31,21 @@ const ActionIcon = ({actionType, itemId}) => {
 
   const dispatch = useDispatch();
 
-  // delete friend handler
   const deleteFriendHandler = (e) => {
     e.preventDefault();
     dispatch(deleteFriend(itemId));
   }
 
-  // ignore friend request handler
   const ignoreRequestHandler = (e) => {
     e.preventDefault();
     dispatch(ignoreReceivedRequest(itemId));
   }
 
-  // accept friend request handler
   const acceptRequestHandler = (e) => {
     e.preventDefault();
     dispatch(acceptReceivedRequest(itemId));
   }
 
-  // cancel friend request handler (might be same as ignore)
   const cancelRequestHandler = (e) => {
     e.preventDefault();
     dispatch(cancelSentRequest(itemId));
@@ -124,7 +122,6 @@ const ActionIcon = ({actionType, itemId}) => {
       onMouseEnter={showHandler(itemId)}
       onMouseLeave={leaveHandler}
     >
-      {/* <span className="action-tooltip">{tooltipText}</span> */}
       {showModal && currentModal === itemId && (
         <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
           <span className="tooltip">{tooltipText}</span>

@@ -1,5 +1,6 @@
-import UserIcon from '../../UserIcon';
 import './FriendListItem.css'
+
+import UserIcon from '../../UserIcon';
 import ActionIcon from './ActionIcon';
 
 const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {

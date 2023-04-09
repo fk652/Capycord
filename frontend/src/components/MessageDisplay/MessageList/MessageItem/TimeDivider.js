@@ -1,7 +1,6 @@
 import './MessageItem.css'
 
 const TimeDivider = ({date}) => {
-
   return (
     <div className="time-divider">
       <div className="divider-border" />

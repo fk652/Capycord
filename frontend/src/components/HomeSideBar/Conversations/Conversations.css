@@ -34,12 +34,12 @@
   font-weight: 500;
 }
 
-.search-bar-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+.search-bar-input:-ms-input-placeholder {
   color:#949ba4;
   font-weight: 500;
 }
 
-.search-bar-input::-ms-input-placeholder { /* Microsoft Edge */
+.search-bar-input::-ms-input-placeholder {
   color: #949ba4;
   font-weight: 500;
 }

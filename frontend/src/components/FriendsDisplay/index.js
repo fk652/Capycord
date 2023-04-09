@@ -1,27 +1,18 @@
 import './FriendsDisplay.css';
-import friendIcon from '../../assets/friend_nav_icons/user.png'
-import messageIcon from '../../assets/friend_nav_icons/chat.png'
-import inboxIcon from '../../assets/friend_nav_icons/inbox.png'
+
+import { useDispatch, useSelector } from "react-redux";
 
 import FriendsAdd from './FriendsAdd';
 import FriendsAll from './FriendsAll';
 import FriendsBlocked from './FriendsBlocked';
 import FriendsOnline from './FriendsOnline';
 import FriendsPending from './FriendsPending';
-import { useDispatch, useSelector } from "react-redux";
 import { getSelectedFriendNavTab, setFriendNav } from '../../store/ui';
-import { fetchFriends, getFriends } from '../../store/friends';
-import { useEffect } from 'react';
 
 const FriendsDisplay = () => {
   const selected = useSelector(getSelectedFriendNavTab);
-  // const friends = useSelector(getFriends)
-
-  // useEffect(() => {
-  //   dispatch(fetchFriends());
-  // }, [dispatch])
-    
   const dispatch = useDispatch();
+
   const toggleSelected = (e) => {
     if (e.target.id) dispatch(setFriendNav(e.target.id));
   }

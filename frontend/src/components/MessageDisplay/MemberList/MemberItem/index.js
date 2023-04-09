@@ -1,5 +1,6 @@
+import './MemberItem.css';
+
 import UserIcon from '../../../UserIcon';
-import './MemberItem.css'
 
 const MemberItem = ({name, status, customStatus, picture}) => {
   const [username, tag] = name.split("#");

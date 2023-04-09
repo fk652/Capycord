@@ -3,23 +3,19 @@ import friendIcon from '../../../assets/friend_nav_icons/user.png'
 import messageIcon from '../../../assets/friend_nav_icons/chat.png'
 import inboxIcon from '../../../assets/friend_nav_icons/inbox.png'
 
+import { useState } from 'react';
+
 import FriendsAdd from '../FriendsAdd';
 import FriendsAll from '../FriendsAll';
 import FriendsBlocked from '../FriendsBlocked';
 import FriendsOnline from '../FriendsOnline';
 import FriendsPending from '../FriendsPending';
-import { useState } from 'react';
 
 const FriendsNavBar = () => {
-
   const [selected, setSelected] = useState("friends-online");
 
   const toggleSelected = (e) => {
-    if (e.target.id)  {
-      setSelected(e.target.id)
-      // setup friend component to display here later based on selected
-      // might have to move navbar directly into FriendsDisplay
-    }
+    if (e.target.id) setSelected(e.target.id)
   }
 
   const checkSelected = (id) => {
@@ -89,28 +85,13 @@ const FriendsNavBar = () => {
         <div className="message-options">
           <div className="icon-wrapper">
             <img className="message-icon" src={messageIcon} alt="message-icon"/>
-            {/* <i class="fa fa-inbox"></i> */}
           </div>
           <div className="nav-divider"></div>
           <div className="icon-wrapper">
             <img className="inbox-icon" src={inboxIcon} alt="inbox-icon"/>
-            {/* <i class="fa fa-inbox"></i> */}
           </div>
         </div>
       </div>
-      {/* {
-        selected === "friends-online"
-          ? <FriendsOnline />
-          : selected === "friends-all"
-            ? <FriendsAll />
-            : selected === "friends-pending"
-              ? <FriendsPending />
-              : selected === "friends-blocked"
-                ? <FriendsBlocked />
-                : selected === "friends-add"
-                  ? <FriendsAdd />
-                  : <FriendsOnline />
-      } */}
       {getDisplay()}
     </>
   )

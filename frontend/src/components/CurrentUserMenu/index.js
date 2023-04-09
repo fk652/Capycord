@@ -1,6 +1,7 @@
 import './CurrentUserMenu.css';
 
 import { useDispatch, useSelector } from "react-redux";
+
 import UserIcon from "../UserIcon";
 import { logout } from "../../store/session";
 

@@ -2,9 +2,10 @@ import '../Form.css';
 import "./LoginFormPage.css";
 
 import { useState, useEffect } from "react";
-import { login } from "../../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
+
+import { login } from "../../../store/session";
 import { addErrors, getErrors, removeErrors } from '../../../store/errors';
 
 const LoginForm = () => {
@@ -16,16 +17,15 @@ const LoginForm = () => {
 
   useEffect(() => {
     dispatch(removeErrors());
-
+    
     return () => dispatch(removeErrors());
   }, [dispatch])
 
-  if (sessionUser) return <Redirect to="/home" />;
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     return dispatch(login({ email, password }))
-      .catch(async (res) => {
+    .catch(async (res) => {
         let data;
         try {
           data = await res.clone().json();
@@ -37,23 +37,26 @@ const LoginForm = () => {
           status: res.status,
           messages: null
         }
+
         if (data?.errors) errors.messages = data.errors;
         // else if (data) errors.messages = [data];
         // else errors.messages = [res.statusText];
 
         dispatch(addErrors(errors))
       });
-  };
+    };
+    
+    const demoLogin = (e, user) => {
+      e.preventDefault();
 
-  const demoLogin = (e, user) => {
-    e.preventDefault();
-
-    const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com'
+      const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com'
     return dispatch(login({
       email,
       password: 'password123'
     }))
   }
+  
+  if (sessionUser) return <Redirect to="/home" />;
 
   return (
     <div className="form-wrapper">

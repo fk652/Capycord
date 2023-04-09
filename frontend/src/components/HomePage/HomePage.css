@@ -1,6 +1,5 @@
 .home {
   display: flex;
-  /* flex-basis: 100%; */
   width: 100vw;
   height: 100vh;
   background: #313338;

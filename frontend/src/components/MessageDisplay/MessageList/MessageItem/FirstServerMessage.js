@@ -1,7 +1,9 @@
+import './MessageItem.css'
+
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+
 import { getServer } from '../../../../store/servers';
-import './MessageItem.css'
 
 const FirstServerMessage = () => {
   const {serverId} = useParams();

@@ -1,20 +1,14 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { fetchMembers, getMembers } from '../../../store/members';
-import { getShowMembersToggle } from '../../../store/ui';
-import MemberItem from './MemberItem';
 import './MemberList.css';
 
+import { useSelector } from 'react-redux';
+
+import { getMembers } from '../../../store/members';
+import { getShowMembersToggle } from '../../../store/ui';
+import MemberItem from './MemberItem';
+
 const MemberList = () => {
-  const {serverId} = useParams();
   const members = useSelector(getMembers);
   const showMembers = useSelector(getShowMembersToggle);
-
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchMembers(serverId));
-  // }, [dispatch, serverId])
 
   const membersSorted = {
     owner: null,
@@ -53,9 +47,6 @@ const MemberList = () => {
     "https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png",
     "https://media.tenor.com/GryShD35-psAAAAC/troll-face-creepy-smile.gif",
     "https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif",
-    // "https://assets.stickpng.com/thumbs/588359d52c9eb99faafea8bd.png",
-    // "https://assets.stickpng.com/thumbs/58716c647b7f6103e35c6c9b.png",
-    // "https://assets.stickpng.com/thumbs/580b585b2edbce24c47b2a32.png",
     null
   ]
 

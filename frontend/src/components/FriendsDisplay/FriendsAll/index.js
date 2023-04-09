@@ -1,17 +1,12 @@
 import "./FriendsAll.css";
+
+import { useSelector } from "react-redux";
+import { getFriends } from '../../../store/friends';
+
 import FriendListItem from "../FriendListItem";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFriends, getFriends } from '../../../store/friends';
-import { useEffect } from 'react';
 
 const FriendsAll = () => {
   const friends = useSelector(getFriends);
-  // console.log("all friends", friends);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFriends());
-  }, [dispatch])
   
   return (
     <>

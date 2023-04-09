@@ -22,8 +22,8 @@ export const getMessage = (id) => (state) => {
   return state.messages ? state.messages[id] : null;
 }
 
-export const fetchMessages = (serverId, channelId) => async dispatch => {
-  const response = await csrfFetch(`/api/servers/${serverId}/channels/${channelId}/messages`);
+export const fetchMessages = (channelId) => async dispatch => {
+  const response = await csrfFetch(`/api/channels/${channelId}/messages`);
 
   if (response.ok) {
     const data = await response.json();

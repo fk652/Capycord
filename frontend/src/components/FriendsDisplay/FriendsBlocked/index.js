@@ -1,7 +1,7 @@
 import "./FriendsBlocked.css";
 
 const FriendsBlocked = () => {
-
+  
   return (
     <>
       <div className="search-bar-wrapper">

@@ -67,14 +67,15 @@ export const logout = () => async (dispatch) => {
 
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
-  dispatch(removeErrors());
-  dispatch(resetUi());
-  dispatch(resetServers());
-  dispatch(resetFriends());
-  dispatch(resetFriendRequests());
-  dispatch(resetChannels());
-  dispatch(resetMessages());
-  dispatch(resetMembers());
+
+  // dispatch(removeErrors());
+  // dispatch(resetUi());
+  // dispatch(resetServers());
+  // dispatch(resetFriends());
+  // dispatch(resetFriendRequests());
+  // dispatch(resetChannels());
+  // dispatch(resetMessages());
+  // dispatch(resetMembers());
   return response;
 };
 

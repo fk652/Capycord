@@ -4,6 +4,7 @@ import './SignupFormPage.css';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
+
 import { signup } from "../../../store/session";
 import { addErrors, getErrors, removeErrors } from '../../../store/errors';
 
@@ -21,8 +22,7 @@ const SignupFormPage = () => {
     return () => dispatch(removeErrors());
   }, [dispatch])
 
-  if (sessionUser) return <Redirect to="/home" />;
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -46,7 +46,9 @@ const SignupFormPage = () => {
       dispatch(addErrors(errors));
     });
   };
-
+  
+  if (sessionUser) return <Redirect to="/home" />;
+  
   return (
     <div className="form-wrapper">
       <div className="form-container">

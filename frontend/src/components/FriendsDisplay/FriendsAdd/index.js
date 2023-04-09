@@ -1,9 +1,11 @@
+import "./FriendsAdd.css";
+
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { addErrors, getErrors, removeErrors } from "../../../store/errors";
 import { createFriendRequest } from "../../../store/friendRequests";
 import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
-import "./FriendsAdd.css";
 
 const FriendsAdd = () => {
   const errors = useSelector(getErrors);

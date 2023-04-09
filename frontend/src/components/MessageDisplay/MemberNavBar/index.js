@@ -1,8 +1,10 @@
 import './MessageNavBar.css';
+
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getShowMembersToggle, setShowMembers } from "../../../store/ui";
 import { useParams } from 'react-router-dom';
+
+import { getShowMembersToggle, setShowMembers } from "../../../store/ui";
 import { getChannel } from '../../../store/channels';
 import { NavToolTip } from '../../../context/Modal';
 
@@ -104,7 +106,6 @@ export const MessageNavBar = () => {
     dispatch(setShowMembers(!showMembers));
   }
 
-  // if (!channelInfo) return <Redirect to={`/login`} />;
   if (!channelInfo) return <div className="message-nav-bar" />;
 
   switch (channelInfo.channelType) {

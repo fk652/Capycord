@@ -1,31 +1,16 @@
-/* .friend-list-item-wrapper {
-  border-top: 1px solid #4e50584c;
-} */
-
 .friend-list-item {
-  /* flex-basis: 95%; */
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 10px;
-  /* padding: 0; */
   margin: 0 10px 0 20px;
-  /* margin-left: 30px;
-  margin-right: 20px; */
 
   border-top: 1px solid #4e50584c;
-  /* border-radius: 8px; */
   max-height: 30px;
-
-  /* position: relative;
-  z-index: 5; */
-  /* overflow: clip; */
 }
 
 .friend-list-item:hover {
   border-radius: 8px;
-  /* margin: 0 10px 0 20px; */
-  /* padding: 16px 10px; */
   border-color: transparent;
   background: #4e50584c;
   cursor: pointer;
@@ -61,10 +46,6 @@
 .friend-item-options {
   display: flex;
   justify-content: center;
-  
-  /* min-width: 100px; */
-  /* flex-basis: 100%; */
-  /* margin-left: 8px; */
 }
 
 .friend-item-action {
@@ -103,7 +84,6 @@
 
 .friend-item-action:hover .action-tooltip {
   visibility: visible;
-  /* transition: height .2s ease-in, width .2s ease-in; */
 }
 
 .all.offline {

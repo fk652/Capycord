@@ -1,10 +1,12 @@
 import './ServerBar.css';
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedServer } from '../../store/ui';
 import { useHistory } from "react-router-dom";
+
+import { getSelectedServer } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
-import { fetchServers, getServers } from '../../store/servers';
+import { fetchServers, getServers, resetServers } from '../../store/servers';
 import { ServerToolTip } from "../../context/Modal";
 
 const ServerBar = () => {
@@ -18,6 +20,8 @@ const ServerBar = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchServers())
+
+    return () => {dispatch(resetServers())}
   }, [dispatch])
 
   const toggleSelected = (e) => {
@@ -94,7 +98,6 @@ const ServerBar = () => {
 
       {
         servers.map(server => {
-          // console.log("server", server)
           return (
             <div 
               className={`server-item-wrapper ${checkSelected(server.id)}`} 

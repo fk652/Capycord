@@ -1,11 +1,12 @@
+import './ChannelSideBar.css'
+
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import { fetchChannels, getChannels, getChannelServerId } from '../../store/channels';
-import { fetchMembers } from '../../store/members';
+
+import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
-import './ChannelSideBar.css'
 
 const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
@@ -14,36 +15,11 @@ const ChannelSideBar = () => {
   const serverInfo = useSelector(getServer(serverId));
   const history = useHistory();
 
-  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchChannels(serverId))
-    .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        data = await res.text();
-      }
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-      if (data?.errors) errors.messages = data.errors;
-      history.push('/home');
-    });
-
-    console.log(channelServerId, serverId);
     if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
       history.push(`/server/${serverId}/${channels[0].id}`);
     }
-
-    dispatch(fetchMembers(serverId));
-  }, [dispatch, serverId, channelServerId])
-
-
-  // if (!serverInfo) return <Redirect to={`/home`} />;
-  if (!serverInfo) return <div className="channel-side-bar" />;
+  }, [serverId, channelServerId])
 
   const checkSelected = (id) => {
     if (id.toString() === channelId) return "selected"
@@ -54,6 +30,8 @@ const ChannelSideBar = () => {
   for (let i = 1000; i < 1050; i++) {
     dummies.push(i);
   }
+  
+  if (!serverInfo) return <div className="channel-side-bar" />;
 
   return (
     <div className="channel-side-bar">

@@ -1,19 +1,12 @@
 import "./FriendsPending.css";
-import FriendListItem from "../FriendListItem";
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { fetchFriendRequests, getFriendRequests } from "../../../store/friendRequests";
 
+import { useSelector } from "react-redux";
+
+import FriendListItem from "../FriendListItem";
+import { getFriendRequests } from "../../../store/friendRequests";
 
 const FriendsPending= () => {
   const requests = useSelector(getFriendRequests);
-
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchFriendRequests())
-  }, [dispatch])
-
-  // console.log("requests", requests);
 
   const incomingMessage = "Incoming Friend Request";
   const outgoingMessage = "Outgoing Friend Request";
