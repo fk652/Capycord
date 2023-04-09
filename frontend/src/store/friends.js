@@ -49,7 +49,7 @@ export const deleteFriend = (friendshipId) => async dispatch => {
   }
 } 
 
-const initialState = {}
+const initialState = null;
 
 const friendsReducer = (state = initialState, action) => {
   switch (action.type) {

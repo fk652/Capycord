@@ -16,7 +16,7 @@ const MessageItem = ({message, user, date, extraTimeInfo}) => {
     }
   );
 
-  const currentDate = new Date()
+  const currentDate = new Date();
   const dayDifference = (currentDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
   let dateInfo;
   if (dayDifference < 1) dateInfo = "Today at";

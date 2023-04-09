@@ -105,3 +105,74 @@
   position: relative;
   top: -5px;
 }
+
+.first-server-message, .first-channel-message {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 20px);
+  margin: 16px;
+}
+
+.first-server-message {
+  padding: 16px 16px 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.first-message-header {
+  font-size: 32px;
+  font-weight: 900;
+  color: #f2f3f5;
+  height: 40px;
+}
+
+.first-message-subtext {
+  font-size: 14px;
+  color: #b5bac1;
+  margin-top: 8px;
+}
+
+.large-channel-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 100%;
+  background: #41434a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;;
+}
+
+.first-message-header.channel {
+  margin: 8px 0;
+}
+
+.first-message-subtext.channel {
+  margin: 0;
+  font-size: 16px;
+}
+
+.channel-settings {
+  margin-top: 16px;
+}
+
+.edit-channel-button {
+  background: none;
+  font-size: 16px;
+  padding: 6px;
+  margin: 0;
+  width: 125px;
+  height: 32px;
+  color: #00a8fc;
+  font-weight: normal;
+}
+
+.edit-channel-button:hover {
+  background: #393c41;
+  cursor: pointer;
+}
+
+.edit-button-icon {
+  display: inline;
+  margin-right: 6px;
+}

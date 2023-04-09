@@ -41,7 +41,7 @@ export const deleteServer = (serverId) => async dispatch => {
 
 }
 
-const initialState = {}
+const initialState = null;
 
 const serversReducer = (state = initialState, action) => {
   switch (action.type) {

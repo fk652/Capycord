@@ -13,11 +13,11 @@ export const removeErrors = () => ({
 })
 
 export const getErrors = (state) => {
-  return state.errors.messages ? state.errors.messages : null
+  return state.errors?.messages ? state.errors.messages : null
 }
 
 const initialState = {
-  status: "",
+  status: null,
   messages: null
 }
 

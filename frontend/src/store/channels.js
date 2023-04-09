@@ -18,15 +18,15 @@ const setChannels = (serverId, channels) => ({
 })
 
 export const getChannels = (state) => {
-  return state.channels ? Object.values(state.channels.channelList) : [];
+  return state.channels?.channelList ? Object.values(state.channels.channelList) : [];
 }
 
 export const getChannel = (id) => (state) => {
-  return state.channels ? state.channels.channelList[id] : null;
+  return state.channels?.channelList ? state.channels.channelList[id] : null;
 }
 
 export const getChannelServerId = (state) => {
-  return state.channels ? state.channels.serverId : null;
+  return state.channels?.serverId ? state.channels.serverId : null;
 }
 
 export const fetchChannels = (serverId) => async dispatch => {
@@ -51,8 +51,8 @@ export const deleteChannel = (channelId) => async dispatch => {
 }
 
 const initialState = {
-  serverId: -1,
-  channelList: {}
+  serverId: null,
+  channelList: null
 }
 
 const channelsReducer = (state = initialState, action) => {

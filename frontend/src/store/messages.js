@@ -15,7 +15,7 @@ const setMessages = (messages) => ({
 })
 
 export const getMessages = (state) => {
-  return state.messages ? Object.values(state.messages) : [];
+  return state.messages ? Object.values(state.messages) : null;
 }
 
 export const getMessage = (id) => (state) => {
@@ -31,7 +31,7 @@ export const fetchMessages = (channelId) => async dispatch => {
   }
 }
 
-const initialState = {}
+const initialState = null
 
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {

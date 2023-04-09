@@ -68,8 +68,9 @@ export const logout = () => async (dispatch) => {
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
 
+  dispatch(resetUi());
+  
   // dispatch(removeErrors());
-  // dispatch(resetUi());
   // dispatch(resetServers());
   // dispatch(resetFriends());
   // dispatch(resetFriendRequests());

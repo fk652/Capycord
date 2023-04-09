@@ -45,7 +45,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
                     <ActionIcon actionType="acceptRequest" itemId={itemId} />
                     <ActionIcon actionType="ignoreRequest" itemId={itemId} />
                   </>
-                : actions === "sentItem"
+                : actions === "outgoingItem"
                   ? <ActionIcon actionType="cancelRequest" itemId={itemId} />
                   : <></>
           }

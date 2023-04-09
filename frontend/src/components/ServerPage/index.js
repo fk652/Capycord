@@ -23,12 +23,15 @@ const ServerPage = () => {
     return () => {
       dispatch(resetChannels());
       dispatch(resetMembers());
-      dispatch(resetMessages());
     }
   }, [dispatch, serverId])
   
   useEffect(() => {
     if (channelId) dispatch(fetchMessages(channelId));
+    
+    return () => {
+      dispatch(resetMessages());
+    }
   }, [dispatch, channelId])
 
   const sessionUser = useSelector(state => state.session.user);

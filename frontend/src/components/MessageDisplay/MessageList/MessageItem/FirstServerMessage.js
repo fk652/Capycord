@@ -12,7 +12,15 @@ const FirstServerMessage = () => {
 
   return (
     <div className="first-server-message">
-    
+      <p className="first-message-header">
+        Welcome to
+      </p>
+      <p className="first-message-header">
+        {serverInfo.name}
+      </p>
+      <div className="first-message-subtext">
+        This is the beginning of this server.
+      </div>
     </div>
   )
 }

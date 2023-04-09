@@ -47,7 +47,7 @@ export const deleteMember = (memberId) => async dispatch => {
 
 }
 
-const initialState = {}
+const initialState = null;
 
 const membersReducer = (state = initialState, action) => {
   switch (action.type) {

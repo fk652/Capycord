@@ -12,9 +12,11 @@ import FirstChannelMessage from './MessageItem/FirstChannelMessage';
 import FirstServerMessage from './MessageItem/FirstServerMessage';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
+import { useParams } from 'react-router-dom';
 
 const MessageList = () => {
-  const channelInfo = useSelector(getChannel)
+  const {channelId} = useParams();
+  const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
 
@@ -26,10 +28,11 @@ const MessageList = () => {
     if (messageElement) messageElement.scrollTo(0, messageElement.scrollHeight);
   }, [messages])
   
-  if (!messages || !members) return null;
-
   let previousDate = null;
+  if (!messages || !members || !channelInfo) return null;
 
+  console.log(messages);
+  
   return (
     <div className="message-list-wrapper">
       <div className="messages-list">
