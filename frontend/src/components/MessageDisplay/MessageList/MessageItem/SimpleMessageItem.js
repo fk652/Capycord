@@ -46,7 +46,7 @@ const SimpleMessageItem = ({message}) => {
   }
 
   return (
-    <div className="message-item-wrapper">
+    <div className="message-item-wrapper simple">
       <div 
         className="message-time"
         onMouseEnter={showHandler(message.id)}

@@ -18,6 +18,10 @@ export const getMembers = (state) => {
   return state.members ? Object.values(state.members) : [];
 }
 
+export const getMembersObject = (state) => {
+  return state.members ? state.members : {};
+}
+
 export const getMember = (id) => (state) => {
   return state.members ? state.members[id] : null;
 }

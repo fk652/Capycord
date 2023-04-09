@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { getMembers } from '../../../store/members';
+import { getMembers, getMembersObject } from '../../../store/members';
 import { fetchMessages, getMessages, resetMessages } from '../../../store/messages';
 import MessageInput from './MessageInput';
+import MessageItem from './MessageItem';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import './MessageList.css'
 
@@ -11,7 +12,7 @@ const MessageList = () => {
   const history = useHistory();
   const {serverId, channelId} = useParams();
   const messages = useSelector(getMessages);
-  const members = useSelector(getMembers);
+  const members = useSelector(getMembersObject);
   
   const dispatch = useDispatch();
   useEffect(() => {
@@ -31,16 +32,27 @@ const MessageList = () => {
       if (data?.errors) errors.messages = data.errors;
       history.push('/home');
     });
-    
+
     return () => dispatch(resetMessages());
   }, [dispatch, serverId, channelId])
+
+  useEffect(() => {
+    const messageElement = document.querySelector(".messages-list")
+    if (messageElement) messageElement.scrollTo(0, messageElement.scrollHeight);
+  }, [messages])
+  
+  if (!messages || !members) return null;
 
   return (
     <div className="message-list-wrapper">
       <div className="messages-list">
         {
           messages.map((message, index) => {
-            return <SimpleMessageItem message={message} />
+            if (index === 0 || message.authorId !== messages[index-1].authorId ) {
+              return <MessageItem message={message} user={members[message.authorId]} />
+            } else {
+              return <SimpleMessageItem message={message} />
+            }
           })
         }
       </div>
