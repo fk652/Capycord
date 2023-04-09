@@ -1,10 +1,11 @@
 import './MessageItem.css'
 
-const TimeDivider = ({time}) => {
+const TimeDivider = ({date}) => {
 
   return (
     <div className="time-divider">
-      
+      <div className="divider-border" />
+      <div className="divider-date">{date}</div>
     </div>
   )
 }

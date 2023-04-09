@@ -2,26 +2,15 @@ import './MessageItem.css'
 import { useState } from 'react';
 import { TimeToolTip } from '../../../../context/Modal';
 
-const MessageItem = ({message, user}) => {
-
+const MessageItem = ({message, user, date, extraTimeInfo}) => {
   // if updatedAt !== createdAt, add edit status
-  const date = new Date(message.createdAt);
+  
   const shortTime = date.toLocaleString(
     'en-us', 
     {
       hour: "numeric", 
       minute: "numeric",
       hour12: true
-    }
-  );
-  
-  const extraTimeInfo = date.toLocaleString(
-    'en-us', 
-    {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric"
     }
   );
 

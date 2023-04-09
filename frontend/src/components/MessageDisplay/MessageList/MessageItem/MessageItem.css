@@ -15,14 +15,14 @@
 
 .message-time {
   font-size: 10px;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.05em;
   min-width: 55px;
   max-width: 55px;
   margin-right: 1px;
   text-align: center;
   color: #949ba4;
   visibility: hidden;
-  font-weight: bold;
+  /* font-weight: bold; */
 
   position: relative;
   top: -5px;
@@ -58,7 +58,7 @@
   position: relative;
   top: 0;
   margin-left: 0.25rem;
-  letter-spacing: 0.02em;
+  /* letter-spacing: 0.02em; */
 }
 
 .author-username {
@@ -83,4 +83,29 @@
   flex-basis: 90%;
   line-height: 1.6;
   margin-left: 5px;
+}
+
+.time-divider {
+  min-width: calc(100% - 20px);
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.divider-border {
+  width: 100%;
+  border-top: 1px solid #3f4147;
+}
+
+.divider-date {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  padding: 0 5px;
+  color: #949ba4;
+  background: #313338;
+  position: relative;
+  top: -5px;
 }

@@ -6,6 +6,7 @@ import { fetchMessages, getMessages, resetMessages } from '../../../store/messag
 import MessageInput from './MessageInput';
 import MessageItem from './MessageItem';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
+import TimeDivider from './MessageItem/TimeDivider';
 import './MessageList.css'
 
 const MessageList = () => {
@@ -43,15 +44,49 @@ const MessageList = () => {
   
   if (!messages || !members) return null;
 
+  let previousDate = null;
+
   return (
     <div className="message-list-wrapper">
       <div className="messages-list">
         {
           messages.map((message, index) => {
-            if (index === 0 || message.authorId !== messages[index-1].authorId ) {
-              return <MessageItem message={message} user={members[message.authorId]} />
+            const date = new Date(message.createdAt);
+            const extraTimeInfo = date.toLocaleString(
+              'en-us', 
+              {
+                weekday: "long",
+                month: "long",
+                day: "numeric",
+                year: "numeric"
+              }
+            );
+
+            if (index === 0 || extraTimeInfo !== previousDate) {
+              previousDate = extraTimeInfo;
+              return <>
+                      <TimeDivider date={extraTimeInfo} />
+                      <MessageItem 
+                      message={message} 
+                      user={members[message.authorId]} 
+                      date={date} 
+                      extraTimeInfo={extraTimeInfo} 
+                      />
+                    </>
+            } else if (index === 0 || message.authorId !== messages[index-1].authorId ) {
+              return <MessageItem 
+                        message={message} 
+                        user={members[message.authorId]} 
+                        date={date} 
+                        extraTimeInfo={extraTimeInfo} 
+                      />
             } else {
-              return <SimpleMessageItem message={message} />
+              return <SimpleMessageItem 
+                        message={message} 
+                        user={members[message.authorId]} 
+                        date={date} 
+                        extraTimeInfo={extraTimeInfo} 
+                      />
             }
           })
         }
