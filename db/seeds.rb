@@ -56,8 +56,8 @@ ApplicationRecord.transaction do
     servers << Server.create!({
       name: Faker::Games::Pokemon.unique.location,
       owner_id: user.id,
-      # picture_url: "https://www.travelandleisure.com/thmb/R2kb6GuJwF4wVJhRVevV-FqOVao=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/el-yunque-national-rainforest-tropical-puerto-rico-TROPICALPLANTS0617-d3ccb18a16064e42bdd626cdf7a8cb68.jpg"
-      picture_url: Faker::LoremFlickr.image
+      picture_url: "https://www.travelandleisure.com/thmb/R2kb6GuJwF4wVJhRVevV-FqOVao=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/el-yunque-national-rainforest-tropical-puerto-rico-TROPICALPLANTS0617-d3ccb18a16064e42bdd626cdf7a8cb68.jpg"
+      # picture_url: Faker::LoremFlickr.image
     })
   end
 
