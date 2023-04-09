@@ -1,0 +1,16 @@
+.message-input-form {
+  width: 100%;
+  padding: 0 16px;
+  margin-left: -8px;
+}
+
+.message-textarea-wrapper {
+  margin-bottom: 24px;
+}
+
+.message-textarea {
+  margin: 0 20px 0 0;
+  width: 95%;
+  max-height: calc(100vh - 50px);
+  resize: none;
+}

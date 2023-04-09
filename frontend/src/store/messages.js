@@ -14,6 +14,11 @@ const setMessages = (messages) => ({
   messages
 })
 
+const addMessage = (message) => ({
+  type: ADD_MESSAGE,
+  message
+})
+
 export const getMessages = (state) => {
   return state.messages ? Object.values(state.messages) : null;
 }
@@ -31,6 +36,17 @@ export const fetchMessages = (channelId) => async dispatch => {
   }
 }
 
+export const CreateMessage = (message) => async dispatch => {
+  const response = await csrfFetch(`/api/channels/${message.channelId}/messages`, {
+    method: 'POST',
+    body: JSON.stringify(message)
+  })
+
+  const data = await response.json();
+  dispatch(addMessage(data));
+  return response;
+}
+
 const initialState = null
 
 const messagesReducer = (state = initialState, action) => {
@@ -39,6 +55,8 @@ const messagesReducer = (state = initialState, action) => {
       return initialState;
     case SET_MESSAGES:
       return {...action.messages};
+    case ADD_MESSAGE:
+      return {...state, [action.message.id]: action.message}
     default:
       return state;
   }
