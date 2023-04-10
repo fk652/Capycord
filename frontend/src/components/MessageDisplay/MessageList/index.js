@@ -62,7 +62,6 @@ const MessageList = () => {
             if (previousUserTime) {
               previousUserMinuteDiff = (date - previousUserTime) / (1000 * 60);
             }
-            console.log(previousUser, previousUserMinuteDiff)
 
             const extraTimeInfo = date.toLocaleString(
               'en-us', 

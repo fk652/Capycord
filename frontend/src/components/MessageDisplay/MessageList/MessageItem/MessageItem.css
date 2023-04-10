@@ -8,8 +8,8 @@
 }
 
 .message-details-wrapper {
-  max-width: calc(100% - 90px);
-  width: 100%;
+  max-width: calc(100% - 70px);
+  /* width: 100%; */
   /* overflow-x: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; */
