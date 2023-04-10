@@ -88,7 +88,7 @@ const ServerPage = () => {
                 (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
               // console.log(atBottom)
               if (atBottom) dispatch(setScroll(true));
-              dispatch(addMessage(message.message));
+              dispatch(addMessage(message));
               break;
             case "DESTROY_MESSAGE":
               dispatch(removeMessage(id));
