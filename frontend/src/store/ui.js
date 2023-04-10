@@ -3,6 +3,7 @@ const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
 const SET_SHOW_MEMBERS = "ui/setShowMembers";
 const SET_SCROLL = "ui/setScroll";
+const RESET_MESSAGE_BOX = "ui/resetMessageBox";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -30,6 +31,11 @@ export const setScroll = (toggle) => ({
   toggle
 })
 
+export const resetMessageBox = (toggle) => ({
+  type: RESET_MESSAGE_BOX,
+  toggle
+})
+
 export const resetUi = () => ({
   type: RESET_UI
 })
@@ -54,6 +60,10 @@ export const getSetScroll = (state) => {
   return state.ui.setScroll
 }
 
+export const getResetMessageBox = (state) => {
+  return state.ui.resetMessageBox
+}
+
 // export const getChannelReset = (state) => {
 //   return state.ui.channelReset
 // }
@@ -63,7 +73,8 @@ const initialState = {
   selectedServer: "home",
   addFriendResult: false,
   showMembers: false,
-  setScroll: true
+  setScroll: true,
+  resetMessageBox: true
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -78,6 +89,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showMembers: action.toggle}
     case SET_SCROLL:
       return {...state, setScroll: action.toggle}
+    case RESET_MESSAGE_BOX:
+      return {...state, resetMessageBox: action.toggle}
     case RESET_UI:
       return {...initialState}
     default:

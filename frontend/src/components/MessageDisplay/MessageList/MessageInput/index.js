@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { addErrors } from '../../../../store/errors'
 import { CreateMessage } from '../../../../store/messages'
-import { setScroll } from '../../../../store/ui'
+import { getResetMessageBox, resetMessageBox, setScroll } from '../../../../store/ui'
 import './MessageInput.css'
 
 const MessageInput = ({channelInfo}) => {
-  const listEle = document.querySelector(".messages-list")
-  const [message, setMessage] = useState('')
+  const boxReset = useSelector(getResetMessageBox);
+  const listEle = document.querySelector(".messages-list");
+  const [message, setMessage] = useState('');
   let shiftPressed = false;
   let enterPressed = false;
   const dispatch = useDispatch();
@@ -15,10 +16,6 @@ const MessageInput = ({channelInfo}) => {
   const handleSubmit = (e) => {e.preventDefault();}
   
   const handleChange = (e) => {
-    if (enterPressed && !shiftPressed) return;
-    console.log(enterPressed, shiftPressed);
-    console.log(e.target.value)
-
     setMessage(e.target.value);
     const setScroll = listEle &&
       (Math.round(listEle.scrollHeight - listEle.scrollTop) === listEle.clientHeight);
@@ -29,6 +26,17 @@ const MessageInput = ({channelInfo}) => {
     
     if (setScroll) listEle.scrollTo(0, listEle.scrollHeight);
   }
+
+  useEffect(() => {
+    const boxEle = document.querySelector('.message-textarea');
+
+    if (boxEle.value === '\n' && boxReset) {
+      boxEle.style.height = "22px";
+      setMessage('');
+      boxEle.value = '';
+      dispatch(resetMessageBox(false));
+    }
+  }, [dispatch, resetMessageBox, message])
   
   const handleKeyDown = (e) => {
     if (e.key === "Shift") shiftPressed = true;
@@ -56,9 +64,8 @@ const MessageInput = ({channelInfo}) => {
       });
       
       setMessage('');
-      e.target.value = '';
-      e.target.style.height = "22px";
       dispatch(setScroll(true));
+      dispatch(resetMessageBox(true));
     }
   }
   

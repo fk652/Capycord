@@ -15,9 +15,10 @@
   overflow: hidden;
 } */
 
-/* .time-message-wrapper {
+.time-message-wrapper {
   max-width: calc(100% - 20px);
-} */
+  overflow-x: clip;
+}
 
 .message-item-wrapper.simple {
   align-items: baseline;
@@ -95,6 +96,7 @@
   margin-left: 5px;
   /* max-width: 90%; */
   /* max-width: calc(100% - 240px); */
+  overflow-x: clip;
 }
 
 .time-divider {
