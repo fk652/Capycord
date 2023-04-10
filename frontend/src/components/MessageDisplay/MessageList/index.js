@@ -28,9 +28,6 @@ const MessageList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const messageElement = document.querySelector(".messages-list")
-    // const atBottom = messageElement &&
-    //   (Math.round(messageElement.scrollHeight - messageElement.scrollTop) <= messageElement.clientHeight);
-    // console.log(atBottom)
 
     if (messageElement && scroll) {
       messageElement.scrollTo(0, messageElement.scrollHeight);

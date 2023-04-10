@@ -126,3 +126,8 @@
 .channel-list-item.selected:hover {
   background: #43444b;
 }
+
+.channel-list-spacer {
+  min-height: 15px;
+  max-height: 15px;
+}

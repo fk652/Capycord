@@ -56,3 +56,8 @@
 .crown-icon {
   color: #f0b132;
 }
+
+.member-list-spacer {
+  min-height: 20px;
+  max-height: 20px;
+}

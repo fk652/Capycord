@@ -143,6 +143,8 @@ const MemberList = () => {
           />
         })
       }
+
+      <div className="member-list-spacer" />
     </div>
   )
 }

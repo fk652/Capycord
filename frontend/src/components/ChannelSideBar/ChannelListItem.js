@@ -24,7 +24,7 @@ const ChannelListItem = ({id, name, type, selected}) => {
 
     const rect = e.target.getBoundingClientRect();
     setTop(rect.y - 37)
-    setLeft(rect.x - 40)
+    setLeft(rect.x - 42)
   }
 
   const leaveHandler = (e) => {
