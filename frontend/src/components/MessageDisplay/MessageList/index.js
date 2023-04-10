@@ -32,7 +32,7 @@ const MessageList = () => {
       messageElement.scrollTo(0, messageElement.scrollHeight);
       dispatch(setScroll(false));
     }
-  }, [messages])
+  }, [dispatch, messages, scroll])
   
   let previousDate = null;
   let previousTime = null;

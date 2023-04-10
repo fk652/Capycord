@@ -17,14 +17,15 @@ const MessageInput = ({channelInfo}) => {
   
   const handleChange = (e) => {
     setMessage(e.target.value);
-    const setScroll = listEle &&
-      (Math.round(listEle.scrollHeight - listEle.scrollTop) === listEle.clientHeight);
+    const scroll = listEle &&
+      (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
 
     e.target.style.height = "22px";
     const height = e.target.scrollHeight;
     e.target.style.height = `${height}px`;
     
-    if (setScroll) listEle.scrollTo(0, listEle.scrollHeight);
+    if (scroll) listEle.scrollTo(0, listEle.scrollHeight);
+    // if (scroll) dispatch(setScroll(true));
   }
 
   useEffect(() => {
@@ -35,7 +36,8 @@ const MessageInput = ({channelInfo}) => {
       setMessage('');
       boxEle.value = '';
       dispatch(resetMessageBox(false));
-      dispatch(setScroll(true));
+      // dispatch(setScroll(true));
+      setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
     }
   }, [dispatch, resetMessageBox, message])
   
@@ -46,6 +48,11 @@ const MessageInput = ({channelInfo}) => {
     const filteredMessage = message.trim();
 
     if(enterPressed && !shiftPressed && filteredMessage !== '') {
+      setMessage('');
+      listEle.scrollTo(0, listEle.scrollHeight);
+      dispatch(setScroll(true));
+      dispatch(resetMessageBox(true));
+
       dispatch(CreateMessage({channelId: channelInfo.id, body: filteredMessage}))
       .catch(async (res) => {
         let data;
@@ -64,9 +71,6 @@ const MessageInput = ({channelInfo}) => {
         dispatch(addErrors(errors));
       });
       
-      setMessage('');
-      dispatch(setScroll(true));
-      dispatch(resetMessageBox(true));
     }
   }
   
