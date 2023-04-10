@@ -22,7 +22,7 @@ const ChannelListItem = ({id, name, type, selected}) => {
     setCurrentModal(id);
     setShowModal(true);
 
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     setTop(rect.y - 37)
     setLeft(rect.x - 42)
   }

@@ -3,8 +3,9 @@ import './MessageItem.css'
 import { useState } from 'react';
 
 import { TimeToolTip } from '../../../../context/Modal';
+import MessageEditOptions from './MessageEditOptions';
 
-const MessageItem = ({message, user, date, extraTimeInfo}) => {
+const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
   
   const shortTime = date.toLocaleString(
@@ -44,36 +45,44 @@ const MessageItem = ({message, user, date, extraTimeInfo}) => {
     setShowModal(false);
   }
 
-  if (!user) return null;
+  if (!user || !message) return null;
 
   return (
-    <div className="message-item-wrapper">
-      <div className="profile-pic-wrapper">
-        <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
-      </div>
+    <div className="message-wrapper">
+      { 
+        (sessionId === message.authorId)
+          ? <MessageEditOptions messageId={message.id} />
+          : null
+      }
+      
+      <div className="message-item-wrapper">
+        <div className="profile-pic-wrapper">
+          <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
+        </div>
 
-      <div className="message-details-wrapper">
-        <h3 className="message-header">
-          <div className="author-username">
-            {user.username.split("#")[0]}
-          </div>
+        <div className="message-details-wrapper">
+          <h3 className="message-header">
+            <div className="author-username">
+              {user.username.split("#")[0]}
+            </div>
 
-          <div 
-            className="message-time long"
-            onMouseEnter={showHandler(message.id)}
-            onMouseLeave={leaveHandler}
-          >
-            {showModal && currentModal === message.id && (
-              <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
-                <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>
-              </TimeToolTip>
-            )}
-            {`${dateInfo} ${shortTime}`}
+            <div 
+              className="message-time long"
+              onMouseOver={showHandler(message.id)}
+              onMouseLeave={leaveHandler}
+              >
+              {showModal && currentModal === message.id && (
+                <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
+                  <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>
+                </TimeToolTip>
+              )}
+              {`${dateInfo} ${shortTime}`}
+            </div>
+          </h3>
+          
+          <div className="message-body">
+            {message.body}
           </div>
-        </h3>
-        
-        <div className="message-body">
-          {message.body}
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { TimeToolTip } from '../../../../context/Modal';
 
-const SimpleMessageItem = ({message, date, extraTimeInfo}) => {
+const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
   
   const shortTime = date.toLocaleString(
@@ -26,7 +26,7 @@ const SimpleMessageItem = ({message, date, extraTimeInfo}) => {
     setCurrentModal(id);
     setShowModal(true);
 
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     setTop(rect.y - 40)
     setLeft(rect.x - 70)
   }

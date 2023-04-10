@@ -21,6 +21,7 @@ const MessageList = () => {
   const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
+  const sessionUser = useSelector(state => state.session.user);
 
   // add useEffect to retrieve more messages when scrolled to the top
   // dependency array with scroll height
@@ -91,6 +92,7 @@ const MessageList = () => {
                         date={date} 
                         extraTimeInfo={extraTimeInfo} 
                         key={message.id}
+                        sessionId={sessionUser.id}
                       />
                     </div>
             } else if (
@@ -109,6 +111,7 @@ const MessageList = () => {
                         date={date} 
                         extraTimeInfo={extraTimeInfo} 
                         key={message.id}
+                        sessionId={sessionUser.id}
                       />
             } else {
               previousTime = date;
@@ -119,6 +122,7 @@ const MessageList = () => {
                         date={date} 
                         extraTimeInfo={extraTimeInfo} 
                         key={message.id}
+                        sessionId={sessionUser.id}
                       />
             }
           })

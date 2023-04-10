@@ -1,0 +1,43 @@
+.message-wrapper {
+  position: relative;
+  margin-top: 17px;
+}
+
+.message-options-container {
+  position: absolute;
+  right: 5px;
+  top: -12px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: #313338;
+  border: 1px solid #27292d;
+  width: 30px;
+  height: 30px;
+}
+
+.delete-container {
+  color: #f23f42;
+  position: relative;
+  top: 2px;
+}
+
+.message-options-container:hover {
+  display: flex;
+  background: #4e505899;
+  cursor: pointer;
+}
+
+.message-options-container:hover + .message-item-wrapper {
+  background: #2e3035;
+}
+
+.message-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.message-wrapper:hover .message-options-container {
+  display: flex;
+}

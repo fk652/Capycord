@@ -27,7 +27,7 @@ export const MessageNavBar = () => {
     setCurrentModal(id);
     setShowModal(true);
 
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     setLeft(rect.x - offsets[0])
     setTop(rect.y + offsets[1])
   }
