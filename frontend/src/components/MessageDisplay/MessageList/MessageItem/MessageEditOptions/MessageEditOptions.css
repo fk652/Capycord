@@ -3,6 +3,10 @@
   margin-top: 17px;
 }
 
+.message-wrapper.simple {
+  margin: 0;
+}
+
 .message-options-container {
   position: absolute;
   right: 5px;

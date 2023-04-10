@@ -3,6 +3,7 @@ import './MessageItem.css'
 import { useState } from 'react';
 
 import { TimeToolTip } from '../../../../context/Modal';
+import MessageEditOptions from './MessageEditOptions';
 
 const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
@@ -38,23 +39,31 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   }
 
   return (
-    <div className="message-item-wrapper simple">
-      <div 
-        className="message-time"
-        onMouseEnter={showHandler(message.id)}
-        onMouseLeave={leaveHandler}
-      >
-        {showModal && currentModal === message.id && (
-          <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
-            <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>
-          </TimeToolTip>
-        )}
-
-        {shortTime}
-      </div>
+    <div className="message-wrapper simple">
+      { 
+        (sessionId === message.authorId)
+          ? <MessageEditOptions messageId={message.id} />
+          : null
+      }
       
-      <div className="message-body">
-        {message.body}
+      <div className="message-item-wrapper simple">
+        <div 
+          className="message-time"
+          onMouseEnter={showHandler(message.id)}
+          onMouseLeave={leaveHandler}
+        >
+          {showModal && currentModal === message.id && (
+            <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
+              <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>
+            </TimeToolTip>
+          )}
+
+          {shortTime}
+        </div>
+        
+        <div className="message-body">
+          {message.body}
+        </div>
       </div>
     </div>
   )
