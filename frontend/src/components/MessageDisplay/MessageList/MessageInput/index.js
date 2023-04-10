@@ -35,6 +35,7 @@ const MessageInput = ({channelInfo}) => {
       setMessage('');
       boxEle.value = '';
       dispatch(resetMessageBox(false));
+      dispatch(setScroll(true));
     }
   }, [dispatch, resetMessageBox, message])
   

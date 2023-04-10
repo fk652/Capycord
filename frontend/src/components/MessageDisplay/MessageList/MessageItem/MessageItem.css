@@ -1,5 +1,5 @@
 .message-item-wrapper {
-  width: calc(100% - 20px);
+  /* width: calc(100% - 20px); */
   /* max-width: calc(100% - 240px); */
   display: flex;
   justify-content: baseline;
@@ -7,12 +7,16 @@
   margin-top: 17px;
 }
 
-/* .message-details-wrapper {
-  max-width: calc(100% - 240px);
-  text-overflow: clip;
-  display: flex;
-  flex-wrap: wrap;
-  overflow: hidden;
+.message-details-wrapper {
+  max-width: calc(100% - 90px);
+  width: 100%;
+  /* overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; */
+}
+
+/* .message-details-wrapper .message-body {
+  width: 100%;
 } */
 
 .time-message-wrapper {
@@ -96,7 +100,20 @@
   margin-left: 5px;
   /* max-width: 90%; */
   /* max-width: calc(100% - 240px); */
-  overflow-x: clip;
+
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-line;
+  
+  /* white-space: break-spaces; */
+  /* white-space: pre-wrap; */
+  /* display: flex;
+  flex-wrap: wrap; */
+  /* width: 100%; */
+  /* word-break: normal; */
+  /* word-break: break-all; */
+  /* white-space: pre-wrap; */
+  /* white-space: normal; */
 }
 
 .time-divider {
