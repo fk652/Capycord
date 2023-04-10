@@ -2,6 +2,7 @@ const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
 const SET_SHOW_MEMBERS = "ui/setShowMembers";
+const SET_SCROLL = "ui/setScroll";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -24,6 +25,11 @@ export const setAddFriendResult = (result) => ({
   result
 })
 
+export const setScroll = (toggle) => ({
+  type: SET_SCROLL,
+  toggle
+})
+
 export const resetUi = () => ({
   type: RESET_UI
 })
@@ -44,15 +50,20 @@ export const getShowMembersToggle = (state) => {
   return state.ui.showMembers
 }
 
-export const getChannelReset = (state) => {
-  return state.ui.channelReset
+export const getSetScroll = (state) => {
+  return state.ui.setScroll
 }
+
+// export const getChannelReset = (state) => {
+//   return state.ui.channelReset
+// }
 
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
   addFriendResult: false,
-  showMembers: false
+  showMembers: false,
+  setScroll: true
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -65,6 +76,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, addFriendResult: action.result}
     case SET_SHOW_MEMBERS:
       return {...state, showMembers: action.toggle}
+    case SET_SCROLL:
+      return {...state, setScroll: action.toggle}
     case RESET_UI:
       return {...initialState}
     default:

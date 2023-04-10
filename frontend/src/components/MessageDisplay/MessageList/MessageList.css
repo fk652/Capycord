@@ -36,3 +36,8 @@
   background: #2b2d31;
   border-radius: 10px;
 }
+
+.message-list-spacer {
+  min-height: 30px;
+  max-height: 30px;
+}

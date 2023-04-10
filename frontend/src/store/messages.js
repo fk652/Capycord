@@ -37,13 +37,13 @@ export const fetchMessages = (channelId) => async dispatch => {
 }
 
 export const CreateMessage = (message) => async dispatch => {
-  const response = await csrfFetch(`/api/channels/${message.channelId}/messages`, {
+  const response = await csrfFetch(`/api/messages`, {
     method: 'POST',
     body: JSON.stringify(message)
   })
 
   const data = await response.json();
-  dispatch(addMessage(data));
+  dispatch(addMessage(data.message));
   return response;
 }
 

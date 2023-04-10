@@ -1,16 +1,69 @@
 .message-input-form {
   width: 100%;
-  padding: 0 16px;
-  margin-left: -8px;
+  padding: 0;
+  margin-left: -10px;
+  display: flex;
+  justify-content: center;
 }
 
 .message-textarea-wrapper {
   margin-bottom: 24px;
+  padding: 10px 20px;
+  background-color: #3a3a40;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.message-textarea-scroll-wrapper {
+  min-height: 22px;
+  max-height: 400px;
+  overflow-y: auto;
+  scrollbar-width: 4px;
+  scrollbar-color: #202226;
+  flex-basis: 100%;
 }
 
 .message-textarea {
-  margin: 0 20px 0 0;
-  width: 95%;
-  max-height: calc(100vh - 50px);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  
+  border: none;
+  background-color: #3a3a40;
   resize: none;
+  outline: none;
+  
+  color: #dbdee1;
+  font-family: 'gg sans', 'Noto Sans', Helvetica;
+  font-size: 16px;
+  font-weight: normal;
+  
+  height: 22px;
+}
+
+.message-textarea-scroll-wrapper::-webkit-scrollbar {
+  width: 4px;
+  border-radius: 10px;
+}
+
+.message-textarea-scroll-wrapper::-webkit-scrollbar-thumb {
+  background: #1a1b1e;
+  border-radius: 10px;
+}
+
+.message-textarea-scroll-wrapper::-webkit-scrollbar-track {
+  background: none;
+  border-radius: 10px;
+}
+
+.message-textarea::-webkit-scrollbar {
+  display: none;
+}
+
+.message-textarea {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -1,7 +1,7 @@
 import './MessageList.css'
 
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getChannel } from '../../../store/channels';
 import { getMembersObject } from '../../../store/members';
@@ -13,9 +13,11 @@ import FirstServerMessage from './MessageItem/FirstServerMessage';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
 import { useParams } from 'react-router-dom';
+import { getSetScroll, setScroll } from '../../../store/ui';
 
 const MessageList = () => {
   const {channelId} = useParams();
+  const scroll = useSelector(getSetScroll);
   const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
@@ -23,12 +25,18 @@ const MessageList = () => {
   // add useEffect to retrieve more messages when scrolled to the top
   // dependency array with scroll height
 
+  const dispatch = useDispatch();
   useEffect(() => {
     const messageElement = document.querySelector(".messages-list")
-    if (messageElement) messageElement.scrollTo(0, messageElement.scrollHeight);
+    console.log(scroll, messageElement)
+    if (messageElement && scroll) {
+      messageElement.scrollTo(0, messageElement.scrollHeight);
+      dispatch(setScroll(false));
+    }
   }, [messages])
   
   let previousDate = null;
+  let previousTime = null;
   if (!messages || !members || !channelInfo) return null;
 
   console.log(messages);
@@ -45,6 +53,8 @@ const MessageList = () => {
         {
           messages.map((message, index) => {
             const date = new Date(message.createdAt);
+            let minuteDifference = null;
+            if (previousTime) minuteDifference = (date - previousTime) / (1000 * 60) 
             const extraTimeInfo = date.toLocaleString(
               'en-us', 
               {
@@ -57,6 +67,7 @@ const MessageList = () => {
 
             if (index === 0 || extraTimeInfo !== previousDate) {
               previousDate = extraTimeInfo;
+              previousTime = date;
               return <div key={`${message.id} ${extraTimeInfo}`}>
                       <TimeDivider 
                         date={extraTimeInfo} 
@@ -70,7 +81,11 @@ const MessageList = () => {
                         key={message.id}
                       />
                     </div>
-            } else if (index === 0 || message.authorId !== messages[index-1].authorId ) {
+            } else if (
+                index === 0 || 
+                message.authorId !== messages[index-1].authorId ||
+                minuteDifference > 5) {
+              previousTime = date;
               return <MessageItem 
                         message={message} 
                         user={members[message.authorId]} 
@@ -79,6 +94,7 @@ const MessageList = () => {
                         key={message.id}
                       />
             } else {
+              previousTime = date;
               return <SimpleMessageItem 
                         message={message} 
                         user={members[message.authorId]} 
@@ -89,9 +105,10 @@ const MessageList = () => {
             }
           })
         }
+        <div className="message-list-spacer" />
       </div>
       
-      <MessageInput />
+      <MessageInput channelInfo={channelInfo}/>
     </div>
   )
 }

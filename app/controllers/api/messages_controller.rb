@@ -3,12 +3,11 @@ class Api::MessagesController < ApplicationController
     channel = Channel.find(params[:channel_id])
     if channel
       server = channel.server
-      if !current_user.server_memberships.find(server.id)
-        render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
-        return
-      else
+      if current_user.server_memberships.find(server.id)
         @messages = channel.messages
         render :index
+      else
+        render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
       end
     else
       render json: { errors: { error: "Channel not found"} }, status: :unprocessable_entity
@@ -20,7 +19,22 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
+    server_id = Channel.find(params[:channel_id]).server.id
+    if current_user.server_memberships.find(server_id)
+      @message = Message.new(
+        body: params[:body], 
+        channel_id: params[:channel_id], 
+        author_id: current_user.id
+      )
 
+      if @message.save
+        render :show
+      else
+        render json: { errors: @message.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Must be a server member to post this message"} }, status: :unauthorized
+    end
   end
 
   def destroy 

@@ -8,7 +8,7 @@ import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { fetchMembers, resetMembers } from '../../store/members';
-import { setSelectedServer } from '../../store/ui';
+import { setScroll, setSelectedServer } from '../../store/ui';
 import { fetchMessages, resetMessages } from '../../store/messages';
 
 const ServerPage = () => {
@@ -28,9 +28,10 @@ const ServerPage = () => {
   
   useEffect(() => {
     if (channelId) dispatch(fetchMessages(channelId));
-    
+
     return () => {
       dispatch(resetMessages());
+      dispatch(setScroll(true));
     }
   }, [dispatch, channelId])
 
