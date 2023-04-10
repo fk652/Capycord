@@ -36,6 +36,8 @@ const MessageList = () => {
   
   let previousDate = null;
   let previousTime = null;
+  let previousUser = null;
+  let previousUserTime = null;
   if (!messages || !members || !channelInfo) return <div className="message-list-wrapper" />;
   
   return (
@@ -51,7 +53,17 @@ const MessageList = () => {
           messages.map((message, index) => {
             const date = new Date(message.createdAt);
             let minuteDifference = null;
-            if (previousTime) minuteDifference = (date - previousTime) / (1000 * 60) 
+            let previousUserMinuteDiff = null;
+            
+            if (previousTime) {
+              minuteDifference = (date - previousTime) / (1000 * 60);
+            }
+            
+            if (previousUserTime) {
+              previousUserMinuteDiff = (date - previousUserTime) / (1000 * 60);
+            }
+            console.log(previousUser, previousUserMinuteDiff)
+
             const extraTimeInfo = date.toLocaleString(
               'en-us', 
               {
@@ -65,6 +77,9 @@ const MessageList = () => {
             if (index === 0 || extraTimeInfo !== previousDate) {
               previousDate = extraTimeInfo;
               previousTime = date;
+              previousUser = message.authorId;
+              previousUserTime = date;
+
               return <div key={`${message.id} ${extraTimeInfo}`} className="time-message-wrapper">
                       <TimeDivider 
                         date={extraTimeInfo} 
@@ -79,10 +94,15 @@ const MessageList = () => {
                       />
                     </div>
             } else if (
-                index === 0 || 
-                message.authorId !== messages[index-1].authorId ||
-                minuteDifference > 5) {
+              index === 0 || 
+              message.authorId !== messages[index-1].authorId ||
+              minuteDifference > 5 ||
+              (message.authorId === previousUser && previousUserMinuteDiff > 10)
+            ) {
+              previousUser = message.authorId;
+              previousUserTime = date;
               previousTime = date;
+
               return <MessageItem 
                         message={message} 
                         user={members[message.authorId]} 
@@ -92,6 +112,7 @@ const MessageList = () => {
                       />
             } else {
               previousTime = date;
+              
               return <SimpleMessageItem 
                         message={message} 
                         user={members[message.authorId]} 

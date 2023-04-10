@@ -102,18 +102,11 @@
   /* max-width: calc(100% - 240px); */
 
   overflow-x: hidden;
-  text-overflow: ellipsis;
-  white-space: pre-line;
-  
+  /* text-overflow: ellipsis; */
+  /* white-space: pre-line; */
+  white-space: pre-wrap;
   /* white-space: break-spaces; */
-  /* white-space: pre-wrap; */
-  /* display: flex;
-  flex-wrap: wrap; */
-  /* width: 100%; */
-  /* word-break: normal; */
-  /* word-break: break-all; */
-  /* white-space: pre-wrap; */
-  /* white-space: normal; */
+  overflow-wrap: break-word;
 }
 
 .time-divider {

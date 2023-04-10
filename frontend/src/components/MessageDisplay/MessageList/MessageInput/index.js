@@ -33,8 +33,9 @@ const MessageInput = ({channelInfo}) => {
 
     if (boxEle.value === '\n' && boxReset) {
       boxEle.style.height = "22px";
+
       setMessage('');
-      boxEle.value = '';
+      // boxEle.value = '';
       dispatch(resetMessageBox(false));
       // dispatch(setScroll(true));
       setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
@@ -49,7 +50,7 @@ const MessageInput = ({channelInfo}) => {
 
     if(enterPressed && !shiftPressed && filteredMessage !== '') {
       setMessage('');
-      listEle.scrollTo(0, listEle.scrollHeight);
+      // listEle.scrollTo(0, listEle.scrollHeight);
       dispatch(setScroll(true));
       dispatch(resetMessageBox(true));
 
