@@ -10,7 +10,7 @@ import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
-import { addMessage, fetchMessages, resetMessages } from '../../store/messages';
+import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 // import { getServers } from '../../store/servers';
 
 const ServerPage = () => {
@@ -80,14 +80,30 @@ const ServerPage = () => {
     const subscription = consumer.subscriptions.create(
       { channel: 'ServersChannel', id: channelId },
       {
-        received: message => {
-          const listEle = document.querySelector(".messages-list")
-          const atBottom = listEle &&
-            (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
-          console.log(atBottom)
+        received: ({type, message, id}) => {
+          switch (type) {
+            case "RECEIVE_MESSAGE":
+              const listEle = document.querySelector(".messages-list")
+              const atBottom = listEle &&
+                (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
+              // console.log(atBottom)
+              if (atBottom) dispatch(setScroll(true));
+              dispatch(addMessage(message.message));
+              break;
+            case "DESTROY_MESSAGE":
+              dispatch(removeMessage(id));
+              break;
+            default:
+              console.log("unknown broadcast type");
+          }
 
-          if (atBottom) dispatch(setScroll(true));
-          dispatch(addMessage(message.message));
+          // const listEle = document.querySelector(".messages-list")
+          // const atBottom = listEle &&
+          //   (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
+          // console.log(atBottom)
+
+          // if (atBottom) dispatch(setScroll(true));
+          // dispatch(addMessage(message.message));
         }
       }
     );

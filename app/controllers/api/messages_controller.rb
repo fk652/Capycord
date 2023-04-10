@@ -29,7 +29,11 @@ class Api::MessagesController < ApplicationController
 
       if @message.save
         # ServersChannel.broadcast_to(@message.channel, @message)
-        ServersChannel.broadcast_to(@message.channel, from_template('api/messages/show', message: @message))
+        ServersChannel.broadcast_to(
+          @message.channel,
+          type: 'RECEIVE_MESSAGE',
+          **from_template('api/messages/show', message: @message)
+        )
         
         # render :show
         # render :show, locals: {message: @message}
@@ -46,7 +50,14 @@ class Api::MessagesController < ApplicationController
     @message = Message.find(params[:id])
     if @message.author_id === current_user.id 
       if @message.destroy
-        head :no_content
+        ServersChannel.broadcast_to(
+          @message.channel,
+          type: 'DESTROY_MESSAGE',
+          id: @message.id
+        )
+
+        # head :no_content
+        render json: nil, status: :ok
       else
         render json: { errors: @message.errors }, status: :unprocessable_entity
       end
