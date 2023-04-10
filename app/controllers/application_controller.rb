@@ -42,6 +42,10 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def from_template(template, locals = {})
+    JSON.parse(self.class.render(:json, template: template, locals: locals))
+  end
+
   private
   def snake_case_params
     params.deep_transform_keys!(&:underscore)

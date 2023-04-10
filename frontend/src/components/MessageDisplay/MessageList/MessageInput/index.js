@@ -33,7 +33,7 @@ const MessageInput = ({channelInfo}) => {
 
   useEffect(() => {
     if (boxReset) {
-      setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
+      if (listEle) setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
       dispatch(resetMessageBox(false));
     }
   }, [dispatch, boxReset])

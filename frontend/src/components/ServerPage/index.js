@@ -3,6 +3,7 @@ import './ServerPage.css'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
+import consumer from '../../consumer';
 
 import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
@@ -73,9 +74,24 @@ const ServerPage = () => {
         
         history.push(`/home`);
       });
+
     }
     
+    // const subscription = consumer.subscriptions.create(
+    //   { channel: 'ServerssChannel', id: channelId }
+    // );
+
+    const subscription = consumer.subscriptions.create(
+      { channel: 'ServersChannel', id: channelId },
+      {
+        received: message => {
+          console.log('Received message: ', message);
+        }
+      }
+    );
+
     return () => {
+      subscription?.unsubscribe();
       dispatch(resetMessages());
       dispatch(setScroll(true));
     }
