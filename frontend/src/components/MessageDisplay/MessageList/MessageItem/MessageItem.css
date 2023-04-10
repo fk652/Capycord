@@ -112,7 +112,8 @@
 }
 
 .time-divider {
-  min-width: calc(100% - 20px);
+  /* min-width: calc(100% - 20px); */
+  width: 98%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
