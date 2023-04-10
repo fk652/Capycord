@@ -28,9 +28,12 @@ class Api::MessagesController < ApplicationController
       )
 
       if @message.save
-        ServersChannel.broadcast_to(@message.channel, @message)
-        # ServersChannel.broadcast_to(@message.channel, from_template('api/messages/show', message: @message))
-        render :show
+        # ServersChannel.broadcast_to(@message.channel, @message)
+        ServersChannel.broadcast_to(@message.channel, from_template('api/messages/show', message: @message))
+        
+        # render :show
+        # render :show, locals: {message: @message}
+        render json: nil, status: :ok
       else
         render json: { errors: @message.errors }, status: :unprocessable_entity
       end

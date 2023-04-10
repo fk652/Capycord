@@ -10,7 +10,7 @@ import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
-import { fetchMessages, resetMessages } from '../../store/messages';
+import { addMessage, fetchMessages, resetMessages } from '../../store/messages';
 import { getServers } from '../../store/servers';
 
 const ServerPage = () => {
@@ -76,16 +76,18 @@ const ServerPage = () => {
       });
 
     }
-    
-    // const subscription = consumer.subscriptions.create(
-    //   { channel: 'ServerssChannel', id: channelId }
-    // );
 
     const subscription = consumer.subscriptions.create(
       { channel: 'ServersChannel', id: channelId },
       {
         received: message => {
-          console.log('Received message: ', message);
+          const listEle = document.querySelector(".messages-list")
+          const atBottom = listEle &&
+            (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
+          console.log(atBottom)
+
+          if (atBottom) dispatch(setScroll(true));
+          dispatch(addMessage(message.message));
         }
       }
     );

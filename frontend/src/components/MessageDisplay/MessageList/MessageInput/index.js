@@ -60,7 +60,7 @@ const MessageInput = ({channelInfo}) => {
         try {
           data = await res.clone().json();
         } catch {
-          data = await res.text();
+          // data = await res.text();
         }
   
         const errors = {
