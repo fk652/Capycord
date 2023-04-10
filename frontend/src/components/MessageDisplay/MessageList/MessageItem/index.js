@@ -34,9 +34,9 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
     setCurrentModal(id);
     setShowModal(true);
 
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     setTop(rect.y - 40)
-    setLeft(rect.x - 40)
+    setLeft(rect.x - 70)
   }
 
   const leaveHandler = (e) => {
@@ -54,7 +54,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
           ? <MessageEditOptions messageId={message.id} />
           : null
       }
-      
+
       <div className="message-item-wrapper">
         <div className="profile-pic-wrapper">
           <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
@@ -70,7 +70,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
               className="message-time long"
               onMouseOver={showHandler(message.id)}
               onMouseLeave={leaveHandler}
-              >
+            >
               {showModal && currentModal === message.id && (
                 <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
                   <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>

@@ -60,5 +60,8 @@
   font-size: 12px;
   font-weight: 500;
   margin-top: 5px;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
