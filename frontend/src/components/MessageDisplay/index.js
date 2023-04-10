@@ -9,8 +9,8 @@ const MessageDisplay = () => {
       <MessageNavBar />
 
       <div className="messages-container">
-        <MessageList />
         <MemberList />
+        <MessageList />
       </div>
     </div>
   )

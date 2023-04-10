@@ -28,7 +28,6 @@ const MessageList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     const messageElement = document.querySelector(".messages-list")
-    console.log(scroll, messageElement)
     if (messageElement && scroll) {
       messageElement.scrollTo(0, messageElement.scrollHeight);
       dispatch(setScroll(false));
@@ -37,9 +36,7 @@ const MessageList = () => {
   
   let previousDate = null;
   let previousTime = null;
-  if (!messages || !members || !channelInfo) return null;
-
-  console.log(messages);
+  if (!messages || !members || !channelInfo) return <div className="message-list-wrapper" />;
   
   return (
     <div className="message-list-wrapper">
@@ -68,7 +65,7 @@ const MessageList = () => {
             if (index === 0 || extraTimeInfo !== previousDate) {
               previousDate = extraTimeInfo;
               previousTime = date;
-              return <div key={`${message.id} ${extraTimeInfo}`}>
+              return <div key={`${message.id} ${extraTimeInfo}`} className="time-message-wrapper">
                       <TimeDivider 
                         date={extraTimeInfo} 
                         key={extraTimeInfo}

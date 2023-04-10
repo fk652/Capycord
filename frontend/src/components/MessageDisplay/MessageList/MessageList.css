@@ -4,6 +4,7 @@
   /* height: calc(100% - 50px); */
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .messages-list {

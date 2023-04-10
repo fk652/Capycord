@@ -29,7 +29,11 @@ a {
 
 body {
   height: 100vh;
-  min-height: 100vh;
+  width: 100vw;
+  /* min-width: 100vw;
+  max-width: 100vw; */
+  display: flex;
+  flex-wrap: wrap;
   font-family: 'gg sans', 'Noto Sans', Helvetica;
   background-color: #6167f4;
 	color: #f2f3f5;

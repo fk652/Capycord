@@ -8,11 +8,16 @@ import './MessageInput.css'
 const MessageInput = ({channelInfo}) => {
   const listEle = document.querySelector(".messages-list")
   const [message, setMessage] = useState('')
+  let shiftPressed = false;
+  let enterPressed = false;
+  const dispatch = useDispatch();
   
   const handleSubmit = (e) => {e.preventDefault();}
   
-  const handleAutoHeight = (e) => {
+  const handleChange = (e) => {
     if (enterPressed && !shiftPressed) return;
+    console.log(enterPressed, shiftPressed);
+    console.log(e.target.value)
 
     setMessage(e.target.value);
     const setScroll = listEle &&
@@ -25,15 +30,14 @@ const MessageInput = ({channelInfo}) => {
     if (setScroll) listEle.scrollTo(0, listEle.scrollHeight);
   }
   
-  let shiftPressed = false;
-  let enterPressed = false;
-  const dispatch = useDispatch();
   const handleKeyDown = (e) => {
     if (e.key === "Shift") shiftPressed = true;
     if (e.key === "Enter") enterPressed = true;
 
-    if(enterPressed && !shiftPressed && message !== '') {
-      dispatch(CreateMessage({channelId: channelInfo.id, body: message}))
+    const filteredMessage = message.trim();
+
+    if(enterPressed && !shiftPressed && filteredMessage !== '') {
+      dispatch(CreateMessage({channelId: channelInfo.id, body: filteredMessage}))
       .catch(async (res) => {
         let data;
         try {
@@ -46,6 +50,7 @@ const MessageInput = ({channelInfo}) => {
           status: res.status,
           messages: null
         }
+
         if (data?.errors) errors.messages = data.errors;
         dispatch(addErrors(errors));
       });
@@ -74,7 +79,7 @@ const MessageInput = ({channelInfo}) => {
             value={message}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
-            onChange={handleAutoHeight}
+            onChange={handleChange}
           />
         </div>
       </div>
