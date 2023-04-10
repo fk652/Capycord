@@ -11,11 +11,15 @@ import { fetchFriendRequests, resetFriendRequests } from "../../store/friendRequ
 import { fetchFriends, resetFriends } from "../../store/friends";
 
 const HomePage = () => {
+  const sessionUser = useSelector(state => state.session.user);
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSelectedServer("home"));
-    dispatch(fetchFriends());
-    dispatch(fetchFriendRequests());
+    if (sessionUser) {
+      dispatch(setSelectedServer("home"));
+      dispatch(fetchFriends());
+      dispatch(fetchFriendRequests());
+    }
 
     return () => {
       dispatch(resetFriends());
@@ -23,7 +27,6 @@ const HomePage = () => {
     }
   }, [dispatch])
   
-  const sessionUser = useSelector(state => state.session.user);
   if (!sessionUser) return <Redirect to="/login" />
 
   return (

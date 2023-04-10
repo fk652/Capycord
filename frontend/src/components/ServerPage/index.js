@@ -2,7 +2,7 @@ import './ServerPage.css'
 
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useParams } from "react-router-dom";
+import { Redirect, useHistory, useParams } from "react-router-dom";
 
 import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
@@ -10,15 +10,41 @@ import { fetchChannels, resetChannels } from '../../store/channels';
 import { fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { fetchMessages, resetMessages } from '../../store/messages';
+import { getServers } from '../../store/servers';
 
 const ServerPage = () => {
+  const sessionUser = useSelector(state => state.session.user);
+  
   const {serverId, channelId} = useParams();
-
+  const history = useHistory();
+  const servers = useSelector(getServers);
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setSelectedServer(serverId));
-    dispatch(fetchChannels(serverId));
-    dispatch(fetchMembers(serverId));
+    if (!servers[serverId]) history.push('/home');
+    else if (sessionUser) {
+      dispatch(setSelectedServer(serverId));
+      dispatch(fetchChannels(serverId))
+      // .catch(async (res) => {
+        //   let data;
+        //   try {
+          //     data = await res.clone().json();
+        //   } catch {
+          //     data = await res.text();
+          //   }
+          
+        //   const errors = {
+          //     status: res.status,
+        //     messages: null
+        //   }
+        
+        //   if (data?.errors) errors.messages = data.errors;
+        //   // dispatch(addErrors(errors));
+    
+        //   history.push(`/home`);
+        // });
+        dispatch(fetchMembers(serverId));
+    }
 
     return () => {
       dispatch(resetChannels());
@@ -27,17 +53,36 @@ const ServerPage = () => {
   }, [dispatch, serverId])
   
   useEffect(() => {
-    if (channelId) dispatch(fetchMessages(channelId));
-
+    if (channelId && sessionUser) {
+      dispatch(fetchMessages(channelId))
+      .catch(async (res) => {
+        let data;
+        try {
+          data = await res.clone().json();
+        } catch {
+          data = await res.text();
+        }
+        
+        const errors = {
+          status: res.status,
+          messages: null
+        }
+        
+        if (data?.errors) errors.messages = data.errors;
+        // dispatch(addErrors(errors));
+        
+        history.push(`/home`);
+      });
+    }
+    
     return () => {
       dispatch(resetMessages());
       dispatch(setScroll(true));
     }
   }, [dispatch, channelId])
-
-  const sessionUser = useSelector(state => state.session.user);
+  
   if (!sessionUser) return <Redirect to="/login" />
-
+  
   return (
     <div className="server-page">
       <HomeSideBar />

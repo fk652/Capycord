@@ -9,14 +9,18 @@ const MessageInput = ({channelInfo}) => {
   const boxReset = useSelector(getResetMessageBox);
   const listEle = document.querySelector(".messages-list");
   const [message, setMessage] = useState('');
-  let shiftPressed = false;
-  let enterPressed = false;
+  const [shift, setShift] = useState(false);
+  const [enter, setEnter] = useState(false);
   const dispatch = useDispatch();
   
   const handleSubmit = (e) => {e.preventDefault();}
   
   const handleChange = (e) => {
+    // handle textarea resizing while typing
+    // if message list scrolled to bottom, keep scroll at bottom
+    if (enter && !shift) return;
     setMessage(e.target.value);
+
     const scroll = listEle &&
       (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
 
@@ -25,32 +29,41 @@ const MessageInput = ({channelInfo}) => {
     e.target.style.height = `${height}px`;
     
     if (scroll) listEle.scrollTo(0, listEle.scrollHeight);
-    // if (scroll) dispatch(setScroll(true));
   }
 
-  useEffect(() => {
-    const boxEle = document.querySelector('.message-textarea');
+  // useEffect(() => {
+  //   const boxEle = document.querySelector('.message-textarea');
+  //   if (boxReset) {
+  //     listEle.scrollTo(0, listEle.scrollHeight);
+  //     dispatch(resetMessageBox(false));
+  //   }
 
-    if (boxEle.value === '\n' && boxReset) {
-      boxEle.style.height = "22px";
+  //   if (boxEle.value === '\n' && boxReset) {
+  //     boxEle.style.height = "22px";
 
-      setMessage('');
-      // boxEle.value = '';
-      dispatch(resetMessageBox(false));
-      // dispatch(setScroll(true));
-      setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
-    }
-  }, [dispatch, resetMessageBox, message])
+  //     setMessage('');
+  //     // boxEle.value = '';
+  //     dispatch(resetMessageBox(false));
+  //     listEle.scrollTo(0, listEle.scrollHeight);
+  //     // dispatch(setScroll(true));
+  //     // setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
+  //   }
+  // }, [dispatch, resetMessageBox, message])
   
   const handleKeyDown = (e) => {
-    if (e.key === "Shift") shiftPressed = true;
-    if (e.key === "Enter") enterPressed = true;
+    if (e.key === "Shift") setShift(true);
+    if (e.key === "Enter") setEnter(true);
 
     const filteredMessage = message.trim();
 
-    if(enterPressed && !shiftPressed && filteredMessage !== '') {
+    // submit
+    // console.log(enter, shift);
+    if(e.key === "Enter" && !shift && filteredMessage !== '') {
       setMessage('');
-      // listEle.scrollTo(0, listEle.scrollHeight);
+      const boxEle = document.querySelector('.message-textarea');
+      boxEle.style.height = "22px";
+      listEle.scrollTo(0, listEle.scrollHeight);
+
       dispatch(setScroll(true));
       dispatch(resetMessageBox(true));
 
@@ -76,8 +89,8 @@ const MessageInput = ({channelInfo}) => {
   }
   
   const handleKeyUp = (e) => {
-    if (e.key === "Shift") shiftPressed = false;
-    if (e.key === "Enter") enterPressed = false;
+    if (e.key === "Shift") setShift(false);
+    if (e.key === "Enter") setEnter(false);
   }
 
   return (
