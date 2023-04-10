@@ -31,24 +31,12 @@ const MessageInput = ({channelInfo}) => {
     if (scroll) listEle.scrollTo(0, listEle.scrollHeight);
   }
 
-  // useEffect(() => {
-  //   const boxEle = document.querySelector('.message-textarea');
-  //   if (boxReset) {
-  //     listEle.scrollTo(0, listEle.scrollHeight);
-  //     dispatch(resetMessageBox(false));
-  //   }
-
-  //   if (boxEle.value === '\n' && boxReset) {
-  //     boxEle.style.height = "22px";
-
-  //     setMessage('');
-  //     // boxEle.value = '';
-  //     dispatch(resetMessageBox(false));
-  //     listEle.scrollTo(0, listEle.scrollHeight);
-  //     // dispatch(setScroll(true));
-  //     // setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
-  //   }
-  // }, [dispatch, resetMessageBox, message])
+  useEffect(() => {
+    if (boxReset) {
+      setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
+      dispatch(resetMessageBox(false));
+    }
+  }, [dispatch, boxReset])
   
   const handleKeyDown = (e) => {
     if (e.key === "Shift") setShift(true);
@@ -57,7 +45,6 @@ const MessageInput = ({channelInfo}) => {
     const filteredMessage = message.trim();
 
     // submit
-    // console.log(enter, shift);
     if(e.key === "Enter" && !shift && filteredMessage !== '') {
       setMessage('');
       const boxEle = document.querySelector('.message-textarea');
