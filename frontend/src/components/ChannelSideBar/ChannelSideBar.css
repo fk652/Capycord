@@ -31,7 +31,9 @@
   min-width: 18px;
   max-width: 18px;
   padding: 0 15px;
-  font-weight: 900;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  /* font-weight: 900; */
   color: #cacbce;
   overflow: clip;
   position: relative;

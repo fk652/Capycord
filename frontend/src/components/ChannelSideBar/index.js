@@ -43,7 +43,7 @@ const ChannelSideBar = () => {
           {serverInfo.name}
         </div>
         <div className="dropdown-button">
-          <svg className="dropdown-button-icon" width="18" height="18">
+          <svg className="dropdown-button-icon" viewBox='0 -6 15 15' width="18" height="18">
             <g fill="none" fillRule="evenodd">
               <path d="M0 0h18v18H0"></path>
               <path stroke="currentColor" d="M4.5 4.5l9 9" strokeLinecap="round"></path>
