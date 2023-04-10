@@ -19,6 +19,11 @@ export const addMessage = (message) => ({
   message
 })
 
+export const removeMessage = (messageId) => ({
+  type: REMOVE_MESSAGE,
+  messageId
+})
+
 export const getMessages = (state) => {
   return state.messages ? Object.values(state.messages) : null;
 }
@@ -36,7 +41,7 @@ export const fetchMessages = (channelId) => async dispatch => {
   }
 }
 
-export const CreateMessage = (message) => async dispatch => {
+export const createMessage = (message) => async dispatch => {
   const response = await csrfFetch(`/api/messages`, {
     method: 'POST',
     body: JSON.stringify(message)
@@ -45,6 +50,18 @@ export const CreateMessage = (message) => async dispatch => {
   const data = await response.json();
   dispatch(addMessage(data.message));
   return response;
+}
+
+export const deleteMessage = (messageId) => async dispatch => {
+  const response = await csrfFetch(`/api/messages/${messageId}`, {
+    method: 'DELETE'
+  })
+
+  if (response.ok) {
+    dispatch(removeMessage(messageId));
+  } else {
+    return response;
+  }
 }
 
 const initialState = null
@@ -57,6 +74,10 @@ const messagesReducer = (state = initialState, action) => {
       return {...action.messages};
     case ADD_MESSAGE:
       return {...state, [action.message.id]: action.message}
+    case REMOVE_MESSAGE:
+      const newState = {...state};
+      delete newState[action.messageId];
+      return newState
     default:
       return state;
   }

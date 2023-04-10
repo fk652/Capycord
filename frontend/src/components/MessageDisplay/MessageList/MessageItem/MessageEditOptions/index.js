@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ActionToolTip } from '../../../../../context/Modal';
+import { deleteMessage } from '../../../../../store/messages';
 import './MessageEditOptions.css'
 
 const MessageEditOptions = ({messageId}) => {
@@ -24,10 +26,10 @@ const MessageEditOptions = ({messageId}) => {
     setShowModal(false);
   }
 
+  const dispatch = useDispatch();
   const handleDelete = (e) => {
     e.preventDefault();
-
-    console.log("delete");
+    dispatch(deleteMessage(messageId));
   }
 
   return (

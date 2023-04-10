@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addErrors } from '../../../../store/errors'
-import { CreateMessage } from '../../../../store/messages'
+import { createMessage } from '../../../../store/messages'
 import { getResetMessageBox, resetMessageBox, setScroll } from '../../../../store/ui'
 import './MessageInput.css'
 
@@ -54,7 +54,7 @@ const MessageInput = ({channelInfo}) => {
       dispatch(setScroll(true));
       dispatch(resetMessageBox(true));
 
-      dispatch(CreateMessage({channelId: channelInfo.id, body: filteredMessage}))
+      dispatch(createMessage({channelId: channelInfo.id, body: filteredMessage}))
       .catch(async (res) => {
         let data;
         try {

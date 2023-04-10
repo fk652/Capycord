@@ -43,7 +43,16 @@ class Api::MessagesController < ApplicationController
   end
 
   def destroy 
-
+    @message = Message.find(params[:id])
+    if @message.author_id === current_user.id 
+      if @message.destroy
+        head :no_content
+      else
+        render json: { errors: @message.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Must be a server member to post this message"} }, status: :unauthorized
+    end
   end
 
   def update
