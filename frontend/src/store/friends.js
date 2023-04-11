@@ -19,7 +19,7 @@ export const addFriend = (friend) => ({
   friend
 })
 
-const removeFriend = (friendshipId) => ({
+export const removeFriend = (friendshipId) => ({
   type: REMOVE_FRIEND,
   friendshipId
 })

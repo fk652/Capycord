@@ -114,8 +114,8 @@ export const ignoreReceivedRequest = (requestId) => async dispatch => {
 }
 
 const initialState = {
-  sent: null,
-  received: null
+  sent: {},
+  received: {}
 }
 
 const friendRequestsReducer = (state = initialState, action) => {

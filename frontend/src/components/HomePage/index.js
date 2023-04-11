@@ -9,7 +9,7 @@ import HomeSideBar from "../HomeSideBar";
 import FriendsDisplay from "../FriendsDisplay";
 import { setSelectedServer } from "../../store/ui";
 import { fetchFriendRequests, resetFriendRequests } from "../../store/friendRequests";
-import { addFriend, fetchFriends, resetFriends } from "../../store/friends";
+import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 
 const HomePage = () => {
   const sessionUser = useSelector(state => state.session.user);
@@ -31,10 +31,10 @@ const HomePage = () => {
               dispatch(addFriend(friend));
               break;
             case "DELETE_FRIEND":
-              // to do later
+              dispatch(removeFriend(id));
               break;
             case "ADD_FRIEND":
-              // to do later
+              dispatch(addFriend(friend));
               break;
             default:
               console.log("unknown broadcast type");
