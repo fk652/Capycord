@@ -37,7 +37,6 @@ const HomePage = () => {
               dispatch(addFriend(friend));
               break;
             case "DELETE_SENT_REQUEST":
-              console.log("remove sent");
               dispatch(removeSentRequest(id));
               break;
             case "ADD_INCOMING_REQUEST":

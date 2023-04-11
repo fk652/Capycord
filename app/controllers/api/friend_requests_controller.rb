@@ -56,7 +56,7 @@ class Api::FriendRequestsController < ApplicationController
     end
 
     if @request.update(status: params[:status])
-      if params[:status] === "ignore"
+      if params[:status] === "ignored"
         # broadcast delete outgoing request on ignore
         # user = (@request.sender_id === current_user.id ? @request.receiver : @request.sender)
         FriendsChannel.broadcast_to(
