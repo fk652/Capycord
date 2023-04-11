@@ -14,6 +14,7 @@ const FriendsAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(removeErrors());
     
     return dispatch(createFriendRequest(username))
     .catch(async (res) => {
