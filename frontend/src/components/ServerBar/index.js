@@ -4,16 +4,18 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { getSelectedServer } from '../../store/ui';
+import { getSelectedServer, getShowServerModal, setServerFormPage, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
 import { fetchServers, getServers, resetServers } from '../../store/servers';
-import { ServerToolTip } from "../../context/Modal";
+import { ServerFormModal, ServerToolTip } from "../../context/Modal";
+import ServerForm from '../ServerForm';
 
 const ServerBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
-  const [showAddServer, setShowAddServer] = useState(false);
+  // const [showServerFormModal, setShowServerFormModal] = useState(false);
+  const showServerFormModal = useSelector(getShowServerModal);
 
   const selected = useSelector(getSelectedServer);
   const servers = useSelector(getServers)
@@ -30,8 +32,8 @@ const ServerBar = () => {
     if (e.target.dataset.key) {
       if(e.target.dataset.key === "home") history.push(`/home`)
       else if (e.target.dataset.key === "add-server") {
-        console.log("display add server modal") // to do
-        setShowAddServer(!showAddServer) // properly change this later
+        // console.log("display add server modal") // to do
+        dispatch(setShowServerModal(true)) // properly change this later
       }
       else history.push(`/server/${e.target.dataset.key}`);
     }
@@ -72,13 +74,14 @@ const ServerBar = () => {
     setShowModal(false);
   }
 
+  const closeForm = () => {
+    dispatch(setShowServerModal(false));
+    dispatch(setServerFormPage('start'));
+  }
+
   return (
     <div className="server-bar" onClick={toggleSelected}>
-      <div 
-        className={`server-item-wrapper ${checkSelected("home")}`}
-        // onMouseEnter={showHandler("home")}
-        // onMouseLeave={leaveHandler}
-      >
+      <div className={`server-item-wrapper ${checkSelected("home")}`}>
         <div 
           id="home"
           data-key="home"
@@ -110,42 +113,41 @@ const ServerBar = () => {
             <div 
               className={`server-item-wrapper ${checkSelected(server.id)}`} 
               key={server.id}
-              onMouseEnter={showHandler(server.id)}
-              onMouseLeave={leaveHandler}
             >
               <ServerListIcon id={server.id} image={server.pictureUrl} name={server.name} />
-              {/* {showModal && currentModal===server.id && (
-                <ServerToolTip top={top} onClose={() => setShowModal(false)}>
-                  <span className="tooltip">{server.name}</span>
-                </ServerToolTip>
-              )} */}
             </div>
           )
         })
       }
 
-    <div 
-      className={`server-item-wrapper ${showAddServer ? 'selected' : ''}`}
-    >
       <div 
-        id="add-server"
-        data-key="add-server"
-        className="server-icon-wrapper add-server-icon-wrapper" 
-        onMouseEnter={showHandler("add-server")}
-        onMouseLeave={leaveHandler}
+        className={`server-item-wrapper ${showServerFormModal ? 'selected' : ''}`}
       >
-        <svg data-key="add-server" className="add-server-icon" width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
-          </path>
-        </svg>
+        <div 
+          id="add-server"
+          data-key="add-server"
+          className="server-icon-wrapper add-server-icon-wrapper" 
+          onMouseEnter={showHandler("add-server")}
+          onMouseLeave={leaveHandler}
+        >
+          <svg data-key="add-server" className="add-server-icon" width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
+            </path>
+          </svg>
+        </div>
+
+        {showModal && currentModal === "add-server" && (
+          <ServerToolTip top={top} onClose={() => setShowModal(false)}>
+            <span className="tooltip">Add a Server</span>
+          </ServerToolTip>
+        )}
       </div>
 
-      {showModal && currentModal === "add-server" && (
-        <ServerToolTip top={top} onClose={() => setShowModal(false)}>
-          <span className="tooltip">Add a Server</span>
-        </ServerToolTip>
+      {showServerFormModal && (
+        <ServerFormModal onClose={closeForm}>
+          <ServerForm />
+        </ServerFormModal>
       )}
-    </div>
 
       {
         dummies.map(dummyId => {

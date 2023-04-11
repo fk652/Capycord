@@ -81,7 +81,7 @@ const FriendsNavBar = () => {
             Pending
             {
               // update for server requests later
-              friendRequests[0].length || friendRequests[1].length
+              friendRequests && friendRequests[1].length
                 ? <div className="pending-alert" />
                 : null
             }

@@ -4,6 +4,8 @@ const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
 const SET_SHOW_MEMBERS = "ui/setShowMembers";
 const SET_SCROLL = "ui/setScroll";
 const RESET_MESSAGE_BOX = "ui/resetMessageBox";
+const SET_SHOW_SERVER_MODAL = "ui/setShowServerModal";
+const SET_SERVER_FORM_PAGE = "ui/setServerFormPage";
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -36,6 +38,16 @@ export const resetMessageBox = (toggle) => ({
   toggle
 })
 
+export const setShowServerModal = (toggle) => ({
+  type: SET_SHOW_SERVER_MODAL,
+  toggle
+})
+
+export const setServerFormPage = (formType) => ({
+  type: SET_SERVER_FORM_PAGE,
+  formType
+})
+
 export const resetUi = () => ({
   type: RESET_UI
 })
@@ -64,9 +76,13 @@ export const getResetMessageBox = (state) => {
   return state.ui.resetMessageBox
 }
 
-// export const getChannelReset = (state) => {
-//   return state.ui.channelReset
-// }
+export const getShowServerModal = (state) => {
+  return state.ui.showServerModal
+}
+
+export const getServerFormType = (state) => {
+  return state.ui.serverFormType
+}
 
 const initialState = {
   selectedFriendNavTab: "friends-online",
@@ -74,7 +90,9 @@ const initialState = {
   addFriendResult: false,
   showMembers: false,
   setScroll: true,
-  resetMessageBox: true
+  resetMessageBox: true,
+  showServerModal: false,
+  serverFormType: "start"
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -91,6 +109,10 @@ const uiReducer = (state = initialState, action) => {
       return {...state, setScroll: action.toggle}
     case RESET_MESSAGE_BOX:
       return {...state, resetMessageBox: action.toggle}
+    case SET_SERVER_FORM_PAGE:
+      return {...state, serverFormType: action.formType}
+    case SET_SHOW_SERVER_MODAL:
+      return {...state, showServerModal: action.toggle}
     case RESET_UI:
       return {...initialState}
     default:
