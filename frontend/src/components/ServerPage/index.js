@@ -8,7 +8,7 @@ import consumer from '../../consumer';
 import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
-import { fetchMembers, resetMembers } from '../../store/members';
+import { addMember, fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 // import { getServers } from '../../store/servers';
@@ -47,7 +47,32 @@ const ServerPage = () => {
         dispatch(fetchMembers(serverId));
     }
 
+    console.log(serverId);
+    const subscription = consumer.subscriptions.create(
+      { channel: 'MembersChannel', id: serverId },
+      {
+        received: ({type, member}) => {
+          switch (type) {
+            case "UPDATE_MEMBER":
+              console.log(type, member);
+              dispatch(addMember(member));
+              break;
+            case "DELETE_MEMBER":
+              // to do later
+              break;
+            case "ADD_MEMBER":
+              // to do later
+              break;
+            default:
+              console.log("unknown broadcast type");
+          }
+        }
+      }
+    );
+    console.log("member sub", subscription);
+
     return () => {
+      subscription?.unsubscribe();
       dispatch(resetChannels());
       dispatch(resetMembers());
     }
@@ -74,7 +99,6 @@ const ServerPage = () => {
         
         history.push(`/home`);
       });
-
     }
 
     const subscription = consumer.subscriptions.create(
@@ -93,6 +117,9 @@ const ServerPage = () => {
             case "DESTROY_MESSAGE":
               dispatch(removeMessage(id));
               break;
+            case "EDIT_MESSAGE":
+              // to do later
+              break;
             default:
               console.log("unknown broadcast type");
           }
@@ -107,6 +134,7 @@ const ServerPage = () => {
         }
       }
     );
+    console.log("channel sub", subscription);
 
     return () => {
       subscription?.unsubscribe();

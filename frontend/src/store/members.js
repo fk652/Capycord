@@ -14,6 +14,11 @@ const setMembers = (members) => ({
   members
 })
 
+export const addMember = (member) => ({
+  type: ADD_MEMBER,
+  member
+})
+
 export const getMembers = (state) => {
   return state.members 
     ? Object.values(state.members).sort((a, b) => a.username > b.username ? 1 : -1)
@@ -57,6 +62,9 @@ const membersReducer = (state = initialState, action) => {
       return initialState;
     case SET_MEMBERS:
       return {...action.members};
+    case ADD_MEMBER:
+      console.log("add member", action.member);
+      return {...state, [action.member.id]: action.member}
     default:
       return state;
   }
