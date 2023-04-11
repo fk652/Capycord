@@ -47,14 +47,12 @@ const ServerPage = () => {
         dispatch(fetchMembers(serverId));
     }
 
-    console.log(serverId);
     const subscription = consumer.subscriptions.create(
       { channel: 'MembersChannel', id: serverId },
       {
-        received: ({type, member}) => {
+        received: ({type, member, id}) => {
           switch (type) {
             case "UPDATE_MEMBER":
-              console.log(type, member);
               dispatch(addMember(member));
               break;
             case "DELETE_MEMBER":
@@ -69,7 +67,6 @@ const ServerPage = () => {
         }
       }
     );
-    console.log("member sub", subscription);
 
     return () => {
       subscription?.unsubscribe();
@@ -134,7 +131,6 @@ const ServerPage = () => {
         }
       }
     );
-    console.log("channel sub", subscription);
 
     return () => {
       subscription?.unsubscribe();
