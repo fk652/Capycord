@@ -25,7 +25,9 @@ const removeFriend = (friendshipId) => ({
 })
 
 export const getFriends = (state) => {
-  return state.friends ? Object.values(state.friends) : [];
+  return state.friends 
+    ? Object.values(state.friends).sort((a, b) => a.username > b.username ? 1 : -1) 
+    : [];
 }
 
 export const fetchFriends = () => async dispatch => {

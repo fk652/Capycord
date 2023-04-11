@@ -15,7 +15,9 @@ const setMembers = (members) => ({
 })
 
 export const getMembers = (state) => {
-  return state.members ? Object.values(state.members) : [];
+  return state.members 
+    ? Object.values(state.members).sort((a, b) => a.username > b.username ? 1 : -1)
+    : [];
 }
 
 export const getMembersObject = (state) => {
