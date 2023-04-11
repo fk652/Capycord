@@ -11,19 +11,20 @@ class Api::FriendsController < ApplicationController
   end
 
   def destroy 
-    # for deleting friends
-    @friend = Friend.find(params[:id])
+    friend = Friend.find(params[:id])
 
-    # error handle check if user is friend
+    if friend.destroy
+      user = (friend.user1_id === current_user.id ? friend.user2 : friend.user1)
 
-    if @friend
-      if @friend.destroy
-        head :no_content
-      else 
-        render json: { errors: @friend.errors }, status: :unprocessable_entity
-      end
-    else
-      render json: { errors: { error: "Friendship not found"} }, status: :unprocessable_entity
+      FriendsChannel.broadcast_to(
+        user,
+        type: 'DELETE_FRIEND',
+        id: friend.id
+      )
+
+      head :no_content
+    else 
+      render json: { errors: friend.errors }, status: :unprocessable_entity
     end
   end
 end

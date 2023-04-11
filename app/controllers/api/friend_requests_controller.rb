@@ -42,7 +42,14 @@ class Api::FriendRequestsController < ApplicationController
         head :no_content
       else  # params[:status] === "accepted"
         @friendship = Friend.find_by(user1_id: @request.sender.id, user2_id: current_user.id)
-        render 'api/friends/show'
+
+        FriendsChannel.broadcast_to(
+          @friendship.user1,
+          type: 'ADD_FRIEND',
+          **from_template('api/friends/show', friendship: @friendship, friend: current_user)
+        )
+
+        render 'api/friends/show', locals: {friendship: @friendship, friend: @friendship.user1}
       end
     else
       render json: { errors: @request.errors }, status: :unprocessable_entity
