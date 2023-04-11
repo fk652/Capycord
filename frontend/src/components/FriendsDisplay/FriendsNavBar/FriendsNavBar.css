@@ -2,10 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+  width: 100%;
   padding: 0 8px;
   font-size: 16px;
-  border-bottom: 1px solid #26282c;
+  border-bottom: 2px solid #26282c;
 }
 
 .friends-options {
@@ -13,8 +15,11 @@
   justify-content: baseline;
   align-items: center;
   flex: 1 1 auto;
-  overflow: hidden;
+  overflow: clip;
+  /* width: 100%; */
+  /* flex-wrap: wrap; */
 }
+
 .title-wrapper{
   margin-right: 8px;
 }
@@ -24,8 +29,7 @@
 }
 
 .friends-nav-icon {
-  width: 21px;
-  height: 16px;
+  color: #80848e;
 }
 
 .nav-divider {
@@ -37,6 +41,12 @@
 
 .options {
   display: flex;
+  flex-wrap: wrap;
+  /* flex-wrap: nowrap; */
+  /* max-width: 420px; */
+  min-width: 220px;
+  /* overflow: clip; */
+  /* flex-basis: 100% */
 }
 
 .option {
@@ -47,10 +57,26 @@
   margin: 0 8px;
   padding: 2px 8px;
   height: 20px;
-  min-width: 24px;
+  /* min-width: 24px; */
   color: #b5bac1;
   font-weight: 500;
   border-radius: 4px;
+
+  /* overflow: clip; */
+  max-width: 100px;
+}
+
+#friends-all {
+  width: 24px;
+}
+
+.pending-alert {
+  margin-left: 5px;
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 100%;
+  background: #da373c;
+  display: inline;
 }
 
 .option:hover {
@@ -81,23 +107,77 @@
 .message-options {
   display: flex;
   justify-content: center;
+  min-width: 100px;
+  padding-right: 10px;
+  /* flex-wrap: wrap; */
+  /* overflow: clip; */
 }
 
 .icon-wrapper {
-  height: 24px;
-  width: 24px;
+  min-height: 24px;
+  min-width: 24px;
   margin: 0 8px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #b5bac1;
+  overflow: clip;
 }
 
-.message-icon {
-  height: 24px;
-  width: 24px;
+.icon-wrapper:hover {
+  color: #dbdee1;
+  cursor: pointer;
 }
 
-.inbox-icon {
-  height: 18px;
-  width: 18px;
+.icon-wrapper.no-hover:hover {
+  cursor: auto;
+}
+
+.search-bar-wrapper {
+  margin: 14px 20px 8px 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.friend-search-input {
+  height: 34px;
+  padding: 0 10px;
+  margin: 1px 0px 1px 1px;
+  font-size: 16px;
+  line-height: 32px;
+  flex-basis: 100%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.friend-search-input::placeholder {
+  color: #949ba4;
+  opacity: 1;
+}
+
+.friend-search-input:-ms-input-placeholder {
+  color:#949ba4;
+}
+
+.friend-search-input::-ms-input-placeholder {
+  color: #949ba4;
+}
+
+.search-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1e1f22;
+  height: 34px;
+  color: #b5bac1;
+  width: 34px;
+  margin: 1px 0;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  padding-right: 1px;
+}
+
+.search-icon {
+  height: 20px;
+  width: 20px;
 }
