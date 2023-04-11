@@ -7,7 +7,6 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
   const [username, tag] = name.split("#");
 
   return (
-    <div className={`friend-list-item-wrapper`}>
       <div className={`friend-list-item ${display} ${status === "Offline" ? "offline" : ""}`}>
         <div className="friend-item-display">
           <UserIcon picture={picture} status={status} name={username} />
@@ -51,7 +50,6 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
           }
         </div>
       </div>
-    </div>
   )
 }
 

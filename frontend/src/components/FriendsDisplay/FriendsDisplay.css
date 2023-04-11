@@ -1,12 +1,13 @@
 .friends-display {
   height: 100vh;
+  width: 100%;
   background: #313338;
   /* width: 100vw; */
   flex-basis: 100%;
   display: flex;
   flex-direction: column;
   
-  overflow: hidden;
+  /* overflow: clip; */
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -17,6 +18,7 @@
   align-items: center;
   min-height: 48px;
   max-height: 48px;
+  width: 100%;
   padding: 0 8px;
   font-size: 16px;
   border-bottom: 2px solid #26282c;
@@ -27,7 +29,9 @@
   justify-content: baseline;
   align-items: center;
   flex: 1 1 auto;
-  overflow: hidden;
+  overflow: clip;
+  /* width: 100%; */
+  /* flex-wrap: wrap; */
 }
 .title-wrapper{
   margin-right: 8px;
@@ -50,6 +54,12 @@
 
 .options {
   display: flex;
+  flex-wrap: wrap;
+  /* flex-wrap: nowrap; */
+  /* max-width: 420px; */
+  min-width: 210px;
+  overflow: clip;
+  /* flex-basis: 100% */
 }
 
 .option {
@@ -60,10 +70,17 @@
   margin: 0 8px;
   padding: 2px 8px;
   height: 20px;
-  min-width: 24px;
+  /* min-width: 24px; */
   color: #b5bac1;
   font-weight: 500;
   border-radius: 4px;
+
+  overflow: clip;
+  max-width: 100px;
+}
+
+#friends-all {
+  width: 24px;
 }
 
 .option:hover {
@@ -94,16 +111,21 @@
 .message-options {
   display: flex;
   justify-content: center;
+  min-width: 100px;
+  padding-right: 10px;
+  /* flex-wrap: wrap; */
+  /* overflow: clip; */
 }
 
 .icon-wrapper {
-  height: 24px;
-  width: 24px;
+  min-height: 24px;
+  min-width: 24px;
   margin: 0 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #b5bac1;
+  overflow: clip;
 }
 
 .icon-wrapper:hover {
@@ -178,6 +200,7 @@
   scrollbar-width: 8px;
   scrollbar-color: #1a1b1e;
   height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   margin-top: 8px;
@@ -198,3 +221,8 @@
   background: #2b2d31;
   border-radius: 10px;
 }
+
+/* .friend-list-item-wrapper {
+  display: flex;
+  width: 100%;
+} */
