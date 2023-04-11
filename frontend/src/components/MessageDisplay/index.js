@@ -1,6 +1,6 @@
 import './MessageDisplay.css';
 import MemberList from './MemberList';
-import MessageNavBar from './MemberNavBar';
+import MessageNavBar from './MessageNavBar';
 import MessageList from './MessageList';
 
 const MessageDisplay = () => {

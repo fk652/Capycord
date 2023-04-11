@@ -18,9 +18,9 @@ const ActionIcon = ({actionType, itemId}) => {
     setCurrentModal(id);
     setShowModal(true);
 
-    const rect = e.target.getBoundingClientRect();
+    const rect = e.currentTarget.getBoundingClientRect();
     setTop(rect.y - 37)
-    setLeft(rect.x - 18)
+    setLeft(rect.x - 17)
   }
 
   const leaveHandler = (e) => {

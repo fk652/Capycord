@@ -71,6 +71,25 @@
   cursor: pointer;
 }
 
+.add-server-icon-wrapper {
+  background-color: #313338;
+  /* color: #dbdee1; */
+  color: #23a559;
+}
+
+.server-item-wrapper.selected .add-server-icon-wrapper {
+  background-color: #23a559;
+  color: #ffffff;
+  border-radius: 16px;
+}
+
+.add-server-icon-wrapper:hover {
+  background-color: #23a559;
+  color: #ffffff;
+  transition: background-color .1s ease-out, color .1s ease-out, border-radius .3s;
+  cursor: pointer;
+}
+
 .server-item-wrapper.selected, .server-item-wrapper.selected:hover {
   background: none;
 }

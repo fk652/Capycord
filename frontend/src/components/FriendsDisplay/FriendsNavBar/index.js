@@ -97,4 +97,4 @@ const FriendsNavBar = () => {
   )
 }
 
-export default FriendsNavBar;
+// export default FriendsNavBar;
