@@ -23,7 +23,7 @@ export const addSentRequest = (request) => ({
   request
 })
 
-const removeSentRequest = (requestId) => ({
+export const removeSentRequest = (requestId) => ({
   type: REMOVE_SENT_REQUEST,
   requestId
 })
@@ -33,7 +33,7 @@ export const addReceivedRequest = (request) => ({
   request
 })
 
-const removeReceivedRequest = (requestId) => ({
+export const removeReceivedRequest = (requestId) => ({
   type: REMOVE_RECEIVED_REQUEST,
   requestId
 })
@@ -134,7 +134,6 @@ const friendRequestsReducer = (state = initialState, action) => {
     case REMOVE_SENT_REQUEST:
       delete newState.sent[action.requestId]
       return newState;
-    // received to be used later for live action cable updates
     case ADD_RECEIVED_REQUEST:
       newState.received[action.request.requestId] = action.request;
       return newState

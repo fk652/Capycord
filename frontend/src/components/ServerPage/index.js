@@ -61,6 +61,21 @@ const ServerPage = () => {
             case "ADD_MEMBER":
               // to do later
               break;
+            case "ADD_CHANNEL":
+              // to do later
+              break;
+            case "DELETE_CHANNEL":
+              // to do later
+              break;
+            case "UPDATE_CHANNEL":
+              // to do later
+              break;
+            case "UPDATE_SERVER":
+              // to do later
+              break;
+            case "DELETE_SERVER":
+              // to do later
+              break;
             default:
               console.log("unknown broadcast type");
           }

@@ -7,7 +7,7 @@ class Api::FriendsController < ApplicationController
   end
 
   def create
-
+    # might not be needed
   end
 
   def destroy 

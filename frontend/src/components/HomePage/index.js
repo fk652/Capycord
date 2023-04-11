@@ -8,7 +8,7 @@ import consumer from '../../consumer';
 import HomeSideBar from "../HomeSideBar";
 import FriendsDisplay from "../FriendsDisplay";
 import { setSelectedServer } from "../../store/ui";
-import { fetchFriendRequests, resetFriendRequests } from "../../store/friendRequests";
+import { addReceivedRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 
 const HomePage = () => {
@@ -22,10 +22,10 @@ const HomePage = () => {
       dispatch(fetchFriendRequests());
     }
 
-    const subscription = consumer.subscriptions.create(
+    const friendSubscription = consumer.subscriptions.create(
       { channel: 'FriendsChannel' },
       {
-        received: ({type, friend, id}) => {
+        received: ({type, friend, friendRequest, id}) => {
           switch (type) {
             case "UPDATE_FRIEND":
               dispatch(addFriend(friend));
@@ -36,6 +36,16 @@ const HomePage = () => {
             case "ADD_FRIEND":
               dispatch(addFriend(friend));
               break;
+            case "DELETE_SENT_REQUEST":
+              console.log("remove sent");
+              dispatch(removeSentRequest(id));
+              break;
+            case "ADD_INCOMING_REQUEST":
+              dispatch(addReceivedRequest(friendRequest));
+              break;
+            case "DELETE_INCOMING_REQUEST":
+              dispatch(removeReceivedRequest(id));
+              break;
             default:
               console.log("unknown broadcast type");
           }
@@ -44,7 +54,7 @@ const HomePage = () => {
     );
 
     return () => {
-      subscription?.unsubscribe();
+      friendSubscription?.unsubscribe();
       dispatch(resetFriends());
       dispatch(resetFriendRequests());
     }

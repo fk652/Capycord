@@ -48,13 +48,13 @@ class Api::SessionsController < ApplicationController
 
   def destroy
     if current_user
-      memberships = current_user.memberships
+      memberships = current_user.memberships.includes(:server)
       friendships1 = current_user.friendships1.includes(:user2, :user1)
       friendships2 = current_user.friendships2.includes(:user1, :user2)
 
       logout!()
 
-      memberships.includes(:server).each do |membership|
+      memberships.each do |membership|
         MembersChannel.broadcast_to(
           membership.server,
           type: 'UPDATE_MEMBER',
