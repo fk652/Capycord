@@ -9,7 +9,12 @@ class Api::ServersController < ApplicationController
   end
 
   def create
-
+    @server = Server.new(create_params)
+    if @server.save 
+      
+    else
+      render json: {errors: @server.errors}, status: :unprocessable_entity
+    end
   end
 
   def destroy 
@@ -18,5 +23,10 @@ class Api::ServersController < ApplicationController
 
   def update
 
+  end
+
+  private
+  def create_params
+    params.require(:server).permit(:name, :owner_id, :picture_url)
   end
 end

@@ -132,7 +132,8 @@
 }
 
 .all.offline {
-  animation: grow .2s ease-in;
+  /* position: relative; */
+  animation: grow .2s ease-out;
 }
 
 .online.offline {
@@ -153,12 +154,14 @@
 
 @keyframes grow {
   0% {
+    /* top: -10; */
     height: 0px;
     opacity: 0%;
     padding-top: 0;
     padding-bottom: 0;
   }
   100% {
+    /* top: 0; */
     height: 30px;
     opacity: 100%;
     padding-top: 16px;
