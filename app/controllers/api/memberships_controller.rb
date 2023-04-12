@@ -28,6 +28,13 @@ class Api::MembershipsController < ApplicationController
 
     if membership.save 
       @server = membership.server
+
+      MembersChannel.broadcast_to(
+        @server,
+        type: 'UPDATE_MEMBER',
+        **from_template('api/memberships/show', membership: membership)
+      )
+
       render "api/servers/show"
     else
       render json: {errors: membership.errors}, status: :unprocessable_entity
