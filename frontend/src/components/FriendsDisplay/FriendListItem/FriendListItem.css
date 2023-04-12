@@ -34,6 +34,10 @@
 .friend-item-tag {
   visibility: hidden;
   color: #b5bac1;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .friend-item-name-wrapper {

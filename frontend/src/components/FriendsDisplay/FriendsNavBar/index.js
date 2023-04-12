@@ -115,7 +115,7 @@ const FriendsNavBar = () => {
           </svg>
         </div>
 
-        <div className="nav-divider"></div>
+        <div className="nav-divider" />
 
         <div 
           className="icon-wrapper"

@@ -22,6 +22,7 @@
 
 .title-wrapper{
   margin-right: 8px;
+  min-width: 50px;
 }
 
 .title-wrapper h1 {
@@ -33,7 +34,8 @@
 }
 
 .nav-divider {
-  width: 1px;
+  min-width: 1px;
+  max-width: 1px;
   height: 24px;
   margin: 0 8px;
   background: #4e50587a;
@@ -42,9 +44,8 @@
 .options {
   display: flex;
   flex-wrap: wrap;
-  /* flex-wrap: nowrap; */
-  /* max-width: 420px; */
-  min-width: 220px;
+  min-width: 250px;
+  overflow: clip;
   /* overflow: clip; */
   /* flex-basis: 100% */
 }
