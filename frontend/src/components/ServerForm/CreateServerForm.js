@@ -19,14 +19,14 @@ const CreateServerForm = () => {
     dispatch(setServerFormSlide(''));
   }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("submit");
-  }
-
   const handleBack = () => {
     dispatch(setServerFormPage("start"));
     dispatch(setServerFormSlide("right"))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("submit");
   }
 
   return (

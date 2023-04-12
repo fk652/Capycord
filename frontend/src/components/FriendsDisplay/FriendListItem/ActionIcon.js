@@ -19,8 +19,8 @@ const ActionIcon = ({actionType, itemId}) => {
     setShowModal(true);
 
     const rect = e.currentTarget.getBoundingClientRect();
-    setTop(rect.y - 37)
-    setLeft(rect.x - 17)
+    setTop(rect.y - 40)
+    setLeft(rect.x - leftOffset)
   }
 
   const leaveHandler = (e) => {
@@ -82,37 +82,43 @@ const ActionIcon = ({actionType, itemId}) => {
     </svg>
   )
 
-  let icon, tooltipText, clickHandler;
+  let icon, tooltipText, clickHandler, leftOffset;
   switch (actionType) {
     case "message":
       icon = messageIcon;
       tooltipText = "Message";
       clickHandler = null; //replace later with correct dispatch
+      leftOffset = 17;
       break;
     case "deleteFriend":
       icon = deleteIcon;
       tooltipText = "Remove";
       clickHandler = deleteFriendHandler;
+      leftOffset = 16;
       break;
     case "acceptRequest":
       icon = acceptIcon;
       tooltipText = "Accept";
       clickHandler = acceptRequestHandler;
+      leftOffset = 12;
       break;
     case "ignoreRequest":
       icon = deleteIcon;
       tooltipText = "Ignore";
       clickHandler = ignoreRequestHandler;
+      leftOffset = 10;
       break;
     case "cancelRequest":
       icon = deleteIcon;
       tooltipText = "Cancel";
       clickHandler = cancelRequestHandler;
+      leftOffset = 13;
       break;
     default:
       icon = moreIcon;
       tooltipText = "More";
       clickHandler = null;
+      leftOffset = 17;
   }
 
   return (
