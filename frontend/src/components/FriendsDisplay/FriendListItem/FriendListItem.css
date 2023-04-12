@@ -8,8 +8,6 @@
   border-top: 1px solid #4e50584c;
   max-height: 30px;
   max-width: 100%;
-  flex-grow: 1;
-  /* width: calc(100% - 50px) */
 }
 
 .friend-list-item:hover {
@@ -26,25 +24,11 @@
 .friend-item-details {
   display: flex;
   flex-direction: column;
-  /* min-width: 0; */
-  flex-shrink: 1;
-  /* max-width: 500px; */
-  /* overflow: clip; */
-  /* max-width: calc(100% - 200px); */
-  /* text-overflow: ellipsis;
-  white-space: nowrap; */
 }
 
 .friend-item-display {
   display: flex;
-  /* justify-content: baseline; */
-  /* min-width: 0;
-  max-width: 500px; */
-  /* flex-basis: auto; */
-  /* flex-shrink: 1; */
   overflow: hidden;
-  /* text-overflow: ellipsis;
-  white-space: nowrap; */
 }
 
 .friend-item-tag {
@@ -62,18 +46,15 @@
 .friend-item-username {
   font-weight: 900;
   color: #f2f3f5;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .friend-item-status {
   margin-top: 5px;
   display: flex;
-  min-width: 0;
-  /* width: calc(100% - 100px); */
-  /* width: 300px; */
-  /* flex-grow: 1; */
-  /* flex-shrink: 1; */
-  /* min-width: 0; */
-  /* max-width: calc(100% - 200px); */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -92,6 +73,7 @@
   display: flex;
   justify-content: end;
   overflow: visible;
+  min-width: 100px;
 }
 
 .friend-item-action {
