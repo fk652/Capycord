@@ -1,12 +1,20 @@
 import "./FriendsOnline.css";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import FriendListItem from "../FriendListItem";
 import { getFriends } from '../../../store/friends';
+import { useEffect } from "react";
+import { setHomePageLoad } from "../../../store/ui";
 
 const FriendsOnline = () => {
   const friends = useSelector(getFriends);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => dispatch(setHomePageLoad(true));
+  }, [])
+
   let count = 0;
   friends.forEach(friend => {
     if (friend.onlineStatus !== "Offline") count++ 
