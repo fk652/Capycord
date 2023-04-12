@@ -12,8 +12,8 @@ const StartServerForm = () => {
   const closeForm = (e) => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
-    dispatch(setServerFormPage('start'));
-    dispatch(setServerFormSlide(''));
+    dispatch(setServerFormPage("start"));
+    dispatch(setServerFormSlide("grow"));
   }
 
   const handleNext = (type) => () => {

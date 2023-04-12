@@ -10,11 +10,11 @@
 }
 
 .server-form.left {
-  animation: slide-left .2s ease-in;
+  animation: slide-left .2s;
 }
 
 .server-form.right {
-  animation: slide-right .2s ease-in;
+  animation: slide-right .2s;
 }
 
 .server-form.join-create {
@@ -194,9 +194,14 @@
   font-size: 14px;
 }
 
+.server-form-submit:hover {
+  margin: 0;
+  font-size: 14px;
+}
+
 @keyframes slide-left {
   0% {
-    left: -250px;
+    left: -500px;
   }
   100% { 
     left: 0; 
@@ -205,7 +210,7 @@
 
 @keyframes slide-right {
   0% {
-    right: -250px;
+    right: -500px;
   }
   100% { 
     right: 0; 

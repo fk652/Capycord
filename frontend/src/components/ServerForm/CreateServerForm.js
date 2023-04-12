@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getErrors } from '../../store/errors';
@@ -11,12 +12,17 @@ const CreateServerForm = () => {
   const username = sessionUser.username.split('#')[0];
   const [input, setInput] = useState(`${username}'s server`);
 
+  useEffect(() => {
+    const inputEle = document.querySelector('.server-form-input');
+    inputEle.focus();
+  }, [])
+
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide(''));
+    dispatch(setServerFormSlide("grow"));
   }
 
   const handleBack = () => {

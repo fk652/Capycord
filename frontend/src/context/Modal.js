@@ -2,8 +2,8 @@ import './Modal.css';
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch } from 'react-redux';
-import { setServerFormPage } from '../store/ui';
+import { useDispatch, useSelector } from 'react-redux';
+import { getServerSlide, setServerFormPage } from '../store/ui';
 
 const ModalContext = React.createContext();
 
@@ -87,13 +87,15 @@ export function TimeToolTip({ top, left, onClose, children }) {
 }
 
 export function ServerFormModal({ onClose, children }) {
+  const slide = useSelector(getServerSlide);
+
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(
     <div id="modal-form">
       <div id="modal-form-background" onClick={onClose} />
-      <div id="modal-content">
+      <div id="modal-content" className={`${slide === "grow" ? "expand" : ""}`}>
         {children}
       </div>
     </div>,

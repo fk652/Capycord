@@ -115,7 +115,7 @@ const initialState = {
   resetMessageBox: true,
   showServerModal: false,
   serverFormType: "start",
-  serverSlide: "",
+  serverSlide: "grow",
   homePageLoad: false
 }
 

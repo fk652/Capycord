@@ -164,3 +164,16 @@
   max-width: 440px;
   overflow: clip;
 }
+
+#modal-content.expand {
+  animation: expand 0.2s;
+}
+
+@keyframes expand {
+  0% {
+    scale: 0
+  }
+  100% {
+    scale: 1
+  }
+}

@@ -14,7 +14,7 @@ const JoinServerForm = () => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide(''));
+    dispatch(setServerFormSlide("grow"));
   }
 
   const handleBack = () => {
@@ -25,7 +25,7 @@ const JoinServerForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("submit");
-    
+
   }
 
   return (
