@@ -1,7 +1,7 @@
 import './ServerForm.css';
-import joinIcon from "../../assets/server_form_icons/join_icon.png";
-import createIcon from "../../assets/server_form_icons/create_icon.png";
-import choiceArrow from "../../assets/server_form_icons/choice_arrow.png";
+import joinIcon from "../../assets/server_form_icons/join_icon.svg";
+import createIcon from "../../assets/server_form_icons/create_icon.svg";
+import choiceArrow from "../../assets/server_form_icons/choice_arrow.svg";
 import { useDispatch, useSelector } from 'react-redux';
 import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 

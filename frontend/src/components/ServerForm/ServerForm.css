@@ -10,11 +10,11 @@
 }
 
 .server-form.left {
-  animation: slide-left .2s;
+  animation: slide-left .3s;
 }
 
 .server-form.right {
-  animation: slide-right .2s;
+  animation: slide-right .3s;
 }
 
 .server-form.join-create {
