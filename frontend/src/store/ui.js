@@ -1,3 +1,4 @@
+const RESET_UI = 'ui/reset';
 const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
@@ -7,8 +8,13 @@ const RESET_MESSAGE_BOX = "ui/resetMessageBox";
 const SET_SHOW_SERVER_MODAL = "ui/setShowServerModal";
 const SET_SERVER_FORM_PAGE = "ui/setServerFormPage";
 const SET_SERVER_FORM_SLIDE = "ui/setServerFormSlide";
-const SET_HOME_PAGE_LOAD = "ui/setHomePageLoad"
-const RESET_UI = 'ui/reset';
+const SET_HOME_PAGE_LOAD = "ui/setHomePageLoad";
+const SET_NEW_SERVER = "ui/setNewServer";
+const SET_NEW_CHANNEL = "ui/setNewChannel";
+
+export const resetUi = () => ({
+  type: RESET_UI
+})
 
 export const setFriendNav = (selectedTab) => ({
   type: SET_FRIEND_NAV_TAB,
@@ -60,8 +66,14 @@ export const setHomePageLoad = (toggle) => ({
   toggle
 })
 
-export const resetUi = () => ({
-  type: RESET_UI
+export const setNewServer = (serverId) => ({
+  type: SET_NEW_SERVER,
+  serverId
+})
+
+export const setNewChannel = (channelId) => ({
+  type: SET_NEW_CHANNEL,
+  channelId
 })
 
 // ---------------------------------------------------------
@@ -106,6 +118,14 @@ export const getHomePageLoad = (state) => {
   return state.ui.homePageLoad
 }
 
+export const getNewServer = (state) => {
+  return state.ui.newServer
+}
+
+export const getNewChannel = (state) => {
+  return state.ui.newChannel
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -116,11 +136,15 @@ const initialState = {
   showServerModal: false,
   serverFormType: "start",
   serverSlide: "expand",
-  homePageLoad: false
+  homePageLoad: false,
+  newServer: null,
+  newChannel: null
 }
 
 const uiReducer = (state = initialState, action) => {
   switch (action.type) {
+    case RESET_UI:
+      return {...initialState}
     case SET_FRIEND_NAV_TAB:
       return {...state, selectedFriendNavTab: action.selectedTab}
     case SET_SELECTED_SERVER:
@@ -141,8 +165,10 @@ const uiReducer = (state = initialState, action) => {
       return {...state, serverSlide: action.direction}
     case SET_HOME_PAGE_LOAD:
       return {...state, homePageLoad: action.toggle}
-    case RESET_UI:
-      return {...initialState}
+    case SET_NEW_SERVER:
+      return {...state, newServer: action.serverId}
+    case SET_NEW_CHANNEL:
+      return {...state, newChannel: action.channelId}
     default:
       return state;
   }

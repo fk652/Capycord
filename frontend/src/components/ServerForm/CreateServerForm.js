@@ -58,9 +58,6 @@ const CreateServerForm = () => {
         messages: null
       }
       if (data?.errors) errors.messages = data.errors;
-      // else if (data) errors.messages = [data];
-      // else errors.messages = [res.statusText];
-
       dispatch(addErrors(errors));
     });
 

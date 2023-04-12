@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { setNewServer } from "./ui";
 
 const RESET_SERVERS = 'servers/resetServers';
 const SET_SERVERS = 'servers/setServers';
@@ -42,8 +43,8 @@ export const createServer = (serverData) => async dispatch => {
   })
 
   const data = await response.json();
-  console.log(data);
   dispatch(addServer(data.server));
+  dispatch(setNewServer(data.server.id));
   return response;
 }
 

@@ -23,7 +23,7 @@ const JoinServerForm = () => {
 
   const handleBack = () => {
     dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide("left"))
+    dispatch(setServerFormSlide("left"));
   }
 
   const handleSubmit = (e) => {

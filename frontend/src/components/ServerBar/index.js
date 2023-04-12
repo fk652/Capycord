@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { getSelectedServer, getShowServerModal, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { getNewServer, getSelectedServer, getShowServerModal, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
 import { fetchServers, getServers, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
@@ -14,6 +14,8 @@ const ServerBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
+  const newServerId = useSelector(getNewServer);
+  console.log("newServerId", newServerId);
   // const [showServerFormModal, setShowServerFormModal] = useState(false);
   const showServerFormModal = useSelector(getShowServerModal);
 
@@ -23,10 +25,17 @@ const ServerBar = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchServers())
+    dispatch(fetchServers());
 
     return () => {dispatch(resetServers())}
   }, [dispatch])
+
+  useEffect(() => {
+    if (newServerId) {
+      history.push(`/server/${newServerId}`);
+      dispatch(setNewServer(null));
+    }
+  }, [newServerId])
 
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {
