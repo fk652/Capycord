@@ -14,7 +14,7 @@ const setServers = (servers) => ({
   servers
 })
 
-const addServer = (server) => ({
+export const addServer = (server) => ({
   type: ADD_SERVER,
   server
 })

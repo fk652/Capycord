@@ -15,7 +15,6 @@ const ServerBar = () => {
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const newServerId = useSelector(getNewServer);
-  console.log("newServerId", newServerId);
   // const [showServerFormModal, setShowServerFormModal] = useState(false);
   const showServerFormModal = useSelector(getShowServerModal);
 

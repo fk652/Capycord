@@ -21,7 +21,17 @@ class Api::MembershipsController < ApplicationController
   end
 
   def create
+    membership = Membership.new({
+      server_id: params[:server_id],
+      member_id: current_user.id
+    })
 
+    if membership.save 
+      @server = membership.server
+      render "api/servers/show"
+    else
+      render json: {errors: membership.errors}, status: :unprocessable_entity
+    end
   end
 
   def destroy 

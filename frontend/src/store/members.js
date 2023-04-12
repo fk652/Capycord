@@ -1,4 +1,6 @@
 import csrfFetch from "./csrf";
+import { addServer } from "./servers";
+import { setNewServer } from "./ui";
 
 const RESET_MEMBERS = 'members/resetMembers';
 const SET_MEMBERS = 'members/setMembers';
@@ -43,7 +45,15 @@ export const fetchMembers = (serverId) => async dispatch => {
 }
 
 export const createMember = (memberData) => async dispatch => {
+  const response = await csrfFetch(`/api/memberships`, {
+    method: "POST",
+    body: JSON.stringify(memberData)
+  });
 
+  const data = await response.json();
+  dispatch(addServer(data.server));
+  dispatch(setNewServer(data.server.id));
+  return response;
 }
 
 export const updateMember = (memberData) => async dispatch => {

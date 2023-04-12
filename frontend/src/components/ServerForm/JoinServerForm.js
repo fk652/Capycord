@@ -1,13 +1,38 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getErrors } from '../../store/errors';
-import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { addErrors, getErrors, removeErrors } from '../../store/errors';
+import { createMember } from '../../store/members';
+import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const JoinServerForm = () => {
+  const sessionuser = useSelector(state => state.session.user);
+  const newServer = useSelector(getNewServer);
   const slide = useSelector(getServerSlide);
   const errors = useSelector(getErrors);
-  const [input, setInput] = useState('');
+  const [serverId, setServerId] = useState('');
+
+  useEffect(() => {
+    const inputEle = document.querySelector('.server-form-input');
+    inputEle.focus();
+    
+    return () => {
+      if (errors) dispatch(removeErrors());
+    }
+  }, [])
+
+  useEffect(() => {
+    if (newServer) {
+      dispatch(setServerFormSlide("close"));
+
+      setTimeout(() => {
+        dispatch(setShowServerModal(false));
+        dispatch(setServerFormPage("start"));
+        dispatch(setServerFormSlide("expand"));
+      }, 200)
+    }
+  }, [newServer])
 
   const dispatch = useDispatch();
   const closeForm = (e) => {
@@ -28,8 +53,30 @@ const JoinServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("submit");
+    if (errors) dispatch(removeErrors());
 
+    const memberData = {
+      serverId,
+      memberId: sessionuser.id
+    }
+
+    dispatch(createMember(memberData))
+    .catch(async (res) => {
+      let data;
+      try {
+        data = await res.clone().json();
+      } catch {
+        data = await res.text();
+      }
+
+      const errors = {
+        status: res.status,
+        messages: null
+      }
+      
+      if (data?.errors) errors.messages = data.errors;
+      dispatch(addErrors(errors));
+    });
   }
 
   return (
@@ -53,11 +100,11 @@ const JoinServerForm = () => {
       </div>
 
       <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
-        <h2 className={`input-label ${errors?.error ? "error" : ""}`}>
+        <h2 className={`input-label ${errors ? "error" : ""}`}>
           SERVER ID NUMBER
           {
-            errors?.error
-              ? <span className="error-message server"> - {errors.error}</span>
+            errors
+              ? <span className="error-message server"> - {Object.values(errors)}</span>
               : <span className="required">*</span>
           }
         </h2>
@@ -65,8 +112,8 @@ const JoinServerForm = () => {
         <input 
           type="text" 
           className="server-form-input" 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)}
+          value={serverId} 
+          onChange={(e) => setServerId(e.target.value)}
           required
         />
 

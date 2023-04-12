@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addErrors, getErrors } from '../../store/errors';
+import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createServer } from '../../store/servers';
-import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const CreateServerForm = () => {
   const slide = useSelector(getServerSlide);
   const sessionUser = useSelector(state => state.session.user);
+  const newServer = useSelector(getNewServer);
   const username = sessionUser.username.split('#')[0];
   const errors = useSelector(getErrors);
   const [name, setName] = useState(`${username}'s server`);
@@ -17,7 +18,23 @@ const CreateServerForm = () => {
   useEffect(() => {
     const inputEle = document.querySelector('.server-form-input');
     inputEle.focus();
+
+    return () => {
+      if (errors) dispatch(removeErrors());
+    }
   }, [])
+
+  useEffect(() => {
+    if (newServer) {
+      dispatch(setServerFormSlide("close"));
+
+      setTimeout(() => {
+        dispatch(setShowServerModal(false));
+        dispatch(setServerFormPage("start"));
+        dispatch(setServerFormSlide("expand"));
+      }, 200)
+    }
+  }, [newServer])
 
   const dispatch = useDispatch();
   const closeForm = (e) => {
@@ -38,6 +55,8 @@ const CreateServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(removeErrors());
+
     const server = {
       name,
       pictureUrl,
@@ -60,16 +79,6 @@ const CreateServerForm = () => {
       if (data?.errors) errors.messages = data.errors;
       dispatch(addErrors(errors));
     });
-
-    if (!errors) {
-      dispatch(setServerFormSlide("close"));
-
-      setTimeout(() => {
-        dispatch(setShowServerModal(false));
-        dispatch(setServerFormPage("start"));
-        dispatch(setServerFormSlide("expand"));
-      }, 200)
-    }
   }
 
   return (
@@ -94,11 +103,11 @@ const CreateServerForm = () => {
       </div>
 
       <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
-        <h2 className={`input-label bold ${errors?.error ? "error" : ""}`}>
+        <h2 className={`input-label bold ${errors ? "error" : ""}`}>
           SERVER NAME
           {
-            errors?.error
-              ? <span className="error-message server"> - {errors.error}</span>
+            errors
+              ? <span className="error-message server"> - {Object.values(errors)}</span>
               : null
           }
         </h2>
