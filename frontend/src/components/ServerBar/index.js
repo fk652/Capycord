@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { getSelectedServer, getShowServerModal, setServerFormPage, setShowServerModal } from '../../store/ui';
+import { getSelectedServer, getShowServerModal, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
 import { fetchServers, getServers, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
@@ -77,6 +77,7 @@ const ServerBar = () => {
   const closeForm = () => {
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage('start'));
+    dispatch(setServerFormSlide(''));
   }
 
   return (

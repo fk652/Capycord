@@ -1,4 +1,5 @@
 .server-form {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -6,6 +7,14 @@
   text-align: center;
   padding-bottom: 16px;
   min-width: 440px;
+}
+
+.server-form.left {
+  animation: slide-left .2s ease-in;
+}
+
+.server-form.right {
+  animation: slide-right .2s ease-in;
 }
 
 .server-form.join-create {
@@ -18,6 +27,10 @@
   align-items: center;
   justify-content: center;
   padding: 24px 16px 0;
+}
+
+.server-form-header.create {
+  padding: 24px 24px 0;
 }
 
 .server-form-header h1 {
@@ -113,6 +126,10 @@
   color: #fa777c;
 }
 
+.input-label.bold {
+  font-weight: 900;
+}
+
 .server-form-input {
   background: #e3e5e8;
   padding: 10px;
@@ -130,6 +147,10 @@
   font-size: 14px;
   color: #060607;
   margin-bottom: 5px;
+}
+
+.helper-text.small {
+  font-size: 12px;
 }
 
 .server-form-footer {
@@ -160,7 +181,33 @@
   cursor: pointer;
 }
 
+.back-link.create {
+  color: #000000;
+}
+
+.back-link.create:hover {
+  text-decoration: none;
+}
+
 .server-form-submit {
   margin: 0;
   font-size: 14px;
+}
+
+@keyframes slide-left {
+  0% {
+    left: -250px;
+  }
+  100% { 
+    left: 0; 
+  }
+}
+
+@keyframes slide-right {
+  0% {
+    right: -250px;
+  }
+  100% { 
+    right: 0; 
+  }
 }

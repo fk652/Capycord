@@ -2,19 +2,27 @@ import './ServerForm.css';
 import joinIcon from "../../assets/server_form_icons/join_icon.svg";
 import createIcon from "../../assets/server_form_icons/create_icon.svg";
 import choiceArrow from "../../assets/server_form_icons/choice_arrow.svg";
-import { useDispatch } from 'react-redux';
-import { setServerFormPage, setShowServerModal } from '../../store/ui';
+import { useDispatch, useSelector } from 'react-redux';
+import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 
 const StartServerForm = () => {
+  const slide = useSelector(getServerSlide);
+
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage('start'));
+    dispatch(setServerFormSlide(''));
+  }
+
+  const handleNext = (type) => () => {
+    dispatch(setServerFormSlide('left'));
+    dispatch(setServerFormPage(type))
   }
 
   return (
-    <div className="server-form">
+    <div className={`server-form ${slide}`}>
       <div className="server-form-header">
         <h1>
           Add a server
@@ -36,7 +44,7 @@ const StartServerForm = () => {
 
       <div 
         className="choice-container" 
-        onClick={() => dispatch(setServerFormPage('create'))}
+        onClick={handleNext('create')}
       >
         <img className="choice-icon" alt="" src={createIcon} />
         <div className="choice-text">
@@ -53,7 +61,7 @@ const StartServerForm = () => {
 
       <div 
         className="choice-container"
-        onClick={() => dispatch(setServerFormPage('join'))}
+        onClick={handleNext('join')}
       >
         <img className="choice-icon" alt="" src={joinIcon} />
         <div className="choice-text">

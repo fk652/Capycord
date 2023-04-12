@@ -162,4 +162,5 @@
   background-color:white;
   border-radius: 4px;
   max-width: 440px;
+  overflow: clip;
 }

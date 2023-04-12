@@ -1,31 +1,43 @@
-import { useDispatch } from 'react-redux';
-import { setServerFormPage, setShowServerModal } from '../../store/ui';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getErrors } from '../../store/errors';
+import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const CreateServerForm = () => {
+  const slide = useSelector(getServerSlide);
+  const errors = useSelector(getErrors);
+  const sessionUser = useSelector(state => state.session.user);
+  const username = sessionUser.username.split('#')[0];
+  const [input, setInput] = useState(`${username}'s server`);
+
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage("start"));
+    dispatch(setServerFormSlide(''));
   }
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("submit");
+  }
 
-    // dispatch(setShowServerModal(false));
-    // dispatch(setServerFormPage('start'));
+  const handleBack = () => {
+    dispatch(setServerFormPage("start"));
+    dispatch(setServerFormSlide("right"))
   }
 
   return (
-    <div className="server-form">
-      <div className="server-form-header">
+    <div className={`server-form join-create ${slide}`}>
+      <div className="server-form-header create">
         <h1>
-          Add a server
+          Customize your server
         </h1>
         <div className="server-form-subtext">
-          Your server is where you and your friends hang out.
-          Make yours and start talking.
+          Give your new server a personality with a name and an icon.
+          You can always change it later.
         </div>
         <div 
           className="server-form-close" 
@@ -38,20 +50,37 @@ const CreateServerForm = () => {
         </div>
       </div>
 
-      <div className="choice-container">
-        <div className="choice-text">
-          Create My Own
-        </div>
-      </div>
+      <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
+        <h2 className={`input-label bold ${errors?.error ? "error" : ""}`}>
+          SERVER NAME
+          {
+            errors?.error
+              ? <span className="error-message server"> - {errors.error}</span>
+              : null
+          }
+        </h2>
+        
+        <input 
+          type="text" 
+          className="server-form-input" 
+          value={input} 
+          onChange={(e) => setInput(e.target.value)}
+          required
+        />
 
-      <div className="server-form-subtext">
-        Have an invite already?
-      </div>
-
-      <div className="choice-container">
-        <div className="choice-text">
-          Join a Server
+        <div className="helper-text small">
+          By creating a server, you agree to love capybaras 💖
         </div>
+      </form>
+
+      <div className="server-form-footer">
+        <div className="back-link create" onClick={handleBack}>
+          Back
+        </div>
+
+        <button className="server-form-submit" onClick={handleSubmit}>
+          Create
+        </button>
       </div>
     </div>
   )

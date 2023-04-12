@@ -6,6 +6,7 @@ const SET_SCROLL = "ui/setScroll";
 const RESET_MESSAGE_BOX = "ui/resetMessageBox";
 const SET_SHOW_SERVER_MODAL = "ui/setShowServerModal";
 const SET_SERVER_FORM_PAGE = "ui/setServerFormPage";
+const SET_SERVER_FORM_SLIDE = "ui/setServerFormSlide"
 const RESET_UI = 'ui/reset';
 
 export const setFriendNav = (selectedTab) => ({
@@ -48,6 +49,11 @@ export const setServerFormPage = (formType) => ({
   formType
 })
 
+export const setServerFormSlide = (direction) => ({
+  type: SET_SERVER_FORM_SLIDE,
+  direction
+})
+
 export const resetUi = () => ({
   type: RESET_UI
 })
@@ -84,6 +90,10 @@ export const getServerFormType = (state) => {
   return state.ui.serverFormType
 }
 
+export const getServerSlide = (state) => {
+  return state.ui.serverSlide
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -92,7 +102,8 @@ const initialState = {
   setScroll: true,
   resetMessageBox: true,
   showServerModal: false,
-  serverFormType: "start"
+  serverFormType: "start",
+  serverSlide: ""
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -113,6 +124,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, serverFormType: action.formType}
     case SET_SHOW_SERVER_MODAL:
       return {...state, showServerModal: action.toggle}
+    case SET_SERVER_FORM_SLIDE:
+      return {...state, serverSlide: action.direction}
     case RESET_UI:
       return {...initialState}
     default:

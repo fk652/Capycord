@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getErrors } from '../../store/errors';
-import { setServerFormPage, setShowServerModal } from '../../store/ui';
+import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const JoinServerForm = () => {
-  let errors = useSelector(getErrors);
+  const slide = useSelector(getServerSlide);
+  const errors = useSelector(getErrors);
   const [input, setInput] = useState('');
 
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const JoinServerForm = () => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage("start"));
+    dispatch(setServerFormSlide(''));
   }
 
   const handleSubmit = (e) => {
@@ -20,8 +22,13 @@ const JoinServerForm = () => {
     console.log("submit");
   }
 
+  const handleBack = () => {
+    dispatch(setServerFormPage("start"));
+    dispatch(setServerFormSlide("right"))
+  }
+
   return (
-    <div className="server-form join-create">
+    <div className={`server-form join-create ${slide}`}>
       <div className="server-form-header">
         <h1>
           Join a Server
@@ -52,9 +59,10 @@ const JoinServerForm = () => {
         
         <input 
           type="text" 
-          className={`server-form-input ${errors?.error ? 'error' : ''}`} 
+          className="server-form-input" 
           value={input} 
           onChange={(e) => setInput(e.target.value)}
+          required
         />
 
         <div className="helper-text">
@@ -67,7 +75,7 @@ const JoinServerForm = () => {
       </form>
 
       <div className="server-form-footer">
-        <div className="back-link" onClick={() => dispatch(setServerFormPage("start"))}>
+        <div className="back-link" onClick={handleBack}>
           Back
         </div>
 
