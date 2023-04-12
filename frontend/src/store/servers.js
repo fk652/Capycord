@@ -2,6 +2,7 @@ import csrfFetch from "./csrf";
 
 const RESET_SERVERS = 'servers/resetServers';
 const SET_SERVERS = 'servers/setServers';
+const ADD_SERVER = 'servers/addServer';
 
 export const resetServers = () => ({
   type: RESET_SERVERS
@@ -10,6 +11,11 @@ export const resetServers = () => ({
 const setServers = (servers) => ({
   type: SET_SERVERS,
   servers
+})
+
+const addServer = (server) => ({
+  type: ADD_SERVER,
+  server
 })
 
 export const getServers = (state) => {
@@ -30,7 +36,15 @@ export const fetchServers = () => async dispatch => {
 }
 
 export const createServer = (serverData) => async dispatch => {
+  const response = await csrfFetch('/api/servers', {
+    method: "POST",
+    body: JSON.stringify(serverData)
+  })
 
+  const data = await response.json();
+  console.log(data);
+  dispatch(addServer(data.server));
+  return response;
 }
 
 export const updateServer = (serverData) => async dispatch => {
@@ -49,6 +63,8 @@ const serversReducer = (state = initialState, action) => {
       return initialState
     case SET_SERVERS:
       return {...action.servers}
+    case ADD_SERVER:
+      return {...state, [action.server.id]: action.server}
     default:
       return state;
   }

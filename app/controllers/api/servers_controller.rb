@@ -9,9 +9,15 @@ class Api::ServersController < ApplicationController
   end
 
   def create
-    @server = Server.new(create_params)
+    # @server = Server.new(create_params)
+    @server = Server.new({
+      name: params[:name],
+      picture_url: params[:picture_url],
+      owner_id: current_user.id
+    })
+
     if @server.save 
-      
+      render :show
     else
       render json: {errors: @server.errors}, status: :unprocessable_entity
     end

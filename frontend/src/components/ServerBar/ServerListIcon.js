@@ -39,7 +39,12 @@ const ServerListIcon = ({id, image, name}) => {
                 alt="server-icon"
                 data-key={id}
               />
-            : <div className="server-icon filler">{name[0].toUpperCase()}</div>
+            : <div 
+                className="server-icon filler"
+                data-key={id}
+              >
+                {name[0].toUpperCase()}
+              </div>
         }
       </div>
       <div className="tab-selector-wrapper">

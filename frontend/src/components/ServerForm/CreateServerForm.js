@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getErrors } from '../../store/errors';
+import { addErrors, getErrors } from '../../store/errors';
+import { createServer } from '../../store/servers';
 import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const CreateServerForm = () => {
   const slide = useSelector(getServerSlide);
-  const errors = useSelector(getErrors);
   const sessionUser = useSelector(state => state.session.user);
   const username = sessionUser.username.split('#')[0];
-  const [input, setInput] = useState(`${username}'s server`);
+  const errors = useSelector(getErrors);
+  const [name, setName] = useState(`${username}'s server`);
+  const [pictureUrl, setPictureUrl] = useState('')
 
   useEffect(() => {
     const inputEle = document.querySelector('.server-form-input');
@@ -36,8 +38,41 @@ const CreateServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log("submit");
+    const server = {
+      name,
+      pictureUrl,
+      ownerId: sessionUser.id 
+    }
 
+    dispatch(createServer(server))
+    .catch(async (res) => {
+      let data;
+      try {
+        data = await res.clone().json();
+      } catch {
+        data = await res.text();
+      }
+
+      const errors = {
+        status: res.status,
+        messages: null
+      }
+      if (data?.errors) errors.messages = data.errors;
+      // else if (data) errors.messages = [data];
+      // else errors.messages = [res.statusText];
+
+      dispatch(addErrors(errors));
+    });
+
+    if (!errors) {
+      dispatch(setServerFormSlide("close"));
+
+      setTimeout(() => {
+        dispatch(setShowServerModal(false));
+        dispatch(setServerFormPage("start"));
+        dispatch(setServerFormSlide("expand"));
+      }, 200)
+    }
   }
 
   return (
@@ -74,8 +109,8 @@ const CreateServerForm = () => {
         <input 
           type="text" 
           className="server-form-input" 
-          value={input} 
-          onChange={(e) => setInput(e.target.value)}
+          value={name} 
+          onChange={(e) => setName(e.target.value)}
           required
         />
 
