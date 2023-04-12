@@ -35,7 +35,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
                   <span className="status">{customStatus ? customStatus : status}</span>
                 </div>
               : <div className="friend-request-message">
-                  <span>{customStatus}</span>
+                  <span className="status">{customStatus}</span>
                 </div> 
             }
           </div>

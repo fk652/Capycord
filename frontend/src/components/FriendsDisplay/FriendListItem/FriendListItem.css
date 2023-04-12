@@ -69,7 +69,7 @@
   display: flex;
   min-width: 0;
   /* width: calc(100% - 100px); */
-  width: 300px;
+  /* width: 300px; */
   /* flex-grow: 1; */
   /* flex-shrink: 1; */
   /* min-width: 0; */
@@ -91,6 +91,7 @@
 .friend-item-options {
   display: flex;
   justify-content: end;
+  overflow: visible;
 }
 
 .friend-item-action {
