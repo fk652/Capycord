@@ -101,6 +101,7 @@ class User < ApplicationRecord
   has_many :friend_requesters, through: :received_friend_requests, source: :sender
   has_many :requested_friends, through: :sent_friend_requests, source: :receiver
   has_many :server_memberships, through: :memberships, source: :server
+  has_many :channel_memberships, through: :server_memberships, source: :channels
 
   def self.find_by_credentials(email, password)
     user = User.find_by(email: email)

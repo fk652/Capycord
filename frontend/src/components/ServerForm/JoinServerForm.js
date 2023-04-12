@@ -1,13 +1,21 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setServerFormPage, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const JoinServerForm = () => {
+  const [input, setInput] = useState('');
+
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
     dispatch(setShowServerModal(false));
     dispatch(setServerFormPage("start"));
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
   }
 
   return (
@@ -31,20 +39,14 @@ const JoinServerForm = () => {
         </div>
       </div>
 
-      <div className="choice-container">
-        <div className="choice-text">
-          Create My Own
+      <div className="server-form-footer">
+        <div className="back-link" onClick={() => dispatch(setServerFormPage("start"))}>
+          Back
         </div>
-      </div>
 
-      <div className="server-form-subtext">
-        Have an invite already?
-      </div>
-
-      <div className="choice-container">
-        <div className="choice-text">
-          Join a Server
-        </div>
+        <button className="submit" onClick={handleSubmit}>
+          Submit
+        </button>
       </div>
     </div>
   )

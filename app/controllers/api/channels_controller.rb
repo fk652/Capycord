@@ -1,16 +1,23 @@
 class Api::ChannelsController < ApplicationController
   def index
-    server = Server.find(params[:server_id]);
-    if server 
-      if current_user.server_memberships.find(params[:server_id])
-        @channels = server.channels
-        render :index
-      else
-        render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
-      end
+    @channels = current_user.server_memberships.find(params[:server_id]).channels
+    if @channels
+      render :index
     else
-      render json: { errors: { error: "Server not found"} }, status: :unprocessable_entity
+      render json: {errors: @channels.errors}, status: :unprocessable_entity
     end
+    
+    # server = Server.find(params[:server_id]);
+    # if server 
+    #   if current_user.server_memberships.find(params[:server_id])
+    #     @channels = server.channels
+    #     render :index
+    #   else
+    #     render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
+    #   end
+    # else
+    #   render json: { errors: { error: "Server not found"} }, status: :unprocessable_entity
+    # end
   end
 
   def show
