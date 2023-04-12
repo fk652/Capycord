@@ -11,14 +11,18 @@ const StartServerForm = () => {
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
-    dispatch(setShowServerModal(false));
-    dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide("grow"));
+    dispatch(setServerFormSlide("close"));
+
+    setTimeout(() => {
+      dispatch(setShowServerModal(false));
+      dispatch(setServerFormPage("start"));
+      dispatch(setServerFormSlide("expand"));
+    }, 200)
   }
 
   const handleNext = (type) => () => {
-    dispatch(setServerFormSlide('left'));
-    dispatch(setServerFormPage(type))
+    dispatch(setServerFormSlide('right'));
+    dispatch(setServerFormPage(type));
   }
 
   return (

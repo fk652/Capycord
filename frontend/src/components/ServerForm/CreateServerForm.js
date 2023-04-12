@@ -20,14 +20,18 @@ const CreateServerForm = () => {
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
-    dispatch(setShowServerModal(false));
-    dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide("grow"));
+    dispatch(setServerFormSlide("close"));
+
+    setTimeout(() => {
+      dispatch(setShowServerModal(false));
+      dispatch(setServerFormPage("start"));
+      dispatch(setServerFormSlide("expand"));
+    }, 200)
   }
 
   const handleBack = () => {
     dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide("right"))
+    dispatch(setServerFormSlide("left"))
   }
 
   const handleSubmit = (e) => {

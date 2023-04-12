@@ -95,7 +95,7 @@ export function ServerFormModal({ onClose, children }) {
   return ReactDOM.createPortal(
     <div id="modal-form">
       <div id="modal-form-background" onClick={onClose} />
-      <div id="modal-content" className={`${slide === "grow" ? "expand" : ""}`}>
+      <div id="modal-content" className={`${slide === "expand" || slide === "close" ? slide : ""}`}>
         {children}
       </div>
     </div>,

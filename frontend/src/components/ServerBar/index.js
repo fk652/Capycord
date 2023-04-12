@@ -31,10 +31,11 @@ const ServerBar = () => {
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {
       if(e.target.dataset.key === "home") history.push(`/home`)
-      // else if (e.target.dataset.key === "add-server") {
-      //   // console.log("display add server modal") // to do
-      //   dispatch(setShowServerModal(true)) // properly change this later
-      // }
+      else if (e.target.dataset.key === "add-server") {
+        // console.log("display add server modal") // to do
+        // dispatch(setShowServerModal(true)) // properly change this later
+        return
+      }
       else history.push(`/server/${e.target.dataset.key}`);
     }
   }
@@ -75,9 +76,13 @@ const ServerBar = () => {
   }
 
   const closeForm = () => {
-    dispatch(setShowServerModal(false));
-    dispatch(setServerFormPage("start"));
-    dispatch(setServerFormSlide("grow"));
+    dispatch(setServerFormSlide("close"));
+
+    setTimeout(() => {
+      dispatch(setShowServerModal(false));
+      dispatch(setServerFormPage("start"));
+      dispatch(setServerFormSlide("expand"));
+    }, 200)
   }
 
   const handleShowForm = (e) => {
