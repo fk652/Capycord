@@ -43,8 +43,8 @@
 .friend-item-name-wrapper {
   display: flex;
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* text-overflow: ellipsis;
+  white-space: nowrap; */
 }
 
 .friend-item-username {

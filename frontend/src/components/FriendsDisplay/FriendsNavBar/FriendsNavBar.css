@@ -143,7 +143,7 @@
 }
 
 .friend-search-input {
-  min-width: 80px;
+  min-width: 45px;
   height: 34px;
   padding: 0 10px;
   margin: 1px 0px 1px 1px;
@@ -173,8 +173,10 @@
   align-items: center;
   background: #1e1f22;
   height: 34px;
-  color: #b5bac1;
+  min-height: 34px;
   width: 34px;
+  min-width: 34px;
+  color: #b5bac1;
   margin: 1px 0;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
