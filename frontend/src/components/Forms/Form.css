@@ -60,7 +60,7 @@ label.error {
   color: #fa777c;
 }
 
-.errorMessage {
+.error-message {
   font-style: italic;
   font-weight: 500;
 }

@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getErrors } from '../../store/errors';
 import { setServerFormPage, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const JoinServerForm = () => {
+  let errors = useSelector(getErrors);
   const [input, setInput] = useState('');
 
   const dispatch = useDispatch();
@@ -15,18 +17,17 @@ const JoinServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    console.log("submit");
   }
 
   return (
-    <div className="server-start-form">
+    <div className="server-form join-create">
       <div className="server-form-header">
         <h1>
-          Add a server
+          Join a Server
         </h1>
-        <div className="server-form-subtext">
-          Your server is where you and your friends hang out.
-          Make yours and start talking.
+        <div className="server-form-subtext small">
+          Enter a server id below to join an existing server
         </div>
         <div 
           className="server-form-close" 
@@ -39,13 +40,39 @@ const JoinServerForm = () => {
         </div>
       </div>
 
+      <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
+        <h2 className={`input-label ${errors?.error ? "error" : ""}`}>
+          SERVER ID NUMBER
+          {
+            errors?.error
+              ? <span className="error-message server"> - {errors.error}</span>
+              : <span className="required">*</span>
+          }
+        </h2>
+        
+        <input 
+          type="text" 
+          className={`server-form-input ${errors?.error ? 'error' : ''}`} 
+          value={input} 
+          onChange={(e) => setInput(e.target.value)}
+        />
+
+        <div className="helper-text">
+          Demo server ids should range from 1-12
+        </div>
+
+        <div className="helper-text">
+          Server ids can also be found in the url link (e.g: /server/:server_id)
+        </div>
+      </form>
+
       <div className="server-form-footer">
         <div className="back-link" onClick={() => dispatch(setServerFormPage("start"))}>
           Back
         </div>
 
-        <button className="submit" onClick={handleSubmit}>
-          Submit
+        <button className="server-form-submit" onClick={handleSubmit}>
+          Join Server
         </button>
       </div>
     </div>

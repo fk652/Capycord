@@ -14,7 +14,7 @@ const StartServerForm = () => {
   }
 
   return (
-    <div className="server-start-form">
+    <div className="server-form">
       <div className="server-form-header">
         <h1>
           Add a server

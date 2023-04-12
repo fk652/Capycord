@@ -71,7 +71,7 @@ const LoginForm = () => {
               EMAIL
               {
                 errors?.login
-                  ? <span className="errorMessage"> - {errors.login}</span>
+                  ? <span className="error-message"> - {errors.login}</span>
                   : <span className="required">*</span>
               }
             </label>
@@ -86,7 +86,7 @@ const LoginForm = () => {
               PASSWORD
               {
                 errors?.login 
-                  ? <span className="errorMessage"> - {errors.login}</span>
+                  ? <span className="error-message"> - {errors.login}</span>
                   : <span className="required">*</span>
               }
             </label>
