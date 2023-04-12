@@ -3,11 +3,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createMember } from '../../store/members';
+import { getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const JoinServerForm = () => {
-  const sessionuser = useSelector(state => state.session.user);
+  const sessionuser = useSelector(getCurrentUser);
   const newServer = useSelector(getNewServer);
   const slide = useSelector(getServerSlide);
   const errors = useSelector(getErrors);

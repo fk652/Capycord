@@ -3,12 +3,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createServer } from '../../store/servers';
+import { getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import './ServerForm.css';
 
 const CreateServerForm = () => {
   const slide = useSelector(getServerSlide);
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(getCurrentUser);
   const newServer = useSelector(getNewServer);
   const username = sessionUser.username.split('#')[0];
   const errors = useSelector(getErrors);
@@ -55,7 +56,7 @@ const CreateServerForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(removeErrors());
+    if (errors) dispatch(removeErrors());
 
     const server = {
       name,

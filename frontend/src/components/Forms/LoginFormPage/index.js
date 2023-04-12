@@ -5,20 +5,22 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
-import { login } from "../../../store/session";
+import { getCurrentUser, login } from "../../../store/session";
 import { addErrors, getErrors, removeErrors } from '../../../store/errors';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    dispatch(removeErrors());
+    if (errors) dispatch(removeErrors());
     
-    return () => dispatch(removeErrors());
+    return () => {
+      if (errors) dispatch(removeErrors());
+    }
   }, [dispatch])
 
   

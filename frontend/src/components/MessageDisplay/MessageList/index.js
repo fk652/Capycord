@@ -14,6 +14,7 @@ import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
 import { useParams } from 'react-router-dom';
 import { getSetScroll, setScroll } from '../../../store/ui';
+import { getCurrentUser } from '../../../store/session';
 
 const MessageList = () => {
   const {channelId} = useParams();
@@ -21,7 +22,7 @@ const MessageList = () => {
   const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(getCurrentUser);
 
   // add useEffect to retrieve more messages when scrolled to the top
   // dependency array with scroll height

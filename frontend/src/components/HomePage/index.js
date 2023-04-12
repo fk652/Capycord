@@ -10,9 +10,10 @@ import FriendsDisplay from "../FriendsDisplay";
 import { setHomePageLoad, setSelectedServer } from "../../store/ui";
 import { addReceivedRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
+import { getCurrentUser } from "../../store/session";
 
 const HomePage = () => {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(getCurrentUser);
 
   const dispatch = useDispatch();
   useEffect(() => {

@@ -14,7 +14,7 @@ const FriendsAdd = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(removeErrors());
+    if (errors) dispatch(removeErrors());
     
     return dispatch(createFriendRequest(username))
     .catch(async (res) => {
@@ -40,7 +40,7 @@ const FriendsAdd = () => {
   const dispatch = useDispatch();
   let ref = useRef();
   useEffect(() => {
-    dispatch(removeErrors());
+    if (errors) dispatch(removeErrors());
 
     ref.button = document.querySelector(".add-friend-button");
     const input = document.querySelector(".add-friend-input");
@@ -64,7 +64,7 @@ const FriendsAdd = () => {
 
     return () => {
       dispatch(setAddFriendResult(false));
-      dispatch(removeErrors());
+      if (errors) dispatch(removeErrors());
     }
   }, [dispatch])
 

@@ -1,12 +1,13 @@
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getServer } from '../../../../store/servers';
+import { getCurrentUser } from '../../../../store/session';
 import './MessageItem.css'
 
 const FirstChannelMessage = ({channelInfo}) => {
   const {serverId} = useParams();
   const serverInfo = useSelector(getServer(serverId));
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector(getCurrentUser);
 
   let icon = null;
   const textIcon = (
