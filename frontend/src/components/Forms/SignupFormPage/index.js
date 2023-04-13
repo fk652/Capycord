@@ -54,8 +54,8 @@ const SignupFormPage = () => {
   
   return (
     <div className="form-wrapper">
-      <AboutMe />
       <div className="form-container">
+        <AboutMe />
         <form className="login-signup" onSubmit={handleSubmit}>
           <div className="form-header">
             <h1>Create an account</h1>
