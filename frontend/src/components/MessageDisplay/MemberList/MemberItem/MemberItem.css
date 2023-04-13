@@ -34,6 +34,13 @@
 
 .member-list-item:hover .member-item-username {
   color: #dbdee1;
+  overflow: visible;
+  white-space: pre-line;
+  word-break: break-all;
+}
+
+.member-list-item:hover .member-item-name-wrapper {
+  flex-wrap: wrap;
 }
 
 .member-item-details {
@@ -43,15 +50,19 @@
 }
 
 .member-item-name-wrapper {
-  max-width: 155px;
+  max-width: 145px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 
 .member-item-username {
   font-weight: 900;
   color: #949ba4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: inline;
 }
 
 
