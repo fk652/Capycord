@@ -20,10 +20,13 @@ export const MessageNavBar = () => {
   const [currentModal, setCurrentModal] = useState(null);
 
   const showHandler = (id) => (e) => {
-    let offsets = [0, 0];
-    if (currentModal === "member") offsets = [55, 30];
-    else if (currentModal === "inbox") offsets = [15, 30]
     e.preventDefault();
+
+    let offsets = [0, 0];
+    if (currentModal === "member" && showMembers) offsets = [52, 34];
+    else if (currentModal === "member" && !showMembers) offsets = [55, 34];
+    else if (currentModal === "inbox") offsets = [15, 34];
+
     setCurrentModal(id);
     setShowModal(true);
 
