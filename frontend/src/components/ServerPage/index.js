@@ -12,18 +12,15 @@ import { addMember, fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { getCurrentUser } from '../../store/session';
-// import { getServers } from '../../store/servers';
 
 const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
   
   const {serverId, channelId} = useParams();
   const history = useHistory();
-  // const servers = useSelector(getServers);
   
   const dispatch = useDispatch();
   useEffect(() => {
-    // if (!servers[serverId]) history.push('/home');
     if (sessionUser) {
       dispatch(setSelectedServer(serverId));
       dispatch(fetchChannels(serverId))
@@ -123,7 +120,6 @@ const ServerPage = () => {
               const listEle = document.querySelector(".messages-list")
               const atBottom = listEle &&
                 (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
-              // console.log(atBottom)
               if (atBottom) dispatch(setScroll(true));
               dispatch(addMessage(message));
               break;
@@ -136,14 +132,6 @@ const ServerPage = () => {
             default:
               console.log("unknown broadcast type");
           }
-
-          // const listEle = document.querySelector(".messages-list")
-          // const atBottom = listEle &&
-          //   (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
-          // console.log(atBottom)
-
-          // if (atBottom) dispatch(setScroll(true));
-          // dispatch(addMessage(message.message));
         }
       }
     );

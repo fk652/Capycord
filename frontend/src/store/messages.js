@@ -47,31 +47,15 @@ export const createMessage = (message) => async dispatch => {
     body: JSON.stringify(message)
   })
 
-  // const response = await csrfFetch(`/api/messages`, {
-  //   method: 'POST',
-  //   body: JSON.stringify(message)
-  // })
-
-  // const data = await response.json();
-  // console.log("data", data)
-  // dispatch(addMessage(data.message));
-  // return response;
+  // create handled with broadcast subscription
 }
 
 export const deleteMessage = (messageId) => async dispatch => {
   csrfFetch(`/api/messages/${messageId}`, {
     method: 'DELETE'
   })
-  
-  // const response = await csrfFetch(`/api/messages/${messageId}`, {
-  //   method: 'DELETE'
-  // })
 
-  // if (response.ok) {
-  //   dispatch(removeMessage(messageId));
-  // } else {
-  //   return response;
-  // }
+  // delete handled with broadcast subscription
 }
 
 const initialState = null

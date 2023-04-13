@@ -2,7 +2,6 @@ import "./reset.css";
 import "./index.css";
 
 import React from "react";
-// import ReactDOM from "react-dom";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { ModalProvider } from "./context/Modal";
@@ -31,15 +30,6 @@ function Root() {
     </ModalProvider>
   );
 }
-
-// const renderApplication = () => {
-//   ReactDOM.render(
-//     <React.StrictMode>
-//       <Root />
-//     </React.StrictMode>,
-//     document.getElementById('root')
-//   );
-// }
 
 const renderApplication = () => {
   const root = ReactDOM.createRoot(document.getElementById('root'));

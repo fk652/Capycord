@@ -61,12 +61,7 @@ export const createFriendRequest = (username) => async dispatch => {
     method: 'POST',
     body: JSON.stringify({username})
   })
-
-  // if (response.ok) {
-  // } else {
-  //   console.log("error")
-  // }
-
+  
   const data = await response.json();
   dispatch(addSentRequest(data.friendRequest));
   dispatch(setAddFriendResult(true));

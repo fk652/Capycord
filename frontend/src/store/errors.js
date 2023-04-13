@@ -1,5 +1,3 @@
-// import csrfFetch from "./csrf";
-
 const ADD_ERRORS = "errors/addErrors";
 const REMOVE_ERRORS = "errors/removeErrors";
 

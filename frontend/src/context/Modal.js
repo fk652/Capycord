@@ -2,8 +2,8 @@ import './Modal.css';
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getServerSlide, setServerFormPage } from '../store/ui';
+import { useSelector } from 'react-redux';
+import { getServerSlide } from '../store/ui';
 
 const ModalContext = React.createContext();
 

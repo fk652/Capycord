@@ -42,7 +42,6 @@
   height: 13px;
   border-radius: 100%;
   position: relative;
-  /* z-index: 2; */
   bottom: -11px;
   right: 10px;
 }

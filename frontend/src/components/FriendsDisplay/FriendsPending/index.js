@@ -54,26 +54,6 @@ const FriendsPending= () => {
             />
           })
         }
-
-        {/* <FriendListItem 
-            itemId={1}
-            name={"dummy#dumdum"}
-            customStatus={incomingMessage}
-            picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
-            display="pending"
-            key={1}
-            actions="incomingItem"
-        />
-
-        <FriendListItem 
-            itemId={2}
-            name={"dummy#dumdum"}
-            customStatus={outgoingMessage}
-            picture={"https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif"}
-            display="pending"
-            key={2}
-            actions="outgoingItem"
-        /> */}
       </div>
     </>
   )

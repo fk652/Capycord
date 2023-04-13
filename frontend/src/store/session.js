@@ -1,11 +1,4 @@
-import { resetChannels } from './channels';
 import csrfFetch from './csrf';
-import { removeErrors } from './errors';
-import { resetFriendRequests } from './friendRequests';
-import { resetFriends } from './friends';
-import { resetMembers } from './members';
-import { resetMessages } from './messages';
-import { resetServers } from './servers';
 import { resetUi } from './ui';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
@@ -71,16 +64,7 @@ export const logout = () => async (dispatch) => {
 
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
-
   dispatch(resetUi());
-  
-  // dispatch(removeErrors());
-  // dispatch(resetServers());
-  // dispatch(resetFriends());
-  // dispatch(resetFriendRequests());
-  // dispatch(resetChannels());
-  // dispatch(resetMessages());
-  // dispatch(resetMembers());
   return response;
 };
 

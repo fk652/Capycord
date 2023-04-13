@@ -14,10 +14,7 @@
   display: flex;
   justify-content: baseline;
   align-items: center;
-  flex: 1 1 auto;
   overflow: clip;
-  /* width: 100%; */
-  /* flex-wrap: wrap; */
 }
 
 .title-wrapper{
@@ -46,8 +43,6 @@
   flex-wrap: wrap;
   min-width: 250px;
   overflow: clip;
-  /* overflow: clip; */
-  /* flex-basis: 100% */
 }
 
 .option {
@@ -58,12 +53,9 @@
   margin: 0 8px;
   padding: 2px 8px;
   height: 20px;
-  /* min-width: 24px; */
   color: #b5bac1;
   font-weight: 500;
   border-radius: 4px;
-
-  /* overflow: clip; */
   max-width: 100px;
 }
 
@@ -110,8 +102,6 @@
   justify-content: center;
   min-width: 100px;
   padding-right: 10px;
-  /* flex-wrap: wrap; */
-  /* overflow: clip; */
 }
 
 .icon-wrapper {
