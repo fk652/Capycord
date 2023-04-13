@@ -71,9 +71,18 @@
   cursor: pointer;
 }
 
+.server-item-wrapper.selected .home-icon {
+  content: url("../../assets/icon.png");
+}
+
+.home-icon-wrapper:hover .home-icon {
+  content: url("../../assets/icon.png");
+}
+
 .home-icon {
   height: 30px;
-  width: 24px;
+  width: 26px;
+  content: url("../../assets/icon_inactive.png");
 }
 
 .add-server-icon-wrapper {
