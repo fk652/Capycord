@@ -47,7 +47,7 @@ const HomePage = () => {
               dispatch(removeReceivedRequest(id));
               break;
             default:
-              console.log("unknown broadcast type");
+              // console.log("unknown broadcast type");
           }
         }
       }

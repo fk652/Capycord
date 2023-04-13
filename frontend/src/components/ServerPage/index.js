@@ -75,7 +75,7 @@ const ServerPage = () => {
               // to do later
               break;
             default:
-              console.log("unknown broadcast type");
+              // console.log("unknown broadcast type");
           }
         }
       }
@@ -130,7 +130,7 @@ const ServerPage = () => {
               // to do later
               break;
             default:
-              console.log("unknown broadcast type");
+              // console.log("unknown broadcast type");
           }
         }
       }

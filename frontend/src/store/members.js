@@ -73,7 +73,6 @@ const membersReducer = (state = initialState, action) => {
     case SET_MEMBERS:
       return {...action.members};
     case ADD_MEMBER:
-      console.log("add member", action.member);
       return {...state, [action.member.id]: action.member}
     default:
       return state;
