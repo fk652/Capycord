@@ -14,7 +14,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
         className={
             `friend-list-item ${display} 
             ${status === "Offline" ? "offline" : ""} 
-            ${display === "online" && animate ? "animate" : ""}`
+            ${display === "online" && animate ? "animate" : "hidden"}`
           }
       >
         <div className="friend-item-display">

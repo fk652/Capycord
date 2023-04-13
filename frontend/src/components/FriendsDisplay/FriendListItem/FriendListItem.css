@@ -125,11 +125,11 @@
 }
 
 .online.offline {
-  visibility: visible;
+  display: none;
 }
 
 .online.offline.animate {
-  /* display: flex; */
+  display: flex;
   animation: shrink .2s ease-in both;
 }
 
@@ -169,6 +169,6 @@
     opacity: 0%;
     padding-top: 0;
     padding-bottom: 0;
-    visibility: hidden;
+    display: none;
   }
 }
