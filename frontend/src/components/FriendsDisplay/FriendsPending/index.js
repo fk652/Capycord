@@ -1,32 +1,17 @@
 import "./FriendsPending.css";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 import FriendListItem from "../FriendListItem";
 import { getFriendRequests } from "../../../store/friendRequests";
-import { getFriendSearch, setFriendSearch } from "../../../store/ui";
-import { useState } from "react";
-import { useEffect } from "react";
 
 const FriendsPending= () => {
   const requests = useSelector(getFriendRequests);
   const incomingMessage = "Incoming Friend Request";
   const outgoingMessage = "Outgoing Friend Request";
 
-  const search = useSelector(getFriendSearch);
   const [searchInput, setSearchInput] = useState('');
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    return () => {
-      dispatch(setFriendSearch(false));
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!search && searchInput) dispatch(setFriendSearch(true));
-  }, [searchInput])
-
   const filteredRequests = [
     requests[0].filter(request => request.username.includes(searchInput)),
     requests[1].filter(request => request.username.includes(searchInput))
