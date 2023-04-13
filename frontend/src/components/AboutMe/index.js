@@ -8,20 +8,20 @@ const AboutMe = () => {
         <div className="icon-container">
           <img className="icon" src={logo} alt=""/>
         </div>
-        <h2 className="project-title">Capycord</h2>
+        
+        <div className="about-me-info">
+          <h2 className="project-title">Capycord</h2>
+          <h3 className="dev-name">By Fahim Khan</h3>
+        </div>
       </div>
 
-      <div className="about-me-info">
-        <h3 className="dev-name">By Fahim Khan</h3>
-
-        <div className="nav-links">
-          <a href="https://github.com/fk652/Capycord">
-            <i className="fab fa-github"></i>
-          </a>
-          <a href="https://www.linkedin.com/in/fk652/">
-            <i className="fab fa-linkedin"></i>
-          </a>
-        </div>
+      <div className="nav-links">
+        <a href="https://github.com/fk652/Capycord">
+          <i className="fab fa-github"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/fk652/">
+          <i className="fab fa-linkedin"></i>
+        </a>
       </div>
     </div>
   )

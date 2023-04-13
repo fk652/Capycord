@@ -15,11 +15,12 @@
   display: flex;
   align-items: center;
   margin-right: 65px;
+  margin-bottom: 10px;
 }
 
 .icon-container {
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   background: #5865f2;
   border-radius: 100%;
   display: flex;
@@ -29,8 +30,8 @@
 }
 
 .icon {
-  height: 30px;
-  width: 30px;
+  height: 40px;
+  width: 40px;
 }
 
 .about-me-info {
@@ -43,11 +44,12 @@
 .project-title {
   font-size: 32px;
   font-weight: 900;
+  margin-bottom: 10px;
 }
 
 .dev-name {
   font-size: 18px;
-  margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .nav-links i {
