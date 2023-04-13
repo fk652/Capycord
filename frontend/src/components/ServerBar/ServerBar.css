@@ -71,6 +71,11 @@
   cursor: pointer;
 }
 
+.home-icon {
+  height: 30px;
+  width: 24px;
+}
+
 .add-server-icon-wrapper {
   background-color: #313338;
   /* color: #dbdee1; */
