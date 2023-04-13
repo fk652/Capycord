@@ -44,7 +44,7 @@ export const getFriendRequests = (state) => {
         Object.values(state.friendRequests.sent),
         Object.values(state.friendRequests.received) 
       ]
-    : [];
+    : [[], []];
 }
 
 export const fetchFriendRequests = () => async dispatch => {

@@ -123,6 +123,10 @@
 
 .online.offline {
   display: none;
+  /* height: 0px;
+  opacity: 0%;
+  padding-top: 0;
+  padding-bottom: 0; */
 }
 
 .online.offline.animate {
