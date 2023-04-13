@@ -7,6 +7,7 @@ import { Redirect, Link } from "react-router-dom";
 
 import { getCurrentUser, login } from "../../../store/session";
 import { addErrors, getErrors, removeErrors } from '../../../store/errors';
+import AboutMe from '../../AboutMe';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const LoginForm = () => {
 
   return (
     <div className="form-wrapper">
+      <AboutMe />
       <div className="form-container">
         <form className="login-signup" onSubmit={handleSubmit}>
           <div className="form-header">
