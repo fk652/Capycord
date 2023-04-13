@@ -3,18 +3,24 @@ import './FriendListItem.css'
 import UserIcon from '../../UserIcon';
 import ActionIcon from './ActionIcon';
 import { useSelector } from 'react-redux';
-import { getHomePageLoad } from '../../../store/ui';
+import { getFriendSearch, getHomePageLoad } from '../../../store/ui';
 
 const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {
   const [username, tag] = name.split("#");
   const animate = useSelector(getHomePageLoad);
+  const search = useSelector(getFriendSearch);
+
+  const getStatusClass = () => {
+    if (status === "Offline" && display === "all" && search) return ""
+    else if (status === "Offline") return "offline";
+  }
 
   return (
       <div 
         className={
             `friend-list-item ${display} 
-            ${status === "Offline" ? "offline" : ""} 
-            ${display === "online" && animate ? "animate" : "hidden"}`
+            ${getStatusClass()} 
+            ${display === "online" && animate && !search ? "animate" : "hidden"}`
           }
       >
         <div className="friend-item-display">

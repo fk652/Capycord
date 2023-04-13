@@ -11,6 +11,7 @@ const SET_SERVER_FORM_SLIDE = "ui/setServerFormSlide";
 const SET_HOME_PAGE_LOAD = "ui/setHomePageLoad";
 const SET_NEW_SERVER = "ui/setNewServer";
 const SET_NEW_CHANNEL = "ui/setNewChannel";
+const SET_FRIEND_SEARCH = "ui/setFriendSearch";
 
 export const resetUi = () => ({
   type: RESET_UI
@@ -76,6 +77,11 @@ export const setNewChannel = (channelId) => ({
   channelId
 })
 
+export const setFriendSearch = (toggle) => ({
+  type: SET_FRIEND_SEARCH,
+  toggle
+})
+
 // ---------------------------------------------------------
 
 export const getSelectedFriendNavTab = (state) => {
@@ -126,6 +132,10 @@ export const getNewChannel = (state) => {
   return state.ui.newChannel
 }
 
+export const getFriendSearch = (state) => {
+  return state.ui.friendSearch
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -138,7 +148,8 @@ const initialState = {
   serverSlide: "expand",
   homePageLoad: false,
   newServer: null,
-  newChannel: null
+  newChannel: null,
+  friendSearch: false
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -169,6 +180,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, newServer: action.serverId}
     case SET_NEW_CHANNEL:
       return {...state, newChannel: action.channelId}
+    case SET_FRIEND_SEARCH:
+      return {...state, friendSearch: action.toggle}
     default:
       return state;
   }
