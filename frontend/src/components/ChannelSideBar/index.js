@@ -70,7 +70,7 @@ const ChannelSideBar = () => {
           })
         }
 
-        {
+        {/* {
           dummies.map(dummy => {
             return <ChannelListItem 
               id={dummy} 
@@ -80,7 +80,7 @@ const ChannelSideBar = () => {
               key={dummy}
             />
           })
-        }
+        } */}
 
         <div className="channel-list-spacer" />
       </div>

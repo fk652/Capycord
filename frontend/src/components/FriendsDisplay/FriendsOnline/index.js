@@ -63,7 +63,7 @@ const FriendsOnline = () => {
           })
         }
 
-        {
+        {/* {
           dummies.map(dummyId => {
             return <FriendListItem 
                       itemId={dummyId}
@@ -76,7 +76,7 @@ const FriendsOnline = () => {
                       actions="friendItem"
                   />
           })
-        }
+        } */}
       </div>
     </>
   )

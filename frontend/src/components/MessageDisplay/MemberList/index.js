@@ -127,7 +127,7 @@ const MemberList = () => {
       }
 
 
-      <h3 className="member-positions-header">
+      {/* <h3 className="member-positions-header">
         <span className="member-position">
           THUNKS - me dunno how count
         </span>
@@ -142,7 +142,7 @@ const MemberList = () => {
             key={dummyId}
           />
         })
-      }
+      } */}
 
       <div className="member-list-spacer" />
     </div>

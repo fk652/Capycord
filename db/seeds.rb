@@ -40,7 +40,8 @@ ApplicationRecord.transaction do
     "https://www.mobot.org/hort/images/Clim1-1.jpg",
     "https://upload.wikimedia.org/wikipedia/commons/8/87/Chiapas_Rainforest_crop.jpg",
     "https://www.islandexpeditions.com/sites/default/files/2018-10/BW%20Bocawina-3.jpg",
-    "https://share.america.gov/wp-content/uploads/2022/03/rainforest-USA-2G8GDBF.jpg"
+    "https://share.america.gov/wp-content/uploads/2022/03/rainforest-USA-2G8GDBF.jpg",
+    "https://media0.giphy.com/media/hi2kPofVMW70k/giphy.gif"
   ]
 
   puts "Creating users..."

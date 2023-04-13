@@ -168,7 +168,7 @@ const ServerBar = () => {
         </ServerFormModal>
       )}
 
-      {
+      {/* {
         dummies.map(dummyId => {
           return (
             <div className={`server-item-wrapper ${checkSelected(dummyId)}`} key={dummyId}>
@@ -176,7 +176,7 @@ const ServerBar = () => {
             </div>
           )
         })
-      }
+      } */}
     </div>
   )
 }
