@@ -1,15 +1,17 @@
 import './AboutMe.css';
-import dummyIcon from "../../assets/icon.png";
+import logo from "../../assets/icon.png";
 
 const AboutMe = () => {
   return (
     <div className="about-me">
-      <div className="icon-container">
-        <img className="icon" src={dummyIcon} alt=""/>
+      <div className="app-header">
+        <div className="icon-container">
+          <img className="icon" src={logo} alt=""/>
+        </div>
+        <h2 className="project-title">Capycord</h2>
       </div>
 
       <div className="about-me-info">
-        <h2 className="project-title">Capycord</h2>
         <h3 className="dev-name">By Fahim Khan</h3>
 
         <div className="nav-links">

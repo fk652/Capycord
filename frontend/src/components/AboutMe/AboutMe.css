@@ -1,33 +1,36 @@
 .about-me {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   background: #313338;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
   border-bottom: 2px solid #4e50587a;
 }
 
-.about-me.login {
-  width: 408px;
+.app-header {
+  display: flex;
+  align-items: center;
+  margin-right: 65px;
 }
 
 .icon-container {
-  width: 90px;
-  height: 90px;
+  width: 45px;
+  height: 45px;
   background: #5865f2;
   border-radius: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 20px;
+  margin: 0 10px;
 }
 
 .icon {
-  height: 60px;
-  width: 60px;
+  height: 30px;
+  width: 30px;
 }
 
 .about-me-info {
@@ -38,18 +41,17 @@
 }
 
 .project-title {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: 900;
-  margin-bottom: 5px;
 }
 
 .dev-name {
-  font-size: 20px;
+  font-size: 18px;
   margin-bottom: 10px;
 }
 
 .nav-links i {
-  font-size: 30px;
+  font-size: 24px;
   color: #f2f3f5;
   margin: 0 10px;
 }
