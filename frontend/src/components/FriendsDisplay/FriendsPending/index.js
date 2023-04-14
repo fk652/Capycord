@@ -43,6 +43,7 @@ const FriendsPending= () => {
               itemId={received.requestId}
               userId={received.userId}
               name={received.username}
+              status={received.onlineStatus} 
               customStatus={incomingMessage}
               picture={received.profilePictureUrl}
               display="pending"
@@ -58,6 +59,7 @@ const FriendsPending= () => {
               itemId={sent.requestId}
               userId={sent.userId}
               name={sent.username}
+              status={sent.onlineStatus} 
               customStatus={outgoingMessage}
               picture={sent.profilePictureUrl}
               display="pending"

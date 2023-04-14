@@ -6,6 +6,10 @@ json.friend_requests do
         json.requestId sent.id
         json.userId receiver.id
         json.extract! receiver, :username, :profile_picture_url
+
+        status = (receiver.online_status == "Offline" || receiver.set_online_status == "Invisible") ? 
+          "Offline" : receiver.set_online_status
+        json.online_status status
       end
     end
   end
@@ -17,6 +21,10 @@ json.friend_requests do
         json.requestId received.id
         json.userId sender.id
         json.extract! sender, :username, :profile_picture_url
+
+        status = (sender.online_status == "Offline" || sender.set_online_status == "Invisible") ? 
+          "Offline" : sender.set_online_status
+        json.online_status status
       end
     end
   end

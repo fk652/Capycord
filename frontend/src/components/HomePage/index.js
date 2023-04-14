@@ -8,7 +8,7 @@ import consumer from '../../consumer';
 import HomeSideBar from "../HomeSideBar";
 import FriendsDisplay from "../FriendsDisplay";
 import { setHomePageLoad, setSelectedServer } from "../../store/ui";
-import { addReceivedRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
+import { addReceivedRequest, addSentRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 import { getCurrentUser } from "../../store/session";
 
@@ -45,6 +45,12 @@ const HomePage = () => {
               break;
             case "DELETE_INCOMING_REQUEST":
               dispatch(removeReceivedRequest(id));
+              break;
+            case "UPDATE_INCOMING_REQUEST":
+              dispatch(addReceivedRequest(friendRequest));
+              break;
+            case "UPDATE_SENT_REQUEST":
+              dispatch(addSentRequest(friendRequest));
               break;
             default:
               // console.log("unknown broadcast type");

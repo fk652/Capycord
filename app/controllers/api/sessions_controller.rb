@@ -40,6 +40,26 @@ class Api::SessionsController < ApplicationController
         )
       end
 
+      @user.sent_friend_requests.includes(:receiver).each do |request|
+        if request.status === "pending"
+          FriendsChannel.broadcast_to(
+            request.receiver,
+            type: 'UPDATE_INCOMING_REQUEST',
+            **from_template('api/friend_requests/show', friend_request: request, receiver: @user)
+          )
+        end
+      end
+
+      @user.received_friend_requests.includes(:sender).each do |request|
+        if request.status === "pending"
+          FriendsChannel.broadcast_to(
+            request.sender,
+            type: 'UPDATE_SENT_REQUEST',
+            **from_template('api/friend_requests/show', friend_request: request, receiver: @user)
+          )
+        end
+      end
+
       render "api/users/show"
     else
       render json: { errors: {login: ['Login or password is invalid.']} }, status: :unauthorized
@@ -51,6 +71,8 @@ class Api::SessionsController < ApplicationController
       memberships = current_user.memberships.includes(:server)
       friendships1 = current_user.friendships1.includes(:user2, :user1)
       friendships2 = current_user.friendships2.includes(:user1, :user2)
+      sent = current_user.sent_friend_requests.includes(:receiver, :sender)
+      received = current_user.received_friend_requests.includes(:sender, :receiver)
 
       logout!()
 
@@ -76,6 +98,26 @@ class Api::SessionsController < ApplicationController
           type: 'UPDATE_FRIEND',
           **from_template('api/friends/show', friendship: friendship, friend: friendship.user2)
         )
+      end
+
+      sent.each do |request|
+        if request.status === "pending"
+          FriendsChannel.broadcast_to(
+            request.receiver,
+            type: 'UPDATE_INCOMING_REQUEST',
+            **from_template('api/friend_requests/show', friend_request: request, receiver: request.sender)
+          )
+        end
+      end
+
+      received.each do |request|
+        if request.status === "pending"
+          FriendsChannel.broadcast_to(
+            request.sender,
+            type: 'UPDATE_SENT_REQUEST',
+            **from_template('api/friend_requests/show', friend_request: request, receiver: request.receiver)
+          )
+        end
       end
 
       head :no_content
