@@ -31,7 +31,9 @@ ApplicationRecord.transaction do
     "https://www.artmajeur.com/medias/standard/j/p/jp-eugster/artwork/16391596_kingsize-capybara-3.jpg",
     "https://i.etsystatic.com/15332298/r/il/da85ac/1935059239/il_fullxfull.1935059239_l0ky.jpg",
     "https://i.pinimg.com/originals/1b/bc/9c/1bbc9c249cfcf9bf40a49ae1575da3fb.jpg",
-    "https://64.media.tumblr.com/58d224fd237c3c4d87c52d519c24185e/tumblr_npmr6xJ8yW1u6hbi4o1_250.jpg"
+    "https://64.media.tumblr.com/58d224fd237c3c4d87c52d519c24185e/tumblr_npmr6xJ8yW1u6hbi4o1_250.jpg",
+    "https://metro.co.uk/wp-content/uploads/2015/08/marmot.png",
+    "https://i.pinimg.com/originals/96/57/4c/96574ccd432266b9115b6da825ac20e1.jpg"
   ]
 
   usernames = [
@@ -40,7 +42,7 @@ ApplicationRecord.transaction do
     "CapyChillin",
     "CapySUS",
     "Capycito",
-    "Capychanto",
+    "CapyStareintoyoursoul",
     "CapyGucci",
     "Capy-chan OwO",
     "CapyChad",
@@ -50,7 +52,9 @@ ApplicationRecord.transaction do
     "King Capy IV, Lord of Rails",
     "Alfred Fitzgerald",
     "CapySean",
-    "CapyKhan"
+    "CapyKhan",
+    "GopherGary",
+    "Capycita"
   ]
 
   customs = [
@@ -69,7 +73,9 @@ ApplicationRecord.transaction do
     "Long live the king",
     "A gentleman is simply a patient capybara.",
     "bruh 🦫",
-    "The capybara below me is cute AF"
+    "The capybara below me is cheating on their lover with a gopher",
+    "I'm that gopher",
+    "In a happy relationship with CapySean 💖. Buying flowers on Amazon later"
   ]
 
   server_icon_urls = [
@@ -189,7 +195,7 @@ ApplicationRecord.transaction do
   demo_users = users[2..-1]
   friendships = []
 
-  demo_users[0...-2].each do |demo_capy|
+  demo_users[0...-4].each do |demo_capy|
     user1, user2 = [demo_1, demo_capy].shuffle();
     friendships << Friend.create!({
       user1_id: user1.id,
@@ -197,7 +203,7 @@ ApplicationRecord.transaction do
     })
   end
 
-  demo_users[-2..-1].each do |demo_capy|
+  demo_users[-4..-1].each do |demo_capy|
     user1, user2 = [demo_2, demo_capy].shuffle();
     friendships << Friend.create!({
       user1_id: user1.id,
