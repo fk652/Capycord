@@ -6,7 +6,7 @@ import busyIcon from "../../assets/status_icons/busy.png";
 import idleIcon from "../../assets/status_icons/idle.png";
 import dummyIcon from "../../assets/icon.png";
 
-const UserIcon = ({picture, status, name}) => {
+const UserIcon = ({picture, status, name, hideStatus}) => {
 
   let iconUrl;
   let noStatus = false;
@@ -38,7 +38,11 @@ const UserIcon = ({picture, status, name}) => {
           ? (
             <>
               <img className="user-profile-pic" src={picture} alt="" />
-              <img className="status-icon" src={iconUrl} alt="status"/>
+              {
+                hideStatus
+                  ? null
+                  : <img className="status-icon" src={iconUrl} alt="status"/>
+              }
             </>
           )
           : (

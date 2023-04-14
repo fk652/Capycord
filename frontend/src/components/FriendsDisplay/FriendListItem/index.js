@@ -5,7 +5,7 @@ import ActionIcon from './ActionIcon';
 import { useSelector } from 'react-redux';
 import { getFriendSearch, getHomePageLoad } from '../../../store/ui';
 
-const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {
+const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions, hideStatus}) => {
   const [username, tag] = name.split("#");
   const animate = useSelector(getHomePageLoad);
   const search = useSelector(getFriendSearch);
@@ -24,7 +24,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
           }
       >
         <div className="friend-item-display">
-          <UserIcon picture={picture} status={status} name={username} />
+          <UserIcon picture={picture} status={status} name={username} hideStatus={hideStatus} />
           <div className="friend-item-details">
             <div className="friend-item-name-wrapper">
               <span className="friend-item-username">

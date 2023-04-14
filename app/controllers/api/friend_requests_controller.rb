@@ -19,7 +19,7 @@ class Api::FriendRequestsController < ApplicationController
         FriendsChannel.broadcast_to(
           receiver,
           type: 'ADD_INCOMING_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: @friend_request, receiver: receiver)
+          **from_template('api/friend_requests/show', friend_request: @friend_request, receiver: current_user)
         )
 
         render :show, locals: {friend_request: @friend_request, receiver: @receiver}
