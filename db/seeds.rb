@@ -33,6 +33,42 @@ ApplicationRecord.transaction do
     "https://i.pinimg.com/originals/1b/bc/9c/1bbc9c249cfcf9bf40a49ae1575da3fb.jpg"
   ]
 
+  usernames = [
+    "Uncle Wombat",
+    "CapyChatty",
+    "CapyChillin",
+    "CapySUS",
+    "Capycito",
+    "Capychanto",
+    "CapyGucci",
+    "Capy-chan OwO",
+    "CapyChad",
+    "CapyBirb",
+    "CapyHappy",
+    "Capy NOM NOM NOM",
+    "King Capy IV, Lord of Rails",
+    "Alfred Fitzgerald",
+    "Sean"
+  ]
+
+  customs = [
+    "Let's be friends",
+    "Why doesn't anyone ever listen to me?",
+    "",
+    "ඞ",
+    "",
+    "",
+    "",
+    "(✿◕‿◕✿)",
+    "life is an adventure that is best lived boldly.",
+    "",
+    "",
+    "NOM NOM NOM NOM NOM NOM NOM NOM NOM",
+    "Long live the king",
+    "A gentleman is simply a patient capybara.",
+    "bruh 🦫"
+  ]
+
   server_icon_urls = [
     "https://travel.mqcdn.com/mapquest/travel/wp-content/uploads/2020/06/GettyImages-676934538-e1592461667985.jpg",
     "https://cdn.britannica.com/90/3890-050-F451C580/rainforest-coast-lowland-rainforests-Ecuador-tropics-evergreen.jpg",
@@ -71,12 +107,14 @@ ApplicationRecord.transaction do
   
   (0...profile_image_urls.length).each do |i| 
     users << User.create!({
-      username: Faker::Internet.unique.username(specifier: 3),
+      # username: Faker::Internet.unique.username(specifier: 3),
+      username: usernames[i],
       email: Faker::Internet.unique.email,
       password: 'password',
       online_status: User::STATUS[0..1].sample(),
       set_online_status: User::STATUS[1..-1].sample(),
-      custom_status: [Faker::Quote.unique.famous_last_words, ''].sample(),
+      # custom_status: [Faker::Quote.unique.famous_last_words, ''].sample(),
+      custom_status: customs[i],
       profile_picture_url: profile_image_urls[i]
     }) 
   end
@@ -101,9 +139,6 @@ ApplicationRecord.transaction do
       })
     end
   end
-
-  # users.each { |user| p user }
-  # p User.all
 
   puts "Creating server memberships..."
   memberships = {}
@@ -151,7 +186,7 @@ ApplicationRecord.transaction do
   demo_users = users[2..-1]
   friendships = []
 
-  demo_users[0...14].each do |demo_capy|
+  demo_users[0...-1].each do |demo_capy|
     user1, user2 = [demo_1, demo_capy].shuffle();
     friendships << Friend.create!({
       user1_id: user1.id,
@@ -159,19 +194,16 @@ ApplicationRecord.transaction do
     })
   end
 
-  demo_users[14..-1].each do |demo_capy|
-    user1, user2 = [demo_2, demo_capy].shuffle();
-    friendships << Friend.create!({
-      user1_id: user1.id,
-      user2_id: user2.id
-    })
-  end
+  user1, user2 = [demo_2, demo_users[-1]].shuffle();
+  friendships << Friend.create!({
+    user1_id: user1.id,
+    user2_id: user2.id
+  })
 
   puts "Creating friend requests..."
-  # replace with friend requests to and from other non-demo users
   FriendRequest.create!({
-    sender_id: demo_1.id,
-    receiver_id: demo_2.id
+    sender_id: demo_2.id,
+    receiver_id: demo_1.id
   })
 
   puts "Done seeding."
