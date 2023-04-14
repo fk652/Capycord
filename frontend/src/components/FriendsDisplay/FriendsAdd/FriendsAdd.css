@@ -30,6 +30,7 @@
   border-radius: 8px;
   border: 1px solid #1e1f22;
   overflow: clip;
+  min-width: 250px;
 }
 
 .add-friend-input-wrapper {
@@ -38,10 +39,12 @@
   flex-basis: 100%;
   display: flex;
   min-height: 40px;
+  min-width: 40px;
 }
 
 .add-friend-input {
   margin: 0;
+  min-width: 40px;
   flex-basis: 100%;
   padding: 0;
   font-size: 16px;
@@ -87,6 +90,7 @@
 
 .add-friend-result.error {
   color: #fa777c;
+  white-space: pre-line;
 }
 
 .add-friend-result.success {
