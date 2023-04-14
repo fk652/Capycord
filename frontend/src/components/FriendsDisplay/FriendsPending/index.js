@@ -48,7 +48,6 @@ const FriendsPending= () => {
               display="pending"
               key={received.requestId}
               actions="incomingItem"
-              hideStatus={true}
             />
           })
         }
@@ -64,7 +63,6 @@ const FriendsPending= () => {
               display="pending"
               key={sent.requestId}
               actions="outgoingItem"
-              hideStatus={true}
             />
           })
         }
