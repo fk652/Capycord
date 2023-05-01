@@ -1,4 +1,6 @@
 class Api::FriendRequestsController < ApplicationController
+  before_action :require_logged_in
+  
   def index 
     @sent_requests = current_user.sent_friend_requests.where("status='pending'").includes(:receiver)
     @received_requests = current_user.received_friend_requests.where("status='pending'").includes(:sender)

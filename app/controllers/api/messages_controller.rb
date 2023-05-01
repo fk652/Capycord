@@ -1,4 +1,6 @@
 class Api::MessagesController < ApplicationController
+  before_action :require_logged_in
+  
   def index
     @messages = current_user.channel_memberships.find(params[:channel_id]).messages
     if @messages

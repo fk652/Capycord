@@ -1,4 +1,6 @@
 class Api::ChannelsController < ApplicationController
+  before_action :require_logged_in
+  
   def index
     @channels = current_user.server_memberships.find(params[:server_id]).channels
     if @channels

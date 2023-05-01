@@ -1,4 +1,6 @@
 class Api::MembershipsController < ApplicationController
+  before_action :require_logged_in
+  
   def index 
     @memberships = current_user.server_memberships.find(params[:server_id]).memberships.includes(:member)
     if @memberships

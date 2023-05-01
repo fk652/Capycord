@@ -1,4 +1,6 @@
 class Api::FriendsController < ApplicationController
+  before_action :require_logged_in
+  
   def index
     # might change the table to have user1 and user2 reversed as well
     @friendships1 = current_user.friendships1.includes(:user2)
