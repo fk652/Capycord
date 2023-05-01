@@ -10,13 +10,17 @@
 .message-options-container {
   position: absolute;
   right: 5px;
-  top: -15px;
+  top: -18px;
   display: none;
   justify-content: center;
   align-items: center;
   border-radius: 4px;
   background: #313338;
   border: 1px solid #27292d;
+}
+
+.message-wrapper.simple .message-options-container {
+  top: -25px;
 }
 
 .message-option {
