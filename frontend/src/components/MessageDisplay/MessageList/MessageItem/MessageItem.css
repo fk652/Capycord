@@ -72,7 +72,7 @@
   font-weight: bold;
 }
 
-.message-item-wrapper:hover {
+.message-item-wrapper:hover, .message-item-wrapper.edit {
   background: #2e3035;
 }
 
@@ -194,4 +194,17 @@
 .edit-button-icon {
   display: inline;
   margin-right: 6px;
+}
+
+.message-item-wrapper.edit .message-time {
+  height: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  top: 0;
+  margin-top: 15px;
+}
+
+.message-item-wrapper.simple.edit {
+  align-items: start;
 }

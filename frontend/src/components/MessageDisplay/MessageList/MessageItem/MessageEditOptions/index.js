@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ActionToolTip } from '../../../../../context/Modal';
 import { deleteMessage } from '../../../../../store/messages';
 import './MessageEditOptions.css'
+import { setEditMessageId } from '../../../../../store/ui';
 
 const MessageEditOptions = ({messageId}) => {
   const [showModal, setShowModal] = useState(false);
@@ -38,7 +39,7 @@ const MessageEditOptions = ({messageId}) => {
 
   const handleEdit = (e) => {
     e.preventDefault();
-    // dispatch(setEditMessageId(messageId))
+    dispatch(setEditMessageId(messageId));
   }
 
   return (

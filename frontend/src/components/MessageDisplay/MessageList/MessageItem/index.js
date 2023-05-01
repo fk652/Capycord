@@ -4,9 +4,12 @@ import { useState } from 'react';
 
 import { TimeToolTip } from '../../../../context/Modal';
 import MessageEditOptions from './MessageEditOptions';
+import { getEditMessageId } from '../../../../store/ui';
+import { useSelector } from 'react-redux';
 
 const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
+  const editMessageId = useSelector(getEditMessageId);
   
   const shortTime = date.toLocaleString(
     'en-us', 
@@ -50,7 +53,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   return (
     <div className="message-wrapper">
       { 
-        (sessionId === message.authorId)
+        (sessionId === message.authorId && message.id !== editMessageId)
           ? <MessageEditOptions messageId={message.id} />
           : null
       }

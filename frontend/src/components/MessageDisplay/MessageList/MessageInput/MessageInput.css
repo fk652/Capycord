@@ -66,3 +66,27 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.message-input-form.edit {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-textarea-wrapper.edit {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.edit-message-instructions {
+  font-size: 12px;
+  padding: 7px 0;
+}
+
+.edit-shortcut {
+  color: #00a8fc;
+}
+
+.edit-shortcut:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

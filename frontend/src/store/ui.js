@@ -12,6 +12,7 @@ const SET_HOME_PAGE_LOAD = "ui/setHomePageLoad";
 const SET_NEW_SERVER = "ui/setNewServer";
 const SET_NEW_CHANNEL = "ui/setNewChannel";
 const SET_FRIEND_SEARCH = "ui/setFriendSearch";
+const SET_EDIT_MESSAGE_ID = "ui/setEditMessageId";
 
 export const resetUi = () => ({
   type: RESET_UI
@@ -82,6 +83,10 @@ export const setFriendSearch = (toggle) => ({
   toggle
 })
 
+export const setEditMessageId = (id) => ({
+  type: SET_EDIT_MESSAGE_ID,
+  id
+})
 // ---------------------------------------------------------
 
 export const getSelectedFriendNavTab = (state) => {
@@ -136,6 +141,10 @@ export const getFriendSearch = (state) => {
   return state.ui.friendSearch
 }
 
+export const getEditMessageId = (state) => {
+  return state.ui.editMessageId
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -149,7 +158,8 @@ const initialState = {
   homePageLoad: false,
   newServer: null,
   newChannel: null,
-  friendSearch: false
+  friendSearch: false,
+  editMessageId: null
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -182,6 +192,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, newChannel: action.channelId}
     case SET_FRIEND_SEARCH:
       return {...state, friendSearch: action.toggle}
+    case SET_EDIT_MESSAGE_ID:
+      return {...state, editMessageId: action.id}
     default:
       return state;
   }

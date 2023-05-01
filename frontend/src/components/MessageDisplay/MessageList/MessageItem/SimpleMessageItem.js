@@ -4,9 +4,13 @@ import { useState } from 'react';
 
 import { TimeToolTip } from '../../../../context/Modal';
 import MessageEditOptions from './MessageEditOptions';
+import { useSelector } from 'react-redux';
+import { getEditMessageId } from '../../../../store/ui';
+import EditMessageInput from './EditMessageInput';
 
 const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
+  const editMessageId = useSelector(getEditMessageId);
   
   const shortTime = date.toLocaleString(
     'en-us', 
@@ -41,12 +45,12 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   return (
     <div className="message-wrapper simple">
       { 
-        (sessionId === message.authorId)
+        (sessionId === message.authorId && message.id !== editMessageId)
           ? <MessageEditOptions messageId={message.id} />
           : null
       }
       
-      <div className="message-item-wrapper simple">
+      <div className={`message-item-wrapper simple ${message.id === editMessageId ? 'edit' : ''}`}>
         <div 
           className="message-time"
           onMouseEnter={showHandler(message.id)}
@@ -61,9 +65,13 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
           {shortTime}
         </div>
         
-        <div className="message-body">
-          {message.body}
-        </div>
+        {
+          message.id === editMessageId
+            ? <EditMessageInput message={message} />
+            : <div className="message-body">
+                {message.body}
+              </div>
+        }
       </div>
     </div>
   )
