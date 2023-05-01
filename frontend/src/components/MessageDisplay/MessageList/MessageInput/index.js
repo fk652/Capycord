@@ -71,6 +71,7 @@ const MessageInput = ({channelInfo}) => {
   const handleKeyDown = (e) => {
     if (e.key === "Shift") setShift(true);
     if (e.key === "Enter") setEnter(true);
+    if (e.key === "Escape") dispatch(setScroll(true));
 
     const filteredMessage = message.trim();
 

@@ -14,12 +14,21 @@ const EditMessageInput = ({message}) => {
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const dispatch = useDispatch();
-
+  
   useEffect(() => {
     const editInput = document.querySelector('.message-textarea.edit');
     editInput.focus();
     editInput.setSelectionRange(editInput.value.length, editInput.value.length);
-  })
+    
+    const escListener = (e) => {
+      if (e.key === 'Escape') dispatch(setEditMessageId(null));
+    }
+
+    document.addEventListener('keydown', escListener);
+    return () => {
+      document.removeEventListener('keydown', escListener);
+    }
+  }, [])
   
   const handleChange = (e) => {
     e.preventDefault();

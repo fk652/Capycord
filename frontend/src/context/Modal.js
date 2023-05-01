@@ -89,6 +89,17 @@ export function TimeToolTip({ top, left, onClose, children }) {
 export function ServerFormModal({ onClose, children }) {
   const slide = useSelector(getServerSlide);
 
+  useEffect(() => {
+    const escListener = (e) => {
+      if (e.key === 'Escape') onClose();
+    }
+
+    document.addEventListener('keydown', escListener);
+    return () => {
+      document.removeEventListener('keydown', escListener);
+    }
+  }, [])
+
   const modalNode = useContext(ModalContext);
   if (!modalNode) return null;
 
