@@ -1,7 +1,7 @@
 {
   "name": "capycord",
   "version": "1.0.0",
-  "description": "This README would normally document whatever steps are necessary to get the application up and running.",
+  "description": "A capybara themed full stack clone of Discord, a text chat app",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/fk652/Capycord.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Fahim Khan",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/fk652/Capycord/issues"
