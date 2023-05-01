@@ -14,8 +14,15 @@ const EditMessageInput = ({message}) => {
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const editInput = document.querySelector('.message-textarea.edit');
+    editInput.focus();
+    editInput.setSelectionRange(editInput.value.length, editInput.value.length);
+  })
   
   const handleChange = (e) => {
+    e.preventDefault();
     // handle textarea resizing while typing
     // if message list scrolled to bottom, keep scroll at bottom
     if (enter && !shift) return;
@@ -28,12 +35,16 @@ const EditMessageInput = ({message}) => {
     const height = e.target.scrollHeight;
     e.target.style.height = `${height}px`;
     
-    const bounds = e.target.getBoundingClientRect();
-    const bottom = bounds.bottom;
-    const top = bounds.top;
+    const messageInput = document.querySelector('.message-input-form.edit');
+    const messageBounds = messageInput.getBoundingClientRect();
+    const messageBottom = messageBounds.bottom;
+    const messageTop = messageBounds.top - 50;
 
-    if (scroll) listEle.scrollTo(0, listEle.scrollHeight);
-    else if (bottom > listEle.height || bottom < 0) listEle.scrollTop = listEle.scrollTop + top - height;
+    const listHeight = listEle.offsetHeight + 50;
+
+    if (scroll) listEle.scrollTo(0, listEle.scrollHeight)
+    else if (messageBottom > listHeight) listEle.scrollTop = listEle.scrollTop + (messageBottom - listHeight)
+    else if (messageTop < 0) listEle.scrollTop = listEle.scrollTop + messageTop
   }
 
   // useEffect(() => {
