@@ -15,13 +15,13 @@ const ChannelSideBar = () => {
   const serverInfo = useSelector(getServer(serverId));
   const history = useHistory();
 
+  if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
+    history.push(`/server/${serverId}/${channels[0].id}`);
+  }
+
   useEffect(() => {
-    if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
-      history.push(`/server/${serverId}/${channels[0].id}`);
-    } else {
-      const listEle = document.querySelector('.channel-list');
-      if (listEle) listEle.scrollTo(0, 0);
-    }
+    const listEle = document.querySelector('.channel-list');
+    if (listEle) listEle.scrollTo(0, 0);
   }, [serverId, channelServerId])
 
   const checkSelected = (id) => {
