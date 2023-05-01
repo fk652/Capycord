@@ -43,14 +43,14 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
   }
 
   return (
-    <div className="message-wrapper simple">
+    <div className={`message-wrapper simple ${message.id === editMessageId ? 'edit' : ''}`}>
       { 
         (sessionId === message.authorId && message.id !== editMessageId)
           ? <MessageEditOptions messageId={message.id} />
           : null
       }
       
-      <div className={`message-item-wrapper simple ${message.id === editMessageId ? 'edit' : ''}`}>
+      <div className="message-item-wrapper simple">
         <div 
           className="message-time"
           onMouseEnter={showHandler(message.id)}

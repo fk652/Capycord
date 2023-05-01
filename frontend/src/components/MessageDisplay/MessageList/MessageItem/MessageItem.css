@@ -2,10 +2,7 @@
   display: flex;
   justify-content: baseline;
   padding: 2px 10px 0 10px;
-}
-
-.message-details-wrapper {
-  max-width: calc(100% - 80px);
+  max-width: 95%;
 }
 
 .time-message-wrapper {
@@ -24,7 +21,6 @@
   letter-spacing: 0.05em;
   min-width: 55px;
   max-width: 55px;
-  margin-right: 1px;
   text-align: center;
   color: #949ba4;
   visibility: hidden;
@@ -56,7 +52,6 @@
   margin-left: 5px;
 }
 
-
 .message-time.long {
   max-width: 100%;
   width: auto;
@@ -73,11 +68,11 @@
   font-weight: bold;
 }
 
-.message-item-wrapper:hover, .message-item-wrapper.edit {
+.message-wrapper:hover, .message-wrapper.edit {
   background: #2e3035;
 }
 
-.message-item-wrapper:hover .message-time {
+.message-wrapper:hover .message-time {
   visibility: visible;
 }
 
@@ -85,7 +80,6 @@
   padding: 2px 0;
   font-size: 16px;
   color: #dbdee1;
-  flex-basis: 90%;
   line-height: 1.6;
   margin-left: 5px;
 
@@ -197,11 +191,11 @@
   margin-right: 6px;
 }
 
-.message-item-wrapper.edit {
+/* .message-item-wrapper.edit {
   width: 100%;
-}
+} */
 
-.message-item-wrapper.edit .message-time {
+.message-wrapper.edit .message-time {
   height: 100%;
   display: flex;
   align-items: start;
@@ -210,14 +204,14 @@
   margin-top: 15px;
 }
 
-.message-item-wrapper.edit .message-details-wrapper {
+.message-wrapper.edit .message-details-wrapper {
   width: 100%;
 }
 
-.message-item-wrapper.edit .message-time.long {
+.message-wrapper.edit .message-time.long {
   margin-top: 0;
 }
 
-.message-item-wrapper.simple.edit {
+.message-wrapper.edit .message-item-wrapper.simple {
   align-items: start;
 }

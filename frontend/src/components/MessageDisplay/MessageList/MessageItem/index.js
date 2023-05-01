@@ -52,14 +52,14 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   if (!user || !message) return null;
 
   return (
-    <div className="message-wrapper">
+    <div className={`message-wrapper ${message.id === editMessageId ? 'edit' : ''}`}>
       { 
         (sessionId === message.authorId && message.id !== editMessageId)
           ? <MessageEditOptions messageId={message.id} />
           : null
       }
 
-      <div className={`message-item-wrapper ${message.id === editMessageId ? 'edit' : ''}`}>
+      <div className="message-item-wrapper">
         <div className="profile-pic-wrapper">
           <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
         </div>

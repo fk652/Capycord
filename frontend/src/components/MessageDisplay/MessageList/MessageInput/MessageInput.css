@@ -76,11 +76,7 @@
 .message-textarea-wrapper.edit {
   margin-top: 10px;
   margin-bottom: 0;
-  width: 92%;
-}
-
-.message-item-wrapper.simple.edit .message-textarea-wrapper.edit {
-  width: 90%;
+  width: 95%;
 }
 
 .edit-message-instructions {
