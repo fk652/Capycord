@@ -70,11 +70,17 @@
 .message-input-form.edit {
   display: flex;
   flex-direction: column;
+  margin-left: 5px;
 }
 
 .message-textarea-wrapper.edit {
   margin-top: 10px;
   margin-bottom: 0;
+  width: 92%;
+}
+
+.message-item-wrapper.simple.edit .message-textarea-wrapper.edit {
+  width: 90%;
 }
 
 .edit-message-instructions {

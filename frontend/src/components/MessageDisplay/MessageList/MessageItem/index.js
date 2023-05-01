@@ -6,6 +6,7 @@ import { TimeToolTip } from '../../../../context/Modal';
 import MessageEditOptions from './MessageEditOptions';
 import { getEditMessageId } from '../../../../store/ui';
 import { useSelector } from 'react-redux';
+import EditMessageInput from './EditMessageInput';
 
 const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
@@ -58,7 +59,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
           : null
       }
 
-      <div className="message-item-wrapper">
+      <div className={`message-item-wrapper ${message.id === editMessageId ? 'edit' : ''}`}>
         <div className="profile-pic-wrapper">
           <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
         </div>
@@ -83,9 +84,13 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
             </div>
           </h3>
           
-          <div className="message-body">
-            {message.body}
-          </div>
+          {
+            message.id === editMessageId
+              ? <EditMessageInput message={message} />
+              : <div className="message-body">
+                  {message.body}
+                </div>
+          }
         </div>
       </div>
     </div>
