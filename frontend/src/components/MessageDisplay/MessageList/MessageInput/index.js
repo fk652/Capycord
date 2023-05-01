@@ -4,6 +4,7 @@ import { addErrors } from '../../../../store/errors'
 import { createMessage } from '../../../../store/messages'
 import { getResetMessageBox, resetMessageBox, setScroll } from '../../../../store/ui'
 import './MessageInput.css'
+import { deleteSession } from '../../../../store/session'
 
 const MessageInput = ({channelInfo}) => {
   const boxReset = useSelector(getResetMessageBox);
@@ -69,7 +70,9 @@ const MessageInput = ({channelInfo}) => {
         }
 
         if (data?.errors) errors.messages = data.errors;
-        dispatch(addErrors(errors));
+
+        if (res.status === 401) dispatch(deleteSession())
+        else dispatch(addErrors(errors));
       });
       
     }

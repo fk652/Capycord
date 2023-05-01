@@ -11,7 +11,7 @@ import { fetchChannels, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
-import { getCurrentUser } from '../../store/session';
+import { deleteSession, getCurrentUser } from '../../store/session';
 
 const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
@@ -33,14 +33,15 @@ const ServerPage = () => {
             }
           
           const errors = {
-              status: res.status,
+            status: res.status,
             messages: null
           }
         
           if (data?.errors) errors.messages = data.errors;
           // dispatch(addErrors(errors));
-    
-          history.push(`/home`);
+          // console.log(res.status, errors.messages);
+          if (res.status === 401) dispatch(deleteSession());
+          else history.push(`/home`);
         });
         dispatch(fetchMembers(serverId));
     }
@@ -107,7 +108,8 @@ const ServerPage = () => {
         if (data?.errors) errors.messages = data.errors;
         // dispatch(addErrors(errors));
         
-        history.push(`/home`);
+        if (res.status === 401) dispatch(deleteSession())
+        else history.push(`/home`);
       });
     }
 

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addErrors, getErrors, removeErrors } from "../../../store/errors";
 import { createFriendRequest } from "../../../store/friendRequests";
 import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
+import { deleteSession } from "../../../store/session";
 
 const FriendsAdd = () => {
   const errors = useSelector(getErrors);
@@ -30,10 +31,13 @@ const FriendsAdd = () => {
         messages: null
       }
       if (data?.errors) errors.messages = data.errors;
-
-      dispatch(addErrors(errors));
       
-      if (errors && errors.success) dispatch(setAddFriendResult(true));
+      if (res.status === 401) dispatch(deleteSession())
+      else {
+        dispatch(addErrors(errors));
+        if (errors && errors.success) dispatch(setAddFriendResult(true));
+      }
+
     });
   }
 

@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { deleteSession } from "./session";
 
 const RESET_MESSAGES = 'messages/resetMessages';
 const SET_MESSAGES = 'messages/setMessages';
@@ -42,20 +43,39 @@ export const fetchMessages = (channelId) => async dispatch => {
 }
 
 export const createMessage = (message) => async dispatch => {
-  csrfFetch(`/api/messages`, {
+  const response = await csrfFetch(`/api/messages`, {
     method: 'POST',
     body: JSON.stringify(message)
   })
 
-  // create handled with broadcast subscription
+  return response;
+  // add message to redux store handled with broadcast subscription
 }
 
 export const deleteMessage = (messageId) => async dispatch => {
-  csrfFetch(`/api/messages/${messageId}`, {
-    method: 'DELETE'
-  })
+  try {
+    const response = await csrfFetch(`/api/messages/${messageId}`, {
+      method: 'DELETE'
+    })
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    // dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
+  }
 
-  // delete handled with broadcast subscription
+  // delete message from redux store handled with broadcast subscription
 }
 
 const initialState = null

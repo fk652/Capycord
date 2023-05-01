@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { deleteSession } from "./session";
 
 const RESET_FRIENDS = 'friends/resetFriends';
 const SET_FRIENDS = 'friends/setFriends';
@@ -31,11 +32,29 @@ export const getFriends = (state) => {
 }
 
 export const fetchFriends = () => async dispatch => {
-  const response = await csrfFetch('/api/friends');
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setFriends(data.friends));
+  try {
+    const response = await csrfFetch('/api/friends');
+  
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setFriends(data.friends));
+    }
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    // dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 }
 
