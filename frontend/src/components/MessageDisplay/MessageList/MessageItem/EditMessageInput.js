@@ -8,7 +8,6 @@ import { getResetMessageBox, resetMessageBox, setEditMessageId, setScroll } from
 import { deleteSession } from '../../../../store/session'
 
 const EditMessageInput = ({message}) => {
-  // const boxReset = useSelector(getResetMessageBox);
   const listEle = document.querySelector(".messages-list");
   const [messageBody, setMessageBody] = useState(message.body);
   const [shift, setShift] = useState(false);
@@ -55,13 +54,6 @@ const EditMessageInput = ({message}) => {
     else if (messageBottom > listHeight) listEle.scrollTop = listEle.scrollTop + (messageBottom - listHeight)
     else if (messageTop < 0) listEle.scrollTop = listEle.scrollTop + messageTop
   }
-
-  // useEffect(() => {
-  //   if (boxReset) {
-  //     if (listEle) setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
-  //     dispatch(resetMessageBox(false));
-  //   }
-  // }, [dispatch, boxReset])
   
   const handleKeyDown = (e) => {
     if (e.key === "Escape") handleCancel();

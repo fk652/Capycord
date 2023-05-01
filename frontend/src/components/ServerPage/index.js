@@ -123,8 +123,10 @@ const ServerPage = () => {
               const listEle = document.querySelector(".messages-list")
               const atBottom = listEle &&
                 (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
-              if (atBottom) dispatch(setScroll(true));
+                
               dispatch(addMessage(message));
+
+              if (message.authorId === sessionUser.id || atBottom) dispatch(setScroll(true));
               break;
             case "DESTROY_MESSAGE":
               dispatch(removeMessage(id));

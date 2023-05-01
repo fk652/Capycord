@@ -4,7 +4,6 @@ const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
 const SET_SHOW_MEMBERS = "ui/setShowMembers";
 const SET_SCROLL = "ui/setScroll";
-const RESET_MESSAGE_BOX = "ui/resetMessageBox";
 const SET_SHOW_SERVER_MODAL = "ui/setShowServerModal";
 const SET_SERVER_FORM_PAGE = "ui/setServerFormPage";
 const SET_SERVER_FORM_SLIDE = "ui/setServerFormSlide";
@@ -40,11 +39,6 @@ export const setAddFriendResult = (result) => ({
 
 export const setScroll = (toggle) => ({
   type: SET_SCROLL,
-  toggle
-})
-
-export const resetMessageBox = (toggle) => ({
-  type: RESET_MESSAGE_BOX,
   toggle
 })
 
@@ -109,10 +103,6 @@ export const getSetScroll = (state) => {
   return state.ui.setScroll
 }
 
-export const getResetMessageBox = (state) => {
-  return state.ui.resetMessageBox
-}
-
 export const getShowServerModal = (state) => {
   return state.ui.showServerModal
 }
@@ -151,7 +141,6 @@ const initialState = {
   addFriendResult: false,
   showMembers: false,
   setScroll: true,
-  resetMessageBox: true,
   showServerModal: false,
   serverFormType: "start",
   serverSlide: "expand",
@@ -176,8 +165,6 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showMembers: action.toggle}
     case SET_SCROLL:
       return {...state, setScroll: action.toggle}
-    case RESET_MESSAGE_BOX:
-      return {...state, resetMessageBox: action.toggle}
     case SET_SERVER_FORM_PAGE:
       return {...state, serverFormType: action.formType}
     case SET_SHOW_SERVER_MODAL:

@@ -7,22 +7,13 @@ import './MessageInput.css'
 import { deleteSession } from '../../../../store/session'
 
 const MessageInput = ({channelInfo}) => {
-  const boxReset = useSelector(getResetMessageBox);
   const listEle = document.querySelector(".messages-list");
   const [message, setMessage] = useState('');
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
   const dispatch = useDispatch();
   
-  const handleSubmit = () => {
-    // const filteredMessage = message.trim();
-    const boxEle = document.querySelector('.message-textarea');
-    boxEle.style.height = "22px";
-    listEle.scrollTo(0, listEle.scrollHeight);
-
-    dispatch(setScroll(true));
-    dispatch(resetMessageBox(true));
-
+  const handleSubmit = () => {    
     dispatch(createMessage({channelId: channelInfo.id, body: message}))
     .catch(async (res) => {
       let data;
@@ -42,7 +33,10 @@ const MessageInput = ({channelInfo}) => {
       
       if (res.status === 401) dispatch(deleteSession())
     });
+
     setMessage('');
+    const boxEle = document.querySelector('.message-textarea');
+    boxEle.style.height = "22px";
   }
   
   const handleChange = (e) => {
@@ -60,13 +54,6 @@ const MessageInput = ({channelInfo}) => {
     
     if (scroll) listEle.scrollTo(0, listEle.scrollHeight);
   }
-
-  useEffect(() => {
-    if (boxReset) {
-      if (listEle) setTimeout(() => listEle.scrollTo(0, listEle.scrollHeight), 400);
-      dispatch(resetMessageBox(false));
-    }
-  }, [dispatch, boxReset])
   
   const handleKeyDown = (e) => {
     if (e.key === "Shift") setShift(true);
@@ -77,33 +64,6 @@ const MessageInput = ({channelInfo}) => {
 
     // submit
     if(e.key === "Enter" && !shift && filteredMessage !== '') {
-      // setMessage('');
-      // const boxEle = document.querySelector('.message-textarea');
-      // boxEle.style.height = "22px";
-      // listEle.scrollTo(0, listEle.scrollHeight);
-
-      // dispatch(setScroll(true));
-      // dispatch(resetMessageBox(true));
-
-      // dispatch(createMessage({channelId: channelInfo.id, body: filteredMessage}))
-      // .catch(async (res) => {
-      //   let data;
-      //   try {
-      //     data = await res.clone().json();
-      //   } catch {
-      //     // data = await res.text();
-      //   }
-  
-      //   const errors = {
-      //     status: res.status,
-      //     messages: null
-      //   }
-
-      //   if (data?.errors) errors.messages = data.errors;
-      //   dispatch(addErrors(errors));
-        
-      //   if (res.status === 401) dispatch(deleteSession())
-      // });
       setMessage(filteredMessage);
       handleSubmit();
     }
