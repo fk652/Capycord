@@ -16,10 +16,10 @@ const AboutMe = () => {
       </div>
 
       <div className="nav-links">
-        <a href="https://github.com/fk652/Capycord">
+        <a href="https://github.com/fk652/Capycord" target="_blank" rel="noopener noreferrer">
           <i className="fab fa-github"></i>
         </a>
-        <a href="https://www.linkedin.com/in/fk652/">
+        <a href="https://www.linkedin.com/in/fk652/" target="_blank" rel="noopener noreferrer">
           <i className="fab fa-linkedin"></i>
         </a>
       </div>
