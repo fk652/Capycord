@@ -70,9 +70,9 @@ const MessageInput = ({channelInfo}) => {
         }
 
         if (data?.errors) errors.messages = data.errors;
-
+        dispatch(addErrors(errors));
+        
         if (res.status === 401) dispatch(deleteSession())
-        else dispatch(addErrors(errors));
       });
       
     }

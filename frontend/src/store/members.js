@@ -1,5 +1,7 @@
 import csrfFetch from "./csrf";
+import { addErrors } from "./errors";
 import { addServer } from "./servers";
+import { deleteSession } from "./session";
 import { setNewServer } from "./ui";
 
 const RESET_MEMBERS = 'members/resetMembers';
@@ -36,11 +38,29 @@ export const getMember = (id) => (state) => {
 }
 
 export const fetchMembers = (serverId) => async dispatch => {
-  const response = await csrfFetch(`/api/servers/${serverId}/memberships`);
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setMembers(data.members));
+  try {
+    const response = await csrfFetch(`/api/servers/${serverId}/memberships`);
+  
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setMembers(data.members));
+    }
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 }
 

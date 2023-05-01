@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { addErrors } from "./errors";
 import { deleteSession } from "./session";
 
 const RESET_MESSAGES = 'messages/resetMessages';
@@ -71,7 +72,7 @@ export const deleteMessage = (messageId) => async dispatch => {
     }
   
     if (data?.errors) errors.messages = data.errors;
-    // dispatch(addErrors(errors));
+    dispatch(addErrors(errors));
     if (res.status === 401) dispatch(deleteSession());
   }
 

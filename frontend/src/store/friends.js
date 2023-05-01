@@ -1,4 +1,5 @@
 import csrfFetch from "./csrf";
+import { addErrors } from "./errors";
 import { deleteSession } from "./session";
 
 const RESET_FRIENDS = 'friends/resetFriends';
@@ -53,7 +54,7 @@ export const fetchFriends = () => async dispatch => {
     }
   
     if (data?.errors) errors.messages = data.errors;
-    // dispatch(addErrors(errors));
+    dispatch(addErrors(errors));
     if (res.status === 401) dispatch(deleteSession());
   }
 }

@@ -12,6 +12,7 @@ import { addMember, fetchMembers, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { deleteSession, getCurrentUser } from '../../store/session';
+import { addErrors } from '../../store/errors';
 
 const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
@@ -38,7 +39,7 @@ const ServerPage = () => {
           }
         
           if (data?.errors) errors.messages = data.errors;
-          // dispatch(addErrors(errors));
+          dispatch(addErrors(errors));
           // console.log(res.status, errors.messages);
           if (res.status === 401) dispatch(deleteSession());
           else history.push(`/home`);
@@ -106,7 +107,7 @@ const ServerPage = () => {
         }
         
         if (data?.errors) errors.messages = data.errors;
-        // dispatch(addErrors(errors));
+        dispatch(addErrors(errors));
         
         if (res.status === 401) dispatch(deleteSession())
         else history.push(`/home`);

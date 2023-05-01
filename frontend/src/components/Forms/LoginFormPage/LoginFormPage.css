@@ -12,3 +12,11 @@
 .demo-button {
   width: 45%;
 }
+
+.unauthorized-message {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  color: #fa777c;
+  margin-bottom: 10px;
+}

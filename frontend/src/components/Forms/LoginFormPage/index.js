@@ -6,18 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 
 import { getCurrentUser, login } from "../../../store/session";
-import { addErrors, getErrors, removeErrors } from '../../../store/errors';
+import { addErrors, getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
+  const errorStatus = useSelector(getErrorStatus);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (errors) dispatch(removeErrors());
+    if (errors && errorStatus !== 401) dispatch(removeErrors());
     
     return () => {
       if (errors) dispatch(removeErrors());
@@ -64,6 +65,11 @@ const LoginForm = () => {
   return (
     <div className="form-wrapper">
       <div className="form-container">
+        {
+          errorStatus && errorStatus === 401 && !errors
+            ? <span className="unauthorized-message">Unauthorized - logged in elsewhere</span>
+            : null
+        }
         <AboutMe />
         <form className="login-signup" onSubmit={handleSubmit}>
           <div className="form-header">

@@ -1,4 +1,5 @@
 import csrfFetch from './csrf';
+import { addErrors } from './errors';
 import { resetUi } from './ui';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
@@ -81,7 +82,7 @@ export const logout = () => async (dispatch) => {
     }
   
     if (data?.errors) errors.messages = data.errors;
-    // dispatch(addErrors(errors));
+    dispatch(addErrors(errors));
     if (res.status === 401) dispatch(deleteSession());
   }
 };

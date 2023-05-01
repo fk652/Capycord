@@ -14,6 +14,10 @@ export const getErrors = (state) => {
   return state.errors?.messages ? state.errors.messages : null
 }
 
+export const getErrorStatus = (state) => {
+  return state.errors?.status ? state.errors.status : null
+}
+
 const initialState = {
   status: null,
   messages: null
