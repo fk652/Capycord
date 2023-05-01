@@ -19,29 +19,25 @@ const EditMessageInput = ({message}) => {
     editInput.focus();
     editInput.setSelectionRange(editInput.value.length, editInput.value.length);
     
+    fixScroll(editInput);
+    
     const escListener = (e) => {
       if (e.key === 'Escape') dispatch(setEditMessageId(null));
     }
-
     document.addEventListener('keydown', escListener);
+
     return () => {
       document.removeEventListener('keydown', escListener);
     }
   }, [])
-  
-  const handleChange = (e) => {
-    e.preventDefault();
-    // handle textarea resizing while typing
-    // if message list scrolled to bottom, keep scroll at bottom
-    if (enter && !shift) return;
-    setMessageBody(e.target.value);
 
+  const fixScroll = (inputEle) => {
     const scroll = listEle &&
       (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
 
-    e.target.style.height = "22px";
-    const height = e.target.scrollHeight;
-    e.target.style.height = `${height}px`;
+    inputEle.style.height = "22px";
+    const height = inputEle.scrollHeight;
+    inputEle.style.height = `${height}px`;
     
     const messageInput = document.querySelector('.message-input-form.edit');
     const messageBounds = messageInput.getBoundingClientRect();
@@ -53,6 +49,16 @@ const EditMessageInput = ({message}) => {
     if (scroll) listEle.scrollTo(0, listEle.scrollHeight)
     else if (messageBottom > listHeight) listEle.scrollTop = listEle.scrollTop + (messageBottom - listHeight)
     else if (messageTop < 0) listEle.scrollTop = listEle.scrollTop + messageTop
+  }
+  
+  const handleChange = (e) => {
+    e.preventDefault();
+    // handle textarea resizing while typing
+    // if message list scrolled to bottom, keep scroll at bottom
+    if (enter && !shift) return;
+    setMessageBody(e.target.value);
+
+    fixScroll(e.target);
   }
   
   const handleKeyDown = (e) => {
