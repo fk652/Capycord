@@ -76,7 +76,7 @@ const ServerBar = () => {
   }
 
   const leaveHandler = (e) => {
-    e.preventDefault();
+    if (e.type !== 'wheel') e.preventDefault();
     setCurrentModal(null);
     setShowModal(false);
   }

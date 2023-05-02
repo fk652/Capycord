@@ -49,7 +49,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   }
 
   const leaveHandler = (e) => {
-    e.preventDefault();
+    if (e.type !== 'wheel') e.preventDefault();
     setCurrentModal(null);
     setShowModal(false);
   }
