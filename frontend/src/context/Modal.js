@@ -127,9 +127,16 @@ export function DropdownModal({ onClose, children }) {
       if (e.key === 'Escape') onClose();
     }
 
+    const clickListener = (e) => {
+      if (e.target.closest('.server-settings-dropdown')) return; 
+      else if (e.target.closest('.server-settings') === null) onClose();
+    }
+
     document.addEventListener('keydown', escListener);
+    document.addEventListener('mousedown', clickListener);
     return () => {
       document.removeEventListener('keydown', escListener);
+      document.removeEventListener('mousedown', clickListener);
     }
   }, [])
 

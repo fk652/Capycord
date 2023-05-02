@@ -47,7 +47,7 @@ const ChannelSideBar = () => {
   return (
     <div className="channel-side-bar">
       <div 
-        className="server-settings-dropdown"
+        className={`server-settings-dropdown ${showModal ? 'active' : ''}`}
         onClick={showHandler}
       >
         <div className="server-name">

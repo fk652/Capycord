@@ -45,6 +45,10 @@
   cursor: pointer;
 }
 
+.server-settings-dropdown.active {
+  background: #35373c;
+}
+
 .channel-list {
   overflow: hidden scroll;
   scrollbar-width: 5px;
