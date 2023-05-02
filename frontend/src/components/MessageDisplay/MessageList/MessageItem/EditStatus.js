@@ -57,6 +57,7 @@ const EditStatus = ({updateTime, messageId}) => {
         className="edited-status"
         onMouseEnter={showHandler(messageId)}
         onMouseLeave={leaveHandler}
+        onWheel={leaveHandler}
       >
         {' (edited)'}
       </span>

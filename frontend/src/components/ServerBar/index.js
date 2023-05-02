@@ -104,6 +104,7 @@ const ServerBar = () => {
           className="server-icon-wrapper home-icon-wrapper" 
           onMouseEnter={showHandler("home")}
           onMouseLeave={leaveHandler}
+          onWheel={leaveHandler}
         >
           <img 
             data-key="home" 
@@ -148,6 +149,7 @@ const ServerBar = () => {
           className="server-icon-wrapper add-server-icon-wrapper" 
           onMouseEnter={showHandler("add-server")}
           onMouseLeave={leaveHandler}
+          onWheel={leaveHandler}
         >
           <svg data-key="add-server" className="add-server-icon" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">

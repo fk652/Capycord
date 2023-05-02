@@ -16,7 +16,8 @@
   border-radius: 6px;
   padding: 10px 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-  animation: tooltip .2s ease-in;
+  animation: tooltip .1s ease-out;
+  transform-origin: left;
 }
 
 .server-tooltip:after{
@@ -48,7 +49,8 @@
   padding: 8px 10px;
   font-size: 14px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-  animation: tooltip .2s ease-in;
+  animation: tooltip .1s ease-out;
+  transform-origin: bottom;
 }
 
 .action-tooltip:after{
@@ -80,7 +82,8 @@
   padding: 8px 10px;
   font-size: 14px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-  animation: tooltip .2s ease-in;
+  animation: tooltip .1s ease-out;
+  transform-origin: top;
 }
 
 .nav-tooltip:after{
@@ -112,7 +115,8 @@
   padding: 8px 10px;
   font-size: 0.9rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
-  animation: tooltip .4s ease-in;
+  animation: tooltip .1s ease-out;
+  transform-origin: bottom;
 }
 
 /* .time-tooltip:after{
@@ -140,9 +144,11 @@
 @keyframes tooltip {
   0% {
     opacity: 0%;
+    scale: 0.75;
   }
   100% {
     opacity: 100%;
+    scale: 1;
   }
 }
 

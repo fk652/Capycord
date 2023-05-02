@@ -30,6 +30,7 @@ const ServerListIcon = ({id, image, name}) => {
         className={`server-icon-wrapper`}
         onMouseEnter={showHandler(id)}
         onMouseLeave={leaveHandler}
+        onWheel={leaveHandler}
       >
         {
           image 

@@ -44,7 +44,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
     setShowModal(true);
 
     const rect = e.currentTarget.getBoundingClientRect();
-    setTop(rect.y - 40)
+    setTop(rect.y - 44)
     setLeft(rect.x - 70)
   }
 
@@ -79,6 +79,7 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
               className="message-time long"
               onMouseOver={showHandler(message.id)}
               onMouseLeave={leaveHandler}
+              onWheel={leaveHandler}
             >
               {showModal && currentModal === message.id && (
                 <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
