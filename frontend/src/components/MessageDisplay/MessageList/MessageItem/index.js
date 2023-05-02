@@ -23,7 +23,11 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   );
 
   const currentDate = new Date();
-  const dayDifference = (currentDate.getTime() - date.getTime()) / (1000 * 3600 * 24)
+  currentDate.setHours(0, 0, 0, 0);
+  const messageDay = new Date(date);
+  messageDay.setHours(0, 0, 0, 0);
+  
+  const dayDifference = (currentDate.getTime() - messageDay.getTime()) / (1000 * 3600 * 24)
   let dateInfo;
   if (dayDifference < 1) dateInfo = "Today at";
   else if (dayDifference >= 1 && dayDifference < 2) dateInfo = "Yesterday at";
