@@ -45,7 +45,8 @@
   position: relative;
   height: 12px;
   width: 12px;
-  top: -1px;
+  top: 7px;
+  left: -88px;
 }
 
 .icon-wrapper.crown-icon:hover {
