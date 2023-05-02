@@ -7,6 +7,7 @@ import MessageEditOptions from './MessageEditOptions';
 import { getEditMessageId } from '../../../../store/ui';
 import { useSelector } from 'react-redux';
 import EditMessageInput from './EditMessageInput';
+import EditStatus from './EditStatus';
 
 const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   // if updatedAt !== createdAt, add edit status
@@ -89,6 +90,14 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
               ? <EditMessageInput message={message} />
               : <div className="message-body">
                   {message.body}
+                  {
+                    message.updatedAt !== message.createdAt
+                      ? <EditStatus 
+                          updateTime={message.updatedAt} 
+                          messageId={message.id} 
+                        />
+                      : ''
+                  }
                 </div>
           }
         </div>
