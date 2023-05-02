@@ -110,18 +110,27 @@
   background-color: black;
   border-radius: 6px;
   padding: 8px 10px;
-  font-size: 14px;
+  font-size: 0.9rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.1);
   animation: tooltip .4s ease-in;
-
-  font-size: 14px;
 }
 
-.time-tooltip:after{
+/* .time-tooltip:after{
   content: "";
   position: absolute;
   top: 100%;
   left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+} */
+
+.time-tooltip-pointer {
+  content: "";
+  position: relative;
+  bottom: -20px;
+  /* left: -50%; */
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
