@@ -18,20 +18,21 @@ const EditMessageInput = ({message}) => {
     const editInput = document.querySelector('.message-textarea.edit');
     editInput.focus();
     editInput.setSelectionRange(editInput.value.length, editInput.value.length);
-    
     fixScroll(editInput);
-    
+
     const escListener = (e) => {
       if (e.key === 'Escape') dispatch(setEditMessageId(null));
     }
     document.addEventListener('keydown', escListener);
-
+    
     return () => {
       document.removeEventListener('keydown', escListener);
     }
-  }, [])
+  }, [listEle])
 
   const fixScroll = (inputEle) => {
+    if (!inputEle || !listEle) return;
+
     const scroll = listEle &&
       (Math.round(listEle.scrollHeight - listEle.scrollTop) <= listEle.clientHeight);
 
