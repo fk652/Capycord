@@ -3,7 +3,7 @@ import '../MessageInput/MessageInput.css';
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addErrors } from '../../../../store/errors'
-import { createMessage } from '../../../../store/messages'
+import { createMessage, updateMessage } from '../../../../store/messages'
 import { getResetMessageBox, resetMessageBox, setEditMessageId, setScroll } from '../../../../store/ui'
 import { deleteSession } from '../../../../store/session'
 
@@ -24,7 +24,7 @@ const EditMessageInput = ({message}) => {
       if (e.key === 'Escape') dispatch(setEditMessageId(null));
     }
     document.addEventListener('keydown', escListener);
-    
+
     return () => {
       document.removeEventListener('keydown', escListener);
     }
@@ -87,34 +87,18 @@ const EditMessageInput = ({message}) => {
   }
 
   const handleSubmit = (e) => {
-    if (e) e.preventDefault();
+    if (e) {
+      e.preventDefault();
+      const filteredMessage = messageBody.trim();
+      setMessageBody(filteredMessage);
+    }
+
     // const boxEle = document.querySelector('.message-textarea');
     // boxEle.style.height = "22px";
     // listEle.scrollTo(0, listEle.scrollHeight);
-
-    // dispatch(setScroll(true));
-    // dispatch(resetMessageBox(true));
-
-    // dispatch(createMessage({channelId: channelInfo.id, body: filteredMessage}))
-    // .catch(async (res) => {
-      //   let data;
-    //   try {
-    //     data = await res.clone().json();
-    //   } catch {
-      //     // data = await res.text();
-    //   }
-
-    //   const errors = {
-    //     status: res.status,
-    //     messages: null
-    //   }
-
-    //   if (data?.errors) errors.messages = data.errors;
-    //   dispatch(addErrors(errors));
-      
-    //   if (res.status === 401) dispatch(deleteSession())
-    // });
-    // setMessageBody('');
+    dispatch(setEditMessageId(null));
+    const editedMessage = {...message, body: messageBody};
+    dispatch(updateMessage(editedMessage));
   }
 
   return (

@@ -131,8 +131,8 @@ const ServerPage = () => {
             case "DESTROY_MESSAGE":
               dispatch(removeMessage(id));
               break;
-            case "EDIT_MESSAGE":
-              // to do later
+            case "UPDATE_MESSAGE":
+              dispatch(addMessage(message));
               break;
             default:
               // console.log("unknown broadcast type");

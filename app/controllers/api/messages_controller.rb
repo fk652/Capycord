@@ -89,11 +89,32 @@ class Api::MessagesController < ApplicationController
         render json: { errors: @message.errors }, status: :unprocessable_entity
       end
     else
-      render json: { errors: { error: "Must be a server member to post this message"} }, status: :unauthorized
+      render json: { errors: { error: "Must be author to delete this message"} }, status: :unauthorized
     end
   end
 
   def update
-    
+    @message = Message.find(params[:id])
+    if @message.author_id === current_user.id 
+      if @message.update(body: params[:body])
+        ServersChannel.broadcast_to(
+          @message.channel,
+          type: 'UPDATE_MESSAGE',
+          **from_template('api/messages/show', message: @message)
+        )
+
+        # head :no_content
+        render json: nil, status: :ok
+      else
+        render json: { errors: @message.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Must be author to edit this message"} }, status: :unauthorized
+    end
+  end
+
+  private
+  def message_params
+    params.require(:message).permit(:body, :channel_id, :author_id)
   end
 end
