@@ -1,12 +1,14 @@
 import './ChannelSideBar.css'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
+import { DropdownModal } from '../../context/Modal';
+import ServerSettings from '../ServerSettings';
 
 const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
@@ -14,6 +16,7 @@ const ChannelSideBar = () => {
   let channelServerId = useSelector(getChannelServerId);
   const serverInfo = useSelector(getServer(serverId));
   const history = useHistory();
+  const [showModal, setShowModal] = useState(false);
 
   if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
     history.push(`/server/${serverId}/${channels[0].id}`);
@@ -33,17 +36,25 @@ const ChannelSideBar = () => {
   for (let i = 1000; i < 1050; i++) {
     dummies.push(i);
   }
+
+  const showHandler = (e) => {
+    e.preventDefault();
+    setShowModal(!showModal);
+  }
   
   if (!serverInfo) return <div className="channel-side-bar" />;
 
   return (
     <div className="channel-side-bar">
-      <div className="server-settings-dropdown">
+      <div 
+        className="server-settings-dropdown"
+        onClick={showHandler}
+      >
         <div className="server-name">
           {serverInfo.name}
         </div>
         <div className="dropdown-button">
-          <svg className="dropdown-button-icon" viewBox='0 -6 15 15' width="18" height="18">
+          <svg className="dropdown-button-icon" viewBox={`0 ${showModal ? -1 : -6} 15 15`} width="18" height="18">
             <g fill="none" fillRule="evenodd">
               <path d="M0 0h18v18H0"></path>
               <path stroke="currentColor" d="M4.5 4.5l9 9" strokeLinecap="round"></path>
@@ -52,6 +63,12 @@ const ChannelSideBar = () => {
           </svg>
         </div>
       </div>
+
+      {showModal && (
+        <DropdownModal onClose={() => setShowModal(false)}>
+          <ServerSettings serverOwnerId={serverInfo.ownerId}/>
+        </DropdownModal>
+      )}
 
       <div className='divider' />
 

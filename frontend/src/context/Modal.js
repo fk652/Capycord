@@ -111,11 +111,34 @@ export function ServerFormModal({ onClose, children }) {
   if (!modalNode) return null;
 
   return ReactDOM.createPortal(
-    <div id="modal-form">
-      <div id="modal-form-background" onClick={onClose} />
-      <div id="modal-content" className={`${slide === "expand" || slide === "close" ? slide : ""}`}>
+    <div className="modal-form">
+      <div className="modal-form-background" onClick={onClose} />
+      <div className={`modal-content ${slide === "expand" || slide === "close" ? slide : ""}`}>
         {children}
       </div>
+    </div>,
+    modalNode
+  );
+}
+
+export function DropdownModal({ onClose, children }) {
+  useEffect(() => {
+    const escListener = (e) => {
+      if (e.key === 'Escape') onClose();
+    }
+
+    document.addEventListener('keydown', escListener);
+    return () => {
+      document.removeEventListener('keydown', escListener);
+    }
+  }, [])
+
+  const modalNode = useContext(ModalContext);
+  if (!modalNode) return null;
+
+  return ReactDOM.createPortal(
+    <div className="dropdown-modal">
+      {children}
     </div>,
     modalNode
   );

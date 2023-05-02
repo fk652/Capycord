@@ -146,7 +146,7 @@
   }
 }
 
-#modal-form {
+.modal-form {
   position: fixed;
   top: 0;
   right: 0;
@@ -157,7 +157,7 @@
   align-items: center;
 }
 
-#modal-form-background {
+.modal-form-background {
   position: fixed;
   top: 0;
   right: 0;
@@ -166,7 +166,7 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-#modal-content {
+.modal-content {
   position: absolute;
   background-color:white;
   border-radius: 4px;
@@ -174,11 +174,11 @@
   overflow: clip;
 }
 
-#modal-content.expand {
+.modal-content.expand {
   animation: expand 0.2s;
 }
 
-#modal-content.close {
+.modal-content.close {
   animation: close 0.2s both;
 }
 
@@ -201,5 +201,33 @@
   100% {
     opacity: 0;
     scale: 0;
+  }
+}
+
+.dropdown-modal {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: clip;
+
+  top: 56px;
+  left: 82px;
+  animation: dropdown-open ease-out 0.1s;
+  transform-origin: top;
+}
+
+@keyframes dropdown-open {
+  0% {
+    opacity: 0;
+    scale: 0;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
   }
 }
