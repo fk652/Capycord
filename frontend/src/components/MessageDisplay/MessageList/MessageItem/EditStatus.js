@@ -41,7 +41,7 @@ const EditStatus = ({updateTime, messageId}) => {
       setPointerOffset(bounds - 90)
     }
 
-    setTop(rect.y - 40)
+    setTop(rect.y - 41)
     setLeft(rect.x - xOffset)
   }
 
