@@ -125,7 +125,7 @@ const ChannelSideBar = () => {
 
       { showServerAdminPage && (
         <SettingPageModal onClose={leaveHandler}>
-          <ServerAdminPage serverInfo={serverInfo} />
+          <ServerAdminPage serverInfo={serverInfo} onClose={leaveHandler}/>
         </SettingPageModal>
       )}
     </>

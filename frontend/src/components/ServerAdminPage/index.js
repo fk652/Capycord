@@ -4,7 +4,7 @@ import { getServerAdminTab, setServerAdminTab } from '../../store/ui';
 import { useEffect } from 'react';
 import Overview from './Overview';
 
-const ServerAdminPage = ({serverInfo}) => {
+const ServerAdminPage = ({serverInfo, onClose}) => {
   const selectedTab = useSelector(getServerAdminTab);
 
   const dispatch = useDispatch();
@@ -88,8 +88,21 @@ const ServerAdminPage = ({serverInfo}) => {
         <div className="admin-content">
           {getAdminContent()}
         </div>
-        <div className="admin-escape-option">
-
+        <div className="admin-escape-option-wrapper">
+          <div 
+            className="admin-escape-option"
+            onClick={onClose}
+          >
+            <div className="escape-icon-container">
+              <svg role="img" width="18" height="18" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z">
+                </path>
+              </svg>
+            </div>
+            <div className="escape-text">
+              ESC
+            </div>
+          </div>
         </div>
       </div>
     </div>
