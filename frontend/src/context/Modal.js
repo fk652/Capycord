@@ -82,10 +82,7 @@ export function TimeToolTip({ top, left, pointerOffset, onClose, children }) {
       onMouseEnter={onClose}
     >
       {children}
-      <div 
-        className="time-tooltip-pointer" 
-        style={{left: pointerLeft}}
-      />
+      <div className="time-tooltip-pointer" style={{left: pointerLeft}} />
     </div>,
     modalNode
   );
