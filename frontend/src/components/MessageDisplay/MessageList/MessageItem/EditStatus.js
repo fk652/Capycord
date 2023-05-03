@@ -37,12 +37,12 @@ const EditStatus = ({updateTime, messageId}) => {
     tooltip = tooltip.firstChild;
     document.body.appendChild(tooltip);
 
-    const tooltipWidth = tooltip.offsetWidth
+    const tooltipWidth = tooltip.offsetWidth - 10
     let left = rect.x + ((rect.right - rect.x) / 2) - (tooltipWidth / 2)
 
     document.body.removeChild(tooltip);
 
-    const diff = (listRect.right - 10) - (left + tooltipWidth)
+    const diff = (listRect.right - 20) - (left + tooltipWidth)
     if (diff < 0) {
       left += diff;
       setPointerOffset(-diff);
