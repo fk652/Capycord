@@ -150,3 +150,26 @@ export function DropdownModal({ onClose, children }) {
     modalNode
   );
 }
+
+export function SettingPageModal({ onClose, children }) {
+  useEffect(() => {
+    const escListener = (e) => {
+      if (e.key === 'Escape') onClose();
+    }
+
+    document.addEventListener('keydown', escListener);
+    return () => {
+      document.removeEventListener('keydown', escListener);
+    }
+  }, [])
+
+  const modalNode = useContext(ModalContext);
+  if (!modalNode) return null;
+
+  return ReactDOM.createPortal(
+    <div className="setting-page-modal">
+      {children}
+    </div>,
+    modalNode
+  );
+}

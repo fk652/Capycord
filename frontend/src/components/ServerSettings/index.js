@@ -1,16 +1,28 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './ServerSettings.css'
 import { getCurrentUser } from '../../store/session';
+import { setShowServerAdminModal } from '../../store/ui';
 
-const ServerSettings = ({serverOwnerId}) => {
-  const sessionUser = useSelector(getCurrentUser)
+const ServerSettings = ({serverInfo}) => {
+  const sessionUser = useSelector(getCurrentUser);
+
+  const dispatch = useDispatch();
+  const showHandler = (e) => {
+    e.preventDefault();
+    document.querySelector('.server-settings-dropdown').click();
+    document.querySelector('.app-container').classList.add('hide');
+    dispatch(setShowServerAdminModal(true));
+  }
 
   return (
     <div className="server-settings">
       {
-        serverOwnerId === sessionUser.id
+        serverInfo.ownerId === sessionUser.id
           ? <>
-              <div className="server-setting-option">
+              <div 
+                className="server-setting-option"
+                onClick={showHandler}
+              >
                 <div className="option-description">
                   Server Settings
                 </div>

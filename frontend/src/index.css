@@ -33,7 +33,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   font-family: 'gg sans', 'Noto Sans', Helvetica;
-  background-color: #6167f4;
+  background-color: #1a1b1e;
 	color: #f2f3f5;
   
   overflow: clip;
@@ -44,4 +44,34 @@ body {
   width: 100vw;
   height: 100vh;
   justify-content: baseline;
+}
+
+.app-container.hide {
+  animation: app-page-animate ease-out 0.2s both;
+}
+
+.app-container.show {
+  animation: app-page-animate-show ease-in 0.2s both;
+}
+
+@keyframes app-page-animate {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: .9;
+  }
+}
+
+@keyframes app-page-animate-show {
+  0% {
+    opacity: 0;
+    scale: .9;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
 }

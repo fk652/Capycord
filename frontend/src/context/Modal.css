@@ -237,3 +237,48 @@
     scale: 1;
   }
 }
+
+.setting-page-modal {
+  position: fixed;
+  z-index: 5;
+
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: clip;
+
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  animation: setting-page-animate ease-in 0.2s;
+}
+
+.setting-page-modal.hide {
+  animation: setting-page-animate-leave ease-out 0.2s both;
+}
+
+@keyframes setting-page-animate {
+  0% {
+    opacity: 0;
+    scale: 1.2;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes setting-page-animate-leave {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+  100% {
+    opacity: 0;
+    scale: 1.2;
+  }
+}

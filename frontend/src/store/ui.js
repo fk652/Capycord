@@ -12,6 +12,7 @@ const SET_NEW_SERVER = "ui/setNewServer";
 const SET_NEW_CHANNEL = "ui/setNewChannel";
 const SET_FRIEND_SEARCH = "ui/setFriendSearch";
 const SET_EDIT_MESSAGE_ID = "ui/setEditMessageId";
+const SET_SHOW_SERVER_ADMIN_MODAL = "uiSetShowServerAdminModal";
 
 export const resetUi = () => ({
   type: RESET_UI
@@ -81,6 +82,11 @@ export const setEditMessageId = (id) => ({
   type: SET_EDIT_MESSAGE_ID,
   id
 })
+
+export const setShowServerAdminModal = (toggle) => ({
+  type: SET_SHOW_SERVER_ADMIN_MODAL,
+  toggle
+})
 // ---------------------------------------------------------
 
 export const getSelectedFriendNavTab = (state) => {
@@ -135,6 +141,10 @@ export const getEditMessageId = (state) => {
   return state.ui.editMessageId
 }
 
+export const getShowServerAdminModal = (state) => {
+  return state.ui.showServerAdminModal
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -148,7 +158,8 @@ const initialState = {
   newServer: null,
   newChannel: null,
   friendSearch: false,
-  editMessageId: null
+  editMessageId: null,
+  showServerAdminModal: false
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -181,6 +192,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, friendSearch: action.toggle}
     case SET_EDIT_MESSAGE_ID:
       return {...state, editMessageId: action.id}
+    case SET_SHOW_SERVER_ADMIN_MODAL:
+      return {...state, showServerAdminModal: action.toggle}
     default:
       return state;
   }
