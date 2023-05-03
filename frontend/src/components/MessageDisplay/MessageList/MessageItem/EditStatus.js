@@ -31,18 +31,25 @@ const EditStatus = ({updateTime, messageId}) => {
 
     const rect = e.currentTarget.getBoundingClientRect();
     const listRect = document.querySelector('.messages-list').getBoundingClientRect();
-    let xOffset = 90;
 
-    const tooltipLength = updatedTime.length;
-    const xDiff = listRect.width + listRect.x - rect.x;
-    const bounds = tooltipLength * 5 - 20;
-    if (xDiff < bounds) {
-      xOffset = bounds;
-      setPointerOffset(bounds - 90)
+    const text = document.createElement('span')
+    text.classList.add('tooltip');
+    text.innerHTML = updatedTime;
+    document.body.appendChild(text);
+
+    const tooltipWidth = text.offsetWidth
+    let left = rect.x + ((rect.right - rect.x) / 2) - (tooltipWidth / 2)
+
+    document.body.removeChild(text);
+
+    const diff = (listRect.right - 130) - (left + (tooltipWidth / 2))
+    if (diff < 0) {
+      left += diff;
+      setPointerOffset(-diff);
     }
 
     setTop(rect.y - 41)
-    setLeft(rect.x - xOffset)
+    setLeft(left)
   }
 
   const leaveHandler = (e) => {
