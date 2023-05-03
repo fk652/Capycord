@@ -32,17 +32,17 @@ const EditStatus = ({updateTime, messageId}) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const listRect = document.querySelector('.messages-list').getBoundingClientRect();
 
-    const text = document.createElement('span')
-    text.classList.add('tooltip');
-    text.innerHTML = updatedTime;
-    document.body.appendChild(text);
+    let tooltip = document.createElement('div');
+    tooltip.innerHTML = `<div class="time-tooltip"><span class="tooltip">${updatedTime}</span><div class="time-tooltip-pointer" /></div>`;
+    tooltip = tooltip.firstChild;
+    document.body.appendChild(tooltip);
 
-    const tooltipWidth = text.offsetWidth
+    const tooltipWidth = tooltip.offsetWidth
     let left = rect.x + ((rect.right - rect.x) / 2) - (tooltipWidth / 2)
 
-    document.body.removeChild(text);
+    document.body.removeChild(tooltip);
 
-    const diff = (listRect.right - 130) - (left + (tooltipWidth / 2))
+    const diff = (listRect.right - 10) - (left + tooltipWidth)
     if (diff < 0) {
       left += diff;
       setPointerOffset(-diff);

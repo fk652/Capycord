@@ -77,18 +77,16 @@ export function TimeToolTip({ top, left, pointerOffset, onClose, children }) {
   const pointerLeft = `calc(-50% + ${pointerOffset || 0}px)`
 
   return ReactDOM.createPortal(
-    <>
+    <div 
+      className="time-tooltip" style={{top: top, left: left}}
+      onMouseEnter={onClose}
+    >
+      {children}
       <div 
-        className="time-tooltip" style={{top: top, left: left}}
-        onMouseEnter={onClose}
-      >
-        {children}
-        <div 
-          className="time-tooltip-pointer" 
-          style={{left: pointerLeft}}
-        />
-      </div>
-    </>,
+        className="time-tooltip-pointer" 
+        style={{left: pointerLeft}}
+      />
+    </div>,
     modalNode
   );
 }
