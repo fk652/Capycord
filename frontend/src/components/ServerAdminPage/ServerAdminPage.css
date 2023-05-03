@@ -2,4 +2,102 @@
   width: 100vw;
   height: 100vh;
   background: #313338;
+  display: flex;
+}
+
+.admin-sidebar-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 0 218px;
+  background: #2b2d31;
+}
+
+.admin-sidebar {
+  overflow: hidden scroll;
+  scrollbar-width: 5px;
+  scrollbar-color: #1a1b1e;
+}
+
+.admin-sidebar::-webkit-scrollbar {
+  width: 5px;
+  border-radius: 10px;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  background: #1a1b1e;
+  border-radius: 10px;
+  visibility: hidden;
+}
+
+.admin-sidebar:hover::-webkit-scrollbar-thumb  {
+  visibility: visible;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.admin-sidebar-options-wrapper {
+  width: 192px;
+  padding: 60px 6px 60px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-sidebar-option-header {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 10px 6px;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #949ba4;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.admin-sidebar-option {
+  padding: 6px 10px;
+  margin-bottom: 2px;
+  font-weight: 500;
+  color: #b5bac1;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 20px;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.admin-sidebar-option.icon-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-sidebar-option:hover {
+  color: #dbdee1;
+  background: #35373c;
+  cursor: pointer;
+}
+
+.admin-sidebar-option.selected:hover {
+  color: #ffffff;
+  cursor: default;
+}
+
+.admin-sidebar-divider {
+  height: 1px;
+  margin: 8px 10px;
+  background: #3b3d44;
+}
+
+.admin-content-wrapper {
+  display: flex;
+  flex: 1 1 800px;
+  align-items: flex-start;
 }

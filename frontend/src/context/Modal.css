@@ -242,7 +242,7 @@
   left: 0;
   bottom: 0;
 
-  animation: setting-page-animate ease-in 0.4s;
+  animation: setting-page-animate ease-in 0.2s;
 }
 
 .setting-page-modal.hide {

@@ -25,9 +25,9 @@ const ChannelSideBar = () => {
   const leaveHandler = () => {
     const modalPage = document.querySelector('.setting-page-modal');
     modalPage.classList.add('hide');
-    console.log(modalPage);
 
     const appContainer = document.querySelector('.app-container')
+    appContainer.removeAttribute('style');
     appContainer.classList.remove('hide');
     appContainer.classList.add('show');
     

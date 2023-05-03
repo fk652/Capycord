@@ -10,8 +10,13 @@ const ServerSettings = ({serverInfo}) => {
   const showHandler = (e) => {
     e.preventDefault();
     document.querySelector('.server-settings-dropdown').click();
-    document.querySelector('.app-container').classList.add('hide');
+    const appContainer = document.querySelector('.app-container')
+    appContainer.classList.add('hide');
     dispatch(setShowServerAdminModal(true));
+
+    setTimeout(() => {
+      appContainer.style.display = 'none';
+    }, 200);
   }
 
   return (
