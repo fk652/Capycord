@@ -15,6 +15,8 @@ import { getCurrentUser } from "../../store/session";
 const HomePage = () => {
   const sessionUser = useSelector(getCurrentUser);
 
+  // document.title = `Capycord | Friends`
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (sessionUser) {

@@ -17,6 +17,8 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
     }
   })
 
+  // document.title = `Capycord | ${selectedTab} | ${serverInfo.name}`
+  
   useEffect(() => {
     return () => dispatch(setServerAdminTab("Overview"));
   }, [])

@@ -13,6 +13,7 @@ import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { deleteSession, getCurrentUser } from '../../store/session';
 import { addErrors } from '../../store/errors';
+import { getServer } from '../../store/servers';
 
 const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
@@ -20,6 +21,9 @@ const ServerPage = () => {
   const {serverId, channelId} = useParams();
   const history = useHistory();
   
+  // const serverInfo = useSelector(getServer(serverId));
+  // if (serverInfo) document.title = `Capycord | ${serverInfo.name}`
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (sessionUser) {
