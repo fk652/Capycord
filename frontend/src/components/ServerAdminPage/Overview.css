@@ -205,3 +205,36 @@
   color: #dbdee1;
   margin-bottom: 0;
 }
+
+.submit-reset-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 71px;
+  max-width: 740px;
+  padding: 0 20px 20px;
+  width: calc(100% - 40px);
+}
+
+.submit-reset-wrapper {
+  padding: 10px 10px 10px 16px;
+  background: #111214;
+  color: #dbdee1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.submit-reset {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.submit-reset-text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

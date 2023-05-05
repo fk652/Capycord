@@ -146,6 +146,7 @@
   scrollbar-color: #1a1b1e;
   /* padding-right: 8px; */
   /* margin-right: 4px; */
+  position: relative;
 }
 
 /* .admin-content-wrapper::-webkit-scrollbar {
@@ -197,6 +198,9 @@
   min-width: 460px;
   /* min-height: 100%; */
   width: 660px;
+  position: relative;
+  min-height: calc(100% - 140px);
+  /* min-height: calc(100vh - 140px); */
 }
 
 .admin-escape-option-wrapper {

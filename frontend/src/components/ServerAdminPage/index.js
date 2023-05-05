@@ -106,6 +106,18 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
             </div>
           </div>
         </div>
+        {/* <div className="submit-reset-container">
+          <div className="submit-reset-wrapper">
+            <div className="submit-reset">
+              <div className="submit-reset-text">
+                Careful — you have unsaved changes!
+              </div>
+              <div className="submit-reset-options">
+
+              </div>
+            </div>
+          </div>
+        </div> */}
       </div>
     </div>
   )
