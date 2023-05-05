@@ -20,6 +20,7 @@ const Overview = ({serverInfo}) => {
 
   const handleImageRemove = (e) => {
     e.preventDefault();
+    setPicture('');
     setImageRemoved(true);
   }
 
@@ -34,12 +35,18 @@ const Overview = ({serverInfo}) => {
     // dispatch update action
   }
 
+  const handleImageInput = (e) => {
+    e.preventDefault();
+    setPicture(e.target.files[0]);
+    setImageRemoved(false)
+  }
+
   const imageInput = (
     <input 
       className="server-form-image-input" 
       type="file" 
       accept=".jpg,.jpeg,.png,.gif" 
-      onChange={(e) => setPicture(e.target.files[0])}
+      onChange={handleImageInput}
       // disabled
     />
   )
@@ -54,8 +61,6 @@ const Overview = ({serverInfo}) => {
         <div className="overview-image-container">
           <div className="overview-image-icon-container">
             <div className="overview-image-icon-wrapper">
-              {/* <div className="overview-image-preview">
-              </div> */}
               {
                 (serverInfo.pictureUrl || picture) && !imageRemoved
                 ? <div className="overview-image-preview" style={{backgroundImage: `url(${picturePreview || serverInfo.pictureUrl})`}} alt=''>
