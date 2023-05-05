@@ -16,7 +16,6 @@ const CreateServerForm = () => {
   const [name, setName] = useState(`${username}'s server`);
   const [picture, setPicture] = useState();
   const [picturePreview, setPicturePreview] = useState();
-  console.log(picture)
 
   useEffect(() => {
     const inputEle = document.querySelector('.server-form-input');
