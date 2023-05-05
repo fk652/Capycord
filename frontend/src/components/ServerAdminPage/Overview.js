@@ -90,7 +90,10 @@ const Overview = ({serverInfo}) => {
     setServerName(serverInfo.name);
     nameHeader.innerText = serverInfo.name;
 
-    setChange(false);
+    const submitReset = document.querySelector('.submit-reset-container');
+    submitReset.classList.add('exit');
+    setTimeout(() => setChange(false), 350)
+    // setChange(false);
   }
 
   const getWidth = () => {
