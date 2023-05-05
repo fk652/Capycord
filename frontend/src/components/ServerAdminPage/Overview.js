@@ -2,7 +2,9 @@ import { useState } from 'react'
 import './Overview.css'
 
 const Overview = ({serverInfo}) => {
-  const [serverName, setServerName] = useState(serverInfo.name)
+  console.log(serverInfo);
+  const [serverName, setServerName] = useState(serverInfo.name);
+  const [imageUrl, setImageUrl] = useState(serverInfo.pictureUrl);
 
   return (
     <div className="server-overview">
@@ -21,6 +23,13 @@ const Overview = ({serverInfo}) => {
             </div>
             <div className="overview-button">
               Upload Image
+              <input 
+                className="server-form-image-input" 
+                type="file" 
+                accept=".jpg,.jpeg,.png,.gif" 
+                // value={imageUrl}
+                disabled
+              />
             </div>
           </div>
         </div>

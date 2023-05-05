@@ -212,6 +212,7 @@
   justify-content: center;
   align-items: center;
   color: #b5bac1;
+  position: fixed;
 }
 
 .escape-icon-container {
