@@ -62,7 +62,7 @@ const Overview = ({serverInfo}) => {
       accept=".jpg,.jpeg,.png,.gif" 
       onChange={handleImageInput}
       id={`image-input-${id}`}
-      // disabled
+      disabled
     />
   )
 

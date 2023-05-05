@@ -27,7 +27,10 @@ const CreateServerForm = () => {
   }, [])
 
   useEffect(() => {
-    if (!picture) return;
+    if (!picture) {
+      setPicturePreview(undefined);
+      return;
+    }
 
     const pictureObject = URL.createObjectURL(picture);
     setPicturePreview(pictureObject);
@@ -46,6 +49,12 @@ const CreateServerForm = () => {
       }, 200)
     }
   }, [newServer])
+
+  const handleImageInput = (e) => {
+    e.preventDefault();
+    if (!e.target.files[0]) return;
+    setPicture(e.target.files[0]);
+  }
 
   const dispatch = useDispatch();
   const closeForm = (e) => {
@@ -139,7 +148,7 @@ const CreateServerForm = () => {
               className="server-form-image-input" 
               type="file" 
               accept=".jpg,.jpeg,.png,.gif" 
-              onChange={(e) => setPicture(e.target.files[0])}
+              onChange={handleImageInput}
               disabled
             />
           </div>
