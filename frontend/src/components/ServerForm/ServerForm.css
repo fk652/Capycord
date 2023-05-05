@@ -160,6 +160,12 @@
   background: none;
 }
 
+.server-form-image-preview {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+}
+
 .input-label {
   margin-bottom: 8px;
   color: #4e5058;
