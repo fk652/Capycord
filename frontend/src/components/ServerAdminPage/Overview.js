@@ -3,14 +3,20 @@ import './Overview.css'
 import { useEffect } from 'react';
 
 const Overview = ({serverInfo}) => {
-  console.log(serverInfo);
+  // console.log(serverInfo);
   const [serverName, setServerName] = useState(serverInfo.name);
   const [picture, setPicture] = useState();
   const [picturePreview, setPicturePreview] = useState();
   const [imageRemoved, setImageRemoved] = useState(false);
+  const [change, setChange] = useState(false);
+  const nameHeader = document.querySelector('.admin-sidebar-option-header');
 
+  console.log(picture, picturePreview);
   useEffect(() => {
-    if (!picture) return;
+    if (!picture) {
+      setPicturePreview(undefined);
+      return
+    }
 
     const pictureObject = URL.createObjectURL(picture);
     setPicturePreview(pictureObject);
@@ -20,6 +26,8 @@ const Overview = ({serverInfo}) => {
 
   const handleImageRemove = (e) => {
     e.preventDefault();
+    const imageInputs = document.querySelectorAll('.server-form-image-input');
+    imageInputs.forEach(input => input.value = null);
     setPicture('');
     setImageRemoved(true);
   }
@@ -37,19 +45,47 @@ const Overview = ({serverInfo}) => {
 
   const handleImageInput = (e) => {
     e.preventDefault();
+    if (!e.target.files[0]) return;
+    e.target.id === 'image-input-1' 
+      ? document.getElementById('image-input-2').value = null 
+      : document.getElementById('image-input-1').value = null
+
     setPicture(e.target.files[0]);
-    setImageRemoved(false)
+    setImageRemoved(false);
+    setChange(true);
   }
 
-  const imageInput = (
+  const imageInput = (id) => (
     <input 
       className="server-form-image-input" 
       type="file" 
       accept=".jpg,.jpeg,.png,.gif" 
       onChange={handleImageInput}
+      id={`image-input-${id}`}
       // disabled
     />
   )
+
+  const handleNameChange = (e) => {
+    e.preventDefault();
+    setChange(true);
+    setServerName(e.target.value);
+    nameHeader.innerText = e.target.value;
+  }
+
+  const resetChange = (e) => {
+    e.preventDefault();
+
+    setPicture(undefined);
+    setImageRemoved(false);
+    const imageInputs = document.querySelectorAll('.server-form-image-input');
+    imageInputs.forEach(input => input.value = null);
+
+    setServerName(serverInfo.name);
+    nameHeader.innerText = serverInfo.name;
+
+    setChange(false);
+  }
 
   return (
     <div className="server-overview">
@@ -61,14 +97,15 @@ const Overview = ({serverInfo}) => {
         <div className="overview-image-container">
           <div className="overview-image-icon-container">
             <div className="overview-image-icon-wrapper">
+              {imageInput(1)}
               {
                 (serverInfo.pictureUrl || picture) && !imageRemoved
-                ? <div className="overview-image-preview" style={{backgroundImage: `url(${picturePreview || serverInfo.pictureUrl})`}} alt=''>
-                    {imageInput}
-                  </div>
+                ? <div className="overview-image-preview" 
+                    style={{backgroundImage: `url(${picturePreview || serverInfo.pictureUrl})`}} 
+                    alt='' 
+                  />
                 : <div className="server-icon filler overview">
                     {serverInfo.name[0].toUpperCase()}
-                    {imageInput}
                   </div>
               }
               <div className={`image-change-text ${
@@ -99,7 +136,7 @@ const Overview = ({serverInfo}) => {
             </div>
             <div className="overview-button">
               Upload Image
-              {imageInput}
+              {imageInput(2)}
             </div>
           </div>
         </div>
@@ -111,7 +148,7 @@ const Overview = ({serverInfo}) => {
           <input 
             className="overview-input"
             value={serverName}
-            onChange={(e) => setServerName(e.target.value)} 
+            onChange={handleNameChange} 
           />
         </div>
       </div>
