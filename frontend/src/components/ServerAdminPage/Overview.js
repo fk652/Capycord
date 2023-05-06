@@ -38,17 +38,6 @@ const Overview = ({serverInfo}) => {
     setImageRemoved(true);
   }
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-
-    serverInfo = {
-      pictureUrl: imageRemoved ? null : picture || serverInfo.pictureUrl,
-      name: serverName
-    }
-
-    // dispatch update action
-  }
-
   const handleImageInput = (e) => {
     e.preventDefault();
     if (!e.target.files[0]) return;
@@ -82,18 +71,19 @@ const Overview = ({serverInfo}) => {
   const resetChange = (e) => {
     e.preventDefault();
 
-    setPicture(undefined);
-    setImageRemoved(false);
-    const imageInputs = document.querySelectorAll('.server-form-image-input');
-    imageInputs.forEach(input => input.value = null);
-
-    setServerName(serverInfo.name);
-    nameHeader.innerText = serverInfo.name;
-
     const submitReset = document.querySelector('.submit-reset-container');
     submitReset.classList.add('exit');
-    setTimeout(() => setChange(false), 350)
-    // setChange(false);
+
+    const resetTimeout = setTimeout(() => {
+      setPicture(undefined);
+      setImageRemoved(false);
+      const imageInputs = document.querySelectorAll('.server-form-image-input');
+      imageInputs.forEach(input => input.value = null);
+
+      setServerName(serverInfo.name);
+      nameHeader.innerText = serverInfo.name;
+      setChange(false)
+    }, 550)
   }
 
   const getWidth = () => {
@@ -111,6 +101,17 @@ const Overview = ({serverInfo}) => {
     const submitReset = document.querySelector('.submit-reset-container');
     submitReset.style.width = `${getWidth()}px`;
     submitReset.style.left = `${getLeft()}px`;
+  }
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+
+    serverInfo = {
+      pictureUrl: imageRemoved ? null : picture || serverInfo.pictureUrl,
+      name: serverName
+    }
+
+    // dispatch update action
   }
 
   return (
@@ -192,7 +193,12 @@ const Overview = ({serverInfo}) => {
                     Careful — you have unsaved changes!
                   </div>
                   <div className="submit-reset-options">
-                    
+                    <button className="reset-button" onClick={resetChange}>
+                      Reset
+                    </button>
+                    <button className="submit-update-button" onClick={handleUpdate}>
+                      Save Changes
+                    </button>
                   </div>
                 </div>
               </div>

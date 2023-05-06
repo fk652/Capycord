@@ -218,7 +218,7 @@
 }
 
 .submit-reset-container.exit {
-  animation: submit-reset-exit .3s both;
+  animation: submit-reset-exit .5s both;
 }
 
 .submit-reset-wrapper {
@@ -266,12 +266,55 @@
   25% {
     transform: translateY(-30px);
   }
-  75% {
+  50% {
     transform: translateY(-30px);
-    opacity: 1;
   }
   100% {
-    transform: translateY(30px);
-    opacity: 0;
+    transform: translateY(100px);
   }
+}
+
+.submit-reset-options {
+  display: flex;
+  flex-grow: 0;
+  justify-content: end;
+  gap: 0 10px;
+}
+
+.reset-button, .submit-update-button {
+  margin: 0;
+  /* width: 60px; */
+  height: 32px;
+  min-width: 60px;
+  min-height: 32px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.reset-button {
+  color: #dbdee1;
+  background: transparent;
+  border: none;
+  padding: 2px 0;
+}
+
+.reset-button:hover {
+  text-decoration: underline;
+  color: #dbdee1;
+  font-size: 14px;
+  background: transparent;
+}
+
+.submit-update-button {
+  padding: 2px 16px;
+  color: #ffffff;
+  background-color: #248046;
+  transition: background-color 0.1s ease-out;
+}
+
+.submit-update-button:hover {
+  background-color: #1a6334;
+  transition: background-color 0.1s ease-in;
+  color: #ffffff;
+  font-size: 14px;
 }

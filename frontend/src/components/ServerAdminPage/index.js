@@ -63,12 +63,12 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
               Overview
             </div>
 
-            <div 
+            {/* <div 
               className="admin-sidebar-option"
               onClick={handleOptionClick}
             >
               Example
-            </div>
+            </div> */}
 
             <div className="admin-sidebar-divider" />
             <div 
