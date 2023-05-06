@@ -74,16 +74,18 @@ const Overview = ({serverInfo}) => {
     const submitReset = document.querySelector('.submit-reset-container');
     submitReset.classList.add('exit');
 
-    const resetTimeout = setTimeout(() => {
-      setPicture(undefined);
-      setImageRemoved(false);
-      const imageInputs = document.querySelectorAll('.server-form-image-input');
-      imageInputs.forEach(input => input.value = null);
+    setPicture(undefined);
+    setImageRemoved(false);
+    const imageInputs = document.querySelectorAll('.server-form-image-input');
+    imageInputs.forEach(input => input.value = null);
 
-      setServerName(serverInfo.name);
-      nameHeader.innerText = serverInfo.name;
-      setChange(false)
-    }, 550)
+    setServerName(serverInfo.name);
+    nameHeader.innerText = serverInfo.name;
+
+    const resetTimeout = setTimeout(() => {
+      setChange(false);
+      // submitReset.style.display = "none";
+    }, 500)
   }
 
   const getWidth = () => {
@@ -105,11 +107,12 @@ const Overview = ({serverInfo}) => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
+    const newServerInfo = {}
 
-    serverInfo = {
-      pictureUrl: imageRemoved ? null : picture || serverInfo.pictureUrl,
-      name: serverName
-    }
+    if (serverName !== serverInfo.name) newServerInfo.name = serverName
+
+    if (imageRemoved && serverInfo.pictureUrl) newServerInfo.pictureUrl = null
+    else if (picture) newServerInfo.pictureUrl = picture
 
     // dispatch update action and setChange(false) + resetChange animation play
   }

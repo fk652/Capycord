@@ -214,7 +214,7 @@
   max-width: 740px;
   padding: 0 20px 20px;
   width: calc(100% - 40px);
-  animation: submit-reset-enter .3s ease-out;
+  animation: submit-reset-enter .4s ease-out;
 }
 
 .submit-reset-container.exit {
@@ -246,10 +246,7 @@
 
 @keyframes submit-reset-enter {
   0% {
-    transform: translateY(10px);
-  }
-  25% {
-    transform: translateY(-15px);
+    transform: translateY(100px);
   }
   50% {
     transform: translateY(-15px);
@@ -264,9 +261,9 @@
     transform: translateY(0px);
   }
   25% {
-    transform: translateY(-30px);
+    transform: translateY(-25px);
   }
-  50% {
+  60% {
     transform: translateY(-30px);
   }
   100% {
