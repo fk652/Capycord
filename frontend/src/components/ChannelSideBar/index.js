@@ -7,10 +7,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import ChannelListItem from './ChannelListItem';
-import { DropdownModal, SettingPageModal } from '../../context/Modal';
+import { DropdownModal, ServerFormModal, SettingPageModal } from '../../context/Modal';
 import ServerSettings from '../ServerSettings';
-import { getShowServerAdminModal, setShowServerAdminModal } from '../../store/ui';
+import { getLeaveServerModal, getShowServerAdminModal, setLeaveServerModal, setServerFormPage, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 import ServerAdminPage from '../ServerAdminPage';
+import LeaveForm from './LeaveForm';
 
 const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
@@ -20,6 +21,7 @@ const ChannelSideBar = () => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const showServerAdminPage = useSelector(getShowServerAdminModal);
+  const showLeaveModal = useSelector(getLeaveServerModal);
 
   const dispatch = useDispatch();
   const leaveHandler = () => {
@@ -61,6 +63,16 @@ const ChannelSideBar = () => {
     setShowModal(!showModal);
   }
   
+  const closeLeaveForm = () => {
+    dispatch(setServerFormSlide("close"));
+
+    setTimeout(() => {
+      dispatch(setLeaveServerModal(false));
+      dispatch(setServerFormPage("start"));
+      dispatch(setServerFormSlide("expand"));
+    }, 200)
+  }
+
   if (!serverInfo) return <div className="channel-side-bar" />;
 
   return (
@@ -88,6 +100,12 @@ const ChannelSideBar = () => {
           <DropdownModal onClose={() => setShowModal(false)}>
             <ServerSettings serverInfo={serverInfo}/>
           </DropdownModal>
+        )}
+
+        {showLeaveModal && (
+          <ServerFormModal onClose={closeLeaveForm}>
+            <LeaveForm serverId={serverInfo.id} serverName={serverInfo.name} onClose={closeLeaveForm}/>
+          </ServerFormModal>
         )}
 
         <div className='divider' />

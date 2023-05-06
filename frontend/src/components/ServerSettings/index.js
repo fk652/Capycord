@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './ServerSettings.css'
 import { getCurrentUser } from '../../store/session';
-import { setShowServerAdminModal } from '../../store/ui';
+import { setLeaveServerModal, setServerFormPage, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 
 const ServerSettings = ({serverInfo}) => {
   const sessionUser = useSelector(getCurrentUser);
@@ -17,6 +17,12 @@ const ServerSettings = ({serverInfo}) => {
     setTimeout(() => {
       appContainer.style.display = 'none';
     }, 200);
+  }
+
+  const handleLeave = (e) => {
+    e.preventDefault();
+    dispatch(setLeaveServerModal(true))
+    document.querySelector('.server-settings-dropdown').click();
   }
 
   return (
@@ -46,11 +52,14 @@ const ServerSettings = ({serverInfo}) => {
                 </svg>
               </div>
             </>
-          : <div className="server-setting-option dangerous">
+          : <div 
+              className="server-setting-option dangerous"
+              onClick={handleLeave}
+            >
               <div className="option-description">
                 Leave Server
               </div>
-              <svg class="option-icon" width="18" height="18" viewBox="0 0 24 24">
+              <svg className="option-icon" width="18" height="18" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M10.418 13L12.708 15.294L11.292 16.706L6.586 11.991L11.294 7.292L12.707 8.708L10.41 11H21.949C21.446 5.955 17.177 2 12 2C6.486 2 2 6.487 2 12C2 17.513 6.486 22 12 22C17.177 22 21.446 18.046 21.949 13H10.418Z">
                 </path>
               </svg>
