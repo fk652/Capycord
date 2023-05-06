@@ -3,6 +3,7 @@ import './ServerBar.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import consumer from '../../consumer';
 
 import { getNewServer, getSelectedServer, getShowServerModal, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
@@ -28,7 +29,29 @@ const ServerBar = () => {
   useEffect(() => {
     dispatch(fetchServers());
 
-    return () => {dispatch(resetServers())}
+    const subscription = consumer.subscriptions.create(
+      { channel: 'UsersChannel' },
+      {
+        received: ({type, server, id}) => {
+          switch (type) {
+            // add direct message notifications here later?
+            case "UPDATE_SERVER":
+              // to do later
+              break;
+            case "DELETE_SERVER":
+              // to do later
+              break;
+            default:
+              // console.log("unknown broadcast type");
+          }
+        }
+      }
+    );
+
+    return () => {
+      subscription?.unsubscribe();
+      dispatch(resetServers());
+    }
   }, [dispatch])
 
   useEffect(() => {

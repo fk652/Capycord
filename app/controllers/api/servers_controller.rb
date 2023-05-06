@@ -26,11 +26,13 @@ class Api::ServersController < ApplicationController
   end
 
   def destroy 
-
+    # broadcast to server owner and each server member, through users channel
+    # should also update server page live
   end
 
   def update
-
+    # broadcast to each server owner and each server member, through users channel
+    # should also update server page live
   end
 
   private

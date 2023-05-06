@@ -111,7 +111,7 @@ const Overview = ({serverInfo}) => {
       name: serverName
     }
 
-    // dispatch update action
+    // dispatch update action and setChange(false) + resetChange animation play
   }
 
   return (
@@ -177,6 +177,8 @@ const Overview = ({serverInfo}) => {
               className="overview-input"
               value={serverName}
               onChange={handleNameChange} 
+              maxLength={100}
+              required
             />
           </div>
         </div>
