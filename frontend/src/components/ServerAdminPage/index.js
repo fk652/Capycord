@@ -1,11 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './ServerAdminPage.css'
-import { getServerAdminTab, setServerAdminTab } from '../../store/ui';
+import { getServerAdminTab, setDeleteServerModal, setServerAdminTab, setServerFormPage, setServerFormSlide } from '../../store/ui';
 import { useEffect } from 'react';
 import Overview from './Overview';
+import { ServerFormModal } from '../../context/Modal';
+import { useState } from 'react';
+import DeleteForm from './DeleteForm';
 
 const ServerAdminPage = ({serverInfo, onClose}) => {
   const selectedTab = useSelector(getServerAdminTab);
+  // const showModal = useSelector(getDeleteServerModal);
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
   const adminOptions = document.querySelectorAll('.admin-sidebar-option');
@@ -45,7 +50,17 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    // setShowDeleteModal(true)
+    setShowModal(true)
+  }
+
+  const closeForm = () => {
+    dispatch(setServerFormSlide("close"));
+
+    setTimeout(() => {
+      setShowModal(false);
+      dispatch(setServerFormPage("start"));
+      dispatch(setServerFormSlide("expand"));
+    }, 200)
   }
 
   return (
@@ -119,6 +134,12 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
           </div>
         </div> */}
       </div>
+
+      {showModal && (
+        <ServerFormModal onClose={closeForm}>
+          <DeleteForm serverId={serverInfo.id} onClose={closeForm}/>
+        </ServerFormModal>
+      )}
     </div>
   )
 }

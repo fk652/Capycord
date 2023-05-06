@@ -3,7 +3,7 @@ import './Modal.css';
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useSelector } from 'react-redux';
-import { getServerSlide } from '../store/ui';
+import { getDeleteServerModal, getServerSlide } from '../store/ui';
 
 const ModalContext = React.createContext();
 
@@ -149,7 +149,8 @@ export function DropdownModal({ onClose, children }) {
 export function SettingPageModal({ onClose, children }) {
   useEffect(() => {
     const escListener = (e) => {
-      if (e.key === 'Escape') onClose();
+      const deleteModal = document.querySelector('.delete-form');
+      if (e.key === 'Escape' && !deleteModal) onClose();
     }
 
     document.addEventListener('keydown', escListener);

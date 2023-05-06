@@ -12,8 +12,8 @@ const SET_NEW_SERVER = "ui/setNewServer";
 const SET_NEW_CHANNEL = "ui/setNewChannel";
 const SET_FRIEND_SEARCH = "ui/setFriendSearch";
 const SET_EDIT_MESSAGE_ID = "ui/setEditMessageId";
-const SET_SHOW_SERVER_ADMIN_MODAL = "uiSetShowServerAdminModal";
-const SET_SERVER_ADMIN_TAB = "uiSetSelectedServerAdminTab";
+const SET_SHOW_SERVER_ADMIN_MODAL = "ui/SetShowServerAdminModal";
+const SET_SERVER_ADMIN_TAB = "ui/SetSelectedServerAdminTab";
 
 export const resetUi = () => ({
   type: RESET_UI
