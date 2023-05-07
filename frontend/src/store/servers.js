@@ -1,4 +1,6 @@
 import csrfFetch from "./csrf";
+import { addErrors } from "./errors";
+import { deleteSession } from "./session";
 import { setNewServer } from "./ui";
 
 const RESET_SERVERS = 'servers/resetServers';
@@ -49,11 +51,56 @@ export const createServer = (serverData) => async dispatch => {
 }
 
 export const updateServer = (serverData) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/servers/${serverData.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(serverData)
+    })
 
+    // update server info handled with broadcast subscription
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
+  }
 }
 
 export const deleteServer = (serverId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/servers/${serverId}`, {
+      method: 'DELETE'
+    })
 
+    // delete server info handled with broadcast subscription
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
+  }
 }
 
 const initialState = null;

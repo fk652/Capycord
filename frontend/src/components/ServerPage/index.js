@@ -63,7 +63,7 @@ const ServerPage = () => {
               // to do later
               break;
             case "ADD_MEMBER":
-              // to do later
+              dispatch(addMember(member));
               break;
             case "ADD_CHANNEL":
               // to do later

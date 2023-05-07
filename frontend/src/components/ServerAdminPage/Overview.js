@@ -107,7 +107,7 @@ const Overview = ({serverInfo}) => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    const newServerInfo = {}
+    const newServerInfo = {id: serverInfo.id}
 
     if (serverName !== serverInfo.name) newServerInfo.name = serverName
 
@@ -115,6 +115,7 @@ const Overview = ({serverInfo}) => {
     else if (picture) newServerInfo.pictureUrl = picture
 
     // dispatch update action and setChange(false) + resetChange animation play
+
   }
 
   return (

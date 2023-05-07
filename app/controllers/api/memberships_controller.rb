@@ -33,7 +33,7 @@ class Api::MembershipsController < ApplicationController
 
       MembersChannel.broadcast_to(
         @server,
-        type: 'UPDATE_MEMBER',
+        type: 'ADD_MEMBER',
         **from_template('api/memberships/show', membership: membership)
       )
 

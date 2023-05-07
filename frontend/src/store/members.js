@@ -81,7 +81,29 @@ export const updateMember = (memberData) => async dispatch => {
 }
 
 export const deleteMember = (memberId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/memberships/${memberId}`, {
+      method: 'DELETE'
+    })
 
+    // delete membership info handled with broadcast subscription
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
+  }
 }
 
 const initialState = null;
