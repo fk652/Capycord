@@ -37,7 +37,7 @@ class Api::MembershipsController < ApplicationController
         **from_template('api/memberships/show', membership: membership)
       )
 
-      render "api/servers/show"
+      render "api/servers/show", locals: {server: @server}
     else
       render json: {errors: membership.errors}, status: :unprocessable_entity
     end

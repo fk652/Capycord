@@ -7,7 +7,7 @@ import consumer from '../../consumer';
 
 import { getNewServer, getSelectedServer, getShowServerModal, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
-import { fetchServers, getServers, resetServers } from '../../store/servers';
+import { addServer, fetchServers, getServers, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerForm from '../ServerForm';
 import homeIcon from "../../assets/icon.png";
@@ -36,7 +36,7 @@ const ServerBar = () => {
           switch (type) {
             // add direct message notifications here later?
             case "UPDATE_SERVER":
-              // to do later
+              dispatch(addServer(server));
               break;
             case "DELETE_SERVER":
               // to do later

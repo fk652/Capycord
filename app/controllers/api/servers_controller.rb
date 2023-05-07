@@ -19,7 +19,7 @@ class Api::ServersController < ApplicationController
     })
 
     if @server.save 
-      render :show
+      render :show, locals: {server: @server}
     else
       render json: {errors: @server.errors}, status: :unprocessable_entity
     end
@@ -31,12 +31,32 @@ class Api::ServersController < ApplicationController
   end
 
   def update
-    # broadcast to each server owner and each server member, through users channel
+    # broadcast to each server member, through users channel
     # should also update server page live
+    @server = Server.find(params[:id])
+    if @server.owner_id == current_user.id
+      if @server.update(update_params)
+        @server.members.each do |member|
+          UsersChannel.broadcast_to(
+            member,
+            type: 'UPDATE_SERVER',
+            **from_template('api/servers/show', server: @server)
+          )
+        end
+      else
+        render json: { errors: @server.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Must be server owner to edit this server"} }, status: :unauthorized
+    end
   end
 
   private
   def create_params
     params.require(:server).permit(:name, :owner_id, :picture_url)
+  end
+
+  def update_params
+    params.require(:server).permit(:name, :picture_url)
   end
 end

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './Overview.css'
 import { useEffect } from 'react';
+import { updateServer } from '../../store/servers';
+import { useDispatch } from 'react-redux';
 
 const Overview = ({serverInfo}) => {
   // console.log(serverInfo);
@@ -10,6 +12,7 @@ const Overview = ({serverInfo}) => {
   const [imageRemoved, setImageRemoved] = useState(false);
   const [change, setChange] = useState(false);
   const nameHeader = document.querySelector('.admin-sidebar-option-header');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (!picture) {
@@ -115,7 +118,14 @@ const Overview = ({serverInfo}) => {
     else if (picture) newServerInfo.pictureUrl = picture
 
     // dispatch update action and setChange(false) + resetChange animation play
+    dispatch(updateServer(newServerInfo));
+    const submitReset = document.querySelector('.submit-reset-container');
+    submitReset.classList.add('exit');
 
+    const resetTimeout = setTimeout(() => {
+      setChange(false);
+      // submitReset.style.display = "none";
+    }, 500)
   }
 
   return (
