@@ -3,7 +3,7 @@ import '../ServerAdminPage/DeleteForm.css'
 const LeaveForm = ({serverId, serverName, onClose}) => {
   const handleDelete = (e) => {
     e.preventDefault();
-    // dispatch delete server and close all modals (redirect to home)
+    // dispatch delete membership and close all modals (redirect to home)
   }
 
   return (

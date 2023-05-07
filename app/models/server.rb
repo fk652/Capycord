@@ -12,6 +12,7 @@
 #
 class Server < ApplicationRecord
   validates :name, :owner_id, presence: true
+  validates :name, length: { maximum: 100 }
   validates :invite_link, uniqueness: true
 
   before_create :add_invite_link

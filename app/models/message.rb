@@ -19,6 +19,7 @@ class Message < ApplicationRecord
   ].freeze
 
   validates :body, :channel_id, :author_id, :status, presence: true
+  validates :body, length: { maximum: 2000 }
   # before_validation :ensure_valid_member
 
   after_validation :status,
