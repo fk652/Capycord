@@ -2,7 +2,9 @@ import { useState } from 'react'
 import './Overview.css'
 import { useEffect } from 'react';
 import { updateServer } from '../../store/servers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getErrors } from '../../store/errors';
+import { removeErrors } from '../../store/errors';
 
 const Overview = ({serverInfo}) => {
   // console.log(serverInfo);
@@ -13,6 +15,7 @@ const Overview = ({serverInfo}) => {
   const [change, setChange] = useState(false);
   const nameHeader = document.querySelector('.admin-sidebar-option-header');
   const dispatch = useDispatch();
+  const errors = useSelector(getErrors);
 
   useEffect(() => {
     if (!picture) {
@@ -32,6 +35,10 @@ const Overview = ({serverInfo}) => {
 
     return () => window.removeEventListener("resize", adjustSubmitReset);
   }, [change])
+
+  useEffect(() => {
+    return () => dispatch(removeErrors())
+  }, [])
 
   const handleImageRemove = (e) => {
     e.preventDefault();
@@ -68,7 +75,8 @@ const Overview = ({serverInfo}) => {
     e.preventDefault();
     setChange(true);
     setServerName(e.target.value);
-    nameHeader.innerText = e.target.value;
+    if (e.target.value) nameHeader.innerText = e.target.value;
+    else nameHeader.innerText = "server settings"
   }
 
   const resetChange = (e) => {
@@ -108,7 +116,7 @@ const Overview = ({serverInfo}) => {
     submitReset.style.left = `${getLeft()}px`;
   }
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const newServerInfo = {id: serverInfo.id}
 
@@ -118,14 +126,17 @@ const Overview = ({serverInfo}) => {
     else if (picture) newServerInfo.pictureUrl = picture
 
     // dispatch update action and setChange(false) + resetChange animation play
-    dispatch(updateServer(newServerInfo));
-    const submitReset = document.querySelector('.submit-reset-container');
-    submitReset.classList.add('exit');
-
-    const resetTimeout = setTimeout(() => {
-      setChange(false);
-      // submitReset.style.display = "none";
-    }, 500)
+    const response = await dispatch(updateServer(newServerInfo));
+    console.log(response)
+    if (response) {
+      const submitReset = document.querySelector('.submit-reset-container');
+      submitReset.classList.add('exit');
+  
+      const resetTimeout = setTimeout(() => {
+        setChange(false);
+        // submitReset.style.display = "none";
+      }, 500)
+    }
   }
 
   return (
@@ -189,11 +200,18 @@ const Overview = ({serverInfo}) => {
             </div>
             <input 
               className="overview-input"
+              id="server-name-change"
               value={serverName}
               onChange={handleNameChange} 
+              minLength={2}
               maxLength={100}
               required
             />
+            {
+              errors?.name
+                ? <span className="input-error-message">{errors.name}</span>
+                : null
+            }
           </div>
         </div>
       </div>

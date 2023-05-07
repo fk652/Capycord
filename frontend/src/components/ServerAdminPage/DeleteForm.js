@@ -1,7 +1,11 @@
 import './DeleteForm.css'
 
 const DeleteForm = ({serverId, onClose}) => {
-  const currentServerName = document.querySelector('.admin-sidebar-option-header').innerText;
+  let currentServerName;
+
+  const nameInput = document.getElementById('server-name-change');
+  if (nameInput) currentServerName = nameInput.value;
+  else currentServerName = document.querySelector('.admin-sidebar-option-header').innerText;
 
   const handleDelete = (e) => {
     e.preventDefault();

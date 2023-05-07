@@ -11,8 +11,8 @@
 #  updated_at  :datetime         not null
 #
 class Server < ApplicationRecord
-  validates :name, :owner_id, presence: true
-  validates :name, length: { maximum: 100 }
+  validates :owner_id, presence: true
+  validates :name, length: { in: 2..100, message: "Must be between 2 and 100 in length." }
   validates :invite_link, uniqueness: true
 
   before_create :add_invite_link

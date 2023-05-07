@@ -57,6 +57,8 @@ export const updateServer = (serverData) => async dispatch => {
       body: JSON.stringify(serverData)
     })
 
+    return response;
+
     // update server info handled with broadcast subscription
   } catch (res) {
     let data;
@@ -74,6 +76,8 @@ export const updateServer = (serverData) => async dispatch => {
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
     if (res.status === 401) dispatch(deleteSession());
+
+    // return res;
   }
 }
 
