@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './ServerAdminPage.css'
-import { getServerAdminTab, setDeleteServerModal, setServerAdminTab, setServerFormPage, setServerFormSlide } from '../../store/ui';
+import { getServerAdminTab, setServerAdminTab, setServerFormPage, setServerFormSlide } from '../../store/ui';
 import { useEffect } from 'react';
-import Overview from './Overview';
 import { ServerFormModal } from '../../context/Modal';
 import { useState } from 'react';
 import DeleteForm from './DeleteForm';
+import Overview from './Overview';
 
 const ServerAdminPage = ({serverInfo, onClose}) => {
   const selectedTab = useSelector(getServerAdminTab);
-  // const showModal = useSelector(getDeleteServerModal);
   const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();

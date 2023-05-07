@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import './Overview.css'
 import { useEffect } from 'react';
-import { updateServer } from '../../store/servers';
+import { updateServer } from '../../../store/servers';
 import { useDispatch, useSelector } from 'react-redux';
-import { getErrors } from '../../store/errors';
-import { removeErrors } from '../../store/errors';
+import { getErrors } from '../../../store/errors';
+import { removeErrors } from '../../../store/errors';
 
 const Overview = ({serverInfo}) => {
-  // console.log(serverInfo);
   const [serverName, setServerName] = useState(serverInfo.name);
   const [picture, setPicture] = useState();
   const [picturePreview, setPicturePreview] = useState();
@@ -95,7 +94,6 @@ const Overview = ({serverInfo}) => {
 
     const resetTimeout = setTimeout(() => {
       setChange(false);
-      // submitReset.style.display = "none";
     }, 500)
   }
 
@@ -125,7 +123,6 @@ const Overview = ({serverInfo}) => {
     if (imageRemoved && serverInfo.pictureUrl) newServerInfo.pictureUrl = null
     else if (picture) newServerInfo.pictureUrl = picture
 
-    // dispatch update action and setChange(false) + resetChange animation play
     const response = await dispatch(updateServer(newServerInfo));
     console.log(response)
     if (response) {
@@ -134,7 +131,6 @@ const Overview = ({serverInfo}) => {
   
       const resetTimeout = setTimeout(() => {
         setChange(false);
-        // submitReset.style.display = "none";
       }, 500)
     }
   }

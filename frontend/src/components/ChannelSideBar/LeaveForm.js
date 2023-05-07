@@ -1,4 +1,4 @@
-import '../ServerAdminPage/DeleteForm.css'
+import '../ServerAdminPage/DeleteForm/DeleteForm.css'
 
 const LeaveForm = ({serverId, serverName, onClose}) => {
   const handleDelete = (e) => {
