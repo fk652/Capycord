@@ -136,7 +136,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
 
       {showModal && (
         <ServerFormModal onClose={closeForm}>
-          <DeleteForm serverId={serverInfo.id} onClose={closeForm}/>
+          <DeleteForm serverId={serverInfo.id} onClose={closeForm} adminClose={onClose} />
         </ServerFormModal>
       )}
     </div>

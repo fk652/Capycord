@@ -74,12 +74,6 @@ const ServerPage = () => {
             case "UPDATE_CHANNEL":
               // to do later
               break;
-            // case "UPDATE_SERVER":   // moved to ServerBar
-            //   // to do later
-            //   break;
-            // case "DELETE_SERVER":   // moved to ServerBar
-            //   // to do later
-            //   break;
             default:
               // console.log("unknown broadcast type");
           }

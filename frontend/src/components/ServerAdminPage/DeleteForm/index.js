@@ -1,15 +1,19 @@
+import { useDispatch } from 'react-redux';
 import './DeleteForm.css'
+import { deleteServer } from '../../../store/servers';
 
-const DeleteForm = ({serverId, onClose}) => {
+const DeleteForm = ({serverId, onClose, adminClose}) => {
   let currentServerName;
-
   const nameInput = document.getElementById('server-name-change');
   if (nameInput) currentServerName = nameInput.value;
   else currentServerName = document.querySelector('.admin-sidebar-option-header').innerText;
 
+  const dispatch = useDispatch();
   const handleDelete = (e) => {
     e.preventDefault();
-    // dispatch delete server and close all modals (redirect to home)
+    onClose();
+    adminClose();
+    dispatch(deleteServer(serverId));
   }
 
   return (

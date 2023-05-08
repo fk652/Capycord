@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import consumer from '../../consumer';
 
-import { getNewServer, getSelectedServer, getShowServerModal, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { getDeletedServerId, getNewServer, getSelectedServer, getShowServerModal, setDeletedServerId, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
 import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
@@ -19,6 +19,7 @@ const ServerBar = () => {
   const [currentModal, setCurrentModal] = useState(null);
   const newServerId = useSelector(getNewServer);
   // const [showServerFormModal, setShowServerFormModal] = useState(false);
+  const deletedServerId = useSelector(getDeletedServerId);
   const showServerFormModal = useSelector(getShowServerModal);
   const {serverId} = useParams();
 
@@ -34,15 +35,15 @@ const ServerBar = () => {
       { channel: 'UsersChannel' },
       {
         received: ({type, server, id}) => {
+          console.log(serverId);
           switch (type) {
             // add direct message notifications here later?
             case "UPDATE_SERVER":
               dispatch(addServer(server));
               break;
             case "DELETE_SERVER":
-              console.log("delete", typeof id, typeof serverId);
               dispatch(removeServer(id));
-              if (serverId === id.toString()) history.push(`/home`);
+              dispatch(setDeletedServerId(id));
               break;
             default:
               // console.log("unknown broadcast type");
@@ -63,6 +64,14 @@ const ServerBar = () => {
       dispatch(setNewServer(null));
     }
   }, [newServerId])
+
+  useEffect(() => {
+    if (deletedServerId) {
+      console.log(typeof serverId, serverId, typeof deletedServerId, deletedServerId)
+      if (serverId === deletedServerId.toString()) history.push('/home');
+      dispatch(setDeletedServerId(null));
+    }
+  }, [deletedServerId])
 
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {

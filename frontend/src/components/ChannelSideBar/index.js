@@ -110,7 +110,7 @@ const ChannelSideBar = () => {
 
         {showLeaveModal && (
           <ServerFormModal onClose={closeLeaveForm}>
-            <LeaveForm serverId={serverInfo.id} serverName={serverInfo.name} onClose={closeLeaveForm}/>
+            <LeaveForm serverName={serverInfo.name} onClose={closeLeaveForm}/>
           </ServerFormModal>
         )}
 

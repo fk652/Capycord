@@ -28,11 +28,12 @@ class Api::ServersController < ApplicationController
   def destroy 
     # broadcast to server owner and each server member, through users channel
     # should also update server page live
-    @server = Server.find(params[:id]);
+    @server = Server.includes(:members).find(params[:id]);
 
     if @server.owner_id == current_user.id 
       if @server.destroy
         @server.members.each do |member|
+          p @server.id
           UsersChannel.broadcast_to(
             member,
             type: 'DELETE_SERVER',

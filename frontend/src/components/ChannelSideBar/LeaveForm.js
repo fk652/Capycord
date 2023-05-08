@@ -3,14 +3,14 @@ import '../ServerAdminPage/DeleteForm/DeleteForm.css'
 import { getCurrentUser } from '../../store/session';
 import { deleteMember, getMemberId } from '../../store/members';
 
-const LeaveForm = ({serverId, serverName, onClose}) => {
+const LeaveForm = ({serverName, onClose}) => {
   const dispatch = useDispatch();
   const sessionUser = useSelector(getCurrentUser);
   const memberId = useSelector(getMemberId(sessionUser.id))
 
   const handleDelete = (e) => {
     e.preventDefault();
-    // dispatch delete membership and close all modals (redirect to home)
+    onClose();
     dispatch(deleteMember(memberId));
   }
 
