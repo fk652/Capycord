@@ -20,11 +20,9 @@ function App() {
       } */}
       <Switch>
         <Route exact path="/signup">
-          <ServerBar />
           <SignupFormPage />
         </Route>
         <Route exact path="/login">
-          <ServerBar />
           <LoginFormPage />
         </Route>
         <Route exact path="/home">
