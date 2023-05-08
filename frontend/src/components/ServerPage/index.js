@@ -8,7 +8,7 @@ import consumer from '../../consumer';
 import HomeSideBar from '../HomeSideBar';
 import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
-import { addMember, fetchMembers, resetMembers } from '../../store/members';
+import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { deleteSession, getCurrentUser } from '../../store/session';
@@ -60,7 +60,7 @@ const ServerPage = () => {
               dispatch(addMember(member));
               break;
             case "DELETE_MEMBER":
-              // to do later
+              dispatch(removeMember(id));
               break;
             case "ADD_MEMBER":
               dispatch(addMember(member));

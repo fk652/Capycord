@@ -44,7 +44,29 @@ class Api::MembershipsController < ApplicationController
   end
 
   def destroy 
+    @membership = Membership.includes(:server, :member).find(params[:id])
+    # can also update this later to also allow owner or mod to delete other memberships (e.g ban or kick someone)
+    if @membership.member_id === current_user.id
+      if @membership.destroy
+        UsersChannel.broadcast_to(
+          @membership.member,
+          type: 'DELETE_SERVER',
+          id: @membership.server.id
+        )
 
+        MembersChannel.broadcast_to(
+          @membership.server,
+          type: 'DELETE_MEMBER',
+          id: @membership.member_id
+        )
+
+        render json: nil, status: :ok
+      else
+        render json: { errors: @membership.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Not authorized to delete this membership"} }, status: :unauthorized
+    end
   end
 
   def update

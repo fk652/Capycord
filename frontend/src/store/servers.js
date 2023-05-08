@@ -6,6 +6,7 @@ import { setNewServer } from "./ui";
 const RESET_SERVERS = 'servers/resetServers';
 const SET_SERVERS = 'servers/setServers';
 const ADD_SERVER = 'servers/addServer';
+const REMOVE_SERVER = 'servers/removeServer';
 
 export const resetServers = () => ({
   type: RESET_SERVERS
@@ -19,6 +20,11 @@ const setServers = (servers) => ({
 export const addServer = (server) => ({
   type: ADD_SERVER,
   server
+})
+
+export const removeServer = (serverId) => ({
+  type: REMOVE_SERVER,
+  serverId
 })
 
 export const getServers = (state) => {
@@ -117,6 +123,10 @@ const serversReducer = (state = initialState, action) => {
       return {...action.servers}
     case ADD_SERVER:
       return {...state, [action.server.id]: action.server}
+    case REMOVE_SERVER:
+      const newState = {...state};
+      delete newState[action.serverId];
+      return newState
     default:
       return state;
   }

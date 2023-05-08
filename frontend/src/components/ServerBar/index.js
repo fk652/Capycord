@@ -2,12 +2,12 @@ import './ServerBar.css';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import consumer from '../../consumer';
 
 import { getNewServer, getSelectedServer, getShowServerModal, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import ServerListIcon from './ServerListIcon';
-import { addServer, fetchServers, getServers, resetServers } from '../../store/servers';
+import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerForm from '../ServerForm';
 import homeIcon from "../../assets/icon.png";
@@ -20,6 +20,7 @@ const ServerBar = () => {
   const newServerId = useSelector(getNewServer);
   // const [showServerFormModal, setShowServerFormModal] = useState(false);
   const showServerFormModal = useSelector(getShowServerModal);
+  const {serverId} = useParams();
 
   const selected = useSelector(getSelectedServer);
   const servers = useSelector(getServers)
@@ -39,7 +40,9 @@ const ServerBar = () => {
               dispatch(addServer(server));
               break;
             case "DELETE_SERVER":
-              // to do later
+              console.log("delete", typeof id, typeof serverId);
+              dispatch(removeServer(id));
+              if (serverId === id.toString()) history.push(`/home`);
               break;
             default:
               // console.log("unknown broadcast type");

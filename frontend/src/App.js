@@ -13,25 +13,30 @@ function App() {
 
   return (
     <div className="app-container">
-      {
+      {/* {
         sessionUser 
           ? <ServerBar />
-          : ''
-      }
+          : null
+      } */}
       <Switch>
         <Route exact path="/signup">
+          <ServerBar />
           <SignupFormPage />
         </Route>
         <Route exact path="/login">
+          <ServerBar />
           <LoginFormPage />
         </Route>
         <Route exact path="/home">
+          <ServerBar />
           <HomePage />
         </Route>
         <Route exact path="/server/:serverId">
+          <ServerBar />
           <ServerPage />
         </Route>
         <Route exact path="/server/:serverId/:channelId">
+          <ServerBar />
           <ServerPage />
         </Route>
         <Route exact path="/">

@@ -28,6 +28,25 @@ class Api::ServersController < ApplicationController
   def destroy 
     # broadcast to server owner and each server member, through users channel
     # should also update server page live
+    @server = Server.find(params[:id]);
+
+    if @server.owner_id == current_user.id 
+      if @server.destroy
+        @server.members.each do |member|
+          UsersChannel.broadcast_to(
+            member,
+            type: 'DELETE_SERVER',
+            id: @server.id
+          )
+        end
+        
+        render json: nil, status: :ok
+      else
+        render json: { errors: @server.errors }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: { error: "Must be server owner to delete this server"} }, status: :unauthorized
+    end
   end
 
   def update
@@ -43,6 +62,8 @@ class Api::ServersController < ApplicationController
             **from_template('api/servers/show', server: @server)
           )
         end
+
+        render json: nil, status: :ok
       else
         render json: { errors: @server.errors }, status: :unprocessable_entity
       end

@@ -48,6 +48,12 @@ const ChannelSideBar = () => {
     if (listEle) listEle.scrollTo(0, 0);
   }, [serverId, channelServerId])
 
+  useEffect(() => {
+    return () => {
+      if (showLeaveModal) dispatch(setLeaveServerModal(false));
+    }
+  }, [])
+
   const checkSelected = (id) => {
     if (id.toString() === channelId) return "selected"
     else return ""

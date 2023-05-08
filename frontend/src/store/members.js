@@ -23,10 +23,19 @@ export const addMember = (member) => ({
   member
 })
 
+export const removeMember = (userId) => ({
+  type: REMOVE_MEMBER,
+  userId
+})
+
 export const getMembers = (state) => {
   return state.members 
     ? Object.values(state.members).sort((a, b) => a.username > b.username ? 1 : -1)
     : [];
+}
+
+export const getMemberId = (userId) => (state) => {
+  return state.members && state.members[userId] ? state.members[userId].memberId : null
 }
 
 export const getMembersObject = (state) => {
@@ -116,6 +125,10 @@ const membersReducer = (state = initialState, action) => {
       return {...action.members};
     case ADD_MEMBER:
       return {...state, [action.member.id]: action.member}
+    case REMOVE_MEMBER:
+      const newState = {...state};
+      delete newState[action.userId];
+      return newState
     default:
       return state;
   }
