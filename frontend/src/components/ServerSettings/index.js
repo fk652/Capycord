@@ -13,10 +13,6 @@ const ServerSettings = ({serverInfo}) => {
     const appContainer = document.querySelector('.app-container')
     appContainer.classList.add('hide');
     dispatch(setShowServerAdminModal(true));
-
-    setTimeout(() => {
-      appContainer.style.display = 'none';
-    }, 200);
   }
 
   const handleLeave = (e) => {

@@ -32,6 +32,13 @@ const ChannelSideBar = () => {
     appContainer.removeAttribute('style');
     appContainer.classList.remove('hide');
     appContainer.classList.add('show');
+
+    // const animationHandler = (e) => {
+    //   appContainer.classList.remove('show');
+    //   dispatch(setShowServerAdminModal(false));
+    //   e.target.removeEventListener("animationend", animationHandler);
+    // }
+    // appContainer.addEventListener("animationEnd", animationHandler);
     
     setTimeout(() => {
       appContainer.classList.remove('show');
