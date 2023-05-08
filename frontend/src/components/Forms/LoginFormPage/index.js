@@ -21,7 +21,7 @@ const LoginForm = () => {
     if (errors && errorStatus !== 401) dispatch(removeErrors());
     
     return () => {
-      if (errors) dispatch(removeErrors());
+      if (errors || errorStatus) dispatch(removeErrors());
     }
   }, [dispatch])
 
