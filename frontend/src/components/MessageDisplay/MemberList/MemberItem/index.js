@@ -6,7 +6,7 @@ const MemberItem = ({name, status, customStatus, picture}) => {
   const [username, tag] = name.split("#");
 
   return (
-    <div className={`member-list-item`}>
+    <div className={`member-list-item disabled`}>
       <div className="member-item-display">
         <UserIcon picture={picture} status={status} name={username} />
         <div className="member-item-details">

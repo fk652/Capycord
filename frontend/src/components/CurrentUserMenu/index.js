@@ -17,7 +17,7 @@ const CurrentUserMenu = () => {
 
   return (
     <div className="current-user-menu">
-      <div className="current-user-display">
+      <div className="current-user-display disabled">
         <UserIcon 
           picture={sessionUser.profilePictureUrl}
           status={sessionUser.onlineStatus}

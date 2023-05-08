@@ -100,7 +100,7 @@ const ChannelListItem = ({id, name, type, selected}) => {
       {
         serverInfo.ownerId === sessionUser.id
           ? <div 
-              className="channel-options"
+              className="channel-options disabled"
               onMouseEnter={showHandler(id)}
               onMouseLeave={leaveHandler}
             >

@@ -100,7 +100,7 @@ const FriendsNavBar = () => {
       </div>
       <div className="message-options">
         <div 
-          className="icon-wrapper"
+          className="icon-wrapper disabled"
           onMouseEnter={showHandler("add dm")}
           onMouseLeave={leaveHandler}
         >
@@ -118,7 +118,7 @@ const FriendsNavBar = () => {
         <div className="nav-divider" />
 
         <div 
-          className="icon-wrapper"
+          className="icon-wrapper disabled"
           onMouseEnter={showHandler("inbox")}
           onMouseLeave={leaveHandler}
         >

@@ -42,7 +42,7 @@ const ServerSettings = ({serverInfo}) => {
                   </path>
                 </svg>
               </div>
-              <div className="server-setting-option">
+              <div className="server-setting-option disabled">
                 <div className="option-description">
                   Create Channel
                 </div>
