@@ -6,11 +6,23 @@
 
 .demo-container {
   display: flex;
+  flex-direction: column;
+}
+
+.demo-buttons-container {
+  display: flex;
   justify-content: space-between;
+  flex-basis: 100%;
 }
 
 .demo-button {
   width: 45%;
+}
+
+.demo-text {
+  font-size: 14px;
+  color: #b5bac1;
+  margin-bottom: 8px;
 }
 
 .unauthorized-message {
