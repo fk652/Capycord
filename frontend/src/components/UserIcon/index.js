@@ -31,18 +31,31 @@ const UserIcon = ({picture, status, name}) => {
       noStatus = true;
   }
 
+  const handleImageError = (e) => {
+    e.preventDefault();
+    const newIcon = document.createElement("div");
+    newIcon.className = "filler-container";
+    newIcon.innerHTML = `<div class="filler-profile-pic">
+                            <img class="dummy-pic" src=${dummyIcon} alt="" />
+                          </div>
+                          <img 
+                            class="filler-status-icon" 
+                            src=${iconUrl} 
+                            alt="status" 
+                            visibility=${noStatus ? "hidden" : "visible"}
+                          />`
+    e.target.parentNode.replaceWith(newIcon)
+  }
+
   return (
     <div className="user-icon">
       {
         picture 
-          ? (
-            <>
-              <img className="user-profile-pic" src={picture} alt="" />
+          ? <div className="user-profile-pic-container">
+              <img className="user-profile-pic" src={picture} alt="" onError={handleImageError}/>
               <img className="status-icon" src={iconUrl} alt="status"/>
-            </>
-          )
-          : (
-            <div className="filler-container">
+            </div>
+          : <div className="filler-container">
               <div className="filler-profile-pic">
                 <img className="dummy-pic" src={dummyIcon} alt="" />
               </div>
@@ -53,7 +66,6 @@ const UserIcon = ({picture, status, name}) => {
                 visibility={noStatus ? "hidden" : "visible"}
               />
             </div>
-          )
       }
     </div>
   )

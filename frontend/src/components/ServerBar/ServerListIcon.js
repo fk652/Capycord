@@ -22,6 +22,16 @@ const ServerListIcon = ({id, image, name}) => {
     setShowModal(false);
   }
 
+  const handleImageError = (e) => {
+    e.preventDefault();
+    const newIcon = document.createElement("div");
+    newIcon.classList.add("server-icon");
+    newIcon.classList.add("filler");
+    newIcon["data-key"] = id;
+    newIcon.innerText = name[0].toUpperCase();
+    e.target.replaceWith(newIcon);
+  }
+
   return (
     <>
       <div 
@@ -39,6 +49,7 @@ const ServerListIcon = ({id, image, name}) => {
                 src={image}
                 alt="server-icon"
                 data-key={id}
+                onError={handleImageError}
               />
             : <div 
                 className="server-icon filler"
