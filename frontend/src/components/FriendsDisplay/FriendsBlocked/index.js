@@ -27,7 +27,7 @@ const FriendsBlocked = () => {
     //   />
     // </>
     <div className="game-container">
-      <iframe className="placeholder-game" title="LUL" src="https://fk652.github.io/Galactic-Defender/" height="90%"/>
+      <iframe className="placeholder-game" title="LUL" src="https://fk652.github.io/Galactic-Defender/"/>
     </div>
   )
 }
