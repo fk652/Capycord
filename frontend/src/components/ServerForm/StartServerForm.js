@@ -11,13 +11,20 @@ const StartServerForm = () => {
   const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
+    
+    const serverFormModal = document.querySelector('.modal-content')
     dispatch(setServerFormSlide("close"));
-
-    setTimeout(() => {
+    serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setShowServerModal(false));
       dispatch(setServerFormPage("start"));
       dispatch(setServerFormSlide("expand"));
-    }, 200)
+    }, {once: true})
+
+    // setTimeout(() => {
+    //   dispatch(setShowServerModal(false));
+    //   dispatch(setServerFormPage("start"));
+    //   dispatch(setServerFormSlide("expand"));
+    // }, 200)
   }
 
   const handleNext = (type) => () => {

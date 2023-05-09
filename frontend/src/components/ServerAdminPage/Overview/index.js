@@ -83,6 +83,9 @@ const Overview = ({serverInfo}) => {
 
     const submitReset = document.querySelector('.submit-reset-container');
     submitReset.classList.add('exit');
+    submitReset.addEventListener("animationend", (e) => {
+      setChange(false);
+    }, {once: true})
 
     setPicture(undefined);
     setImageRemoved(false);
@@ -92,9 +95,9 @@ const Overview = ({serverInfo}) => {
     setServerName(serverInfo.name);
     nameHeader.innerText = serverInfo.name;
 
-    const resetTimeout = setTimeout(() => {
-      setChange(false);
-    }, 500)
+    // const resetTimeout = setTimeout(() => {
+    //   setChange(false);
+    // }, 500)
   }
 
   const getWidth = () => {
@@ -128,10 +131,13 @@ const Overview = ({serverInfo}) => {
     if (response) {
       const submitReset = document.querySelector('.submit-reset-container');
       submitReset.classList.add('exit');
-  
-      const resetTimeout = setTimeout(() => {
+      submitReset.addEventListener("animationend", (e) => {
         setChange(false);
-      }, 500)
+      }, {once: true});
+  
+      // const resetTimeout = setTimeout(() => {
+      //   setChange(false);
+      // }, 500)
     }
   }
 

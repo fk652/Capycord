@@ -33,17 +33,15 @@ const ChannelSideBar = () => {
     appContainer.classList.remove('hide');
     appContainer.classList.add('show');
 
-    // const animationHandler = (e) => {
-    //   appContainer.classList.remove('show');
-    //   dispatch(setShowServerAdminModal(false));
-    //   e.target.removeEventListener("animationend", animationHandler);
-    // }
-    // appContainer.addEventListener("animationEnd", animationHandler);
-    
-    setTimeout(() => {
+    appContainer.addEventListener("animationend", (e) => {
       appContainer.classList.remove('show');
       dispatch(setShowServerAdminModal(false));
-    }, 250);
+    }, {once: true});
+    
+    // setTimeout(() => {
+    //   appContainer.classList.remove('show');
+    //   dispatch(setShowServerAdminModal(false));
+    // }, 250);
   }
 
   if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
@@ -77,13 +75,19 @@ const ChannelSideBar = () => {
   }
   
   const closeLeaveForm = () => {
+    const serverFormModal = document.querySelector('.modal-content');
     dispatch(setServerFormSlide("close"));
-
-    setTimeout(() => {
+    serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setLeaveServerModal(false));
       dispatch(setServerFormPage("start"));
       dispatch(setServerFormSlide("expand"));
-    }, 200)
+    }, {once: true})
+
+    // setTimeout(() => {
+    //   dispatch(setLeaveServerModal(false));
+    //   dispatch(setServerFormPage("start"));
+    //   dispatch(setServerFormSlide("expand"));
+    // }, 200)
   }
 
   if (!serverInfo) return <div className="channel-side-bar" />;

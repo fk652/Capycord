@@ -53,13 +53,19 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
   }
 
   const closeForm = () => {
+    const serverFormModal = document.querySelector('.modal-content');
     dispatch(setServerFormSlide("close"));
-
-    setTimeout(() => {
+    serverFormModal.addEventListener("animationend", (e) => {
       setShowModal(false);
       dispatch(setServerFormPage("start"));
       dispatch(setServerFormSlide("expand"));
-    }, 200)
+    }, {once: true})
+
+    // setTimeout(() => {
+    //   setShowModal(false);
+    //   dispatch(setServerFormPage("start"));
+    //   dispatch(setServerFormSlide("expand"));
+    // }, 200)
   }
 
   return (
