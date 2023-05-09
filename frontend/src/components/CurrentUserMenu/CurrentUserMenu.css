@@ -28,6 +28,10 @@
 .username-container {
   display: flex;
   flex-direction: column;
+
+  /* -webkit-user-select: auto;
+  -ms-user-select: unset;
+  user-select: auto; */
 }
 
 .username {
@@ -38,11 +42,19 @@
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  /* -webkit-user-select: auto;
+  -ms-user-select: unset;
+  user-select: auto; */
 }
 
 .tag-number {
   font-size: 12px;
   color: #b5bac1;
+
+  /* -webkit-user-select: auto;
+  -ms-user-select: unset;
+  user-select: auto; */
 }
 
 .settings-container {

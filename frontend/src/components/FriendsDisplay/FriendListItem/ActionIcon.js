@@ -123,7 +123,8 @@ const ActionIcon = ({actionType, itemId}) => {
 
   return (
     <div 
-      className="friend-item-action" 
+      // className="friend-item-action"
+      className={`friend-item-action ${actionType === "message" ? "disabled" : ''}`} 
       onClick={clickHandler}
       onMouseEnter={showHandler(itemId)}
       onMouseLeave={leaveHandler}
