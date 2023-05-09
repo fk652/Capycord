@@ -73,3 +73,9 @@
   background: transparent;
   border-radius: 10px;
 }
+
+.conversation-list strong {
+  font-weight: 900;
+  font-size: 20px;
+  text-transform: uppercase;
+}
