@@ -59,8 +59,8 @@ const MessageInput = ({channelInfo}) => {
   }
   
   const handleKeyDown = (e) => {
-    if (e.key === "Shift" && !e.repeat) setShift(true);
-    if (e.key === "Enter" && !e.repeat) setEnter(true);
+    if (e.key === "Shift") setShift(true);
+    if (e.key === "Enter") setEnter(true);
 
     // submit
     if(e.key === "Enter" && !shift) handleSubmit();
@@ -69,6 +69,10 @@ const MessageInput = ({channelInfo}) => {
   const handleKeyUp = (e) => {
     if (e.key === "Shift") setShift(false);
     if (e.key === "Enter") setEnter(false);
+  }
+
+  const handleFocus = (e) => {
+    if (shift) setShift(false); 
   }
 
   return (
@@ -84,6 +88,7 @@ const MessageInput = ({channelInfo}) => {
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
             onChange={handleChange}
+            onFocus={handleFocus}
           />
         </div>
       </div>

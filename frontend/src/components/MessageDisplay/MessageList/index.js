@@ -15,6 +15,7 @@ import TimeDivider from './MessageItem/TimeDivider';
 import { useParams } from 'react-router-dom';
 import { getQuickDelete, getSetScroll, setQuickDelete, setScroll } from '../../../store/ui';
 import { getCurrentUser } from '../../../store/session';
+import { getEditMessageId } from '../../../store/ui';
 
 const MessageList = () => {
   const {channelId} = useParams();
@@ -23,15 +24,16 @@ const MessageList = () => {
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
   const sessionUser = useSelector(getCurrentUser);
+  const [disabled, setDisabled] = useState(false);
   // const quickDelete = useSelector(getQuickDelete);
-  const messageElement = document.querySelector(".messages-list")
+  // const messageElement = document.querySelector(".messages-list");
 
   // add useEffect to retrieve more messages when scrolled to the top
   // dependency array with scroll height
   
   const dispatch = useDispatch();
   useEffect(() => {
-    // const messageElement = document.querySelector(".messages-list")
+    const messageElement = document.querySelector(".messages-list")
     if (messageElement && scroll) {
       messageElement.scrollTo(0, messageElement.scrollHeight);
       dispatch(setScroll(false));
@@ -42,19 +44,30 @@ const MessageList = () => {
     const keydownListener = (e) => {
       // e.preventDefault();
       // if (e.repeat) return;
-      if (e.key === "Shift" && !e.repeat) dispatch(setQuickDelete(true));
-      
       const formModal = document.querySelector('.modal-form');
       const adminModal = document.querySelector('.setting-page-modal');
       const dropdownModal = document.querySelector('.server-settings');
-      if (e.key === "Escape" && !formModal && !adminModal && !dropdownModal) {
-        messageElement.scrollTo(0, messageElement.scrollHeight);
+      if (formModal || adminModal || dropdownModal) return;
+
+      const editInput = document.querySelector('.message-textarea.edit');
+      if (e.key === "Shift" && !e.repeat) {
+        dispatch(setQuickDelete(true))
+      } else if (e.key === "Escape" && editInput) {
+        setDisabled(true);
+        setTimeout(() => setDisabled(false), 500);
+      } else if (e.key === "Escape" && !disabled) {
+        const messageElement = document.querySelector(".messages-list");
+        if (messageElement) messageElement.scrollTo(0, messageElement.scrollHeight);
       }
     }
 
     const keyupListener = (e) => {
       e.preventDefault();
-      if (e.key === "Shift") dispatch(setQuickDelete(false));
+      const formModal = document.querySelector('.modal-form');
+      const adminModal = document.querySelector('.setting-page-modal');
+      const dropdownModal = document.querySelector('.server-settings');
+      if (formModal || adminModal || dropdownModal) return;
+      else if (e.key === "Shift") dispatch(setQuickDelete(false));
     }
 
     document.addEventListener("keydown", keydownListener);

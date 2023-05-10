@@ -67,7 +67,6 @@ const EditMessageInput = ({message}) => {
   }
   
   const handleKeyDown = (e) => {
-    if (e.key === "Escape") handleCancel();
     if (e.key === "Shift") setShift(true);
     if (e.key === "Enter") setEnter(true);
 
