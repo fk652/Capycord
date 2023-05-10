@@ -44,10 +44,12 @@ const ChannelSideBar = () => {
     // }, 250);
   }
 
-  if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
-    history.push(`/server/${serverId}/${channels[0].id}`);
-  }
-
+  useEffect(() => {
+    if (channelId === undefined && channelServerId === serverId && (channels && channels.length)) {
+      history.push(`/server/${serverId}/${channels[0].id}`);
+    }
+  }, [channelId, channelServerId, serverId, channels])
+  
   useEffect(() => {
     const listEle = document.querySelector('.channel-list');
     if (listEle) listEle.scrollTo(0, 0);
