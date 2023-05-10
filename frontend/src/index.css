@@ -84,4 +84,5 @@ body::-webkit-scrollbar {
 
 .disabled:hover {
   cursor: not-allowed !important;
+  pointer-events: none !important;
 }
