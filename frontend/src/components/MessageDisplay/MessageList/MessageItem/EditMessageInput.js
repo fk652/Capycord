@@ -21,7 +21,11 @@ const EditMessageInput = ({message}) => {
     fixScroll(editInput);
 
     const escListener = (e) => {
-      if (e.key === 'Escape') dispatch(setEditMessageId(null));
+      const formModal = document.querySelector('.modal-form');
+      const adminModal = document.querySelector('.setting-page-modal');
+      const dropdownModal = document.querySelector('.server-settings');
+      
+      if (e.key === 'Escape' && !formModal && !adminModal && !dropdownModal) dispatch(setEditMessageId(null));
     }
     document.addEventListener('keydown', escListener);
 
