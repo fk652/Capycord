@@ -39,7 +39,7 @@ const ActionIcon = ({actionType, itemId, name}) => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       setShowDeleteFriendModal(false);
-      dispatch(setServerFormSlide("expand"));
+      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
 
     // setTimeout(() => {
@@ -153,11 +153,13 @@ const ActionIcon = ({actionType, itemId, name}) => {
       >
         {icon}
       </div>
+
       {showModal && currentModal === itemId && (
         <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
           <span className="tooltip">{tooltipText}</span>
         </ActionToolTip>
       )}
+      
       {showDeleteFriendModal && (
         <ServerFormModal onClose={closeDeleteForm}>
           <DeleteFriendForm friendId={itemId} friendName={name} onClose={closeDeleteForm}/>

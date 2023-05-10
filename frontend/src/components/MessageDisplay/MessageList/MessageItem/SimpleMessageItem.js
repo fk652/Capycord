@@ -46,7 +46,12 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
     <div className={`message-wrapper simple ${message.id === editMessageId ? 'edit' : ''}`}>
       { 
         (sessionId === message.authorId && message.id !== editMessageId)
-          ? <MessageEditOptions messageId={message.id} />
+          ? <MessageEditOptions 
+              messageId={message.id} 
+              message={message} 
+              date={date} 
+              extraTimeInfo={extraTimeInfo}
+            />
           : null
       }
       

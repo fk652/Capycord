@@ -50,7 +50,7 @@ const JoinServerForm = () => {
     serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setShowServerModal(false));
       dispatch(setServerFormPage("start"));
-      dispatch(setServerFormSlide("expand"));
+      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
 
     // setTimeout(() => {

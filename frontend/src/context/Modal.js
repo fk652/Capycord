@@ -93,15 +93,14 @@ export function ServerFormModal({ onClose, children }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const escListener = (e) => {
-      if (e.key === 'Escape') onClose();
-    }
+    if (slide === "close") dispatch(setServerFormSlide("expand"));
 
+    const escListener = (e) => { if (e.key === 'Escape') onClose(); }
     document.addEventListener('keydown', escListener);
 
-    if (slide === "close") dispatch(setServerFormSlide("expand"))
     return () => {
       document.removeEventListener('keydown', escListener);
+      dispatch(setServerFormSlide("expand"));
     }
   }, [])
 

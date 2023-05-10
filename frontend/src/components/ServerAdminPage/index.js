@@ -57,7 +57,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       setShowModal(false);
-      dispatch(setServerFormSlide("expand"));
+      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
 
     // setTimeout(() => {

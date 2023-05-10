@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import EditMessageInput from './EditMessageInput';
 import EditStatus from './EditStatus';
 
-const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
+const MessageItem = ({message, user, date, extraTimeInfo, sessionId, editDisabled}) => {
   // if updatedAt !== createdAt, add edit status
   const editMessageId = useSelector(getEditMessageId);
   
@@ -57,10 +57,17 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId}) => {
   if (!user || !message) return null;
 
   return (
-    <div className={`message-wrapper ${message.id === editMessageId ? 'edit' : ''}`}>
+    <div 
+      className={`message-wrapper ${message.id === editMessageId ? 'edit' : ''} ${editDisabled ? 'delete-preview' : ''}`}
+    >
       { 
-        (sessionId === message.authorId && message.id !== editMessageId)
-          ? <MessageEditOptions messageId={message.id} />
+        (sessionId === message.authorId && message.id !== editMessageId && !editDisabled)
+          ? <MessageEditOptions 
+              messageId={message.id} 
+              message={message} 
+              date={date} 
+              extraTimeInfo={extraTimeInfo}
+            />
           : null
       }
 

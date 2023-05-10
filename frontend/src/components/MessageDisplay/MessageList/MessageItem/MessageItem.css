@@ -228,3 +228,21 @@
 .edited-status:hover {
   cursor: default;
 }
+
+.message-wrapper.delete-preview {
+  margin-top: 0;
+}
+
+.message-wrapper.delete-preview:hover {
+  background: none;
+}
+
+.message-wrapper.delete-preview .message-item-wrapper {
+  padding: 0;
+  max-width: calc(100% - 15px);
+}
+
+.message-wrapper.delete-preview .message-body {
+  font-size: 1rem;
+  line-height: 1.375rem;
+}
