@@ -13,8 +13,11 @@ const MessageInput = ({channelInfo}) => {
   const [enter, setEnter] = useState(false);
   const dispatch = useDispatch();
   
-  const handleSubmit = () => {    
-    dispatch(createMessage({channelId: channelInfo.id, body: message}))
+  const handleSubmit = () => {
+    const filtered = message.trim();
+    if (!filtered) return;
+
+    dispatch(createMessage({channelId: channelInfo.id, body: filtered}))
     .catch(async (res) => {
       let data;
       try {
@@ -56,17 +59,11 @@ const MessageInput = ({channelInfo}) => {
   }
   
   const handleKeyDown = (e) => {
-    if (e.key === "Shift") setShift(true);
-    if (e.key === "Enter") setEnter(true);
-    if (e.key === "Escape") dispatch(setScroll(true));
-
-    const filteredMessage = message.trim();
+    if (e.key === "Shift" && !e.repeat) setShift(true);
+    if (e.key === "Enter" && !e.repeat) setEnter(true);
 
     // submit
-    if(e.key === "Enter" && !shift && filteredMessage !== '') {
-      setMessage(filteredMessage);
-      handleSubmit();
-    }
+    if(e.key === "Enter" && !shift) handleSubmit();
   }
   
   const handleKeyUp = (e) => {

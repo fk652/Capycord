@@ -16,6 +16,7 @@ const SET_SHOW_SERVER_ADMIN_MODAL = "ui/setShowServerAdminModal";
 const SET_SERVER_ADMIN_TAB = "ui/setSelectedServerAdminTab";
 const SET_LEAVE_SERVER_MODAL = "ui/setLeaveServerModal";
 const SET_DELETED_SERVER_ID = "ui/setDeletedServerId";
+const SET_QUICK_DELETE = "ui/setQuickDelete";
 
 export const resetUi = () => ({
   type: RESET_UI
@@ -105,6 +106,11 @@ export const setDeletedServerId = (id) => ({
   type: SET_DELETED_SERVER_ID,
   id
 })
+
+export const setQuickDelete = (toggle) => ({
+  type: SET_QUICK_DELETE,
+  toggle
+})
 // ---------------------------------------------------------
 
 export const getSelectedFriendNavTab = (state) => {
@@ -175,6 +181,10 @@ export const getDeletedServerId = (state) => {
   return state.ui.deletedServerId
 }
 
+export const getQuickDelete = (state) => {
+  return state.ui.quickDelete
+}
+
 const initialState = {
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
@@ -192,7 +202,8 @@ const initialState = {
   showServerAdminModal: false,
   serverAdminTab: "Overview",
   showLeaveServerModal: false,
-  deletedServerId: null
+  deletedServerId: null,
+  quickDelete: false
 }
 
 const uiReducer = (state = initialState, action) => {
@@ -233,6 +244,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showLeaveServerModal: action.toggle}
     case SET_DELETED_SERVER_ID:
       return {...state, deletedServerId: action.id}
+    case SET_QUICK_DELETE:
+      return {...state, quickDelete: action.toggle}
     default:
       return state;
   }

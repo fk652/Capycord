@@ -1,6 +1,6 @@
 import './MessageList.css'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getChannel } from '../../../store/channels';
@@ -13,7 +13,7 @@ import FirstServerMessage from './MessageItem/FirstServerMessage';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
 import { useParams } from 'react-router-dom';
-import { getSetScroll, setScroll } from '../../../store/ui';
+import { getQuickDelete, getSetScroll, setQuickDelete, setScroll } from '../../../store/ui';
 import { getCurrentUser } from '../../../store/session';
 
 const MessageList = () => {
@@ -23,19 +23,48 @@ const MessageList = () => {
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
   const sessionUser = useSelector(getCurrentUser);
+  // const quickDelete = useSelector(getQuickDelete);
+  const messageElement = document.querySelector(".messages-list")
 
   // add useEffect to retrieve more messages when scrolled to the top
   // dependency array with scroll height
-
+  
   const dispatch = useDispatch();
   useEffect(() => {
-    const messageElement = document.querySelector(".messages-list")
-
+    // const messageElement = document.querySelector(".messages-list")
     if (messageElement && scroll) {
       messageElement.scrollTo(0, messageElement.scrollHeight);
       dispatch(setScroll(false));
     }
   }, [dispatch, messages, scroll])
+
+  useEffect(() => {
+    const keydownListener = (e) => {
+      // e.preventDefault();
+      // if (e.repeat) return;
+      if (e.key === "Shift" && !e.repeat) dispatch(setQuickDelete(true));
+      
+      const formModal = document.querySelector('.modal-form');
+      const adminModal = document.querySelector('.setting-page-modal');
+      const dropdownModal = document.querySelector('.server-settings');
+      if (e.key === "Escape" && !formModal && !adminModal && !dropdownModal) {
+        messageElement.scrollTo(0, messageElement.scrollHeight);
+      }
+    }
+
+    const keyupListener = (e) => {
+      e.preventDefault();
+      if (e.key === "Shift") dispatch(setQuickDelete(false));
+    }
+
+    document.addEventListener("keydown", keydownListener);
+    document.addEventListener("keyup", keyupListener);
+
+    return () => {
+      document.removeEventListener("keydown", keydownListener);
+      document.removeEventListener("keyup", keyupListener);
+    }
+  }, [])
   
   let previousDate = null;
   let previousTime = null;

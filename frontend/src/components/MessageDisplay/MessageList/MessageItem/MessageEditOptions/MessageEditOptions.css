@@ -45,6 +45,10 @@
 }
 
 .delete-container:hover {
+  background: #4e505899;
+}
+
+.delete-container.quick-delete:hover {
   color: #ffffff;
   background: #da373c;
 }
