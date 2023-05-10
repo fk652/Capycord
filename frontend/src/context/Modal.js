@@ -2,8 +2,8 @@ import './Modal.css';
 
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { useSelector } from 'react-redux';
-import { getDeleteServerModal, getServerSlide } from '../store/ui';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDeleteServerModal, getServerSlide, setServerFormSlide } from '../store/ui';
 
 const ModalContext = React.createContext();
 
@@ -90,6 +90,7 @@ export function TimeToolTip({ top, left, pointerOffset, onClose, children }) {
 
 export function ServerFormModal({ onClose, children }) {
   const slide = useSelector(getServerSlide);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const escListener = (e) => {
@@ -97,6 +98,8 @@ export function ServerFormModal({ onClose, children }) {
     }
 
     document.addEventListener('keydown', escListener);
+
+    if (slide === "close") dispatch(setServerFormSlide("expand"))
     return () => {
       document.removeEventListener('keydown', escListener);
     }

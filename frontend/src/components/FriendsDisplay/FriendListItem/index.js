@@ -52,7 +52,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
             actions === "friendItem"
             ? <>
                 <ActionIcon actionType="message" itemId={itemId} />
-                <ActionIcon actionType="deleteFriend" itemId={itemId} />
+                <ActionIcon actionType="deleteFriend" itemId={itemId} name={username} />
               </>
               : actions === "incomingItem"
                 ? <>
@@ -61,7 +61,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
                   </>
                 : actions === "outgoingItem"
                   ? <ActionIcon actionType="cancelRequest" itemId={itemId} />
-                  : <></>
+                  : null
           }
         </div>
       </div>

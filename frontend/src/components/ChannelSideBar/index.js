@@ -79,7 +79,6 @@ const ChannelSideBar = () => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setLeaveServerModal(false));
-      dispatch(setServerFormPage("start"));
       dispatch(setServerFormSlide("expand"));
     }, {once: true})
 

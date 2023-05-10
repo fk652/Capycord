@@ -5,13 +5,16 @@ import { useDispatch } from 'react-redux';
 
 import { acceptReceivedRequest, cancelSentRequest, ignoreReceivedRequest } from '../../../store/friendRequests';
 import { deleteFriend } from '../../../store/friends';
-import { ActionToolTip } from '../../../context/Modal';
+import { ActionToolTip, ServerFormModal } from '../../../context/Modal';
+import { setServerFormPage, setServerFormSlide } from '../../../store/ui';
+import DeleteFriendForm from './DeleteFriendForm';
 
-const ActionIcon = ({actionType, itemId}) => {
+const ActionIcon = ({actionType, itemId, name}) => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
+  const [showDeleteFriendModal, setShowDeleteFriendModal] = useState(false);
 
   const showHandler = (id) => (e) => {
     e.preventDefault();
@@ -31,9 +34,26 @@ const ActionIcon = ({actionType, itemId}) => {
 
   const dispatch = useDispatch();
 
+  const closeDeleteForm = () => {
+    const serverFormModal = document.querySelector('.modal-content');
+    dispatch(setServerFormSlide("close"));
+    serverFormModal.addEventListener("animationend", (e) => {
+      setShowDeleteFriendModal(false);
+      dispatch(setServerFormSlide("expand"));
+    }, {once: true})
+
+    // setTimeout(() => {
+    //   dispatch(setLeaveServerModal(false));
+    //   dispatch(setServerFormPage("start"));
+    //   dispatch(setServerFormSlide("expand"));
+    // }, 200)
+  }
+
   const deleteFriendHandler = (e) => {
     e.preventDefault();
-    dispatch(deleteFriend(itemId));
+    // dispatch(deleteFriend(itemId));
+    // dispatch(setDeleteFriendModal(true));
+    setShowDeleteFriendModal(true);
   }
 
   const ignoreRequestHandler = (e) => {
@@ -137,6 +157,11 @@ const ActionIcon = ({actionType, itemId}) => {
         <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
           <span className="tooltip">{tooltipText}</span>
         </ActionToolTip>
+      )}
+      {showDeleteFriendModal && (
+        <ServerFormModal onClose={closeDeleteForm}>
+          <DeleteFriendForm friendId={itemId} friendName={name} onClose={closeDeleteForm}/>
+        </ServerFormModal>
       )}
     {/* </> */}
     </div>
