@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
 
@@ -82,6 +82,15 @@ const ChannelListItem = ({id, name, type, selected}) => {
     default:
       icon = textIcon;
   }
+
+  useEffect(() => {
+    if (selected) {
+      const selectedChannel = document.querySelector(".channel-list-item.selected");
+      if (selectedChannel?.getBoundingClientRect().bottom > selectedChannel.parentNode.getBoundingClientRect().bottom) {
+        selectedChannel.scrollIntoView(false)
+      }
+    }
+  }, [])
 
   return (
     <div 

@@ -58,6 +58,12 @@ const ServerBar = () => {
     }
   }, [dispatch])
 
+  // useEffect(() => {
+  //   const selectedIcon = document.querySelector('.server-item-wrapper.selected');
+  //   console.log(selectedIcon);
+  //   if (selectedIcon) selectedIcon.scrollIntoView(true);
+  // }, [serverId, newServerId])
+
   useEffect(() => {
     if (newServerId) {
       history.push(`/server/${newServerId}`);
@@ -136,8 +142,16 @@ const ServerBar = () => {
     dispatch(setShowServerModal(true));
   }
 
+  const handleLoad = (e) => {
+    const selectedIcon = document.querySelector(".server-item-wrapper.selected");
+
+    if (selectedIcon?.getBoundingClientRect().bottom > window.innerHeight) {
+      selectedIcon.scrollIntoView(false)
+    }
+  }
+
   return (
-    <div className="server-bar" onClick={toggleSelected}>
+    <div className="server-bar" onClick={toggleSelected} onLoad={handleLoad}>
       <div className={`server-item-wrapper ${checkSelected("home")}`}>
         <div 
           id="home"
