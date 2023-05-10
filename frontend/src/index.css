@@ -82,7 +82,10 @@ body::-webkit-scrollbar {
   }
 }
 
-.disabled:hover {
-  cursor: not-allowed !important;
+.disabled {
   pointer-events: none !important;
+}
+
+.disabled-hover {
+  cursor: not-allowed !important;
 }

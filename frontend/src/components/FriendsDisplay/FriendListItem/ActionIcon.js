@@ -122,19 +122,23 @@ const ActionIcon = ({actionType, itemId}) => {
   }
 
   return (
-    <div 
-      // className="friend-item-action"
-      className={`friend-item-action ${actionType === "message" ? "disabled" : ''}`} 
-      onClick={clickHandler}
-      onMouseEnter={showHandler(itemId)}
-      onMouseLeave={leaveHandler}
-    >
+    <div className={`${actionType === "message" ? "disabled-hover" : ''}`}>
+    {/* <> */}
+      <div 
+        // className="friend-item-action"
+        className={`friend-item-action ${actionType === "message" ? "disabled" : ''}`} 
+        onClick={clickHandler}
+        onMouseEnter={showHandler(itemId)}
+        onMouseLeave={leaveHandler}
+      >
+        {icon}
+      </div>
       {showModal && currentModal === itemId && (
         <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
           <span className="tooltip">{tooltipText}</span>
         </ActionToolTip>
       )}
-      {icon}
+    {/* </> */}
     </div>
   )
 }
