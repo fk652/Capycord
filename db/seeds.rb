@@ -101,7 +101,8 @@ ApplicationRecord.transaction do
     password: 'password123',
     custom_status: 'CAPYBARA OVER 9000 💢',
     profile_picture_url: 'https://cdn.drawception.com/images/panels/2017/5-4/wR4kkj9B1j-2.png',
-    set_online_status: 'Idle'
+    set_online_status: 'Idle',
+    created_at: rand(10.0..20.0).days.ago
   )
   users << demo_1
   
@@ -110,7 +111,8 @@ ApplicationRecord.transaction do
     email: 'capybara2@gmail.com', 
     password: 'password123',
     custom_status: 'CAPYBARA CAPYBARA CAPYBARA 🦫',
-    profile_picture_url: 'https://i.pinimg.com/564x/66/6e/ec/666eecdd082565ca44425c681113ee0f.jpg'
+    profile_picture_url: 'https://i.pinimg.com/564x/66/6e/ec/666eecdd082565ca44425c681113ee0f.jpg',
+    created_at: rand(10.0..20.0).days.ago
   )
   users << demo_2
   
@@ -124,13 +126,9 @@ ApplicationRecord.transaction do
       set_online_status: User::STATUS[1..-1].sample(),
       # custom_status: [Faker::Quote.unique.famous_last_words, ''].sample(),
       custom_status: customs[i],
-      profile_picture_url: profile_image_urls[i]
+      profile_picture_url: profile_image_urls[i],
+      created_at: rand(10.0..20.0).days.ago
     }) 
-  end
-
-  users.each do |user|
-    user.created_at = rand(10.0..20.0).days.ago
-    user.save
   end
 
   puts "Creating servers..."
@@ -139,13 +137,9 @@ ApplicationRecord.transaction do
     servers << Server.create!({
       name: Faker::Games::Pokemon.unique.location,
       owner_id: user.id,
-      picture_url: server_icon_urls[i]
+      picture_url: server_icon_urls[i],
+      created_at: rand(10.0..15.0).days.ago
     })
-  end
-
-  servers.each do |server|
-    server.created_at = rand(10.0..15.0).days.ago
-    server.save
   end
 
   puts "Creating channels..."
@@ -154,14 +148,10 @@ ApplicationRecord.transaction do
     rand(3..5).times do
       channels << Channel.create!({
         name: Faker::JapaneseMedia::OnePiece.unique.island,
-        server_id: server.id
+        server_id: server.id,
+        created_at: rand(5.0...10.0).days.ago
       })
     end
-  end
-
-  channels.each do |channel|
-    channel.created_at = rand(5.0...10.0).days.ago
-    channel.save
   end
 
   puts "Creating server memberships..."
@@ -312,13 +302,6 @@ ApplicationRecord.transaction do
   rand_messages.each do |message|
     messages << Message.create!(message)
   end
-
-  # messages.each do |message|
-  #   rand_time = rand(2.0...5.0).days.ago
-  #   message.created_at = rand_time
-  #   message.updated_at = rand(1..20) == 15 ? rand(0.1...2.0).days.ago : rand_time
-  #   message.save
-  # end
 
   # puts "Creating server invites..."
   # to do later
