@@ -275,10 +275,13 @@ ApplicationRecord.transaction do
   })
 
   rand_messages = [];
+  prev_user = nil;
+  prev_time = nil;
   channels.each do |channel|
     rand(10..20).times do
-      rand_time = rand(2.0...5.0).days.ago
       user_id = channel.server.members.sample().id
+      rand_time = user_id == prev_user ? prev_time : rand(2.0...5.0).days.ago
+
       rand_messages << {
         body: [
           Faker::Quote.famous_last_words,
@@ -295,6 +298,9 @@ ApplicationRecord.transaction do
         created_at: rand_time,
         updated_at: rand(1..20) == 15 ? rand(0.1...2.0).days.ago : rand_time
       }
+
+      prev_user = user_id
+      prev_time = rand_time
     end
   end
 
