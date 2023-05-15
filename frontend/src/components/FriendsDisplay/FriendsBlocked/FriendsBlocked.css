@@ -28,7 +28,7 @@
 
 .placeholder-game {
   width: 100%;
-  min-width: 730px;
+  /* min-width: 730px; */
   min-height: 1045px;
   display: flex;
 }
