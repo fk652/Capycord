@@ -110,11 +110,11 @@ const LoginForm = () => {
             <button type="submit">Log In</button>
             <div className="demo-container">
               <div className="demo-buttons-container">
-                <button className="demo-button" onClick={e => demoLogin(e, 1)}>Login as SSJ Capy</button>
-                <button className="demo-button" onClick={e => demoLogin(e, 2)}>Login as Capybaby</button>
+                <button className="demo-button" onClick={e => demoLogin(e, 1)}>Login Demo User 1 <br /> (SSJ Capy)</button>
+                <button className="demo-button" onClick={e => demoLogin(e, 2)}>Login Demo User 2 <br /> (Capybaby)</button>
               </div>
               <span className="demo-text">
-                Login the other user on a new browser or incognito mode
+                Login the other user on a different browser or incognito mode
               </span>
             </div>
             <span className="signup-link">Need an account? <Link to="/signup">Register</Link></span>

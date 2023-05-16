@@ -17,6 +17,7 @@
 
 .demo-button {
   width: 45%;
+  height: fit-content;
 }
 
 .demo-text {
