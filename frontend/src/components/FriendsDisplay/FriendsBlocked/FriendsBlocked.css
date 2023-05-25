@@ -1,34 +1,10 @@
 .game-container {
   height: 100%;
   width: 100%;
-  overflow: hidden scroll;
-  scrollbar-width: 8px;
-  scrollbar-color: #1a1b1e;
-  height: 100%;
-  width: calc(100% - 6px);
   display: flex;
-  padding-right: 3px;
-}
-
-.game-container::-webkit-scrollbar {
-  width: 8px;
-  border-radius: 10px;
-}
-
-.game-container::-webkit-scrollbar-thumb {
-  background: #1a1b1e;
-  border-radius: 10px;
-}
-
-.game-container::-webkit-scrollbar-track {
-  background: #2b2d31;
-  border-radius: 10px;
-  margin: 5px;
 }
 
 .placeholder-game {
   width: 100%;
-  /* min-width: 730px; */
-  min-height: 1045px;
-  display: flex;
+  min-width: 325px;
 }
