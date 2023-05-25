@@ -3,12 +3,13 @@ import './FriendsNavBar.css';
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getFriendRequests } from '../../../store/friendRequests';
-import { getSelectedFriendNavTab, setFriendNav } from '../../../store/ui';
+import { getAnimateOfflineFriends, getSelectedFriendNavTab, setAnimateOfflineFriends, setFriendNav } from '../../../store/ui';
 import { NavToolTip } from '../../../context/Modal';
 
 const FriendsNavBar = () => {
   const friendRequests = useSelector(getFriendRequests);
   const selected = useSelector(getSelectedFriendNavTab);
+  const animateOfflineFriends = useSelector(getAnimateOfflineFriends);
 
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
@@ -36,7 +37,16 @@ const FriendsNavBar = () => {
 
   const dispatch = useDispatch();
   const toggleSelected = (e) => {
-    if (e.target.id) dispatch(setFriendNav(e.target.id));
+    if (e.target.id) {
+      if ((selected === "friends-online" && e.target.id === "friends-all") || 
+          (selected === "friends-all" && e.target.id === "friends-online")) {
+        dispatch(setAnimateOfflineFriends(true));
+      } else if (animateOfflineFriends) {
+        dispatch(setAnimateOfflineFriends(false));
+      }
+      
+      dispatch(setFriendNav(e.target.id));
+    }
   }
 
   const checkSelected = (id) => {

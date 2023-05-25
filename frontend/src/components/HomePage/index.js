@@ -7,7 +7,7 @@ import consumer from '../../consumer';
 
 import HomeSideBar from "../HomeSideBar";
 import FriendsDisplay from "../FriendsDisplay";
-import { setHomePageLoad, setSelectedServer } from "../../store/ui";
+import { setAnimateOfflineFriends, setSelectedServer } from "../../store/ui";
 import { addReceivedRequest, addSentRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 import { getCurrentUser } from "../../store/session";
@@ -65,7 +65,7 @@ const HomePage = () => {
       friendSubscription?.unsubscribe();
       dispatch(resetFriends());
       dispatch(resetFriendRequests());
-      dispatch(setHomePageLoad(false));
+      dispatch(setAnimateOfflineFriends(false));
     }
   }, [dispatch])
   

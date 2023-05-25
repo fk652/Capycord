@@ -118,7 +118,7 @@
   visibility: visible;
 }
 
-.all.offline {
+.all.offline.animate {
   animation: grow .2s ease-out;
 }
 

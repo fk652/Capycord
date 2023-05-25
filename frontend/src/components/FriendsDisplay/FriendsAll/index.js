@@ -15,9 +15,7 @@ const FriendsAll = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    return () => {
-      dispatch(setFriendSearch(false));
-    }
+    return () => dispatch(setFriendSearch(false));
   }, [])
 
   useEffect(() => {

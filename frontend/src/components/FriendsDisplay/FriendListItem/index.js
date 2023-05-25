@@ -3,11 +3,11 @@ import './FriendListItem.css'
 import UserIcon from '../../UserIcon';
 import ActionIcon from './ActionIcon';
 import { useSelector } from 'react-redux';
-import { getFriendSearch, getHomePageLoad } from '../../../store/ui';
+import { getAnimateOfflineFriends, getFriendSearch } from '../../../store/ui';
 
 const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {
   const [username, tag] = name.split("#");
-  const animate = useSelector(getHomePageLoad);
+  const animate = useSelector(getAnimateOfflineFriends);
   const search = useSelector(getFriendSearch);
 
   const getStatusClass = () => {
@@ -20,7 +20,7 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, di
         className={
             `friend-list-item ${display} 
             ${getStatusClass()} 
-            ${display === "online" && animate && !search ? "animate" : "hidden"}`
+            ${["online", "all"].includes(display) && animate && !search ? "animate" : "hidden"}`
           }
       >
         <div className="friend-item-display">

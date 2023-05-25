@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FriendListItem from "../FriendListItem";
 import { getFriends } from '../../../store/friends';
 import { useEffect } from "react";
-import { getFriendSearch, getHomePageLoad, setFriendSearch, setHomePageLoad } from "../../../store/ui";
+import { getFriendSearch, setFriendSearch } from "../../../store/ui";
 import { useState } from "react";
 
 const FriendsOnline = () => {
@@ -15,10 +15,7 @@ const FriendsOnline = () => {
   
   const dispatch = useDispatch();
   useEffect(() => {
-    return () => {
-      dispatch(setHomePageLoad(true));
-      dispatch(setFriendSearch(false));
-    }
+    return () => dispatch(setFriendSearch(false));
   }, [])
 
   let count = 0;

@@ -7,7 +7,7 @@ const SET_SCROLL = "ui/setScroll";
 const SET_SHOW_SERVER_MODAL = "ui/setShowServerModal";
 const SET_SERVER_FORM_PAGE = "ui/setServerFormPage";
 const SET_SERVER_FORM_SLIDE = "ui/setServerFormSlide";
-const SET_HOME_PAGE_LOAD = "ui/setHomePageLoad";
+const SET_ANIMATE_OFFLINE_FRIENDS = "ui/setAnimateOfflineFriends";
 const SET_NEW_SERVER = "ui/setNewServer";
 const SET_NEW_CHANNEL = "ui/setNewChannel";
 const SET_FRIEND_SEARCH = "ui/setFriendSearch";
@@ -62,8 +62,8 @@ export const setServerFormSlide = (direction) => ({
   direction
 })
 
-export const setHomePageLoad = (toggle) => ({
-  type: SET_HOME_PAGE_LOAD,
+export const setAnimateOfflineFriends = (toggle) => ({
+  type: SET_ANIMATE_OFFLINE_FRIENDS,
   toggle
 })
 
@@ -145,8 +145,8 @@ export const getServerSlide = (state) => {
   return state.ui.serverSlide
 }
 
-export const getHomePageLoad = (state) => {
-  return state.ui.homePageLoad
+export const getAnimateOfflineFriends = (state) => {
+  return state.ui.animateOfflineFriends
 }
 
 export const getNewServer = (state) => {
@@ -194,7 +194,7 @@ const initialState = {
   showServerModal: false,
   serverFormType: "start",
   serverSlide: "expand",
-  homePageLoad: false,
+  animateOfflineFriends: false,
   newServer: null,
   newChannel: null,
   friendSearch: false,
@@ -226,8 +226,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showServerModal: action.toggle}
     case SET_SERVER_FORM_SLIDE:
       return {...state, serverSlide: action.direction}
-    case SET_HOME_PAGE_LOAD:
-      return {...state, homePageLoad: action.toggle}
+    case SET_ANIMATE_OFFLINE_FRIENDS:
+      return {...state, animateOfflineFriends: action.toggle}
     case SET_NEW_SERVER:
       return {...state, newServer: action.serverId}
     case SET_NEW_CHANNEL:
