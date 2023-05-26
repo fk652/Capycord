@@ -17,7 +17,7 @@ class Api::SessionsController < ApplicationController
       login!(@user)
 
       @user.memberships.includes(:server).each do |membership|
-        MembersChannel.broadcast_to(
+        ServersChannel.broadcast_to(
           membership.server,
           type: 'UPDATE_MEMBER',
           **from_template('api/memberships/show', membership: membership)
@@ -77,7 +77,7 @@ class Api::SessionsController < ApplicationController
       logout!()
 
       memberships.each do |membership|
-        MembersChannel.broadcast_to(
+        ServersChannel.broadcast_to(
           membership.server,
           type: 'UPDATE_MEMBER',
           **from_template('api/memberships/show', membership: membership)

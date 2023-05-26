@@ -52,7 +52,7 @@ const ServerPage = () => {
     }
 
     const subscription = consumer.subscriptions.create(
-      { channel: 'MembersChannel', id: serverId },
+      { channel: 'ServersChannel', id: serverId },
       {
         received: ({type, member, id}) => {
           switch (type) {
@@ -113,7 +113,7 @@ const ServerPage = () => {
     }
 
     const subscription = consumer.subscriptions.create(
-      { channel: 'ServersChannel', id: channelId },
+      { channel: 'MessagesChannel', id: channelId },
       {
         received: ({type, message, id}) => {
           switch (type) {

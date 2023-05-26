@@ -201,7 +201,7 @@ def destroy
     logout!()
 
     memberships.each do |membership|
-      MembersChannel.broadcast_to(
+      ServersChannel.broadcast_to(
         membership.server,
         type: 'UPDATE_MEMBER',
         **from_template('api/memberships/show', membership: membership)

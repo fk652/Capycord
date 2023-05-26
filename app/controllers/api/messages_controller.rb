@@ -35,7 +35,7 @@ class Api::MessagesController < ApplicationController
     )
 
     if @message.save
-      ServersChannel.broadcast_to(
+      MessagesChannel.broadcast_to(
         @message.channel,
         type: 'RECEIVE_MESSAGE',
         **from_template('api/messages/show', message: @message)
@@ -77,7 +77,7 @@ class Api::MessagesController < ApplicationController
     @message = Message.find(params[:id])
     if @message.author_id === current_user.id 
       if @message.destroy
-        ServersChannel.broadcast_to(
+        MessagesChannel.broadcast_to(
           @message.channel,
           type: 'DESTROY_MESSAGE',
           id: @message.id
@@ -97,7 +97,7 @@ class Api::MessagesController < ApplicationController
     @message = Message.find(params[:id])
     if @message.author_id === current_user.id 
       if @message.update(body: params[:body])
-        ServersChannel.broadcast_to(
+        MessagesChannel.broadcast_to(
           @message.channel,
           type: 'UPDATE_MESSAGE',
           **from_template('api/messages/show', message: @message)

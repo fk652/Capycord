@@ -31,7 +31,7 @@ class Api::MembershipsController < ApplicationController
     if membership.save 
       @server = membership.server
 
-      MembersChannel.broadcast_to(
+      ServersChannel.broadcast_to(
         @server,
         type: 'ADD_MEMBER',
         **from_template('api/memberships/show', membership: membership)
@@ -54,7 +54,7 @@ class Api::MembershipsController < ApplicationController
           id: @membership.server.id
         )
 
-        MembersChannel.broadcast_to(
+        ServersChannel.broadcast_to(
           @membership.server,
           type: 'DELETE_MEMBER',
           id: @membership.member_id
