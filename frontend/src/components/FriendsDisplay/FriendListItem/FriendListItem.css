@@ -126,16 +126,10 @@
 
 .friends-online.offline {
   display: none;
-  /* height: 0px;
-  opacity: 0%;
-  padding-top: 0;
-  padding-bottom: 0; */
 }
 
 .friends-online.offline.animate {
   display: flex;
-  overflow: hidden;
-  max-height: 0;
   animation: shrink .2s ease-in both;
 }
 
@@ -174,14 +168,12 @@
 @keyframes shrink {
   0% {
     height: 30px;
-    max-height: 40px;
     opacity: 100%;
     padding-top: 16px;
     padding-bottom: 16px;
   }
   100% {
     height: 0px;
-    max-height: 0;
     opacity: 0%;
     padding-top: 0;
     padding-bottom: 0;
