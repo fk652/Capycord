@@ -12,6 +12,22 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, ac
   const search = useSelector(getFriendSearch);
   const selectedTab = useSelector(getSelectedFriendNavTab);
   const prevStatus = useRef(status);
+
+  useEffect(() => {
+    if (status !== prevStatus.current) {
+      prevStatus.current = status;
+
+      const listItem = document.getElementById(`friend-${userId}`)
+      if (status === "Offline" && selectedTab === "friends-all") {
+        listItem.classList.remove("animate");
+      } else if (status === "Offline" && selectedTab === "friends-online") {
+        listItem.classList.add("shrink");
+      } else if (status !== "Offline" && selectedTab === "friends-online") {
+        listItem.removeAttribute("style");
+        listItem.classList.add("grow");
+      }
+    }
+  }, [status])
   
   const getStatusClass = () => {
     if (status === "Offline" && selectedTab === "friends-all" && search) return "";
@@ -26,26 +42,18 @@ const FriendListItem = ({itemId, userId, name, status, customStatus, picture, ac
       return ""
     }
   }
-  
-  useEffect(() => {
-    if (status !== prevStatus.current) {
-      prevStatus.current = status;
 
-      const listItem = document.getElementById(`friend-${userId}`)
-      if (status === "Offline" && selectedTab === "friends-all") {
-        listItem.classList.remove("animate")
-      } else if (status === "Offline" && selectedTab === "friends-online") {
-        listItem.classList.add("shrink")
-      } else if (status !== "Offline" && selectedTab === "friends-online") {
-        listItem.classList.add("grow")
-      }
+  const setDisplay = (e) => {
+    if (status === "Offline" && selectedTab === "friends-online") {
+      e.target.style.display = "none";
     }
-  }, [status])
+  }
 
   return (
       <div 
         id={`friend-${userId}`}
         className={`friend-list-item ${selectedTab} ${getStatusClass()} ${getAnimationStatus()}`}
+        onAnimationEnd={setDisplay}
       >
         <div className="friend-item-display">
           <UserIcon picture={picture} status={status} name={username} />
