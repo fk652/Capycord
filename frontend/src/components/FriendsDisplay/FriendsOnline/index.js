@@ -71,7 +71,6 @@ const FriendsOnline = () => {
                       status={friend.onlineStatus} 
                       customStatus={friend.customStatus}
                       picture={friend.profilePictureUrl}
-                      display="online"
                       actions="friendItem"
                       key={friend.friendshipId}
                   />

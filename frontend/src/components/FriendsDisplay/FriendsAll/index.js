@@ -52,7 +52,6 @@ const FriendsAll = () => {
                       status={friend.onlineStatus} 
                       customStatus={friend.customStatus}
                       picture={friend.profilePictureUrl}
-                      display="all"
                       key={friend.friendshipId}
                       actions="friendItem"
                   />

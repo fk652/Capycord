@@ -118,11 +118,11 @@
   visibility: visible;
 }
 
-.all.offline.animate {
+.friends-all.offline.animate {
   animation: grow .2s ease-out;
 }
 
-.online.offline {
+.friends-online.offline {
   display: none;
   /* height: 0px;
   opacity: 0%;
@@ -130,9 +130,18 @@
   padding-bottom: 0; */
 }
 
-.online.offline.animate {
+.friends-online.offline.animate {
   display: flex;
   animation: shrink .2s ease-in both;
+}
+
+.friends-online.offline.shrink {
+  display: flex;
+  animation: shrink .2s ease-in both;
+}
+
+.friends-online.grow {
+  animation: grow .2s ease-out;
 }
 
 .friend-request-message {
@@ -170,6 +179,5 @@
     opacity: 0%;
     padding-top: 0;
     padding-bottom: 0;
-    display: none;
   }
 }

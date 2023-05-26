@@ -46,7 +46,6 @@ const FriendsPending= () => {
               status={received.onlineStatus} 
               customStatus={incomingMessage}
               picture={received.profilePictureUrl}
-              display="pending"
               key={received.requestId}
               actions="incomingItem"
             />
@@ -62,7 +61,6 @@ const FriendsPending= () => {
               status={sent.onlineStatus} 
               customStatus={outgoingMessage}
               picture={sent.profilePictureUrl}
-              display="pending"
               key={sent.requestId}
               actions="outgoingItem"
             />

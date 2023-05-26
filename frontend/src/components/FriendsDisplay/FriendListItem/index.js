@@ -3,25 +3,49 @@ import './FriendListItem.css'
 import UserIcon from '../../UserIcon';
 import ActionIcon from './ActionIcon';
 import { useSelector } from 'react-redux';
-import { getAnimateOfflineFriends, getFriendSearch } from '../../../store/ui';
+import { getAnimateOfflineFriends, getFriendSearch, getSelectedFriendNavTab } from '../../../store/ui';
+import { useEffect, useRef } from 'react';
 
-const FriendListItem = ({itemId, userId, name, status, customStatus, picture, display, actions}) => {
+const FriendListItem = ({itemId, userId, name, status, customStatus, picture, actions}) => {
   const [username, tag] = name.split("#");
   const animate = useSelector(getAnimateOfflineFriends);
   const search = useSelector(getFriendSearch);
-
+  const selectedTab = useSelector(getSelectedFriendNavTab);
+  const prevStatus = useRef(status);
+  
   const getStatusClass = () => {
-    if (status === "Offline" && display === "all" && search) return ""
+    if (status === "Offline" && selectedTab === "friends-all" && search) return "";
     else if (status === "Offline") return "offline";
+    else return "";
   }
+
+  const getAnimationStatus = () => {
+    if (["friends-online", "friends-all"].includes(selectedTab) && animate && !search) {
+      return "animate"
+    } else {
+      return ""
+    }
+  }
+  
+  useEffect(() => {
+    if (status !== prevStatus.current) {
+      prevStatus.current = status;
+
+      const listItem = document.getElementById(`friend-${userId}`)
+      if (status === "Offline" && selectedTab === "friends-all") {
+        listItem.classList.remove("animate")
+      } else if (status === "Offline" && selectedTab === "friends-online") {
+        listItem.classList.add("shrink")
+      } else if (status !== "Offline" && selectedTab === "friends-online") {
+        listItem.classList.add("grow")
+      }
+    }
+  }, [status])
 
   return (
       <div 
-        className={
-            `friend-list-item ${display} 
-            ${getStatusClass()} 
-            ${["online", "all"].includes(display) && animate && !search ? "animate" : "hidden"}`
-          }
+        id={`friend-${userId}`}
+        className={`friend-list-item ${selectedTab} ${getStatusClass()} ${getAnimationStatus()}`}
       >
         <div className="friend-item-display">
           <UserIcon picture={picture} status={status} name={username} />
