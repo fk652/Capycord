@@ -29,13 +29,9 @@ class FriendRequest < ApplicationRecord
 
   private
   def ensure_valid_request
-    # also check for blocked later
     if (!self.persisted?)
       if (self.receiver_id === self.sender_id)
         errors.add(:error, "Hm, didn't work. Double check that the capitalization, spelling, any space, and numbers are correct.")
-      # elsif (!User.find(self.receiver_id))
-      #   # errors.add(:error, "User not found.")
-      #   errors.add(:error, "Hm, didn't work. Double check that the capitalization, spelling, any space, and numbers are correct.")
       elsif (
         Friend.where([
           "(user1_id = :sender AND user2_id = :receiver) OR (user1_id = :receiver AND user2_id = :sender)",
@@ -57,8 +53,7 @@ class FriendRequest < ApplicationRecord
           "sender_id = :sender AND receiver_id = :receiver AND status = 'pending'",
           {sender: self.sender_id, receiver: self.receiver_id}
         ])[0]
-        # request.destroy! if (request) 
-        errors.add(:success, true) if (request != nil)
+        errors.add(:duplicate, true) if (request != nil)
       end
     end
   end

@@ -34,10 +34,7 @@ const FriendsAdd = () => {
       dispatch(addErrors(errors));
       
       if (res.status === 401) dispatch(deleteSession())
-      else {
-        if (errors && errors.success) dispatch(setAddFriendResult(true));
-      }
-
+      else if (errors && errors.duplicate) dispatch(setAddFriendResult(true));
     });
   }
 
@@ -51,9 +48,10 @@ const FriendsAdd = () => {
     const inputContainer = document.querySelector(".add-friend-input-container");
     
     input.addEventListener("focus", () => {
+      console.log(errors, errors?.error);
       errors?.error 
         ? inputContainer.style.borderColor = "#fa777c"
-        : errors?.success || friendResult
+        : errors?.duplicate || friendResult
             ? inputContainer.style.borderColor = "#2dc770"
             : inputContainer.style.borderColor = "#00a8fc"
     })
@@ -61,7 +59,7 @@ const FriendsAdd = () => {
     input.addEventListener("focusout", () => {
       errors?.error 
         ? inputContainer.style.borderColor = "#fa777c"
-          : errors?.success || friendResult
+          : errors?.duplicate || friendResult
             ? inputContainer.style.borderColor = "#2dc770"
             : inputContainer.style.borderColor = "#1e1f22"
     })
@@ -81,7 +79,7 @@ const FriendsAdd = () => {
 
   const getStatus = () => {
     if (errors && errors.error) return 'error';
-    else if ((errors && errors.success) || friendResult) {
+    else if ((errors && errors.duplicate) || friendResult) {
       return 'success';
     }
     else return '';
@@ -101,7 +99,7 @@ const FriendsAdd = () => {
               className="add-friend-input" 
               type="text"
               placeholder="Enter a Username#0000"
-              value={errors?.success || friendResult ? '' : username}
+              value={errors?.duplicate || friendResult ? '' : username}
               onChange={handleChange}
             />
           </div>
@@ -114,7 +112,7 @@ const FriendsAdd = () => {
             ? <div className="add-friend-result error">
                 {errors.error}
               </div>
-            : errors?.success || friendResult
+            : errors?.duplicate || friendResult
               ? <div className="add-friend-result success">
                   Success! Your friend request to 
                   <span className="bold"> {username} </span> 
