@@ -1,6 +1,6 @@
 import "./FriendsAdd.css";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addErrors, getErrors, removeErrors } from "../../../store/errors";
@@ -12,9 +12,12 @@ const FriendsAdd = () => {
   const errors = useSelector(getErrors);
   const friendResult = useSelector(getAddFriendResult);
   const [username, setUsername] = useState('');
+  const [button, setButton] = useState();
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (button.disabled) return;
+
     if (errors) dispatch(removeErrors());
     
     return dispatch(createFriendRequest(username))
@@ -26,29 +29,27 @@ const FriendsAdd = () => {
         data = await res.text();
       }
 
-      const errors = {
+      const newErrors = {
         status: res.status,
         messages: null
       }
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
+      if (data?.errors) newErrors.messages = data.errors;
+      dispatch(addErrors(newErrors));
       
       if (res.status === 401) dispatch(deleteSession())
-      else if (errors && errors.duplicate) dispatch(setAddFriendResult(true));
+      else if (newErrors?.duplicate) dispatch(setAddFriendResult(true));
     });
   }
 
   const dispatch = useDispatch();
-  let ref = useRef();
   useEffect(() => {
     if (errors) dispatch(removeErrors());
 
-    ref.button = document.querySelector(".add-friend-button");
+    setButton(document.querySelector(".add-friend-button"));
     const input = document.querySelector(".add-friend-input");
     const inputContainer = document.querySelector(".add-friend-input-container");
     
     input.addEventListener("focus", () => {
-      console.log(errors, errors?.error);
       errors?.error 
         ? inputContainer.style.borderColor = "#fa777c"
         : errors?.duplicate || friendResult
@@ -66,22 +67,41 @@ const FriendsAdd = () => {
 
     return () => {
       dispatch(setAddFriendResult(false));
-      if (errors) dispatch(removeErrors());
+      dispatch(removeErrors());
     }
   }, [dispatch])
 
   const handleChange = (e) => {
-    e.target.value ? ref.button.disabled = false : ref.button.disabled = true;
-    setUsername(e.target.value);
+    // e.target.value ? button.disabled = false : button.disabled = true;
+    // setUsername(e.target.value);
+
+    let start = e.target.selectionStart;
+    let end = e.target.selectionEnd;
+    let replaced = e.target.value.replace(/^\s+|/gm, '');
+    if (replaced !== e.target.value) {
+      e.target.value = replaced;
+      e.target.setSelectionRange(start, end-1);
+    }
+
+    if (/^[\w\d\s]{0,32}#\d{0,4}$/gm.test(e.target.value) || /^[\w\d\s]{0,32}$/gm.test(e.target.value)){
+      setUsername(e.target.value);
+      // button.disabled = !(/^[\w\d]{1}[\w\d\s]{0,30}[\w\d]{1}#\d{4}$/gm.test(e.target.value));
+      button.disabled = !(/^[\w\d\s]+#\d{4}$/gm.test(e.target.value));
+    }
+
     if (errors) dispatch(removeErrors());
     if (friendResult) dispatch(setAddFriendResult(false));
   }
 
+  const formatPasteInput = (e) => {
+    e.preventDefault();
+    e.target.value = e.clipboardData.getData("Text").trim().replace(/\s+#/gm, '#');
+    handleChange(e);
+  }
+
   const getStatus = () => {
-    if (errors && errors.error) return 'error';
-    else if ((errors && errors.duplicate) || friendResult) {
-      return 'success';
-    }
+    if (errors?.error) return 'error';
+    else if (errors?.duplicate || friendResult) return 'success';
     else return '';
   }
 
@@ -101,6 +121,7 @@ const FriendsAdd = () => {
               placeholder="Enter a Username#0000"
               value={errors?.duplicate || friendResult ? '' : username}
               onChange={handleChange}
+              onPaste={formatPasteInput}
             />
           </div>
           <button className="add-friend-button" type="submit" disabled>
