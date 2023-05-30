@@ -45,7 +45,7 @@ class Api::SessionsController < ApplicationController
           FriendsChannel.broadcast_to(
             request.receiver,
             type: 'UPDATE_INCOMING_REQUEST',
-            **from_template('api/friend_requests/show', friend_request: request, receiver: @user)
+            **from_template('api/friend_requests/show', friend_request: request, user: @user)
           )
         end
       end
@@ -55,7 +55,7 @@ class Api::SessionsController < ApplicationController
           FriendsChannel.broadcast_to(
             request.sender,
             type: 'UPDATE_SENT_REQUEST',
-            **from_template('api/friend_requests/show', friend_request: request, receiver: @user)
+            **from_template('api/friend_requests/show', friend_request: request, user: @user)
           )
         end
       end
@@ -105,7 +105,7 @@ class Api::SessionsController < ApplicationController
           FriendsChannel.broadcast_to(
             request.receiver,
             type: 'UPDATE_INCOMING_REQUEST',
-            **from_template('api/friend_requests/show', friend_request: request, receiver: request.sender)
+            **from_template('api/friend_requests/show', friend_request: request, user: request.sender)
           )
         end
       end
@@ -115,7 +115,7 @@ class Api::SessionsController < ApplicationController
           FriendsChannel.broadcast_to(
             request.sender,
             type: 'UPDATE_SENT_REQUEST',
-            **from_template('api/friend_requests/show', friend_request: request, receiver: request.receiver)
+            **from_template('api/friend_requests/show', friend_request: request, user: request.receiver)
           )
         end
       end

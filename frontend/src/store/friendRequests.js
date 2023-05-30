@@ -1,5 +1,6 @@
 import csrfFetch from "./csrf";
-import { addFriend } from "./friends";
+import { addErrors } from "./errors";
+import { deleteSession } from "./session";
 import { setAddFriendResult } from "./ui";
 
 const RESET_FRIEND_REQUESTS = 'friendRequests/resetFriendRequests';
@@ -62,49 +63,90 @@ export const createFriendRequest = (username) => async dispatch => {
     body: JSON.stringify({username})
   })
   
-  const data = await response.json();
-  dispatch(addSentRequest(data.friendRequest));
   dispatch(setAddFriendResult(true));
   return response;
 }
 
 export const cancelSentRequest = (requestId) => async dispatch => {
-  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
-    method: "DELETE"
-  })
-
-  if (response.ok) {
-    dispatch(removeSentRequest(requestId))
-  } else {
+  try {
+    const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+      method: "DELETE"
+    })
+    
+    // delete request handled with broadcast
     return response;
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 }
 
 export const acceptReceivedRequest = (requestId) => async dispatch => {
-  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
-    method: "PATCH",
-    body: JSON.stringify({status: "accepted"})
-  })
-
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(removeReceivedRequest(requestId));
-    dispatch(addFriend(data.friend));
-  } else {
+  try {
+    const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+      method: "PATCH",
+      body: JSON.stringify({status: "accepted"})
+    })
+    
+    // delete request and add friend dispatches handled with broadcast
     return response;
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 }
 
 export const ignoreReceivedRequest = (requestId) => async dispatch => {
-  const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
-    method: "PATCH",
-    body: JSON.stringify({status: "ignored"})
-  })
-
-  if (response.ok) {
-    dispatch(removeReceivedRequest(requestId));
-  } else {
+  try {
+    const response = await csrfFetch(`/api/friend_requests/${requestId}`, {
+      method: "PATCH",
+      body: JSON.stringify({status: "ignored"})
+    })
+    
+    // delete request dispatch handled with broadcast
     return response;
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 }
 

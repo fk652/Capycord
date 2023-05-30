@@ -39,8 +39,14 @@ const HomePage = () => {
             case "ADD_FRIEND":
               dispatch(addFriend(friend));
               break;
+            case "ADD_SENT_REQUEST":
+              dispatch(addSentRequest(friendRequest));
+              break;
             case "DELETE_SENT_REQUEST":
               dispatch(removeSentRequest(id));
+              break;
+            case "UPDATE_SENT_REQUEST":
+              dispatch(addSentRequest(friendRequest));
               break;
             case "ADD_INCOMING_REQUEST":
               dispatch(addReceivedRequest(friendRequest));
@@ -50,9 +56,6 @@ const HomePage = () => {
               break;
             case "UPDATE_INCOMING_REQUEST":
               dispatch(addReceivedRequest(friendRequest));
-              break;
-            case "UPDATE_SENT_REQUEST":
-              dispatch(addSentRequest(friendRequest));
               break;
             default:
               // console.log("unknown broadcast type");

@@ -30,13 +30,6 @@ class User < ApplicationRecord
     uniqueness: true
   validates :username,
     presence: true
-  # validates :username, 
-  #   length: { in: 2..32 }, 
-  #   format: { without: URI::MailTo::EMAIL_REGEXP, message: "can't be email" }
-  # validates :username,
-  #   format: { without: /@|#|:|```|discord/, message: "can't include @, #, :, ```, discord"}
-  # validates :username,
-  #   format: { without: /(^everyone$)|(^here$)/, message: "can't be 'everyone' or 'here'"}
   validates :email, 
     length: { in: 3..255 }, 
     format: { with: URI::MailTo::EMAIL_REGEXP },
@@ -54,7 +47,6 @@ class User < ApplicationRecord
   validate :validate_username
 
   before_validation :ensure_session_token
-  # before_create :validate_username
   before_create :add_tag_number
   before_update :ensure_unique_tag_username
 

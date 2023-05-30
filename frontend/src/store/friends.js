@@ -60,14 +60,29 @@ export const fetchFriends = () => async dispatch => {
 }
 
 export const deleteFriend = (friendshipId) => async dispatch => {
-  const response = await csrfFetch(`/api/friends/${friendshipId}`, {
-    method: "DELETE"
-  })
-
-  if (response.ok) {
-    dispatch(removeFriend(friendshipId));
-  } else {
+  try {
+    const response = await csrfFetch(`/api/friends/${friendshipId}`, {
+      method: "DELETE"
+    })
+    
+    // delete friend handled with broadcast
     return response;
+  } catch (res) {
+    let data;
+    try {
+        data = await res.clone().json();
+    } catch {
+        data = await res.text();
+    }
+    
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+  
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    if (res.status === 401) dispatch(deleteSession());
   }
 } 
 

@@ -1,5 +1,7 @@
 class Api::FriendRequestsController < ApplicationController
   before_action :require_logged_in
+  before_action :verify_request_sender, only: [:destroy]
+  before_action :verify_request_receiver, only: [:update]
   
   def index 
     @sent_requests = current_user.sent_friend_requests.where("status='pending'").includes(:receiver)
@@ -16,15 +18,21 @@ class Api::FriendRequestsController < ApplicationController
       )
 
       if @friend_request.save
-        # broadcast add incoming request to receiver
+        # broadcast new request to both sides
         receiver = @friend_request.receiver
+        FriendsChannel.broadcast_to(
+          current_user,
+          type: 'ADD_SENT_REQUEST',
+          **from_template('api/friend_requests/show', friend_request: @friend_request, user: @receiver)
+        )
+
         FriendsChannel.broadcast_to(
           receiver,
           type: 'ADD_INCOMING_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: @friend_request, receiver: current_user)
+          **from_template('api/friend_requests/show', friend_request: @friend_request, user: current_user)
         )
 
-        render :show, locals: {friend_request: @friend_request, receiver: @receiver}
+        head :no_content
       else
         render json: { errors: @friend_request.errors }, status: :unprocessable_entity
       end
@@ -34,10 +42,14 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def destroy 
-    @request = FriendRequest.find(params[:id])
-
     if @request.destroy
-      # broadcast delete incoming request
+      # broadcast delete request to both sides
+      FriendsChannel.broadcast_to(
+        @request.sender,
+        type: 'DELETE_SENT_REQUEST',
+        id: @request.id
+      )
+
       FriendsChannel.broadcast_to(
         @request.receiver,
         type: 'DELETE_INCOMING_REQUEST',
@@ -51,49 +63,55 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def update
-    @request = FriendRequest.find(params[:id])
-    if @request.receiver_id != current_user.id
-      render json: { errors: { error: "Only the receiver can update a friend request status"} }, status: :unauthorized
-      return
-    end
-
     if @request.update(status: params[:status])
-      if params[:status] === "ignored"
-        # broadcast delete outgoing request on ignore
-        # user = (@request.sender_id === current_user.id ? @request.receiver : @request.sender)
-        FriendsChannel.broadcast_to(
-          @request.sender,
-          type: 'DELETE_SENT_REQUEST',
-          id: @request.id
-        )
+      # broadcast delete request to both sides since request was handled
+      FriendsChannel.broadcast_to(
+        @request.sender,
+        type: 'DELETE_SENT_REQUEST',
+        id: @request.id
+      )
 
-        head :no_content
-      elsif  params[:status] === "accepted"
-        @friendship = Friend.find_by(user1_id: @request.sender.id, user2_id: current_user.id)
+      FriendsChannel.broadcast_to(
+        @request.receiver,
+        type: 'DELETE_INCOMING_REQUEST',
+        id: @request.id
+      )
 
+      if params[:status] === "accepted"
+        friendship = Friend.includes(:user1, :user2).find_by(user1_id: @request.sender.id, user2_id: current_user.id)
+
+        # broadcast new friend info to both sides
         FriendsChannel.broadcast_to(
-          @friendship.user1,
+          friendship.user1,
           type: 'ADD_FRIEND',
-          **from_template('api/friends/show', friendship: @friendship, friend: current_user)
+          **from_template('api/friends/show', friendship: friendship, friend: friendship.user2)
         )
 
         FriendsChannel.broadcast_to(
-          @request.sender,
-          type: 'DELETE_SENT_REQUEST',
-          id: @request.id
+          friendship.user2,
+          type: 'ADD_FRIEND',
+          **from_template('api/friends/show', friendship: friendship, friend: friendship.user1)
         )
-
-        render 'api/friends/show', locals: {friendship: @friendship, friend: @friendship.user1}
-      else # || params[:status] === "pending"
-        head :no_content
       end
+
+      head :no_content
     else
       render json: { errors: @request.errors }, status: :unprocessable_entity
     end
   end
 
-  # private
-  # def create_params
-  #   params.require(:friend_request).permit(:username)
-  # end
+  private
+  def verify_request_sender
+    @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
+    if @request.sender_id != current_user.id
+      render json: { errors: { error: "Must be owner to delete this request"} }, status: :unauthorized
+    end
+  end
+
+  def verify_request_receiver
+    @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
+    if @request.receiver_id != current_user.id
+      render json: { errors: { error: "Only the receiver can update a friend request status"} }, status: :unauthorized
+    end
+  end
 end

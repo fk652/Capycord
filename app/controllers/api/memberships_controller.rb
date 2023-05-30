@@ -1,5 +1,6 @@
 class Api::MembershipsController < ApplicationController
   before_action :require_logged_in
+  before_action :verify_authorization
   
   def index 
     @memberships = current_user.server_memberships.find(params[:server_id]).memberships.includes(:member)
@@ -8,18 +9,6 @@ class Api::MembershipsController < ApplicationController
     else
       render json: {errors: @memberships.errors}, status: :unprocessable_entity
     end
-
-    # server = Server.find(params[:server_id]);
-    # if !server 
-    #   render json: { errors: { error: "Server not found"} }, status: :unprocessable_entity
-    #   return
-    # elsif !current_user.server_memberships.find(params[:server_id])
-    #   render json: { errors: { error: "Must be a server member to view this information"} }, status: :unauthorized
-    #   return
-    # else
-    #   @memberships = server.memberships.includes(:member)
-    #   render :index
-    # end
   end
 
   def create
@@ -44,32 +33,32 @@ class Api::MembershipsController < ApplicationController
   end
 
   def destroy 
-    @membership = Membership.includes(:server, :member).find(params[:id])
-    # can also update this later to also allow owner or mod to delete other memberships (e.g ban or kick someone)
-    if @membership.member_id === current_user.id
-      if @membership.destroy
-        UsersChannel.broadcast_to(
-          @membership.member,
-          type: 'DELETE_SERVER',
-          id: @membership.server.id
-        )
+    if @membership.destroy
+      UsersChannel.broadcast_to(
+        @membership.member,
+        type: 'DELETE_SERVER',
+        id: @membership.server.id
+      )
 
-        ServersChannel.broadcast_to(
-          @membership.server,
-          type: 'DELETE_MEMBER',
-          id: @membership.member_id
-        )
+      ServersChannel.broadcast_to(
+        @membership.server,
+        type: 'DELETE_MEMBER',
+        id: @membership.member_id
+      )
 
-        render json: nil, status: :ok
-      else
-        render json: { errors: @membership.errors }, status: :unprocessable_entity
-      end
+      render json: nil, status: :ok
     else
-      render json: { errors: { error: "Not authorized to delete this membership"} }, status: :unauthorized
+      render json: { errors: @membership.errors }, status: :unprocessable_entity
     end
   end
 
-  def update
-    
+  private
+  def verify_authorization
+    @membership = Membership.includes(:server, :member).find(params[:id])
+
+    # can update this later to also let admins kick/ban members
+    if @membership.member_id != current_user.id
+      render json: { errors: { error: "Not authorized to delete this membership"} }, status: :unauthorized
+    end
   end
 end
