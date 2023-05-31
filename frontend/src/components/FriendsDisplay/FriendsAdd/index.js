@@ -1,14 +1,14 @@
 import "./FriendsAdd.css";
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { addErrors, getErrors, removeErrors } from "../../../store/errors";
 import { createFriendRequest } from "../../../store/friendRequests";
 import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
 import { deleteSession } from "../../../store/session";
 
 const FriendsAdd = () => {
+  const dispatch = useDispatch();
+
   const errors = useSelector(getErrors);
   const friendResult = useSelector(getAddFriendResult);
   const [username, setUsername] = useState('');
@@ -20,7 +20,7 @@ const FriendsAdd = () => {
 
     if (errors) dispatch(removeErrors());
     
-    return dispatch(createFriendRequest(username))
+    dispatch(createFriendRequest(username))
     .catch(async (res) => {
       let data;
       try {
@@ -41,7 +41,6 @@ const FriendsAdd = () => {
     });
   }
 
-  const dispatch = useDispatch();
   useEffect(() => {
     if (errors) dispatch(removeErrors());
 
@@ -72,12 +71,10 @@ const FriendsAdd = () => {
   }, [dispatch])
 
   const handleChange = (e) => {
-    // e.target.value ? button.disabled = false : button.disabled = true;
-    // setUsername(e.target.value);
-
     let start = e.target.selectionStart;
     let end = e.target.selectionEnd;
     let replaced = e.target.value.replace(/^\s+|/gm, '');
+
     if (replaced !== e.target.value) {
       e.target.value = replaced;
       e.target.setSelectionRange(start, end-1);
@@ -85,7 +82,6 @@ const FriendsAdd = () => {
 
     if (/^[\w\d\s]{0,32}#\d{0,4}$/gm.test(e.target.value) || /^[\w\d\s]{0,32}$/gm.test(e.target.value)){
       setUsername(e.target.value);
-      // button.disabled = !(/^[\w\d]{1}[\w\d\s]{0,30}[\w\d]{1}#\d{4}$/gm.test(e.target.value));
       button.disabled = !(/^[\w\d\s]+#\d{4}$/gm.test(e.target.value));
     }
 
@@ -108,7 +104,6 @@ const FriendsAdd = () => {
   return (
     <div className="add-friend-wrapper">
       <h2 className="add-friend-title">ADD FRIEND</h2>
-
       <form className="add-friend-form" autoComplete="off" onSubmit={handleSubmit}>
         <div className="add-friend-form-span">
           You can add a friend with their Discord Tag. It's cAsE sEnSitIvE!
@@ -128,6 +123,7 @@ const FriendsAdd = () => {
             Send Friend Request
           </button>
         </div>
+        
         {
           errors?.error 
             ? <div className="add-friend-result error">

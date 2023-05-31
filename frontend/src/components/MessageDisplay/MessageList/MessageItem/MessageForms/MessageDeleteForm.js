@@ -1,8 +1,8 @@
+import '../../../../ServerAdminPage/DeleteForm/DeleteForm.css'
 import { useDispatch, useSelector } from 'react-redux';
-import '../../../ServerAdminPage/DeleteForm/DeleteForm.css'
-import { deleteMessage, getMessage } from '../../../../store/messages';
-import { getCurrentUser } from '../../../../store/session';
-import MessageItem from '.';
+import { deleteMessage } from '../../../../../store/messages';
+import { getCurrentUser } from '../../../../../store/session';
+import MessageItem from '..';
 
 const MessageDeleteForm = ({messageId, message, date, extraTimeInfo, onClose}) => {
   const sessionUser = useSelector(getCurrentUser);

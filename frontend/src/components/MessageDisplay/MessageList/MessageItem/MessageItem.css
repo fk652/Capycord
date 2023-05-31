@@ -24,9 +24,6 @@
   text-align: center;
   color: #949ba4;
   visibility: hidden;
-
-  /* position: relative;
-  top: 0px; */
 }
 
 .profile-pic-wrapper {
@@ -191,10 +188,6 @@
   margin-right: 6px;
 }
 
-/* .message-item-wrapper.edit {
-  width: 100%;
-} */
-
 .message-wrapper.edit .message-time {
   height: 100%;
   display: flex;
@@ -219,10 +212,6 @@
 .edited-status {
   font-size: 0.625rem;
   color: #949ba4;
-
-  /* -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
 }
 
 .edited-status:hover {

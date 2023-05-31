@@ -10,7 +10,7 @@ import ServerListIcon from './ServerListIcon';
 import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerForm from '../ServerForm';
-import homeIcon from "../../assets/icon.png";
+import homeIcon from "../../assets/capycord_icons/icon.png";
 
 const ServerBar = () => {
   const [showModal, setShowModal] = useState(false);

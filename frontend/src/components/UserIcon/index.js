@@ -4,7 +4,7 @@ import offlineIcon from "../../assets/status_icons/offline.png";
 import onlineIcon from "../../assets/status_icons/online.png";
 import busyIcon from "../../assets/status_icons/busy.png";
 import idleIcon from "../../assets/status_icons/idle.png";
-import dummyIcon from "../../assets/icon.png";
+import dummyIcon from "../../assets/capycord_icons/icon.png";
 
 const UserIcon = ({picture, status, name}) => {
 

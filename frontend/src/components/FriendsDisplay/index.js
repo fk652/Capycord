@@ -1,13 +1,11 @@
 import './FriendsDisplay.css';
-
 import { useSelector } from "react-redux";
-
+import { getSelectedFriendNavTab } from '../../store/ui';
 import FriendsAdd from './FriendsAdd';
 import FriendsAll from './FriendsAll';
 import FriendsBlocked from './FriendsBlocked';
 import FriendsOnline from './FriendsOnline';
 import FriendsPending from './FriendsPending';
-import { getSelectedFriendNavTab } from '../../store/ui';
 import FriendsNavBar from './FriendsNavBar';
 
 const FriendsDisplay = () => {

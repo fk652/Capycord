@@ -1,24 +1,22 @@
-import './HomeSideBar.css';
-
+import './MainSideBar.css';
 import { useParams } from 'react-router-dom';
-
 import CurrentUserMenu from "../CurrentUserMenu"
-import Conversations from "./Conversations"
+import ConversationSideBar from "./ConversationSideBar"
 import ChannelSideBar from '../ChannelSideBar';
 
-const HomeSideBar = () => {
+const MainSideBar = () => {
   const {serverId} = useParams();
 
   return (
-    <div className="home-side-bar">
+    <div className="main-side-bar">
       {
         serverId 
           ? <ChannelSideBar />
-          : <Conversations />
+          : <ConversationSideBar />
       }
       <CurrentUserMenu />
     </div>
   )
 }
 
-export default HomeSideBar
+export default MainSideBar;

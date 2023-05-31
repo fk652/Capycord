@@ -1,9 +1,7 @@
 import './MessageNavBar.css';
-
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-
 import { getShowMembersToggle, setShowMembers } from "../../../store/ui";
 import { getChannel } from '../../../store/channels';
 import { NavToolTip } from '../../../context/Modal';
@@ -66,7 +64,7 @@ export const MessageNavBar = () => {
       searchClearIcon.style.display = 'none'; 
     }
     setSearchInput(e.target.value);
-    // filter messages here later
+    // to do filter messages
   }
 
   let icon = null;

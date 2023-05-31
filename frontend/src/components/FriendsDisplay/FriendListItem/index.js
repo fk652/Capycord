@@ -1,10 +1,9 @@
 import './FriendListItem.css'
-
-import UserIcon from '../../UserIcon';
-import ActionIcon from './ActionIcon';
 import { useSelector } from 'react-redux';
 import { getAnimateOfflineFriends, getFriendSearch, getSelectedFriendNavTab } from '../../../store/ui';
 import { useEffect, useRef } from 'react';
+import UserIcon from '../../UserIcon';
+import ActionIcon from './ActionIcon';
 
 const FriendListItem = ({itemId, userId, name, status, customStatus, picture, actions}) => {
   const [username, tag] = name.split("#");

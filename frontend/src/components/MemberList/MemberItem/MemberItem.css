@@ -14,7 +14,6 @@
   cursor: pointer;
 }
 
-
 .member-item-display {
   display: flex;
   justify-content: baseline;
@@ -54,7 +53,6 @@
   display: flex;
 }
 
-
 .member-item-username {
   font-weight: 900;
   color: #949ba4;
@@ -64,7 +62,6 @@
   display: inline;
   padding-bottom: 1px;
 }
-
 
 .member-item-status {
   color: #949ba4;

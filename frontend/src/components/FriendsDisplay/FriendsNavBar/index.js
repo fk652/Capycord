@@ -1,5 +1,4 @@
 import './FriendsNavBar.css';
-
 import { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { getFriendRequests } from '../../../store/friendRequests';
@@ -90,7 +89,6 @@ const FriendsNavBar = () => {
           >
             Pending
             {
-              // update for server requests later
               friendRequests && friendRequests[1].length
                 ? <div className="pending-alert" />
                 : null
@@ -119,14 +117,14 @@ const FriendsNavBar = () => {
             </path>
           </svg>
         </div>
+
         {showModal && currentModal === "add dm" && (
           <NavToolTip top={top} left={left} onClose={() => setShowModal(false)}>
             <span className="tooltip">New DM</span>
           </NavToolTip>
         )}
-
+        
         <div className="nav-divider" />
-
         <div 
           className="icon-wrapper disabled"
           onMouseEnter={showHandler("inbox")}
@@ -137,6 +135,7 @@ const FriendsNavBar = () => {
             </path>
           </svg>
         </div>
+
         {showModal && currentModal === "inbox" && (
           <NavToolTip top={top} left={left} onClose={() => setShowModal(false)}>
             <span className="tooltip">Inbox</span>

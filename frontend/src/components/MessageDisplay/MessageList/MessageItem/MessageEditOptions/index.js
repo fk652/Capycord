@@ -1,19 +1,22 @@
+import './MessageEditOptions.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActionToolTip, ServerFormModal } from '../../../../../context/Modal';
 import { deleteMessage } from '../../../../../store/messages';
-import './MessageEditOptions.css'
 import { getQuickDelete, setEditMessageId, setServerFormSlide } from '../../../../../store/ui';
-import MessageDeleteForm from '../MessageDeleteForm';
+import MessageDeleteForm from '../MessageForms/MessageDeleteForm';
 
 const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
+  const dispatch = useDispatch();
+
+  const quickDelete = useSelector(getQuickDelete);
+  const [disabled, setDisabled] = useState(false);
+
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [left, setLeft] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const quickDelete = useSelector(getQuickDelete);
-  const [disabled, setDisabled] = useState(false);
 
   const showHandler = (type) => (e) => {
     e.preventDefault();
@@ -35,7 +38,6 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
     setShowModal(false);
   }
 
-  const dispatch = useDispatch();
   const handleDelete = (e) => {
     e.preventDefault();
     if (disabled) return;
@@ -43,14 +45,14 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
     if (quickDelete) {
       setDisabled(true);
       dispatch(deleteMessage(messageId));
+    } else {
+      setShowDeleteModal(true);
     }
-    else setShowDeleteModal(true);
   }
 
   const handleEdit = (e) => {
     e.preventDefault();
-    if (disabled) return;
-    dispatch(setEditMessageId(messageId));
+    if (!disabled) dispatch(setEditMessageId(messageId));
   }
 
   const closeDeleteForm = () => {
@@ -58,14 +60,7 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       setShowDeleteModal(false);
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setLeaveServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   return (
@@ -83,6 +78,7 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
             </path>
           </svg>
         </div>
+
         {showModal && currentModal === "edit" && (
           <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
             <span className="tooltip">Edit</span>
@@ -103,6 +99,7 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
             </path>
           </svg>
         </div>
+
         {showModal && currentModal === "delete" && (
           <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
             <span className="tooltip">Delete</span>

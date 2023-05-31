@@ -1,6 +1,5 @@
 import './MemberItem.css';
-
-import UserIcon from '../../../UserIcon';
+import UserIcon from '../../UserIcon';
 
 const MemberItem = ({name, status, customStatus, picture}) => {
   const [username, tag] = name.split("#");
@@ -18,7 +17,6 @@ const MemberItem = ({name, status, customStatus, picture}) => {
               #{tag}
             </span>
           </div>
-
           <div className="member-item-status">
             {customStatus}
           </div>

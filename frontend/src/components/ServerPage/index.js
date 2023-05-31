@@ -1,27 +1,22 @@
 import './ServerPage.css'
-
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import consumer from '../../consumer';
-
-import HomeSideBar from '../HomeSideBar';
-import MessageDisplay from '../MessageDisplay';
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { deleteSession, getCurrentUser } from '../../store/session';
 import { addErrors } from '../../store/errors';
-import { getServer } from '../../store/servers';
+import MainSideBar from '../MainSideBar';
+import MessageDisplay from '../MessageDisplay';
+import consumer from '../../consumer';
 
 const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
-  
   const {serverId, channelId} = useParams();
   const history = useHistory();
   
-  // const serverInfo = useSelector(getServer(serverId));
   // if (serverInfo) document.title = `Capycord | ${serverInfo.name}`
 
   const dispatch = useDispatch();
@@ -44,7 +39,6 @@ const ServerPage = () => {
         
           if (data?.errors) errors.messages = data.errors;
           dispatch(addErrors(errors));
-          // console.log(res.status, errors.messages);
           if (res.status === 401) dispatch(deleteSession());
           else history.push(`/home`);
         });
@@ -92,12 +86,7 @@ const ServerPage = () => {
     if (channelId && sessionUser) {
       dispatch(fetchMessages(channelId))
       .catch(async (res) => {
-        let data;
-        try {
-          data = await res.clone().json();
-        } catch {
-          // data = await res.text();
-        }
+        let data = await res.clone().json();
         
         const errors = {
           status: res.status,
@@ -150,7 +139,7 @@ const ServerPage = () => {
   
   return (
     <div className="server-page">
-      <HomeSideBar />
+      <MainSideBar />
       {
         channelId 
           ? <MessageDisplay />

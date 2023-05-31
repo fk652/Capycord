@@ -1,7 +1,5 @@
 import './MessageItem.css'
-
 import { useState } from 'react';
-
 import { TimeToolTip } from '../../../../context/Modal';
 
 const EditStatus = ({updateTime, messageId}) => {

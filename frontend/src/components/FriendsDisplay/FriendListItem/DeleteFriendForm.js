@@ -1,5 +1,5 @@
-import { useDispatch } from 'react-redux';
 import '../../ServerAdminPage/DeleteForm/DeleteForm.css'
+import { useDispatch } from 'react-redux';
 import { deleteFriend } from '../../../store/friends';
 
 const DeleteFriendForm = ({friendId, friendName, onClose}) => {

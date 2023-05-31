@@ -1,5 +1,5 @@
 import './AboutMe.css';
-import logo from "../../assets/icon.png";
+import logo from "../../assets/capycord_icons/icon.png";
 
 const AboutMe = () => {
   return (
@@ -8,7 +8,6 @@ const AboutMe = () => {
         <div className="icon-container">
           <img className="icon" src={logo} alt=""/>
         </div>
-        
         <div className="about-me-info">
           <h2 className="project-title">Capycord</h2>
           <h3 className="dev-name">By Fahim Khan</h3>

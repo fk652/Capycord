@@ -1,29 +1,29 @@
 import './ChannelSideBar.css'
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
-import ChannelListItem from './ChannelListItem';
 import { DropdownModal, ServerFormModal, SettingPageModal } from '../../context/Modal';
+import { getLeaveServerModal, getShowServerAdminModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
+import ChannelListItem from './ChannelListItem';
 import ServerSettings from '../ServerSettings';
-import { getLeaveServerModal, getShowServerAdminModal, setLeaveServerModal, setServerFormPage, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 import ServerAdminPage from '../ServerAdminPage';
 import LeaveForm from './LeaveForm';
 
 const ChannelSideBar = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const {serverId, channelId} = useParams();
   let channels = useSelector(getChannels);
   let channelServerId = useSelector(getChannelServerId);
   const serverInfo = useSelector(getServer(serverId));
-  const history = useHistory();
+
   const [showModal, setShowModal] = useState(false);
   const showServerAdminPage = useSelector(getShowServerAdminModal);
   const showLeaveModal = useSelector(getLeaveServerModal);
 
-  const dispatch = useDispatch();
   const leaveHandler = () => {
     const modalPage = document.querySelector('.setting-page-modal');
     modalPage.classList.add('hide');
@@ -37,11 +37,6 @@ const ChannelSideBar = () => {
       appContainer.classList.remove('show');
       dispatch(setShowServerAdminModal(false));
     }, {once: true});
-    
-    // setTimeout(() => {
-    //   appContainer.classList.remove('show');
-    //   dispatch(setShowServerAdminModal(false));
-    // }, 250);
   }
 
   useEffect(() => {
@@ -66,11 +61,6 @@ const ChannelSideBar = () => {
     else return ""
   }
 
-  const dummies = [];
-  for (let i = 1000; i < 1050; i++) {
-    dummies.push(i);
-  }
-
   const showHandler = (e) => {
     e.preventDefault();
     setShowModal(!showModal);
@@ -81,14 +71,7 @@ const ChannelSideBar = () => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setLeaveServerModal(false));
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setLeaveServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   if (!serverInfo) return <div className="channel-side-bar" />;
@@ -142,19 +125,6 @@ const ChannelSideBar = () => {
               )
             })
           }
-
-          {/* {
-            dummies.map(dummy => {
-              return <ChannelListItem 
-                id={dummy} 
-                name={"dummy"} 
-                type={["text", "voice", "privateText", "privateVoice"][Math.floor(Math.random()*4)]}
-                selected={checkSelected(dummy)}
-                key={dummy}
-              />
-            })
-          } */}
-
           <div className="channel-list-spacer" />
         </div>
       </div>

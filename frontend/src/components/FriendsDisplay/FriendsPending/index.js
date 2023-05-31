@@ -1,10 +1,8 @@
 import "./FriendsPending.css";
-
 import { useState } from "react";
 import { useSelector } from "react-redux";
-
-import FriendListItem from "../FriendListItem";
 import { getFriendRequests } from "../../../store/friendRequests";
+import FriendListItem from "../FriendListItem";
 
 const FriendsPending= () => {
   const requests = useSelector(getFriendRequests);
@@ -34,7 +32,6 @@ const FriendsPending= () => {
           </svg>
         </div>
       </div>
-
       <h2 className="friend-count">PENDING — {requests[0].length + requests[1].length}</h2>
       <div className="friend-display-wrapper">
         {

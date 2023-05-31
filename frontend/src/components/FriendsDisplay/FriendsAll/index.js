@@ -1,12 +1,9 @@
 import "./FriendsAll.css";
-
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getFriends } from '../../../store/friends';
-
-import FriendListItem from "../FriendListItem";
-import { useState } from "react";
 import { getFriendSearch, setFriendSearch } from "../../../store/ui";
-import { useEffect } from "react";
+import FriendListItem from "../FriendListItem";
 
 const FriendsAll = () => {
   const friends = useSelector(getFriends);
@@ -21,6 +18,7 @@ const FriendsAll = () => {
   useEffect(() => {
     if (!search && searchInput) dispatch(setFriendSearch(true));
   }, [searchInput])
+
   let filteredFriends = friends.filter(user => user.username.includes(searchInput));
 
   return (
@@ -40,7 +38,6 @@ const FriendsAll = () => {
           </svg>
         </div>
       </div>
-      
       <h2 className="friend-count">ALL FRIENDS — {friends.length}</h2>
       <div className="friend-display-wrapper">
         {

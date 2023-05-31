@@ -1,12 +1,10 @@
 import './MessageItem.css'
-
 import { useState } from 'react';
-
 import { TimeToolTip } from '../../../../context/Modal';
-import MessageEditOptions from './MessageEditOptions';
 import { useSelector } from 'react-redux';
 import { getEditMessageId } from '../../../../store/ui';
-import EditMessageInput from './EditMessageInput';
+import MessageEditOptions from './MessageEditOptions';
+import EditMessageInput from './MessageForms/EditMessageInput';
 import EditStatus from './EditStatus';
 
 const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
@@ -62,6 +60,7 @@ const SimpleMessageItem = ({message, date, extraTimeInfo, sessionId}) => {
           onMouseLeave={leaveHandler}
           onWheel={leaveHandler}
         >
+
           {showModal && currentModal === message.id && (
             <TimeToolTip top={top} left={left} onClose={() => setShowModal(false)}>
               <span className="tooltip">{`${extraTimeInfo} ${shortTime}`}</span>

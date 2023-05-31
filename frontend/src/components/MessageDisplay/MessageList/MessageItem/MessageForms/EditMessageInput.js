@@ -1,18 +1,16 @@
-import '../MessageInput/MessageInput.css';
-// import './MessageItem.css';
+import '../../MessageInput/MessageInput.css';
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addErrors } from '../../../../store/errors'
-import { createMessage, updateMessage } from '../../../../store/messages'
-import { getResetMessageBox, resetMessageBox, setEditMessageId, setScroll } from '../../../../store/ui'
-import { deleteSession } from '../../../../store/session'
+import { useDispatch } from 'react-redux'
+import { updateMessage } from '../../../../../store/messages'
+import { setEditMessageId } from '../../../../../store/ui'
 
 const EditMessageInput = ({message}) => {
+  const dispatch = useDispatch();
+
   const listEle = document.querySelector(".messages-list");
   const [messageBody, setMessageBody] = useState(message.body);
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
-  const dispatch = useDispatch();
   
   useEffect(() => {
     const editInput = document.querySelector('.message-textarea.edit');
@@ -71,8 +69,6 @@ const EditMessageInput = ({message}) => {
     if (e.key === "Enter") setEnter(true);
 
     const filteredMessage = messageBody.trim();
-
-    // submit
     if(e.key === "Enter" && !shift && filteredMessage !== '') {
       setMessageBody(filteredMessage);
       handleSubmit();
@@ -96,9 +92,6 @@ const EditMessageInput = ({message}) => {
       setMessageBody(filteredMessage);
     }
 
-    // const boxEle = document.querySelector('.message-textarea');
-    // boxEle.style.height = "22px";
-    // listEle.scrollTo(0, listEle.scrollHeight);
     dispatch(setEditMessageId(null));
     const editedMessage = {...message, body: messageBody};
     dispatch(updateMessage(editedMessage));
@@ -119,7 +112,6 @@ const EditMessageInput = ({message}) => {
           />
         </div>
       </div>
-
       <div className="edit-message-instructions">
         {'escape to '} 
         <span className="edit-shortcut" onClick={handleCancel}>cancel</span> 

@@ -74,15 +74,15 @@
 .home-icon {
   height: 28px;
   width: 28px;
-  content: url("../../assets/icon_inactive.png");
+  content: url("../../assets/capycord_icons/icon_inactive.png");
 }
 
 .server-item-wrapper.selected .home-icon {
-  content: url("../../assets/icon.png");
+  content: url("../../assets/capycord_icons/icon.png");
 }
 
 .home-icon-wrapper:hover .home-icon {
-  content: url("../../assets/icon.png");
+  content: url("../../assets/capycord_icons/icon.png");
 }
 
 .add-server-icon-wrapper {

@@ -1,16 +1,13 @@
 import './MessageItem.css'
-
 import { useState } from 'react';
-
 import { TimeToolTip } from '../../../../context/Modal';
-import MessageEditOptions from './MessageEditOptions';
 import { getEditMessageId } from '../../../../store/ui';
 import { useSelector } from 'react-redux';
-import EditMessageInput from './EditMessageInput';
+import MessageEditOptions from './MessageEditOptions';
+import EditMessageInput from './MessageForms/EditMessageInput';
 import EditStatus from './EditStatus';
 
 const MessageItem = ({message, user, date, extraTimeInfo, sessionId, editDisabled}) => {
-  // if updatedAt !== createdAt, add edit status
   const editMessageId = useSelector(getEditMessageId);
   
   const shortTime = date.toLocaleString(
@@ -75,13 +72,11 @@ const MessageItem = ({message, user, date, extraTimeInfo, sessionId, editDisable
         <div className="profile-pic-wrapper">
           <img className="message-profile-pic" src={user.profilePictureUrl} alt="" />
         </div>
-
         <div className="message-details-wrapper">
           <h3 className="message-header">
             <div className="author-username">
               {user.username.split("#")[0]}
             </div>
-
             <div 
               className="message-time long"
               onMouseOver={showHandler(message.id)}

@@ -1,17 +1,17 @@
-import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import './MessageInput.css'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { addErrors } from '../../../../store/errors'
 import { createMessage } from '../../../../store/messages'
-import { getResetMessageBox, resetMessageBox, setScroll } from '../../../../store/ui'
-import './MessageInput.css'
 import { deleteSession } from '../../../../store/session'
 
 const MessageInput = ({channelInfo}) => {
+  const dispatch = useDispatch();
+
   const listEle = document.querySelector(".messages-list");
   const [message, setMessage] = useState('');
   const [shift, setShift] = useState(false);
   const [enter, setEnter] = useState(false);
-  const dispatch = useDispatch();
   
   const handleSubmit = () => {
     const filtered = message.trim();
@@ -19,12 +19,7 @@ const MessageInput = ({channelInfo}) => {
 
     dispatch(createMessage({channelId: channelInfo.id, body: filtered}))
     .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        // data = await res.text();
-      }
+      let data = await res.clone().json();
 
       const errors = {
         status: res.status,
@@ -61,9 +56,7 @@ const MessageInput = ({channelInfo}) => {
   const handleKeyDown = (e) => {
     if (e.key === "Shift") setShift(true);
     if (e.key === "Enter") setEnter(true);
-
-    // submit
-    if(e.key === "Enter" && !shift) handleSubmit();
+    if (e.key === "Enter" && !shift) handleSubmit();
   }
   
   const handleKeyUp = (e) => {

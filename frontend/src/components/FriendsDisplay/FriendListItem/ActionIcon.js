@@ -1,12 +1,9 @@
 import './FriendListItem.css'
-
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { acceptReceivedRequest, cancelSentRequest, ignoreReceivedRequest } from '../../../store/friendRequests';
-import { deleteFriend } from '../../../store/friends';
 import { ActionToolTip, ServerFormModal } from '../../../context/Modal';
-import { setServerFormPage, setServerFormSlide } from '../../../store/ui';
+import { setServerFormSlide } from '../../../store/ui';
 import DeleteFriendForm from './DeleteFriendForm';
 
 const ActionIcon = ({actionType, itemId, name}) => {
@@ -39,20 +36,11 @@ const ActionIcon = ({actionType, itemId, name}) => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       setShowDeleteFriendModal(false);
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setLeaveServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   const deleteFriendHandler = (e) => {
     e.preventDefault();
-    // dispatch(deleteFriend(itemId));
-    // dispatch(setDeleteFriendModal(true));
     setShowDeleteFriendModal(true);
   }
 
@@ -107,7 +95,7 @@ const ActionIcon = ({actionType, itemId, name}) => {
     case "message":
       icon = messageIcon;
       tooltipText = "Message";
-      clickHandler = null; //replace later with correct dispatch
+      clickHandler = null; // replace when direct messaging implemented
       leftOffset = 17;
       break;
     case "deleteFriend":
@@ -143,9 +131,7 @@ const ActionIcon = ({actionType, itemId, name}) => {
 
   return (
     <div className={`${actionType === "message" ? "disabled-hover" : ''}`}>
-    {/* <> */}
-      <div 
-        // className="friend-item-action"
+      <div
         className={`friend-item-action ${actionType === "message" ? "disabled" : ''}`} 
         onClick={clickHandler}
         onMouseEnter={showHandler(itemId)}
@@ -165,7 +151,6 @@ const ActionIcon = ({actionType, itemId, name}) => {
           <DeleteFriendForm friendId={itemId} friendName={name} onClose={closeDeleteForm}/>
         </ServerFormModal>
       )}
-    {/* </> */}
     </div>
   )
 }

@@ -1,19 +1,19 @@
 import '../Form.css';
 import "./LoginFormPage.css";
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-
 import { getCurrentUser, login } from "../../../store/session";
 import { addErrors, getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+
   const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
   const errorStatus = useSelector(getErrorStatus);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -28,36 +28,30 @@ const LoginForm = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    return dispatch(login({ email, password }))
+
+    dispatch(login({ email, password }))
     .catch(async (res) => {
-        let data;
-        try {
-          data = await res.clone().json();
-        } catch {
-          data = await res.text();
-        }
+      let data;
+      try {
+        data = await res.clone().json();
+      } catch {
+        data = await res.text();
+      }
 
-        const errors = {
-          status: res.status,
-          messages: null
-        }
+      const errors = {
+        status: res.status,
+        messages: null
+      }
 
-        if (data?.errors) errors.messages = data.errors;
-        // else if (data) errors.messages = [data];
-        // else errors.messages = [res.statusText];
-
-        dispatch(addErrors(errors))
-      });
-    };
+      if (data?.errors) errors.messages = data.errors;
+      dispatch(addErrors(errors));
+    });
+  };
     
-    const demoLogin = (e, user) => {
-      e.preventDefault();
-
-      const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com'
-    return dispatch(login({
-      email,
-      password: 'password123'
-    }))
+  const demoLogin = (e, user) => {
+    e.preventDefault();
+    const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com';
+    dispatch(login({email, password: 'password123'}));
   }
   
   if (sessionUser) return <Redirect to="/home" />;

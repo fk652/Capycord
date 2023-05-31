@@ -1,16 +1,14 @@
 import "./HomePage.css"
-
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import consumer from '../../consumer';
-
-import HomeSideBar from "../HomeSideBar";
-import FriendsDisplay from "../FriendsDisplay";
 import { setAnimateOfflineFriends, setSelectedServer } from "../../store/ui";
 import { addReceivedRequest, addSentRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 import { getCurrentUser } from "../../store/session";
+import MainSideBar from "../MainSideBar";
+import FriendsDisplay from "../FriendsDisplay";
+import consumer from '../../consumer';
 
 const HomePage = () => {
   const sessionUser = useSelector(getCurrentUser);
@@ -73,7 +71,7 @@ const HomePage = () => {
 
   return (
     <div className="home">
-      <HomeSideBar />
+      <MainSideBar />
       <FriendsDisplay />
     </div>
   )

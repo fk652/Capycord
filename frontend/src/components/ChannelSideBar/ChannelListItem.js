@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
-
 import { ActionToolTip } from '../../context/Modal';
 import { getServer } from '../../store/servers';
 
@@ -119,6 +118,7 @@ const ChannelListItem = ({id, name, type, selected}) => {
                   </path>
                 </svg>
               </div>
+              
               {showModal && currentModal === id && (
                 <ActionToolTip top={top} left={left} onClose={() => setShowModal(false)}>
                   <span className="tooltip">Edit Channel</span>

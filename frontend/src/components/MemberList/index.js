@@ -1,9 +1,7 @@
 import './MemberList.css';
-
 import { useSelector } from 'react-redux';
-
-import { getMembers } from '../../../store/members';
-import { getShowMembersToggle } from '../../../store/ui';
+import { getMembers } from '../../store/members';
+import { getShowMembersToggle } from '../../store/ui';
 import MemberItem from './MemberItem';
 
 const MemberList = () => {
@@ -36,19 +34,6 @@ const MemberList = () => {
           : membersSorted.online.push(member)
     }
   })
-
-  const dummies = [];
-  for (let i = 1000; i < 1050; i++) {
-    dummies.push(i)
-  }
-  const status = ["Busy", "Idle", "Do Not Disturb"]
-  const customStatus = ["everything is fine 🔥", "bruh 🦫", null, null, null]
-  const pictures = [
-    "https://upload.wikimedia.org/wikipedia/en/9/9a/Trollface_non-free.png",
-    "https://media.tenor.com/GryShD35-psAAAAC/troll-face-creepy-smile.gif",
-    "https://media.tenor.com/jtliaaom4MQAAAAd/clueless-aware.gif",
-    null
-  ]
 
   if (!membersSorted.owner || !showMembers) return null;
 
@@ -125,25 +110,7 @@ const MemberList = () => {
           />
         })
       }
-
-
-      {/* <h3 className="member-positions-header">
-        <span className="member-position">
-          THUNKS - me dunno how count
-        </span>
-      </h3>
-      {
-        dummies.map(dummyId => {
-          return <MemberItem
-            name={"dummy#dumdum"} 
-            status={status[Math.floor(Math.random()*status.length)]} 
-            customStatus={customStatus[Math.floor(Math.random()*customStatus.length)]}
-            picture={pictures[Math.floor(Math.random()*pictures.length)]}
-            key={dummyId}
-          />
-        })
-      } */}
-
+      
       <div className="member-list-spacer" />
     </div>
   )

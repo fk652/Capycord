@@ -127,7 +127,6 @@ const Overview = ({serverInfo}) => {
     else if (picture) newServerInfo.pictureUrl = picture
 
     const response = await dispatch(updateServer(newServerInfo));
-    console.log(response)
     if (response) {
       const submitReset = document.querySelector('.submit-reset-container');
       submitReset.classList.add('exit');

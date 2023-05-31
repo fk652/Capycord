@@ -1,9 +1,7 @@
 import './CurrentUserMenu.css';
-
 import { useDispatch, useSelector } from "react-redux";
-
-import UserIcon from "../UserIcon";
 import { logout } from "../../store/session";
+import UserIcon from "../UserIcon";
 
 const CurrentUserMenu = () => {
   const sessionUser = useSelector(state => state.session.user);

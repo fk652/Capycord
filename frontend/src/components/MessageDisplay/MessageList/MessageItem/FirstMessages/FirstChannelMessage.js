@@ -1,8 +1,8 @@
+import '../MessageItem.css'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getServer } from '../../../../store/servers';
-import { getCurrentUser } from '../../../../store/session';
-import './MessageItem.css'
+import { getServer } from '../../../../../store/servers';
+import { getCurrentUser } from '../../../../../store/session';
 
 const FirstChannelMessage = ({channelInfo}) => {
   const {serverId} = useParams();

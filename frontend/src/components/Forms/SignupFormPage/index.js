@@ -1,18 +1,18 @@
 import '../Form.css';
 import './SignupFormPage.css';
-
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
-
 import { getCurrentUser, signup } from "../../../store/session";
 import { addErrors, getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
 
 const SignupFormPage = () => {
   const dispatch = useDispatch();
+
   const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,8 +29,8 @@ const SignupFormPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    return dispatch(signup({ email, username, password }))
-      .catch(async (res) => {
+    dispatch(signup({ email, username, password }))
+    .catch(async (res) => {
       let data;
       try {
         data = await res.clone().json();
@@ -42,10 +42,8 @@ const SignupFormPage = () => {
         status: res.status,
         messages: null
       }
-      if (data?.errors) errors.messages = data.errors;
-      // else if (data) errors.messages = [data];
-      // else errors.messages = [res.statusText];
 
+      if (data?.errors) errors.messages = data.errors;
       dispatch(addErrors(errors));
     });
   };
