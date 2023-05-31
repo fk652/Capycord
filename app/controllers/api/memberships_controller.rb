@@ -1,6 +1,6 @@
 class Api::MembershipsController < ApplicationController
   before_action :require_logged_in
-  before_action :verify_authorization
+  before_action :verify_authorization, only: [:destroy]
   
   def index 
     @memberships = current_user.server_memberships.find(params[:server_id]).memberships.includes(:member)
@@ -20,6 +20,7 @@ class Api::MembershipsController < ApplicationController
     if membership.save 
       @server = membership.server
 
+      # broadcast new member to server
       ServersChannel.broadcast_to(
         @server,
         type: 'ADD_MEMBER',
@@ -34,19 +35,21 @@ class Api::MembershipsController < ApplicationController
 
   def destroy 
     if @membership.destroy
+      # broadcast delete server to ex-member
       UsersChannel.broadcast_to(
         @membership.member,
         type: 'DELETE_SERVER',
         id: @membership.server.id
       )
-
+      
+      # broadcast delete member to server
       ServersChannel.broadcast_to(
         @membership.server,
         type: 'DELETE_MEMBER',
         id: @membership.member_id
       )
 
-      render json: nil, status: :ok
+      head :no_content
     else
       render json: { errors: @membership.errors }, status: :unprocessable_entity
     end

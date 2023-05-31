@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
     resources :users, only: [:create, :show, :update]
 
-    resources :servers, only: [:index, :show, :create, :destroy, :update] do 
+    resources :servers, only: [:index, :create, :destroy, :update] do 
       resources :channels, only: [:index]
       resources :memberships, only: [:index]
     end
@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resources :messages, only: [:index]
     end
     
-    resources :messages, only: [:create, :show, :destroy, :update]
+    resources :messages, only: [:create, :destroy, :update]
     resources :friends, only: [:index, :destroy]
     resources :friend_requests, only: [:index, :create, :destroy, :update]
     resources :memberships, only: [:create, :destroy]

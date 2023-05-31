@@ -85,17 +85,14 @@ export const createMember = (memberData) => async dispatch => {
   return response;
 }
 
-export const updateMember = (memberData) => async dispatch => {
-
-}
-
 export const deleteMember = (memberId) => async dispatch => {
   try {
     const response = await csrfFetch(`/api/memberships/${memberId}`, {
       method: 'DELETE'
     })
 
-    // delete membership info handled with broadcast subscription
+    // delete membership dispatch handled with broadcast subscription
+    return response;
   } catch (res) {
     let data;
     try {
@@ -128,7 +125,7 @@ const membersReducer = (state = initialState, action) => {
     case REMOVE_MEMBER:
       const newState = {...state};
       delete newState[action.userId];
-      return newState
+      return newState;
     default:
       return state;
   }

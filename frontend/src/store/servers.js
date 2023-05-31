@@ -63,9 +63,8 @@ export const updateServer = (serverData) => async dispatch => {
       body: JSON.stringify(serverData)
     })
 
+    // update server dispatch handled with broadcast subscription
     return response;
-
-    // update server info handled with broadcast subscription
   } catch (res) {
     let data;
     try {
@@ -82,8 +81,6 @@ export const updateServer = (serverData) => async dispatch => {
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
     if (res.status === 401) dispatch(deleteSession());
-
-    // return res;
   }
 }
 
@@ -93,7 +90,8 @@ export const deleteServer = (serverId) => async dispatch => {
       method: 'DELETE'
     })
 
-    // delete server info handled with broadcast subscription
+    // delete server dispatch handled with broadcast subscription
+    return response;
   } catch (res) {
     let data;
     try {

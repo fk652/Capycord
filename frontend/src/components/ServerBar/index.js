@@ -11,14 +11,12 @@ import { addServer, fetchServers, getServers, removeServer, resetServers } from 
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerForm from '../ServerForm';
 import homeIcon from "../../assets/icon.png";
-// import inactiveIcon from "../../assets/icon_inactive.png";
 
 const ServerBar = () => {
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const newServerId = useSelector(getNewServer);
-  // const [showServerFormModal, setShowServerFormModal] = useState(false);
   const deletedServerId = useSelector(getDeletedServerId);
   const showServerFormModal = useSelector(getShowServerModal);
   const {serverId} = useParams();
@@ -35,9 +33,8 @@ const ServerBar = () => {
       { channel: 'UsersChannel' },
       {
         received: ({type, server, id}) => {
-          console.log(serverId);
           switch (type) {
-            // add direct message notifications here later?
+            // add direct message notifications here later
             case "UPDATE_SERVER":
               dispatch(addServer(server));
               break;
@@ -58,12 +55,6 @@ const ServerBar = () => {
     }
   }, [dispatch])
 
-  // useEffect(() => {
-  //   const selectedIcon = document.querySelector('.server-item-wrapper.selected');
-  //   console.log(selectedIcon);
-  //   if (selectedIcon) selectedIcon.scrollIntoView(true);
-  // }, [serverId, newServerId])
-
   useEffect(() => {
     if (newServerId) {
       history.push(`/server/${newServerId}`);
@@ -73,7 +64,6 @@ const ServerBar = () => {
 
   useEffect(() => {
     if (deletedServerId) {
-      console.log(typeof serverId, serverId, typeof deletedServerId, deletedServerId)
       if (serverId === deletedServerId.toString()) history.push('/home');
       dispatch(setDeletedServerId(null));
     }
@@ -91,21 +81,6 @@ const ServerBar = () => {
     if (selected === id.toString()) return "selected"
     return ""
   }
-
-  //dummy server icons, remove later
-  const dummies = [];
-  for (let i = 1000; i < 1050; i++) {
-    dummies.push(i)
-  }
-
-  const pictures = [
-    "https://pbs.twimg.com/profile_images/1076326143660298245/iaMMNWg9_400x400.jpg",
-    "https://metroflowermarket.com/wp-content/uploads/2023/01/RosesRed_Freedom.png",
-    "https://s.hdnux.com/photos/01/12/66/62/19623053/4/rawImage.jpg",
-    "https://images.immediate.co.uk/production/volatile/sites/7/2021/09/GettyImages-1279734279-24aade8.jpg",
-    "https://www.tripsavvy.com/thmb/qFqPcg6Wo24Hu4fLokNfAZdC-xQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/fuji-mountain-in-autumn-822273028-5a6a8a9c3418c600363958d3.jpg",
-    null
-  ]
 
   const showHandler = (id) => (e) => {
     e.preventDefault();
@@ -130,12 +105,6 @@ const ServerBar = () => {
       dispatch(setServerFormPage("start"));
       dispatch(setServerFormSlide("expand"));
     }, {once: true})
-    
-    // setTimeout(() => {
-    //   dispatch(setShowServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   const handleShowForm = (e) => {
@@ -224,16 +193,6 @@ const ServerBar = () => {
           <ServerForm />
         </ServerFormModal>
       )}
-
-      {/* {
-        dummies.map(dummyId => {
-          return (
-            <div className={`server-item-wrapper ${checkSelected(dummyId)}`} key={dummyId}>
-              <ServerListIcon id={dummyId} image={pictures[Math.floor(Math.random()*pictures.length)]} name="dummy" />
-            </div>
-          )
-        })
-      } */}
     </div>
   )
 }
