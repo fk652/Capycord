@@ -1,9 +1,9 @@
 import './ServerForm.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import joinIcon from "../../assets/server_form_icons/join_icon.svg";
 import createIcon from "../../assets/server_form_icons/create_icon.svg";
 import choiceArrow from "../../assets/server_form_icons/choice_arrow.svg";
-import { useDispatch, useSelector } from 'react-redux';
-import { getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 
 const StartServerForm = () => {
   const slide = useSelector(getServerSlide);
@@ -14,17 +14,10 @@ const StartServerForm = () => {
     
     const serverFormModal = document.querySelector('.modal-content')
     dispatch(setServerFormSlide("close"));
-    serverFormModal.addEventListener("animationend", (e) => {
+    serverFormModal.addEventListener("animationend", () => {
       dispatch(setShowServerModal(false));
       dispatch(setServerFormPage("start"));
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setShowServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   const handleNext = (type) => () => {
@@ -52,7 +45,6 @@ const StartServerForm = () => {
           </svg>
         </div>
       </div>
-
       <div 
         className="choice-container" 
         onClick={handleNext('create')}
@@ -65,11 +57,9 @@ const StartServerForm = () => {
           <img alt="" src={choiceArrow} />
         </div>
       </div>
-
       <div className="server-form-subtext">
         Have an invite already?
       </div>
-
       <div 
         className="choice-container"
         onClick={handleNext('join')}

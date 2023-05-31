@@ -5,8 +5,8 @@ import { getCurrentUser } from '../../../../../store/session';
 import MessageItem from '..';
 
 const MessageDeleteForm = ({messageId, message, date, extraTimeInfo, onClose}) => {
-  const sessionUser = useSelector(getCurrentUser);
   const dispatch = useDispatch();
+  const sessionUser = useSelector(getCurrentUser);
 
   const handleDelete = (e) => {
     e.preventDefault();

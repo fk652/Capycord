@@ -1,8 +1,6 @@
 .delete-form {
   width: 440px;
-  /* max-height: 720px; */
   max-height: min(720px, 100vh - 80px);
-  /* min-height: 200px; */
   background: #313338;
   display: flex;
   flex-direction: column;
@@ -64,7 +62,6 @@
 
 .reset-button.cancel, .submit-update-button.delete {
   padding: 2px 16px;
-  /* width: 96px; */
   width: auto;
   height: 38px;
   min-width: 96px;

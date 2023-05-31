@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { ServerToolTip } from "../../context/Modal";
 
 const ServerListIcon = ({id, image, name}) => {

@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import './ServerForm.css';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createServer } from '../../store/servers';
 import { deleteSession, getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
-import './ServerForm.css';
 
 const CreateServerForm = () => {
   const slide = useSelector(getServerSlide);
@@ -45,14 +44,7 @@ const CreateServerForm = () => {
       serverFormModal.addEventListener("animationend", (e) => {
         dispatch(setShowServerModal(false));
         dispatch(setServerFormPage("start"));
-        // dispatch(setServerFormSlide("expand"));
       }, {once: true})
-
-      // setTimeout(() => {
-      //   dispatch(setShowServerModal(false));
-      //   dispatch(setServerFormPage("start"));
-      //   dispatch(setServerFormSlide("expand"));
-      // }, 200)
     }
   }, [newServer])
 
@@ -68,17 +60,10 @@ const CreateServerForm = () => {
     
     const serverFormModal = document.querySelector('.modal-content')
     dispatch(setServerFormSlide("close"));
-    serverFormModal.addEventListener("animationend", (e) => {
+    serverFormModal.addEventListener("animationend", () => {
       dispatch(setShowServerModal(false));
       dispatch(setServerFormPage("start"));
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setShowServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   const handleBack = () => {
@@ -135,7 +120,6 @@ const CreateServerForm = () => {
           </svg>
         </div>
       </div>
-
       <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
         <div className="server-form-image-container">
           <div className="server-form-image-icon-container">
@@ -167,7 +151,6 @@ const CreateServerForm = () => {
             />
           </div>
         </div>
-
         <div className="server-form-name-container">
           <h2 className={`input-label bold ${errors ? "error" : ""}`}>
             SERVER NAME
@@ -177,7 +160,6 @@ const CreateServerForm = () => {
                 : null
             }
           </h2>
-          
           <input 
             type="text" 
             className="server-form-input" 
@@ -188,17 +170,14 @@ const CreateServerForm = () => {
             required
           />
         </div>
-
         <div className="helper-text small">
           By creating a server, you agree to love capybaras 💖
         </div>
       </form>
-
       <div className="server-form-footer">
         <div className="back-link create" onClick={handleBack}>
           Back
         </div>
-
         <button className="server-form-submit" onClick={handleSubmit}>
           Create
         </button>

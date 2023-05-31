@@ -1,31 +1,30 @@
 import './ServerBar.css';
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import consumer from '../../consumer';
-
 import { getDeletedServerId, getNewServer, getSelectedServer, getShowServerModal, setDeletedServerId, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
-import ServerListIcon from './ServerListIcon';
 import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
+import ServerListIcon from './ServerListIcon';
 import ServerForm from '../ServerForm';
 import homeIcon from "../../assets/capycord_icons/icon.png";
+import consumer from '../../consumer';
 
 const ServerBar = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const {serverId} = useParams();
+  const selected = useSelector(getSelectedServer);
+  const servers = useSelector(getServers)
+
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const newServerId = useSelector(getNewServer);
   const deletedServerId = useSelector(getDeletedServerId);
   const showServerFormModal = useSelector(getShowServerModal);
-  const {serverId} = useParams();
 
-  const selected = useSelector(getSelectedServer);
-  const servers = useSelector(getServers)
-  const history = useHistory();
-
-  const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchServers());
 
@@ -107,11 +106,11 @@ const ServerBar = () => {
     }, {once: true})
   }
 
-  const handleShowForm = (e) => {
+  const handleShowForm = () => {
     dispatch(setShowServerModal(true));
   }
 
-  const handleLoad = (e) => {
+  const handleLoad = () => {
     const selectedIcon = document.querySelector(".server-item-wrapper.selected");
 
     if (selectedIcon?.getBoundingClientRect().bottom > window.innerHeight) {
@@ -147,7 +146,6 @@ const ServerBar = () => {
           </ServerToolTip>
         )}
       </div>
-
       <div className="server-divider" />
 
       {

@@ -91,7 +91,6 @@
 .image-change-text {
   width: 100px;
   height: 100px;
-  /* border-radius: 100%; */
   font-size: 10px;
   color: #ffffff;
   font-weight: 700;
@@ -103,8 +102,6 @@
   align-items: center;
   position: absolute;
   visibility: hidden;
-  /* top: 0;
-  right: 0; */
   pointer-events: none;
 }
 
@@ -280,7 +277,6 @@
 
 .reset-button, .submit-update-button {
   margin: 0;
-  /* width: 60px; */
   height: 32px;
   min-width: 60px;
   min-height: 32px;

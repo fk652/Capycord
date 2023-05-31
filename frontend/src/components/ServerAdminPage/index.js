@@ -1,17 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './ServerAdminPage.css'
-import { getServerAdminTab, setServerAdminTab, setServerFormPage, setServerFormSlide } from '../../store/ui';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getServerAdminTab, setServerAdminTab, setServerFormSlide } from '../../store/ui';
 import { ServerFormModal } from '../../context/Modal';
-import { useState } from 'react';
 import DeleteForm from './DeleteForm';
 import Overview from './Overview';
 
 const ServerAdminPage = ({serverInfo, onClose}) => {
+  const dispatch = useDispatch();
   const selectedTab = useSelector(getServerAdminTab);
   const [showModal, setShowModal] = useState(false);
 
-  const dispatch = useDispatch();
   const adminOptions = document.querySelectorAll('.admin-sidebar-option');
   let selectedOption = null;
   adminOptions.forEach(option => {
@@ -57,14 +56,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
     dispatch(setServerFormSlide("close"));
     serverFormModal.addEventListener("animationend", (e) => {
       setShowModal(false);
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   setShowModal(false);
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   return (
@@ -81,14 +73,6 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
             >
               Overview
             </div>
-
-            {/* <div 
-              className="admin-sidebar-option"
-              onClick={handleOptionClick}
-            >
-              Example
-            </div> */}
-
             <div className="admin-sidebar-divider" />
             <div 
               className="admin-sidebar-option icon-option"
@@ -125,18 +109,6 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
             </div>
           </div>
         </div>
-        {/* <div className="submit-reset-container">
-          <div className="submit-reset-wrapper">
-            <div className="submit-reset">
-              <div className="submit-reset-text">
-                Careful — you have unsaved changes!
-              </div>
-              <div className="submit-reset-options">
-
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
 
       {showModal && (

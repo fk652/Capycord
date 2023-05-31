@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
 import './ServerSettings.css'
+import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../../store/session';
-import { setLeaveServerModal, setServerFormPage, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
+import { setLeaveServerModal, setShowServerAdminModal } from '../../store/ui';
 
 const ServerSettings = ({serverInfo}) => {
+  const dispatch = useDispatch();
   const sessionUser = useSelector(getCurrentUser);
 
-  const dispatch = useDispatch();
   const showHandler = (e) => {
     e.preventDefault();
     document.querySelector('.server-settings-dropdown').click();

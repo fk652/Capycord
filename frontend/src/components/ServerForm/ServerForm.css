@@ -150,9 +150,7 @@
   height: 100%;
   opacity: 0;
   font-size: 0px;
-  /* cursor: pointer; */
   cursor: not-allowed;
-
   margin: 0;
   padding: 0;
   border: none;

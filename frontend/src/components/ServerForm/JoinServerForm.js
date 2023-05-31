@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
-import { useState } from 'react';
+import './ServerForm.css';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createMember } from '../../store/members';
 import { deleteSession, getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
-import './ServerForm.css';
 
 const JoinServerForm = () => {
+  const dispatch = useDispatch();
+
   const sessionuser = useSelector(getCurrentUser);
   const newServer = useSelector(getNewServer);
   const slide = useSelector(getServerSlide);
@@ -32,16 +33,9 @@ const JoinServerForm = () => {
         dispatch(setServerFormPage("start"));
         dispatch(setServerFormSlide("expand"));
       }, {once: true})
-
-      // setTimeout(() => {
-      //   dispatch(setShowServerModal(false));
-      //   dispatch(setServerFormPage("start"));
-      //   dispatch(setServerFormSlide("expand"));
-      // }, 200)
     }
   }, [newServer])
 
-  const dispatch = useDispatch();
   const closeForm = (e) => {
     e.preventDefault();
     
@@ -50,14 +44,7 @@ const JoinServerForm = () => {
     serverFormModal.addEventListener("animationend", (e) => {
       dispatch(setShowServerModal(false));
       dispatch(setServerFormPage("start"));
-      // dispatch(setServerFormSlide("expand"));
     }, {once: true})
-
-    // setTimeout(() => {
-    //   dispatch(setShowServerModal(false));
-    //   dispatch(setServerFormPage("start"));
-    //   dispatch(setServerFormSlide("expand"));
-    // }, 200)
   }
 
   const handleBack = () => {
@@ -113,7 +100,6 @@ const JoinServerForm = () => {
           </svg>
         </div>
       </div>
-
       <form className="server-form-input-wrapper" onSubmit={handleSubmit}>
         <h2 className={`input-label ${errors ? "error" : ""}`}>
           SERVER ID NUMBER
@@ -123,7 +109,6 @@ const JoinServerForm = () => {
               : <span className="required">*</span>
           }
         </h2>
-        
         <input 
           type="text" 
           className="server-form-input" 
@@ -131,21 +116,17 @@ const JoinServerForm = () => {
           onChange={(e) => setServerId(e.target.value)}
           required
         />
-
         <div className="helper-text">
           Demo server ids should range from 1-12
         </div>
-
         <div className="helper-text">
           Server ids can also be found in the url link (e.g: /server/:server_id)
         </div>
       </form>
-
       <div className="server-form-footer">
         <div className="back-link" onClick={handleBack}>
           Back
         </div>
-
         <button className="server-form-submit" onClick={handleSubmit}>
           Join Server
         </button>

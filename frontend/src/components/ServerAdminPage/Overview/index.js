@@ -1,19 +1,19 @@
-import { useState } from 'react'
 import './Overview.css'
-import { useEffect } from 'react';
-import { updateServer } from '../../../store/servers';
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { getErrors } from '../../../store/errors';
-import { removeErrors } from '../../../store/errors';
+import { updateServer } from '../../../store/servers';
+import { getErrors, removeErrors } from '../../../store/errors';
 
 const Overview = ({serverInfo}) => {
+  const dispatch = useDispatch();
+
   const [serverName, setServerName] = useState(serverInfo.name);
   const [picture, setPicture] = useState();
   const [picturePreview, setPicturePreview] = useState();
   const [imageRemoved, setImageRemoved] = useState(false);
   const [change, setChange] = useState(false);
+
   const nameHeader = document.querySelector('.admin-sidebar-option-header');
-  const dispatch = useDispatch();
   const errors = useSelector(getErrors);
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const Overview = ({serverInfo}) => {
 
   const handleImageRemove = (e) => {
     e.preventDefault();
+
     const imageInputs = document.querySelectorAll('.server-form-image-input');
     imageInputs.forEach(input => input.value = null);
     setPicture('');
@@ -50,6 +51,7 @@ const Overview = ({serverInfo}) => {
   const handleImageInput = (e) => {
     e.preventDefault();
     if (!e.target.files[0]) return;
+
     e.target.id === 'image-input-1' 
       ? document.getElementById('image-input-2').value = null 
       : document.getElementById('image-input-1').value = null
@@ -72,8 +74,10 @@ const Overview = ({serverInfo}) => {
 
   const handleNameChange = (e) => {
     e.preventDefault();
+
     setChange(true);
     setServerName(e.target.value);
+
     if (e.target.value) nameHeader.innerText = e.target.value;
     else nameHeader.innerText = "server settings"
   }
@@ -94,10 +98,6 @@ const Overview = ({serverInfo}) => {
 
     setServerName(serverInfo.name);
     nameHeader.innerText = serverInfo.name;
-
-    // const resetTimeout = setTimeout(() => {
-    //   setChange(false);
-    // }, 500)
   }
 
   const getWidth = () => {
@@ -119,12 +119,12 @@ const Overview = ({serverInfo}) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    
     const newServerInfo = {id: serverInfo.id}
+    if (serverName !== serverInfo.name) newServerInfo.name = serverName;
 
-    if (serverName !== serverInfo.name) newServerInfo.name = serverName
-
-    if (imageRemoved && serverInfo.pictureUrl) newServerInfo.pictureUrl = null
-    else if (picture) newServerInfo.pictureUrl = picture
+    if (imageRemoved && serverInfo.pictureUrl) newServerInfo.pictureUrl = null;
+    else if (picture) newServerInfo.pictureUrl = picture;
 
     const response = await dispatch(updateServer(newServerInfo));
     if (response) {
@@ -133,10 +133,6 @@ const Overview = ({serverInfo}) => {
       submitReset.addEventListener("animationend", (e) => {
         setChange(false);
       }, {once: true});
-  
-      // const resetTimeout = setTimeout(() => {
-      //   setChange(false);
-      // }, 500)
     }
   }
 
@@ -146,27 +142,24 @@ const Overview = ({serverInfo}) => {
         <div className="overview-header">
           Server Overview
         </div>
-
         <div className="overview-update-container">
           <div className="overview-image-container">
             <div className="overview-image-icon-container">
               <div className="overview-image-icon-wrapper">
                 {imageInput(1)}
+
                 {
                   (serverInfo.pictureUrl || picture) && !imageRemoved
-                  ? <div className="overview-image-preview" 
-                      style={{backgroundImage: `url(${picturePreview || serverInfo.pictureUrl})`}} 
-                      alt='' 
-                    />
-                  : <div className="server-icon filler overview">
-                      {serverInfo.name[0].toUpperCase()}
-                    </div>
+                    ? <div className="overview-image-preview" 
+                        style={{backgroundImage: `url(${picturePreview || serverInfo.pictureUrl})`}} 
+                        alt='' 
+                      />
+                    : <div className="server-icon filler overview">
+                        {serverInfo.name[0].toUpperCase()}
+                      </div>
                 }
-                <div className={`image-change-text ${
-                  (serverInfo.pictureUrl || picture) && !imageRemoved
-                  ? 'no-icon'
-                  : ''
-                }`}>
+
+                <div className={`image-change-text ${(serverInfo.pictureUrl || picture) && !imageRemoved ? 'no-icon' : ''}`}>
                   Change<br />Icon
                 </div>
                 <div className="image-upload-icon">
@@ -178,6 +171,7 @@ const Overview = ({serverInfo}) => {
                   </svg>
                 </div>
               </div>
+
               {
                 (serverInfo.pictureUrl || picture) && !imageRemoved
                   ? <div className="remove-image-link" onClick={handleImageRemove}>Remove</div>
@@ -194,7 +188,6 @@ const Overview = ({serverInfo}) => {
               </div>
             </div>
           </div>
-
           <div className="overview-server-name-container">
             <div className="overview-option-label">
               Server Name
@@ -208,6 +201,7 @@ const Overview = ({serverInfo}) => {
               maxLength={100}
               required
             />
+
             {
               errors?.name
                 ? <span className="input-error-message">{errors.name}</span>
@@ -216,6 +210,7 @@ const Overview = ({serverInfo}) => {
           </div>
         </div>
       </div>
+
       {
         change 
           ? <div 

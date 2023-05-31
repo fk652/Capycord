@@ -1,6 +1,6 @@
+import './ServerForm.css';
 import { useSelector } from 'react-redux';
 import { getServerFormType } from '../../store/ui';
-import './ServerForm.css';
 import StartServerForm from './StartServerForm';
 import CreateServerForm from './CreateServerForm';
 import JoinServerForm from './JoinServerForm';

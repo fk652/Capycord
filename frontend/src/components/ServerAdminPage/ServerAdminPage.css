@@ -14,35 +14,12 @@
 
 .admin-sidebar {
   display: flex;
-  /* flex: 1 0 auto; */
   align-items: flex-start;
   justify-content: flex-end;
   overflow: hidden scroll;
-  /* scrollbar-width: 5px; */
   scrollbar-width: auto;
   scrollbar-color: #1a1b1e;
-  /* padding-right: 5px; */
 }
-
-/* .admin-sidebar::-webkit-scrollbar {
-  width: 5px;
-  border-radius: 10px;
-}
-
-.admin-sidebar::-webkit-scrollbar-thumb {
-  background: #1a1b1e;
-  border-radius: 10px;
-  visibility: hidden;
-}
-
-.admin-sidebar:hover::-webkit-scrollbar-thumb {
-  visibility: visible;
-}
-
-.admin-sidebar::-webkit-scrollbar-track {
-  background: transparent;
-  border-radius: 10px;
-} */
 
 .admin-sidebar:hover::-webkit-scrollbar-thumb, .admin-sidebar:hover::-webkit-scrollbar-track  {
   visibility: visible;
@@ -93,9 +70,6 @@
   line-height: 16px;
   text-transform: uppercase;
   color: #949ba4;
-  /* -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
 }
 
 .admin-sidebar-option {
@@ -106,9 +80,6 @@
   border-radius: 4px;
   font-size: 16px;
   line-height: 20px;
-  /* -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none; */
 }
 
 .admin-sidebar-option.icon-option {
@@ -141,29 +112,10 @@
   justify-content: flex-start;
 
   overflow: hidden scroll;
-  /* scrollbar-width: 8px; */
   scrollbar-width: auto;
   scrollbar-color: #1a1b1e;
-  /* padding-right: 8px; */
-  /* margin-right: 4px; */
   position: relative;
 }
-
-/* .admin-content-wrapper::-webkit-scrollbar {
-  width: 8px;
-  border-radius: 8px;
-}
-
-.admin-content-wrapper::-webkit-scrollbar-thumb {
-  background: #1a1b1e;
-  border-radius: 8px;
-}
-
-.admin-content-wrapper::-webkit-scrollbar-track {
-  background: #2b2d31;
-  border-radius: 8px;
-  margin: 4px 0;
-} */
 
 .admin-content-wrapper::-webkit-scrollbar {
   width: 16px;
@@ -193,14 +145,11 @@
 .admin-content {
   display: flex;
   padding: 60px 40px 80px;
-  /* flex: 1 1 auto; */
   max-width: 740px;
   min-width: 460px;
-  /* min-height: 100%; */
   width: 660px;
   position: relative;
   min-height: calc(100% - 140px);
-  /* min-height: calc(100vh - 140px); */
 }
 
 .admin-escape-option-wrapper {

@@ -2,13 +2,11 @@
   position: fixed;
   left: 80px;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-
   font-weight: bold;
   color: #dbdee1;
   text-align: center;
@@ -34,13 +32,11 @@
 .action-tooltip {
   position: fixed;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  
   color: #dbdee1;
   font-weight: bold;
   text-align: center;
@@ -67,13 +63,11 @@
 .nav-tooltip {
   position: fixed;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  
   color: #dbdee1;
   font-weight: bold;
   text-align: center;
@@ -100,13 +94,11 @@
 .time-tooltip {
   position: fixed;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
-  
   color: #dbdee1;
   font-weight: bold;
   text-align: center;
@@ -203,14 +195,12 @@
 .dropdown-modal {
   position: fixed;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: clip;
-
   top: 56px;
   left: 82px;
   animation: dropdown-open ease-out 0.1s;
@@ -231,19 +221,16 @@
 .setting-page-modal {
   position: fixed;
   z-index: 5;
-
   height: fit-content;
   width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: clip;
-
   top: 0;
   right: 0;
   left: 0;
   bottom: 0;
-
   animation: setting-page-animate ease-in 0.2s;
 }
 
