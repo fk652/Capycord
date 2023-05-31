@@ -11,15 +11,11 @@ class Api::FriendsController < ApplicationController
     friend = Friend.includes(:user1, :user2).find(params[:id])
 
     if friend.destroy
-      # broadcast delete friendship to both sides
-      FriendsChannel.broadcast_to(
-        friend.user1,
-        type: 'DELETE_FRIEND',
-        id: friend.id
-      )
+      otherUser = (friend.user1.id === current_user.id ? friend.user2 : friend.user1)
 
+      # broadcast to other end to delete friend with current user
       FriendsChannel.broadcast_to(
-        friend.user2,
+        otherUser,
         type: 'DELETE_FRIEND',
         id: friend.id
       )

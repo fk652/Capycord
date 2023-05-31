@@ -65,7 +65,7 @@ export const deleteFriend = (friendshipId) => async dispatch => {
       method: "DELETE"
     })
     
-    // delete friend handled with broadcast
+    dispatch(removeFriend(friendshipId));
     return response;
   } catch (res) {
     let data;

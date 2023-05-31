@@ -1,5 +1,6 @@
 import csrfFetch from "./csrf";
 import { addErrors } from "./errors";
+import { addFriend } from "./friends";
 import { deleteSession } from "./session";
 import { setAddFriendResult } from "./ui";
 
@@ -63,7 +64,10 @@ export const createFriendRequest = (username) => async dispatch => {
     body: JSON.stringify({username})
   })
   
+  const data = await response.json();
+  dispatch(addSentRequest(data.friendRequest));
   dispatch(setAddFriendResult(true));
+
   return response;
 }
 
@@ -73,7 +77,7 @@ export const cancelSentRequest = (requestId) => async dispatch => {
       method: "DELETE"
     })
     
-    // delete request handled with broadcast
+    dispatch(removeSentRequest(requestId));
     return response;
   } catch (res) {
     let data;
@@ -101,7 +105,10 @@ export const acceptReceivedRequest = (requestId) => async dispatch => {
       body: JSON.stringify({status: "accepted"})
     })
     
-    // delete request and add friend dispatches handled with broadcast
+    const data = await response.json();
+    dispatch(addFriend(data.friend));
+    dispatch(removeReceivedRequest(requestId));
+
     return response;
   } catch (res) {
     let data;
@@ -129,7 +136,7 @@ export const ignoreReceivedRequest = (requestId) => async dispatch => {
       body: JSON.stringify({status: "ignored"})
     })
     
-    // delete request dispatch handled with broadcast
+    dispatch(removeReceivedRequest(requestId));
     return response;
   } catch (res) {
     let data;

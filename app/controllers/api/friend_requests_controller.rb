@@ -1,5 +1,6 @@
 class Api::FriendRequestsController < ApplicationController
   before_action :require_logged_in
+  before_action :find_receiver, only: [:create]
   before_action :verify_request_sender, only: [:destroy]
   before_action :verify_request_receiver, only: [:update]
   
@@ -10,46 +11,28 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   def create
-    @receiver = User.find_by(username: params[:username])
-    if @receiver
-      @friend_request = FriendRequest.new(
-        sender_id: current_user.id,
-        receiver_id: @receiver.id
+    @friend_request = FriendRequest.new(
+      sender_id: current_user.id,
+      receiver_id: @receiver.id
+    )
+
+    if @friend_request.save
+      # broadcast new friend request to receiver
+      FriendsChannel.broadcast_to(
+        @receiver,
+        type: 'ADD_INCOMING_REQUEST',
+        **from_template('api/friend_requests/show', friend_request: @friend_request, user: current_user)
       )
 
-      if @friend_request.save
-        # broadcast new request to both sides
-        receiver = @friend_request.receiver
-        FriendsChannel.broadcast_to(
-          current_user,
-          type: 'ADD_SENT_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: @friend_request, user: @receiver)
-        )
-
-        FriendsChannel.broadcast_to(
-          receiver,
-          type: 'ADD_INCOMING_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: @friend_request, user: current_user)
-        )
-
-        head :no_content
-      else
-        render json: { errors: @friend_request.errors }, status: :unprocessable_entity
-      end
+      render :show, locals: {friend_request: @friend_request, user: @receiver}
     else
-      render json: { errors: { error: "Hm, didn't work. Double check that the capitalization, spelling, any space, and numbers are correct."} }, status: :unprocessable_entity
+      render json: { errors: @friend_request.errors }, status: :unprocessable_entity
     end
   end
 
   def destroy 
     if @request.destroy
-      # broadcast delete request to both sides
-      FriendsChannel.broadcast_to(
-        @request.sender,
-        type: 'DELETE_SENT_REQUEST',
-        id: @request.id
-      )
-
+      # broadcast delete request to receiver
       FriendsChannel.broadcast_to(
         @request.receiver,
         type: 'DELETE_INCOMING_REQUEST',
@@ -64,34 +47,25 @@ class Api::FriendRequestsController < ApplicationController
 
   def update
     if @request.update(status: params[:status])
-      # broadcast delete request to both sides since request was handled
+      # broadcast delete request to sender since receiver made a decision
       FriendsChannel.broadcast_to(
         @request.sender,
         type: 'DELETE_SENT_REQUEST',
         id: @request.id
       )
 
-      FriendsChannel.broadcast_to(
-        @request.receiver,
-        type: 'DELETE_INCOMING_REQUEST',
-        id: @request.id
-      )
-
       if params[:status] === "accepted"
-        friendship = Friend.includes(:user1, :user2).find_by(user1_id: @request.sender.id, user2_id: current_user.id)
+        @friendship = Friend.find_by(user1_id: @request.sender.id, user2_id: current_user.id)
 
-        # broadcast new friend info to both sides
+        # broadcast new friend info to sender
         FriendsChannel.broadcast_to(
-          friendship.user1,
+          @request.sender,
           type: 'ADD_FRIEND',
-          **from_template('api/friends/show', friendship: friendship, friend: friendship.user2)
+          **from_template('api/friends/show', friendship: @friendship, friend: current_user)
         )
 
-        FriendsChannel.broadcast_to(
-          friendship.user2,
-          type: 'ADD_FRIEND',
-          **from_template('api/friends/show', friendship: friendship, friend: friendship.user1)
-        )
+        render 'api/friends/show', locals: {friendship: @friendship, friend: @request.sender}
+        return
       end
 
       head :no_content
@@ -101,6 +75,13 @@ class Api::FriendRequestsController < ApplicationController
   end
 
   private
+  def find_receiver
+    @receiver = User.find_by(username: params[:username])
+    if !@receiver
+      render json: { errors: { error: "Hm, didn't work. Double check that the capitalization, spelling, any space, and numbers are correct."} }, status: :unprocessable_entity
+    end
+  end
+
   def verify_request_sender
     @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
     if @request.sender_id != current_user.id
