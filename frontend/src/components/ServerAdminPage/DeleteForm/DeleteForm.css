@@ -1,6 +1,7 @@
 .delete-form {
   width: 440px;
-  max-height: 720px;
+  /* max-height: 720px; */
+  max-height: min(720px, 100vh - 80px);
   /* min-height: 200px; */
   background: #313338;
   display: flex;
@@ -22,6 +23,30 @@
   font-size: 16px;
   color: #dbdee1;
   position: relative;
+  overflow: hidden scroll;
+}
+
+.delete-form-text::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.delete-form-text::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.delete-form-text::-webkit-scrollbar-thumb {
+  background: #1a1b1e;
+  min-height: 40px;
+  background-clip: padding-box;
+  border: 2px solid transparent;
+  border-radius: 4px;
+}
+
+.delete-form-text::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid transparent;
 }
 
 .delete-form-text strong {

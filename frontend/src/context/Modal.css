@@ -167,6 +167,7 @@
   border-radius: 4px;
   max-width: 440px;
   overflow: clip;
+  max-height: calc(100vh - 80px);
 }
 
 .modal-content.expand {
