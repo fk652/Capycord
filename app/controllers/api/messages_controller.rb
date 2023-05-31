@@ -1,5 +1,6 @@
 class Api::MessagesController < ApplicationController
   before_action :require_logged_in
+  before_action :verify_membership, only: [:create]
   before_action :verify_author, only: [:update, :destroy]
   
   def index
@@ -62,6 +63,12 @@ class Api::MessagesController < ApplicationController
   end
 
   private
+  def verify_membership
+    if !current_user.channel_memberships.find(params[:channel_id])
+      render json: { errors: { error: "Must be a member to post messages"} }, status: :unauthorized
+    end
+  end
+
   def verify_author
     @message = Message.find(params[:id])
     if @message.author_id != current_user.id
