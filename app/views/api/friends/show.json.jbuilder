@@ -1,6 +1,4 @@
 json.friend do 
-  # friend = (type === 1 ? friendship.user1 : friendship.user2)
-
   json.friendshipId friendship.id 
   json.userId friend.id
   json.extract! friend, :username, :custom_status, :profile_picture_url
