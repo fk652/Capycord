@@ -1,9 +1,7 @@
 import { createConsumer } from "@rails/actioncable";
 
-let wsUrl;
-if (process.env.NODE_ENV !== "production") 
-  wsUrl = "ws://localhost:5000/cable";
-else
-  wsUrl = "/cable";
+const wsUrl = (process.env.NODE_ENV !== "production") 
+                ? "ws://localhost:5000/cable"
+                : "/cable";
 
 export default createConsumer(wsUrl);
