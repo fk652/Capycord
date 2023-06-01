@@ -92,7 +92,7 @@ class Api::FriendRequestsController < ApplicationController
   def verify_request_receiver
     @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
     if @request.receiver_id != current_user.id
-      render json: { errors: { error: "Only the receiver can update a friend request status"} }, status: :unauthorized
+      render json: { errors: { error: "Must be the receiver"} }, status: :unauthorized
     end
   end
 end

@@ -19,7 +19,7 @@ class Membership < ApplicationRecord
   ]
 
   validates :member_id, :server_id, presence: true
-  validates :server_id, uniqueness: {scope: :member_id, message: "already a member of the server"}
+  validates :server_id, uniqueness: {scope: :member_id, message: "already a member of the server."}
 
   after_validation :position,
     inclusion: { in: POSITIONS, message: "'%{value}' is not a valid position"}

@@ -1,5 +1,6 @@
 class Api::MembershipsController < ApplicationController
   before_action :require_logged_in
+  before_action :verify_link, only: [:create]
   before_action :verify_authorization, only: [:destroy]
   
   def index 
@@ -56,6 +57,14 @@ class Api::MembershipsController < ApplicationController
   end
 
   private
+  def verify_link 
+    if !params[:server_id].match(/[1-9][0-9]*/)
+      render json: { errors: { error: "Please enter a valid number."} }, status: :unprocessable_entity
+    elsif !Server.find_by(id: params[:server_id])
+      render json: { errors: { error: "Invalid server id."} }, status: :unprocessable_entity
+    end
+  end
+
   def verify_authorization
     @membership = Membership.includes(:server, :member).find(params[:id])
 
