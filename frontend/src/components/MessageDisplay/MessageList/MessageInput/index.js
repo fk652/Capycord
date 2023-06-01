@@ -1,9 +1,7 @@
 import './MessageInput.css'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addErrors } from '../../../../store/errors'
 import { createMessage } from '../../../../store/messages'
-import { deleteDuplicateSession } from '../../../../store/session'
 
 const MessageInput = ({channelInfo}) => {
   const dispatch = useDispatch();
@@ -17,20 +15,7 @@ const MessageInput = ({channelInfo}) => {
     const filtered = message.trim();
     if (!filtered) return;
 
-    dispatch(createMessage({channelId: channelInfo.id, body: filtered}))
-    .catch(async (res) => {
-      let data = await res.clone().json();
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
-      
-      if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
-    });
+    dispatch(createMessage({channelId: channelInfo.id, body: filtered}));
 
     setMessage('');
     const boxEle = document.querySelector('.message-textarea');

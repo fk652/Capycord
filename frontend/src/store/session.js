@@ -1,6 +1,6 @@
 import csrfFetch from './csrf';
 import { addErrors } from './errors';
-import { resetUi, setAlreadyLoggedIn } from './ui';
+import { resetUi, setUnauthorized } from './ui';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
 const REMOVE_CURRENT_USER = 'session/removeCurrentUser';
@@ -29,33 +29,54 @@ export const getCurrentUser = (state) => {
   return state.session.user
 }
 
-export const login = ({ email, password }) => async dispatch => {
-  const response = await csrfFetch("/api/session", {
-    method: "POST",
-    body: JSON.stringify({ email, password })
-  });
+export const login = (loginInfo) => async dispatch => {
+  try {
+    const response = await csrfFetch("/api/session", {
+      method: "POST",
+      body: JSON.stringify(loginInfo)
+    });
+  
+    const data = await response.json();
+    storeCurrentUser(data.user);
+    dispatch(setCurrentUser(data.user));
 
-  const data = await response.json();
-  storeCurrentUser(data.user);
-  dispatch(setCurrentUser(data.user));
-  return response;
+    return response;
+  } catch (res) {
+    const data = await res.clone().json();
+
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+  }
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { username, email, password } = user;
-  const response = await csrfFetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify({
-      username,
-      email,
-      password
-    })
-  });
+  try {
+    const response = await csrfFetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify(user)
+    });
+  
+    const data = await response.json();
+    storeCurrentUser(data.user);
+    dispatch(setCurrentUser(data.user));
 
-  const data = await response.json();
-  storeCurrentUser(data.user);
-  dispatch(setCurrentUser(data.user));
-  return response;
+    return response;
+  } catch (res) {
+    const data = await res.clone().json();
+
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+  }
 };
 
 export const logout = () => async (dispatch) => {
@@ -67,31 +88,18 @@ export const logout = () => async (dispatch) => {
     storeCurrentUser(null);
     dispatch(removeCurrentUser());
     dispatch(resetUi());
+
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 };
 
-export const deleteDuplicateSession = () => async (dispatch) => {
+export const unauthorizedSession = () => async (dispatch) => {
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
   dispatch(resetUi());
-  dispatch(setAlreadyLoggedIn(true));
+  dispatch(setUnauthorized(true));
 }
 
 export const restoreSession = () => async dispatch => {

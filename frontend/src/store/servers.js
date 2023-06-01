@@ -1,6 +1,6 @@
 import csrfFetch from "./csrf";
 import { addErrors } from "./errors";
-import { deleteDuplicateSession } from "./session";
+import { unauthorizedSession } from "./session";
 import { setNewServer } from "./ui";
 
 const RESET_SERVERS = 'servers/resetServers';
@@ -36,24 +36,41 @@ export const getServer = (serverId) => (state) => {
 }
 
 export const fetchServers = () => async dispatch => {
-  const response = await csrfFetch('/api/servers');
-
-  if (response.ok) {
+  try {
+    const response = await csrfFetch('/api/servers');
+  
     const data = await response.json();
     dispatch(setServers(data.servers));
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
 export const createServer = (serverData) => async dispatch => {
-  const response = await csrfFetch('/api/servers', {
-    method: "POST",
-    body: JSON.stringify(serverData)
-  })
+  try {
+    const response = await csrfFetch('/api/servers', {
+      method: "POST",
+      body: JSON.stringify(serverData)
+    })
+  
+    const data = await response.json();
+    dispatch(addServer(data.server));
+    dispatch(setNewServer(data.server.id));
 
-  const data = await response.json();
-  dispatch(addServer(data.server));
-  dispatch(setNewServer(data.server.id));
-  return response;
+    return response;
+  } catch (res) {
+    const data = await res.clone().json();
+
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+    
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+
+    if (res.status === 401) dispatch(unauthorizedSession());
+  }
 }
 
 export const updateServer = (serverData) => async dispatch => {
@@ -66,21 +83,7 @@ export const updateServer = (serverData) => async dispatch => {
     // update server dispatch handled with broadcast subscription
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
@@ -93,21 +96,7 @@ export const deleteServer = (serverId) => async dispatch => {
     // delete server dispatch handled with broadcast subscription
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 

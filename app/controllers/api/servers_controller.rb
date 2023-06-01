@@ -60,7 +60,7 @@ class Api::ServersController < ApplicationController
   def verify_owner
     @server = Server.includes(:members).find(params[:id]);
     if @server.owner_id != current_user.id
-      render json: { errors: { error: "Must be server owner"} }, status: :unauthorized
+      render json: { errors: { error: "Must be server owner"} }, status: :forbidden
     end
   end
 

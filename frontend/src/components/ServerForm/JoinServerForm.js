@@ -1,9 +1,9 @@
 import './ServerForm.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addErrors, getErrors, removeErrors } from '../../store/errors';
+import { getErrors, removeErrors } from '../../store/errors';
 import { createMember } from '../../store/members';
-import { deleteDuplicateSession, getCurrentUser } from '../../store/session';
+import { getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 
 const JoinServerForm = () => {
@@ -61,24 +61,7 @@ const JoinServerForm = () => {
       memberId: sessionuser.id
     }
 
-    dispatch(createMember(memberData))
-    .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        data = await res.text();
-      }
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-      
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
-      if (res.status === 401 && !errors.messages) dispatch(deleteDuplicateSession());
-    });
+    dispatch(createMember(memberData));
   }
 
   return (

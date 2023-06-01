@@ -1,10 +1,9 @@
 import "./FriendsAdd.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addErrors, getErrors, removeErrors } from "../../../store/errors";
+import { getErrors, removeErrors } from "../../../store/errors";
 import { createFriendRequest } from "../../../store/friendRequests";
 import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
-import { deleteDuplicateSession } from "../../../store/session";
 
 const FriendsAdd = () => {
   const dispatch = useDispatch();
@@ -17,29 +16,9 @@ const FriendsAdd = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (button.disabled) return;
-
     if (errors) dispatch(removeErrors());
     
-    dispatch(createFriendRequest(username))
-    .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        data = await res.text();
-      }
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
-      
-      if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
-      else if (errors?.duplicate) dispatch(setAddFriendResult(true));
-    });
+    dispatch(createFriendRequest(username));
   }
 
   useEffect(() => {

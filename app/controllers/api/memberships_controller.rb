@@ -59,7 +59,7 @@ class Api::MembershipsController < ApplicationController
   private
   def verify_link 
     if !params[:server_id].match(/[1-9][0-9]*/)
-      render json: { errors: { error: "Please enter a valid number."} }, status: :unprocessable_entity
+      render json: { errors: { error: "Please enter a valid number."} }, status: :bad_request
     elsif !Server.find_by(id: params[:server_id])
       render json: { errors: { error: "Invalid server id."} }, status: :unprocessable_entity
     end
@@ -70,7 +70,7 @@ class Api::MembershipsController < ApplicationController
 
     # can update this later to also let admins kick/ban members
     if @membership.member_id != current_user.id
-      render json: { errors: { error: "Not authorized to delete this membership"} }, status: :unauthorized
+      render json: { errors: { error: "Not authorized to delete this membership"} }, status: :forbidden
     end
   end
 end

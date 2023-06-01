@@ -65,14 +65,14 @@ class Api::MessagesController < ApplicationController
   private
   def verify_membership
     if !current_user.channel_memberships.find(params[:channel_id])
-      render json: { errors: { error: "Must be a member to post messages"} }, status: :unauthorized
+      render json: { errors: { error: "Must be a member to post messages"} }, status: :forbidden
     end
   end
 
   def verify_author
     @message = Message.find(params[:id])
     if @message.author_id != current_user.id
-      render json: { errors: { error: "Must be author"} }, status: :unauthorized
+      render json: { errors: { error: "Must be author"} }, status: :forbidden
     end
   end
 

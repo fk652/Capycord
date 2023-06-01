@@ -1,4 +1,6 @@
 import csrfFetch from "./csrf";
+import { unauthorizedSession } from "./session";
+import { setHomeRedirect } from "./ui";
 
 const RESET_CHANNELS = 'channels/resetChannels';
 const SET_CHANNELS = 'channels/setChannels';
@@ -30,11 +32,14 @@ export const getChannelServerId = (state) => {
 }
 
 export const fetchChannels = (serverId) => async dispatch => {
-  const response = await csrfFetch(`/api/servers/${serverId}/channels`);
-
-  if (response.ok) {
+  try {
+    const response = await csrfFetch(`/api/servers/${serverId}/channels`);
+  
     const data = await response.json();
     dispatch(setChannels(serverId, data.channels));
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
+    else dispatch(setHomeRedirect(true));
   }
 }
 

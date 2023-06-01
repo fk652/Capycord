@@ -38,7 +38,7 @@ class ApplicationController < ActionController::API
 
   def require_logged_out
     if logged_in?
-      render json: { message: 'Must be logged out' }, status: 403 
+      render json: { message: 'Must be logged out' }, status: :forbidden
     end
   end
 

@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { getCurrentUser, login } from "../../../store/session";
-import { addErrors, getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
+import { getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
-import { getAlreadyLoggedIn, setAlreadyLoggedIn } from '../../../store/ui';
+import { getUnauthorized, setUnauthorized } from '../../../store/ui';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const LoginForm = () => {
   const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
   const errorStatus = useSelector(getErrorStatus);
-  const alreadyLoggedIn = useSelector(getAlreadyLoggedIn);
+  const unauthorized = useSelector(getUnauthorized);
   document.title = 'Capycord';
 
   const [email, setEmail] = useState("");
@@ -32,31 +32,15 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (errors) dispatch(removeErrors());
-    if (alreadyLoggedIn) dispatch(setAlreadyLoggedIn(false));
+    if (unauthorized) dispatch(setUnauthorized(false));
 
-    dispatch(login({ email, password }))
-    .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        data = await res.text();
-      }
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
-    });
+    dispatch(login({ email, password }));
   };
     
   const demoLogin = (e, user) => {
     e.preventDefault();
     if (errors) dispatch(removeErrors());
-    if (alreadyLoggedIn) dispatch(setAlreadyLoggedIn(false));
+    if (unauthorized) dispatch(setUnauthorized(false));
 
     const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com';
     dispatch(login({email, password: 'password123'}));
@@ -68,7 +52,7 @@ const LoginForm = () => {
     <div className="form-wrapper">
       <div className="form-container">
         {
-          alreadyLoggedIn
+          unauthorized
             ? <span className="unauthorized-message">Unauthorized - logged in elsewhere</span>
             : null
         }

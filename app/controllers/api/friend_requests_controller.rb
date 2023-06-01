@@ -85,14 +85,14 @@ class Api::FriendRequestsController < ApplicationController
   def verify_request_sender
     @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
     if @request.sender_id != current_user.id
-      render json: { errors: { error: "Must be owner to delete this request"} }, status: :unauthorized
+      render json: { errors: { error: "Must be owner to delete this request"} }, status: :forbidden
     end
   end
 
   def verify_request_receiver
     @request = FriendRequest.includes(:sender, :receiver).find(params[:id])
     if @request.receiver_id != current_user.id
-      render json: { errors: { error: "Must be the receiver"} }, status: :unauthorized
+      render json: { errors: { error: "Must be the receiver"} }, status: :forbidden
     end
   end
 end

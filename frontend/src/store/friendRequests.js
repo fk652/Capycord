@@ -1,14 +1,14 @@
 import csrfFetch from "./csrf";
 import { addErrors } from "./errors";
 import { addFriend } from "./friends";
-import { deleteDuplicateSession } from "./session";
+import { unauthorizedSession } from "./session";
 import { setAddFriendResult } from "./ui";
 
 const RESET_FRIEND_REQUESTS = 'friendRequests/resetFriendRequests';
 const SET_FRIEND_REQUESTS = 'friendRequests/setFriendRequests';
 const ADD_SENT_REQUEST = 'friendRequests/addSentRequest';
 const REMOVE_SENT_REQUEST = 'friendRequests/removeSentRequest';
-const ADD_RECEIVED_REQUEST = 'friendRequests/addReceivedRequest'; // to be used later
+const ADD_RECEIVED_REQUEST = 'friendRequests/addReceivedRequest';
 const REMOVE_RECEIVED_REQUEST = 'friendRequests/removeReceivedRequest';
 
 export const resetFriendRequests = () => ({
@@ -50,25 +50,42 @@ export const getFriendRequests = (state) => {
 }
 
 export const fetchFriendRequests = () => async dispatch => {
-  const response = await csrfFetch('/api/friend_requests');
+  try {
+    const response = await csrfFetch('/api/friend_requests');
 
-  if (response.ok) {
     const data = await response.json();
     dispatch(setFriendRequests(data.friendRequests));
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
 export const createFriendRequest = (username) => async dispatch => {
-  const response = await csrfFetch('/api/friend_requests', {
-    method: 'POST',
-    body: JSON.stringify({username})
-  })
+  try {
+    const response = await csrfFetch('/api/friend_requests', {
+      method: 'POST',
+      body: JSON.stringify({username})
+    })
+    
+    const data = await response.json();
+    dispatch(addSentRequest(data.friendRequest));
+    dispatch(setAddFriendResult(true));
   
-  const data = await response.json();
-  dispatch(addSentRequest(data.friendRequest));
-  dispatch(setAddFriendResult(true));
+    return response;
+  } catch (res) {
+    const data = await res.clone().json();
 
-  return response;
+    const errors = {
+      status: res.status,
+      messages: null
+    }
+
+    if (data?.errors) errors.messages = data.errors;
+    dispatch(addErrors(errors));
+    
+    if (res.status === 401) dispatch(unauthorizedSession())
+    else if (errors?.duplicate) dispatch(setAddFriendResult(true));
+  }
 }
 
 export const cancelSentRequest = (requestId) => async dispatch => {
@@ -80,21 +97,7 @@ export const cancelSentRequest = (requestId) => async dispatch => {
     dispatch(removeSentRequest(requestId));
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
@@ -111,21 +114,7 @@ export const acceptReceivedRequest = (requestId) => async dispatch => {
 
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
@@ -139,21 +128,7 @@ export const ignoreReceivedRequest = (requestId) => async dispatch => {
     dispatch(removeReceivedRequest(requestId));
     return response;
   } catch (res) {
-    let data;
-    try {
-        data = await res.clone().json();
-    } catch {
-        data = await res.text();
-    }
-    
-    const errors = {
-      status: res.status,
-      messages: null
-    }
-  
-    if (data?.errors) errors.messages = data.errors;
-    dispatch(addErrors(errors));
-    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
+    if (res.status === 401) dispatch(unauthorizedSession());
   }
 }
 
@@ -163,7 +138,8 @@ const initialState = {
 }
 
 const friendRequestsReducer = (state = initialState, action) => {
-  let newState = {sent: {...state.sent}, received: {...state.received}}
+  let newState = {sent: {...state.sent}, received: {...state.received}};
+
   switch (action.type) {
     case RESET_FRIEND_REQUESTS:
       return initialState

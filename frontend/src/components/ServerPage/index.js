@@ -4,43 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
-import { setScroll, setSelectedServer } from '../../store/ui';
+import { getHomeRedirect, setHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
-import { deleteDuplicateSession, getCurrentUser } from '../../store/session';
-import { addErrors } from '../../store/errors';
+import { getCurrentUser } from '../../store/session';
 import MainSideBar from '../MainSideBar';
 import MessageDisplay from '../MessageDisplay';
 import consumer from '../../consumer';
 
 const ServerPage = () => {
-  const sessionUser = useSelector(getCurrentUser);
-  const {serverId, channelId} = useParams();
+  const dispatch = useDispatch();
   const history = useHistory();
 
-  const dispatch = useDispatch();
+  const homeRedirect = useSelector(getHomeRedirect);
+  const sessionUser = useSelector(getCurrentUser);
+  const {serverId, channelId} = useParams();
+
+  useEffect(() => {
+    if (homeRedirect) {
+      (async () => await dispatch(setHomeRedirect(false)))();
+      history.push(`/home`);
+    }
+  }, [homeRedirect])
+
   useEffect(() => {
     if (sessionUser) {
       dispatch(setSelectedServer(serverId));
-      dispatch(fetchChannels(serverId))
-      .catch(async (res) => {
-          let data;
-          try {
-              data = await res.clone().json();
-          } catch {
-              data = await res.text();
-            }
-          
-          const errors = {
-            status: res.status,
-            messages: null
-          }
-        
-          if (data?.errors) errors.messages = data.errors;
-          dispatch(addErrors(errors));
-          if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
-          else history.push(`/home`);
-        });
-        dispatch(fetchMembers(serverId));
+      dispatch(fetchChannels(serverId));
+      dispatch(fetchMembers(serverId));
     }
 
     const subscription = consumer.subscriptions.create(
@@ -82,21 +72,7 @@ const ServerPage = () => {
   
   useEffect(() => {
     if (channelId && sessionUser) {
-      dispatch(fetchMessages(channelId))
-      .catch(async (res) => {
-        let data = await res.clone().json();
-        
-        const errors = {
-          status: res.status,
-          messages: null
-        }
-        
-        if (data?.errors) errors.messages = data.errors;
-        dispatch(addErrors(errors));
-        
-        if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
-        else history.push(`/home`);
-      });
+      dispatch(fetchMessages(channelId));
     }
 
     const subscription = consumer.subscriptions.create(

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { getCurrentUser, signup } from "../../../store/session";
-import { addErrors, getErrors, removeErrors } from '../../../store/errors';
+import { getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
 
 const SignupFormPage = () => {
@@ -28,24 +28,7 @@ const SignupFormPage = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(signup({ email, username, password }))
-    .catch(async (res) => {
-      let data;
-      try {
-        data = await res.clone().json();
-      } catch {
-        data = await res.text();
-      }
-
-      const errors = {
-        status: res.status,
-        messages: null
-      }
-
-      if (data?.errors) errors.messages = data.errors;
-      dispatch(addErrors(errors));
-    });
+    dispatch(signup({ email, username, password }));
   };
   
   if (sessionUser) return <Redirect to="/home" />;
