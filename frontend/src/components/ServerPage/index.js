@@ -6,7 +6,7 @@ import { fetchChannels, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
 import { setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
-import { deleteSession, getCurrentUser } from '../../store/session';
+import { deleteDuplicateSession, getCurrentUser } from '../../store/session';
 import { addErrors } from '../../store/errors';
 import MainSideBar from '../MainSideBar';
 import MessageDisplay from '../MessageDisplay';
@@ -39,7 +39,7 @@ const ServerPage = () => {
         
           if (data?.errors) errors.messages = data.errors;
           dispatch(addErrors(errors));
-          if (res.status === 401) dispatch(deleteSession());
+          if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
           else history.push(`/home`);
         });
         dispatch(fetchMembers(serverId));
@@ -96,7 +96,7 @@ const ServerPage = () => {
         if (data?.errors) errors.messages = data.errors;
         dispatch(addErrors(errors));
         
-        if (res.status === 401) dispatch(deleteSession())
+        if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
         else history.push(`/home`);
       });
     }

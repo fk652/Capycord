@@ -6,6 +6,7 @@ import { Redirect, Link } from "react-router-dom";
 import { getCurrentUser, login } from "../../../store/session";
 import { addErrors, getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
 import AboutMe from '../../AboutMe';
+import { getAlreadyLoggedIn, setAlreadyLoggedIn } from '../../../store/ui';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const LoginForm = () => {
   const sessionUser = useSelector(getCurrentUser);
   const errors = useSelector(getErrors);
   const errorStatus = useSelector(getErrorStatus);
+  const alreadyLoggedIn = useSelector(getAlreadyLoggedIn);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,6 +30,8 @@ const LoginForm = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (errors) dispatch(removeErrors());
+    if (alreadyLoggedIn) dispatch(setAlreadyLoggedIn(false));
 
     dispatch(login({ email, password }))
     .catch(async (res) => {
@@ -50,6 +54,9 @@ const LoginForm = () => {
     
   const demoLogin = (e, user) => {
     e.preventDefault();
+    if (errors) dispatch(removeErrors());
+    if (alreadyLoggedIn) dispatch(setAlreadyLoggedIn(false));
+
     const email = user === 1 ? 'capybara@gmail.com' : 'capybara2@gmail.com';
     dispatch(login({email, password: 'password123'}));
   }
@@ -60,7 +67,7 @@ const LoginForm = () => {
     <div className="form-wrapper">
       <div className="form-container">
         {
-          errorStatus && errorStatus === 401 && !errors
+          alreadyLoggedIn
             ? <span className="unauthorized-message">Unauthorized - logged in elsewhere</span>
             : null
         }

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { addErrors } from '../../../../store/errors'
 import { createMessage } from '../../../../store/messages'
-import { deleteSession } from '../../../../store/session'
+import { deleteDuplicateSession } from '../../../../store/session'
 
 const MessageInput = ({channelInfo}) => {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ const MessageInput = ({channelInfo}) => {
       if (data?.errors) errors.messages = data.errors;
       dispatch(addErrors(errors));
       
-      if (res.status === 401) dispatch(deleteSession())
+      if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
     });
 
     setMessage('');

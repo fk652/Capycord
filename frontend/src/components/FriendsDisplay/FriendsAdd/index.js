@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addErrors, getErrors, removeErrors } from "../../../store/errors";
 import { createFriendRequest } from "../../../store/friendRequests";
 import { getAddFriendResult, setAddFriendResult } from "../../../store/ui";
-import { deleteSession } from "../../../store/session";
+import { deleteDuplicateSession } from "../../../store/session";
 
 const FriendsAdd = () => {
   const dispatch = useDispatch();
@@ -29,15 +29,16 @@ const FriendsAdd = () => {
         data = await res.text();
       }
 
-      const newErrors = {
+      const errors = {
         status: res.status,
         messages: null
       }
-      if (data?.errors) newErrors.messages = data.errors;
-      dispatch(addErrors(newErrors));
+
+      if (data?.errors) errors.messages = data.errors;
+      dispatch(addErrors(errors));
       
-      if (res.status === 401) dispatch(deleteSession())
-      else if (newErrors?.duplicate) dispatch(setAddFriendResult(true));
+      if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession())
+      else if (errors?.duplicate) dispatch(setAddFriendResult(true));
     });
   }
 

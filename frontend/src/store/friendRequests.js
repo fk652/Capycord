@@ -1,7 +1,7 @@
 import csrfFetch from "./csrf";
 import { addErrors } from "./errors";
 import { addFriend } from "./friends";
-import { deleteSession } from "./session";
+import { deleteDuplicateSession } from "./session";
 import { setAddFriendResult } from "./ui";
 
 const RESET_FRIEND_REQUESTS = 'friendRequests/resetFriendRequests';
@@ -94,7 +94,7 @@ export const cancelSentRequest = (requestId) => async dispatch => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 }
 
@@ -125,7 +125,7 @@ export const acceptReceivedRequest = (requestId) => async dispatch => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 }
 
@@ -153,7 +153,7 @@ export const ignoreReceivedRequest = (requestId) => async dispatch => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 }
 

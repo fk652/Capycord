@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addErrors, getErrors, removeErrors } from '../../store/errors';
 import { createMember } from '../../store/members';
-import { deleteSession, getCurrentUser } from '../../store/session';
+import { deleteDuplicateSession, getCurrentUser } from '../../store/session';
 import { getNewServer, getServerSlide, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 
 const JoinServerForm = () => {
@@ -77,7 +77,7 @@ const JoinServerForm = () => {
       
       if (data?.errors) errors.messages = data.errors;
       dispatch(addErrors(errors));
-      if (res.status === 401) dispatch(deleteSession());
+      if (res.status === 401 && !errors.messages) dispatch(deleteDuplicateSession());
     });
   }
 

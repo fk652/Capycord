@@ -1,4 +1,5 @@
 const RESET_UI = 'ui/reset';
+const SET_ALREADY_LOGGED_IN = "ui/setAlreadyLoggedIn";
 const SET_FRIEND_NAV_TAB = "ui/setFriendNavTab";
 const SET_SELECTED_SERVER = "ui/setSelectedServer";
 const SET_ADD_FRIEND_RESULT = "ui/setAddFriendResult";
@@ -20,6 +21,11 @@ const SET_QUICK_DELETE = "ui/setQuickDelete";
 
 export const resetUi = () => ({
   type: RESET_UI
+})
+
+export const setAlreadyLoggedIn = (toggle) => ({
+  type: SET_ALREADY_LOGGED_IN,
+  toggle
 })
 
 export const setFriendNav = (selectedTab) => ({
@@ -113,6 +119,10 @@ export const setQuickDelete = (toggle) => ({
 })
 // ---------------------------------------------------------
 
+export const getAlreadyLoggedIn = (state) => {
+  return state.ui.alreadyLoggedIn
+}
+
 export const getSelectedFriendNavTab = (state) => {
   return state.ui.selectedFriendNavTab;
 }
@@ -186,6 +196,7 @@ export const getQuickDelete = (state) => {
 }
 
 const initialState = {
+  alreadyLoggedIn: false,
   selectedFriendNavTab: "friends-online",
   selectedServer: "home",
   addFriendResult: false,
@@ -210,6 +221,8 @@ const uiReducer = (state = initialState, action) => {
   switch (action.type) {
     case RESET_UI:
       return {...initialState}
+    case SET_ALREADY_LOGGED_IN:
+      return {...state, alreadyLoggedIn: action.toggle}
     case SET_FRIEND_NAV_TAB:
       return {...state, selectedFriendNavTab: action.selectedTab}
     case SET_SELECTED_SERVER:

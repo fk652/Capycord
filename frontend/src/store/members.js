@@ -1,7 +1,7 @@
 import csrfFetch from "./csrf";
 import { addErrors } from "./errors";
 import { addServer } from "./servers";
-import { deleteSession } from "./session";
+import { deleteDuplicateSession } from "./session";
 import { setNewServer } from "./ui";
 
 const RESET_MEMBERS = 'members/resetMembers';
@@ -69,7 +69,7 @@ export const fetchMembers = (serverId) => async dispatch => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 }
 
@@ -108,7 +108,7 @@ export const deleteMember = (memberId) => async dispatch => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 }
 

@@ -1,6 +1,6 @@
 import csrfFetch from './csrf';
 import { addErrors } from './errors';
-import { resetUi } from './ui';
+import { resetUi, setAlreadyLoggedIn } from './ui';
 
 const SET_CURRENT_USER = 'session/setCurrentUser';
 const REMOVE_CURRENT_USER = 'session/removeCurrentUser';
@@ -83,14 +83,15 @@ export const logout = () => async (dispatch) => {
   
     if (data?.errors) errors.messages = data.errors;
     dispatch(addErrors(errors));
-    if (res.status === 401) dispatch(deleteSession());
+    if (res.status === 401 && !data.errors) dispatch(deleteDuplicateSession());
   }
 };
 
-export const deleteSession = () => async (dispatch) => {
+export const deleteDuplicateSession = () => async (dispatch) => {
   storeCurrentUser(null);
   dispatch(removeCurrentUser());
   dispatch(resetUi());
+  dispatch(setAlreadyLoggedIn(true));
 }
 
 export const restoreSession = () => async dispatch => {
