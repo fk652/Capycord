@@ -10,6 +10,7 @@ const ChannelListItem = ({id, name, type, selected}) => {
 
   const sessionUser = useSelector(state => state.session.user);
   const serverInfo = useSelector(getServer(serverId));
+  if (selected && serverInfo) document.title = `Capycord | #${name} | ${serverInfo.name}`
 
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);

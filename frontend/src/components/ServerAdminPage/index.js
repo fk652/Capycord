@@ -10,6 +10,8 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
   const dispatch = useDispatch();
   const selectedTab = useSelector(getServerAdminTab);
   const [showModal, setShowModal] = useState(false);
+  
+  document.title = `Capycord | ${selectedTab} | ${serverInfo.name}`;
 
   const adminOptions = document.querySelectorAll('.admin-sidebar-option');
   let selectedOption = null;
@@ -19,8 +21,6 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
       selectedOption.classList.add('selected')
     }
   })
-
-  // document.title = `Capycord | ${selectedTab} | ${serverInfo.name}`
   
   useEffect(() => {
     return () => dispatch(setServerAdminTab("Overview"));

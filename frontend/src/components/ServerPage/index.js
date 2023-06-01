@@ -16,8 +16,6 @@ const ServerPage = () => {
   const sessionUser = useSelector(getCurrentUser);
   const {serverId, channelId} = useParams();
   const history = useHistory();
-  
-  // if (serverInfo) document.title = `Capycord | ${serverInfo.name}`
 
   const dispatch = useDispatch();
   useEffect(() => {

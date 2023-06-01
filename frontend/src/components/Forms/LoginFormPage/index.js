@@ -15,6 +15,7 @@ const LoginForm = () => {
   const errors = useSelector(getErrors);
   const errorStatus = useSelector(getErrorStatus);
   const alreadyLoggedIn = useSelector(getAlreadyLoggedIn);
+  document.title = 'Capycord';
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

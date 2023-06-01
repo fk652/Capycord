@@ -19,6 +19,7 @@ const ChannelSideBar = () => {
   let channels = useSelector(getChannels);
   let channelServerId = useSelector(getChannelServerId);
   const serverInfo = useSelector(getServer(serverId));
+  if (serverInfo) document.title = `Capycord | ${serverInfo.name}`
 
   const [showModal, setShowModal] = useState(false);
   const showServerAdminPage = useSelector(getShowServerAdminModal);

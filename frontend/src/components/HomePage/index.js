@@ -12,8 +12,7 @@ import consumer from '../../consumer';
 
 const HomePage = () => {
   const sessionUser = useSelector(getCurrentUser);
-
-  // document.title = `Capycord | Friends`
+  document.title = `Capycord | Friends`;
 
   const dispatch = useDispatch();
   useEffect(() => {
