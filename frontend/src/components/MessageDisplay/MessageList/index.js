@@ -1,37 +1,33 @@
 import './MessageList.css'
-
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import { useParams } from 'react-router-dom';
 import { getChannel } from '../../../store/channels';
 import { getMembersObject } from '../../../store/members';
 import { getMessages} from '../../../store/messages';
+import { getSetScroll, setQuickDelete, setScroll } from '../../../store/ui';
+import { getCurrentUser } from '../../../store/session';
 import MessageInput from './MessageInput';
 import MessageItem from './MessageItem';
 import FirstChannelMessage from './MessageItem/FirstMessages/FirstChannelMessage';
 import FirstServerMessage from './MessageItem/FirstMessages/FirstServerMessage';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
-import { useParams } from 'react-router-dom';
-import { getQuickDelete, getSetScroll, setQuickDelete, setScroll } from '../../../store/ui';
-import { getCurrentUser } from '../../../store/session';
-import { getEditMessageId } from '../../../store/ui';
 
 const MessageList = () => {
+  const dispatch = useDispatch();
+
   const {channelId} = useParams();
+  const [disabled, setDisabled] = useState(false);
   const scroll = useSelector(getSetScroll);
   const channelInfo = useSelector(getChannel(channelId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
   const sessionUser = useSelector(getCurrentUser);
-  const [disabled, setDisabled] = useState(false);
-  // const quickDelete = useSelector(getQuickDelete);
-  // const messageElement = document.querySelector(".messages-list");
 
   // add useEffect to retrieve more messages when scrolled to the top
-  // dependency array with scroll height
+  // with dependency array of scroll height
   
-  const dispatch = useDispatch();
   useEffect(() => {
     const messageElement = document.querySelector(".messages-list")
     if (messageElement && scroll) {
@@ -42,8 +38,6 @@ const MessageList = () => {
 
   useEffect(() => {
     const keydownListener = (e) => {
-      // e.preventDefault();
-      // if (e.repeat) return;
       const formModal = document.querySelector('.modal-form');
       const adminModal = document.querySelector('.setting-page-modal');
       const dropdownModal = document.querySelector('.server-settings');
@@ -172,7 +166,6 @@ const MessageList = () => {
         }
         <div className="message-list-spacer" />
       </div>
-      
       <MessageInput channelInfo={channelInfo}/>
     </div>
   )

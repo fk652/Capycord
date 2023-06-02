@@ -2,7 +2,7 @@ import "./HomePage.css"
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { setAnimateOfflineFriends, setSelectedServer } from "../../store/ui";
+import { getHomeRedirect, setAnimateOfflineFriends, setHomeRedirect, setSelectedServer } from "../../store/ui";
 import { addReceivedRequest, addSentRequest, fetchFriendRequests, removeReceivedRequest, removeSentRequest, resetFriendRequests } from "../../store/friendRequests";
 import { addFriend, removeFriend, fetchFriends, resetFriends } from "../../store/friends";
 import { getCurrentUser } from "../../store/session";
@@ -11,10 +11,16 @@ import FriendsDisplay from "../FriendsDisplay";
 import consumer from '../../consumer';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+
   const sessionUser = useSelector(getCurrentUser);
+  const homeRedirect = useSelector(getHomeRedirect);
   document.title = `Capycord | Friends`;
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (homeRedirect) dispatch(setHomeRedirect(false));
+  }, [homeRedirect])
+
   useEffect(() => {
     if (sessionUser) {
       dispatch(setSelectedServer("home"));

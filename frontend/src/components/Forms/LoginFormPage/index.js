@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, Link } from "react-router-dom";
 import { getCurrentUser, login } from "../../../store/session";
 import { getErrorStatus, getErrors, removeErrors } from '../../../store/errors';
-import AboutMe from '../../AboutMe';
 import { getUnauthorized, setUnauthorized } from '../../../store/ui';
+import AboutMe from '../../AboutMe';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const LoginForm = () => {
       <div className="form-container">
         {
           unauthorized
-            ? <span className="unauthorized-message">Unauthorized - logged in elsewhere</span>
+            ? <span className="unauthorized-message">Must be logged in or logged in elsewhere.</span>
             : null
         }
         <AboutMe />

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { fetchChannels, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
-import { getHomeRedirect, setHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
+import { getHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
 import { getCurrentUser } from '../../store/session';
 import MainSideBar from '../MainSideBar';
@@ -15,15 +15,12 @@ const ServerPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const homeRedirect = useSelector(getHomeRedirect);
   const sessionUser = useSelector(getCurrentUser);
+  const homeRedirect = useSelector(getHomeRedirect);
   const {serverId, channelId} = useParams();
 
   useEffect(() => {
-    if (homeRedirect) {
-      (async () => await dispatch(setHomeRedirect(false)))();
-      history.push(`/home`);
-    }
+    if (homeRedirect) history.push(`/home`);
   }, [homeRedirect])
 
   useEffect(() => {

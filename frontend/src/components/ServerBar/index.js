@@ -16,7 +16,7 @@ const ServerBar = () => {
 
   const {serverId} = useParams();
   const selected = useSelector(getSelectedServer);
-  const servers = useSelector(getServers)
+  const servers = useSelector(getServers);
 
   const [showModal, setShowModal] = useState(false);
   const [top, setTop] = useState(0);
