@@ -115,6 +115,7 @@
   flex-direction: column;
   width: calc(100% - 20px);
   margin: 16px;
+  margin-top: auto;
   
   text-overflow: ellipsis;
   white-space: pre-wrap;

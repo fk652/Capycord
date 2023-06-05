@@ -46,6 +46,7 @@ const MessageList = () => {
       const editInput = document.querySelector('.message-textarea.edit');
       if (e.key === "Shift" && !e.repeat) {
         dispatch(setQuickDelete(true))
+        document.getSelection().removeAllRanges();
       } else if (e.key === "Escape" && editInput) {
         setDisabled(true);
         setTimeout(() => setDisabled(false), 500);

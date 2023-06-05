@@ -43,6 +43,7 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
     if (disabled) return;
 
     if (quickDelete) {
+      document.getSelection().removeAllRanges();
       setDisabled(true);
       dispatch(deleteMessage(messageId));
     } else {
