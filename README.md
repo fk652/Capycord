@@ -4,7 +4,7 @@
 
 ## What is Capycord?
 
-Capycord is a clone of [Discord](https://discord.com/), a popular text/video/voice chat app where individuals and communities come together to hang out. Users can create servers for their friends and communities. Servers can be organized with different channels, and can be customized with a profile photo and name. Users also have friend lists to manage their friends and check who is online or not, as well as customize their own status, profile photo, and username. Users can also direct message each other and see notifications. I chose to clone Discord because I primarily hang out with friends online there.
+Capycord is a clone of [Discord](https://discord.com/), a popular text/video/voice chat app where individuals and communities come together to hang out. Users can create servers for their friends and communities. Servers can be organized with different channels, and can be customized with a profile photo and name. Friend lists are available to manage friends and check who is online. Users can also customize their own status, profile photo, and username. There's also direct messaging between users and live notifications. I chose to clone Discord because I primarily hang out and have fun gaming sessions with my friends there.
 
 ___
 
@@ -21,93 +21,78 @@ ___
 
 ## Feature List
 
-### Servers
+### **1. Friends**
 
-___
-
-Servers are where groups of people can text each other. Can also view the members listing and get live updates on member status changes.
-
-![server screenshot](./frontend/src/assets/readme_images/server.png)
-
-The ServerPage component fetches necessary channel and message data, and sets up
-
-```javascript
-const ServerPage = () => {
-  const sessionUser = useSelector(getCurrentUser);
-  const {serverId, channelId} = useParams();
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (sessionUser) {
-      dispatch(setSelectedServer(serverId));
-      dispatch(fetchChannels(serverId))
-      ... // error handling code
-      dispatch(fetchMembers(serverId));
-    }
-
-    ... // action cable subscription handling
-  }, [dispatch, serverId])
-  
-  useEffect(() => {
-    if (channelId && sessionUser) {
-      dispatch(fetchMessages(channelId))
-      ... // error handling
-    }
-
-    ... // action cable subscription handling
-
-    return () => {
-      subscription?.unsubscribe();
-      dispatch(resetMessages());
-      dispatch(setScroll(true));
-    }
-  }, [dispatch, channelId])
-  
-  if (!sessionUser) return <Redirect to="/login" />
-  
-  return (
-    <div className="server-page">
-      <HomeSideBar />
-      {
-        channelId 
-          ? <MessageDisplay />
-          : null
-      }
-    </div>
-  )
-}
-```
-
-### Friends List
-
-___
-
-Users can manage their friends, filter by their online status, and manage sent and incoming friend requests. Friend listings are live updated when any friend status changes or friends get added/deleted.
+Users can manage their friends, filter by their online status, and manage sent and incoming friend requests. Friend listings are updated live when any friend's status changes or when friends get added or deleted.
 
 ![friends screenshot](./frontend/src/assets/readme_images/friends.png)
 
-HomePage component fetches the necessary friends and requests data
+HomePage component fetches the necessary friends and requests data, and renders components to display it.
 
 ```javascript
 const HomePage = () => {
-  const sessionUser = useSelector(getCurrentUser);
-
   const dispatch = useDispatch();
+  const sessionUser = useSelector(getCurrentUser);
+  const homeRedirect = useSelector(getHomeRedirect);
+  document.title = `Capycord | Friends`;
+
+  // reset state for home redirect if user was redirected here
   useEffect(() => {
+    if (homeRedirect) dispatch(setHomeRedirect(false));
+  }, [homeRedirect])
+
+  // friends useEffect
+  useEffect(() => {
+    // fetch friend and request data from the backend api
     if (sessionUser) {
       dispatch(setSelectedServer("home"));
       dispatch(fetchFriends());
       dispatch(fetchFriendRequests());
     }
 
-    ... // action cable handling
+    // action cable subscription handling for friend and request live updates
+    const friendSubscription = consumer.subscriptions.create(
+      { channel: 'FriendsChannel' },
+      {
+        received: ({type, friend, friendRequest, id}) => {
+          switch (type) {
+            case "UPDATE_FRIEND":
+              dispatch(addFriend(friend));
+              break;
+            case "DELETE_FRIEND":
+              dispatch(removeFriend(id));
+              break;
+            case "ADD_FRIEND":
+              dispatch(addFriend(friend));
+              break;
+            case "DELETE_SENT_REQUEST":
+              dispatch(removeSentRequest(id));
+              break;
+            case "UPDATE_SENT_REQUEST":
+              dispatch(addSentRequest(friendRequest));
+              break;
+            case "ADD_INCOMING_REQUEST":
+              dispatch(addReceivedRequest(friendRequest));
+              break;
+            case "DELETE_INCOMING_REQUEST":
+              dispatch(removeReceivedRequest(id));
+              break;
+            case "UPDATE_INCOMING_REQUEST":
+              dispatch(addReceivedRequest(friendRequest));
+              break;
+            default:
+              // unknown broadcast type
+          }
+        }
+      }
+    );
 
+    // cleanup when leaving home page
     return () => {
       friendSubscription?.unsubscribe();
       dispatch(resetFriends());
       dispatch(resetFriendRequests());
-      dispatch(setHomePageLoad(false));
+      dispatch(setAnimateOfflineFriends(false));
     }
   }, [dispatch])
   
@@ -115,14 +100,14 @@ const HomePage = () => {
 
   return (
     <div className="home">
-      <HomeSideBar />
+      <MainSideBar />
       <FriendsDisplay />
     </div>
   )
 }
 ```
 
-FriendsDisplay component chooses the appropriate friends tab to display which each read through the appropriate redux data fetched from HomePage.
+FriendsDisplay component displays the selected friends tab.
 
 ``` javascript
 const FriendsDisplay = () => {
@@ -154,15 +139,133 @@ const FriendsDisplay = () => {
 }
 ```
 
-### Live Chat
+### **2. Servers**
 
-___
+Servers are where groups of people can text each other. Can also view the members listing and get live updates on member status changes and listing updates.
 
-Users can message each other within server channels. Can post and delete messages which gets updated in realtime for everyone seeing the channel.
+![server screenshot](./frontend/src/assets/readme_images/server.png)
+
+The ServerPage component fetches necessary channel and message data, and renders components to display it.
+
+```javascript
+const ServerPage = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const sessionUser = useSelector(getCurrentUser);
+  const homeRedirect = useSelector(getHomeRedirect);
+  const {serverId, channelId} = useParams();
+
+  // redirect to home when accessing invalid servers or channels
+  useEffect(() => {
+    if (homeRedirect) history.push(`/home`);
+  }, [homeRedirect])
+
+  // server switching useEffect
+  useEffect(() => {
+    // fetch channel and member data from the backend api
+    if (sessionUser) {
+      dispatch(setSelectedServer(serverId));
+      dispatch(fetchChannels(serverId));
+      dispatch(fetchMembers(serverId));
+    }
+
+    // action cable subscription handling for member and channel live updates
+    const subscription = consumer.subscriptions.create(
+      { channel: 'ServersChannel', id: serverId },
+      {
+        received: ({type, member, id}) => {
+          switch (type) {
+            case "UPDATE_MEMBER":
+              dispatch(addMember(member));
+              break;
+            case "DELETE_MEMBER":
+              dispatch(removeMember(id));
+              break;
+            case "ADD_MEMBER":
+              dispatch(addMember(member));
+              break;
+            ... // channel CRUD broadcasts to be implemented here
+            default:
+              // unknown broadcast type
+          }
+        }
+      }
+    );
+
+    // cleanup when leaving server page
+    return () => {
+      subscription?.unsubscribe();
+      dispatch(resetChannels());
+      dispatch(resetMembers());
+    }
+  }, [dispatch, serverId])
+  
+  // channel switching useEffect
+  useEffect(() => {
+    // fetch message data from the backend api
+    if (channelId && sessionUser) {
+      dispatch(fetchMessages(channelId));
+    }
+
+    // action cable subscription handling for message live updates
+    const subscription = consumer.subscriptions.create(
+      { channel: 'MessagesChannel', id: channelId },
+      {
+        received: ({type, message, id}) => {
+          switch (type) {
+            case "RECEIVE_MESSAGE":
+              ... // message list scroll handling
+                
+              dispatch(addMessage(message));
+
+              ... // message list scroll handling
+              break;
+            case "DESTROY_MESSAGE":
+              dispatch(removeMessage(id));
+              break;
+            case "UPDATE_MESSAGE":
+              dispatch(addMessage(message));
+              break;
+            default:
+              // unknown broadcast type
+          }
+        }
+      }
+    );
+
+    // cleanup when leaving channel page
+    return () => {
+      subscription?.unsubscribe();
+      dispatch(resetMessages());
+      dispatch(setScroll(true));
+    }
+  }, [dispatch, channelId])
+  
+  if (!sessionUser) return <Redirect to="/login" />
+  
+  return (
+    <div className="server-page">
+      <MainSideBar />
+      {
+        channelId 
+          ? <MessageDisplay />
+          : null
+      }
+    </div>
+  )
+}
+```
+
+### **3. Messaging**
+
+Users can message each other within server channels. Can post, edit, and delete messages which gets updated live for everyone else currently viewing the channel.
 
 ![messages screenshot](./frontend/src/assets/readme_images/chat.png)
 
-MessageDisplay subcomponents will use and display the messages data fetched from the ServerPage.
+MessageDisplay subcomponents will display the fetched members and messages data.  
+MessageList subcomponents display MessageItems and a MessageInput for submitting new messages.  
+MessageItems displays author info, time posted, and edit/delete options if user is the author.
 
 ```javascript
 const MessageDisplay = () => {
@@ -179,108 +282,68 @@ const MessageDisplay = () => {
 }
 ```
 
-### Notifications
+### **4. Live Notifications**
 
-___
+Live notification updates for change in members, friends, requests, messages, and more. This makes up the live service aspect of the application.
 
-Includes live updates for change in member status, friends, requests, and messages.
+Implemented in the Rails backend using Action Cable, and using an Action Cable npm library in the React frontend. Uses a redis database to manage web socket connections.
 
-Implemented in the Rails backend using Action Cable, and using an Action Cable npm library in the React frontend. Uses a redis database to manage web connections.
-
-Example of broadcasting status updates on the backend when logging out.
+Example of broadcasting notifications on the backend when deleting or updating a server.
 
 ```ruby
-def destroy
-  if current_user
-    memberships = current_user.memberships.includes(:server)
-    friendships1 = current_user.friendships1.includes(:user2, :user1)
-    friendships2 = current_user.friendships2.includes(:user1, :user2)
-    sent = current_user.sent_friend_requests.includes(:receiver, :sender)
-    received = current_user.received_friend_requests.includes(:sender, :receiver)
-
-    logout!()
-
-    memberships.each do |membership|
-      ServersChannel.broadcast_to(
-        membership.server,
-        type: 'UPDATE_MEMBER',
-        **from_template('api/memberships/show', membership: membership)
+def destroy 
+  if @server.destroy
+    # broadcast deleted server to every member, through users channel
+    @server.members.each do |member|
+      p @server.id
+      UsersChannel.broadcast_to(
+        member,
+        type: 'DELETE_SERVER',
+        id: @server.id
       )
     end
+    
+    head :no_content
+  else
+    render json: { errors: @server.errors }, status: :unprocessable_entity
+  end
+end
 
-    friendships1.each do |friendship|
-      FriendsChannel.broadcast_to(
-        friendship.user2,
-        type: 'UPDATE_FRIEND',
-        **from_template('api/friends/show', friendship: friendship, friend: friendship.user1)
+def update
+  # broadcast updated server info to each server member, through users channel
+  if @server.update(update_params)
+    @server.members.each do |member|
+      UsersChannel.broadcast_to(
+        member,
+        type: 'UPDATE_SERVER',
+        **from_template('api/servers/show', server: @server)
       )
-    end
-
-    friendships2.each do |friendship|
-      FriendsChannel.broadcast_to(
-        friendship.user1,
-        type: 'UPDATE_FRIEND',
-        **from_template('api/friends/show', friendship: friendship, friend: friendship.user2)
-      )
-    end
-
-    sent.each do |request|
-      if request.status === "pending"
-        FriendsChannel.broadcast_to(
-          request.receiver,
-          type: 'UPDATE_INCOMING_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: request, receiver: request.sender)
-        )
-      end
-    end
-
-    received.each do |request|
-      if request.status === "pending"
-        FriendsChannel.broadcast_to(
-          request.sender,
-          type: 'UPDATE_SENT_REQUEST',
-          **from_template('api/friend_requests/show', friend_request: request, receiver: request.receiver)
-        )
-      end
     end
 
     head :no_content
+  else
+    render json: { errors: @server.errors }, status: :unprocessable_entity
   end
 end
 ```
 
-Example of the frontend subscribing to friend broadcasts and dispatching the appropriate redux actions
+Example of the frontend subscribing to those broadcasts and dispatching the appropriate redux actions.
 
 ```javascript
-const friendSubscription = consumer.subscriptions.create(
-  { channel: 'FriendsChannel' },
+const subscription = consumer.subscriptions.create(
+  { channel: 'UsersChannel' },
   {
-    received: ({type, friend, friendRequest, id}) => {
+    received: ({type, server, id}) => {
       switch (type) {
-        case "UPDATE_FRIEND":
-          dispatch(addFriend(friend));
+        case "UPDATE_SERVER":
+          dispatch(addServer(server));
           break;
-        case "DELETE_FRIEND":
-          dispatch(removeFriend(id));
+        case "DELETE_SERVER":
+          dispatch(removeServer(id));
+          dispatch(setDeletedServerId(id));
           break;
-        case "ADD_FRIEND":
-          dispatch(addFriend(friend));
-          break;
-        case "DELETE_SENT_REQUEST":
-          dispatch(removeSentRequest(id));
-          break;
-        case "ADD_INCOMING_REQUEST":
-          dispatch(addReceivedRequest(friendRequest));
-          break;
-        case "DELETE_INCOMING_REQUEST":
-          dispatch(removeReceivedRequest(id));
-          break;
-        case "UPDATE_INCOMING_REQUEST":
-          dispatch(addReceivedRequest(friendRequest));
-          break;
-        case "UPDATE_SENT_REQUEST":
-          dispatch(addSentRequest(friendRequest));
-          break;
+        default:
+          // unknown broadcast type
       }
     }
   }
