@@ -13,14 +13,16 @@ import FirstChannelMessage from './MessageItem/FirstMessages/FirstChannelMessage
 import FirstServerMessage from './MessageItem/FirstMessages/FirstServerMessage';
 import SimpleMessageItem from './MessageItem/SimpleMessageItem';
 import TimeDivider from './MessageItem/TimeDivider';
+import { getServer } from '../../../store/servers';
 
 const MessageList = () => {
   const dispatch = useDispatch();
 
-  const {channelId} = useParams();
+  const {serverId, channelId} = useParams();
   const [disabled, setDisabled] = useState(false);
   const scroll = useSelector(getSetScroll);
   const channelInfo = useSelector(getChannel(channelId));
+  const serverInfo = useSelector(getServer(serverId));
   const messages = useSelector(getMessages);
   const members = useSelector(getMembersObject);
   const sessionUser = useSelector(getCurrentUser);
@@ -78,13 +80,13 @@ const MessageList = () => {
   let previousTime = null;
   let previousUser = null;
   let previousUserTime = null;
-  if (!messages || !members || !channelInfo) return <div className="message-list-wrapper" />;
+  if (!messages || !members || !channelInfo || !serverInfo) return <div className="message-list-wrapper" />;
   
   return (
     <div className="message-list-wrapper">
       <div className="messages-list">
         {
-          channelInfo.first
+          channelInfo.id === serverInfo.firstChannelId
             ? <FirstServerMessage />
             : <FirstChannelMessage channelInfo={channelInfo} />
         }

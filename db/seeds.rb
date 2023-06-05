@@ -11,7 +11,6 @@ ApplicationRecord.transaction do
   ApplicationRecord.connection.reset_pk_sequence!('channels')
   ApplicationRecord.connection.reset_pk_sequence!('messages')
   ApplicationRecord.connection.reset_pk_sequence!('memberships')
-  ApplicationRecord.connection.reset_pk_sequence!('server_invites')
   ApplicationRecord.connection.reset_pk_sequence!('friends')
   ApplicationRecord.connection.reset_pk_sequence!('friend_requests')
   
@@ -118,13 +117,11 @@ ApplicationRecord.transaction do
   
   (0...profile_image_urls.length).each do |i| 
     users << User.create!({
-      # username: Faker::Internet.unique.username(specifier: 3),
       username: usernames[i],
       email: Faker::Internet.unique.email,
       password: 'password',
       online_status: User::STATUS[0..1].sample(),
       set_online_status: User::STATUS[1..-1].sample(),
-      # custom_status: [Faker::Quote.unique.famous_last_words, ''].sample(),
       custom_status: customs[i],
       profile_picture_url: profile_image_urls[i],
       created_at: rand(10.0..20.0).days.ago
@@ -308,10 +305,6 @@ ApplicationRecord.transaction do
   rand_messages.each do |message|
     messages << Message.create!(message)
   end
-
-  # puts "Creating server invites..."
-  # to do later
-  # should only be invites to and from demo users
 
   puts "Creating friendships..."
   demo_users = users[2..-1]

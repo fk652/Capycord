@@ -2,13 +2,14 @@
 #
 # Table name: servers
 #
-#  id          :bigint           not null, primary key
-#  name        :string           not null
-#  owner_id    :bigint           not null
-#  picture_url :string
-#  invite_link :string           not null
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
+#  id               :bigint           not null, primary key
+#  name             :string           not null
+#  owner_id         :bigint           not null
+#  picture_url      :string
+#  invite_link      :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  first_channel_id :bigint
 #
 class Server < ApplicationRecord
   validates :owner_id, presence: true
@@ -16,8 +17,7 @@ class Server < ApplicationRecord
   validates :invite_link, uniqueness: true
 
   before_create :add_invite_link
-  after_create :add_owner_membership
-  after_create :create_first_channel
+  after_create :add_owner_membership, :create_first_channel
 
   has_one_attached :photo
 
@@ -44,10 +44,12 @@ class Server < ApplicationRecord
   end
 
   def create_first_channel
-    Channel.create!({
+    first_channel = Channel.create!({
       name: "general",
-      server_id: self.id,
-      first: true
+      server_id: self.id
     })
+
+    self.first_channel_id = first_channel.id
+    self.save!
   end
 end

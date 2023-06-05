@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_05_012054) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,7 +47,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
     t.bigint "server_id", null: false
     t.string "channel_type", default: "text", null: false
     t.string "description"
-    t.boolean "first", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["server_id"], name: "index_channels_on_server_id"
@@ -94,18 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
     t.index ["channel_id"], name: "index_messages_on_channel_id"
   end
 
-  create_table "server_invites", force: :cascade do |t|
-    t.bigint "server_id", null: false
-    t.bigint "sender_id", null: false
-    t.bigint "receiver_id", null: false
-    t.string "status", default: "pending", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["receiver_id"], name: "index_server_invites_on_receiver_id"
-    t.index ["sender_id"], name: "index_server_invites_on_sender_id"
-    t.index ["server_id"], name: "index_server_invites_on_server_id"
-  end
-
   create_table "servers", force: :cascade do |t|
     t.string "name", null: false
     t.bigint "owner_id", null: false
@@ -113,6 +100,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
     t.string "invite_link", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "first_channel_id"
     t.index ["invite_link"], name: "index_servers_on_invite_link", unique: true
     t.index ["owner_id"], name: "index_servers_on_owner_id"
   end
@@ -144,8 +132,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_06_144042) do
   add_foreign_key "memberships", "users", column: "member_id"
   add_foreign_key "messages", "channels"
   add_foreign_key "messages", "users", column: "author_id"
-  add_foreign_key "server_invites", "servers"
-  add_foreign_key "server_invites", "users", column: "receiver_id"
-  add_foreign_key "server_invites", "users", column: "sender_id"
   add_foreign_key "servers", "users", column: "owner_id"
 end
