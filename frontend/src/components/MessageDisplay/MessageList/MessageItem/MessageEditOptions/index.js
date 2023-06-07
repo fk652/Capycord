@@ -20,6 +20,11 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
 
   const showHandler = (type) => (e) => {
     e.preventDefault();
+    
+    if (document.activeElement?.nodeName !== "TEXTAREA") {
+      document.getSelection().removeAllRanges();
+    }
+
     setCurrentModal(type);
     setShowModal(true);
 
@@ -43,7 +48,10 @@ const MessageEditOptions = ({messageId, message, date, extraTimeInfo}) => {
     if (disabled) return;
 
     if (quickDelete) {
-      document.getSelection().removeAllRanges();
+      if (document.activeElement?.nodeName !== "TEXTAREA") {
+        document.getSelection().removeAllRanges();
+      }
+
       setDisabled(true);
       dispatch(deleteMessage(messageId));
     } else {

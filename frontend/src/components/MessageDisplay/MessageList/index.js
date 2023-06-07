@@ -47,8 +47,7 @@ const MessageList = () => {
 
       const editInput = document.querySelector('.message-textarea.edit');
       if (e.key === "Shift" && !e.repeat) {
-        dispatch(setQuickDelete(true))
-        document.getSelection().removeAllRanges();
+        dispatch(setQuickDelete(true));
       } else if (e.key === "Escape" && editInput) {
         setDisabled(true);
         setTimeout(() => setDisabled(false), 500);
@@ -71,6 +70,7 @@ const MessageList = () => {
     document.addEventListener("keyup", keyupListener);
 
     return () => {
+      dispatch(setQuickDelete(false));
       document.removeEventListener("keydown", keydownListener);
       document.removeEventListener("keyup", keyupListener);
     }
