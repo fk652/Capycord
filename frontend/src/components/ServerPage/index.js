@@ -2,7 +2,7 @@ import './ServerPage.css'
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
-import { fetchChannels, resetChannels } from '../../store/channels';
+import { addChannel, fetchChannels, removeChannel, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
 import { getHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
@@ -33,7 +33,7 @@ const ServerPage = () => {
     const subscription = consumer.subscriptions.create(
       { channel: 'ServersChannel', id: serverId },
       {
-        received: ({type, member, id}) => {
+        received: ({type, member, channel, id}) => {
           switch (type) {
             case "UPDATE_MEMBER":
               dispatch(addMember(member));
@@ -45,13 +45,13 @@ const ServerPage = () => {
               dispatch(addMember(member));
               break;
             case "ADD_CHANNEL":
-              // to do later
+              dispatch(addChannel(channel));
               break;
             case "DELETE_CHANNEL":
-              // to do later
+              dispatch(removeChannel(id));
               break;
             case "UPDATE_CHANNEL":
-              // to do later
+              dispatch(addChannel(channel));
               break;
             default:
               // console.log("unknown broadcast type");

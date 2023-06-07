@@ -12,6 +12,8 @@
   line-height: 24px;
   font-size: 20px;
   color: #f2f3f5;
+  display: flex;
+  justify-content: space-between;
 }
 
 .delete-form-text {
@@ -60,7 +62,7 @@
   height: 100%;
 }
 
-.reset-button.cancel, .submit-update-button.delete {
+.reset-button.cancel, .submit-update-button.delete, .submit-update-button.create {
   padding: 2px 16px;
   width: auto;
   height: 38px;
@@ -81,6 +83,21 @@
 
 .submit-update-button.delete:hover {
   background-color: #a12828;
+}
+
+.submit-update-button.create:disabled, .submit-update-button.create:disabled:hover {
+  background-color: #464a93;
+  color: #959698;
+  cursor: not-allowed;
+}
+
+.submit-update-button.create {
+  background-color: #5865f2;
+  color: #ffffff;
+}
+
+.submit-update-button.create:hover {
+  background-color: #4e53c6;
 }
 
 .delete-text {

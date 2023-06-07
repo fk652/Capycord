@@ -19,6 +19,16 @@ const setChannels = (serverId, channels) => ({
   }
 })
 
+export const addChannel = (channel) => ({
+  type: ADD_CHANNEL,
+  channel
+})
+
+export const removeChannel = (channelId) => ({
+  type: REMOVE_CHANNEL,
+  channelId
+})
+
 export const getChannels = (state) => {
   return state.channels?.channelList ? Object.values(state.channels.channelList) : [];
 }
@@ -44,28 +54,66 @@ export const fetchChannels = (serverId) => async dispatch => {
 }
 
 export const createChannel = (channelData) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/channels`, {
+      method: 'POST',
+      body: JSON.stringify(channelData)
+    })
 
+    // add channel dispatch handled with broadcast subscription
+    return response;
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
+  }
 }
 
 export const updateChannel = (channelData) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/channels/${channelData.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(channelData)
+    })
 
+    // update channel dispatch handled with broadcast subscription
+    return response;
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
+  }
 }
 
 export const deleteChannel = (channelId) => async dispatch => {
+  try {
+    const response = await csrfFetch(`/api/channels/${channelId}`, {
+      method: 'DELETE'
+    })
 
+    // delete channel dispatch handled with broadcast subscription
+    return response;
+  } catch (res) {
+    if (res.status === 401) dispatch(unauthorizedSession());
+  }
 }
 
 const initialState = {
   serverId: null,
-  channelList: null
+  channelList: {}
 }
 
 const channelsReducer = (state = initialState, action) => {
+  let newState = {serverId: state.serverId, channelList: {...state.channelList}};
+
   switch (action.type) {
     case RESET_CHANNELS:
       return initialState;
     case SET_CHANNELS:
-      return {serverId: action.payload.serverId, channelList: {...action.payload.channels}};
+      newState = {serverId: action.payload.serverId, channelList: {...action.payload.channels}};
+      return newState;
+    case ADD_CHANNEL:
+      newState.channelList[action.channel.id] = action.channel;
+      return newState;
+    case REMOVE_CHANNEL:
+      delete newState.channelList[action.channelId];
+      return newState;
     default:
       return state;
   }

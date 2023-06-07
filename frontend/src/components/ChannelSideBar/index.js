@@ -5,11 +5,12 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import { DropdownModal, ServerFormModal, SettingPageModal } from '../../context/Modal';
-import { getLeaveServerModal, getShowServerAdminModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
+import { getCreateChannelModal, getLeaveServerModal, getShowServerAdminModal, setCreateChannelModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 import ChannelListItem from './ChannelListItem';
-import ServerSettings from '../ServerSettings';
+import ServerSettings from './ServerSettings';
 import ServerAdminPage from '../ServerAdminPage';
-import LeaveForm from './LeaveForm';
+import LeaveForm from './Forms/LeaveForm';
+import CreateChannelForm from './Forms/CreateChannelForm';
 
 const ChannelSideBar = () => {
   const history = useHistory();
@@ -24,6 +25,7 @@ const ChannelSideBar = () => {
   const [showModal, setShowModal] = useState(false);
   const showServerAdminPage = useSelector(getShowServerAdminModal);
   const showLeaveModal = useSelector(getLeaveServerModal);
+  const showCreateChannelModal = useSelector(getCreateChannelModal);
 
   const leaveHandler = () => {
     const modalPage = document.querySelector('.setting-page-modal');
@@ -54,6 +56,7 @@ const ChannelSideBar = () => {
   useEffect(() => {
     return () => {
       if (showLeaveModal) dispatch(setLeaveServerModal(false));
+      if (showCreateChannelModal) dispatch(setCreateChannelModal(false));
     }
   }, [])
 
@@ -67,11 +70,11 @@ const ChannelSideBar = () => {
     setShowModal(!showModal);
   }
   
-  const closeLeaveForm = () => {
+  const closeForm = (modalSetter) => () => {
     const serverFormModal = document.querySelector('.modal-content');
     dispatch(setServerFormSlide("close"));
-    serverFormModal.addEventListener("animationend", (e) => {
-      dispatch(setLeaveServerModal(false));
+    serverFormModal.addEventListener("animationend", () => {
+      dispatch(modalSetter(false));
     }, {once: true})
   }
 
@@ -105,8 +108,14 @@ const ChannelSideBar = () => {
         )}
 
         {showLeaveModal && (
-          <ServerFormModal onClose={closeLeaveForm}>
-            <LeaveForm serverName={serverInfo.name} onClose={closeLeaveForm}/>
+          <ServerFormModal onClose={closeForm(setLeaveServerModal)}>
+            <LeaveForm serverName={serverInfo.name} onClose={closeForm(setLeaveServerModal)}/>
+          </ServerFormModal>
+        )}
+
+        {showCreateChannelModal && (
+          <ServerFormModal onClose={closeForm(setCreateChannelModal)}>
+            <CreateChannelForm serverId={serverInfo.id} onClose={closeForm(setCreateChannelModal)}/>
           </ServerFormModal>
         )}
 

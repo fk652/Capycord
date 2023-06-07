@@ -1,7 +1,7 @@
 import './ServerSettings.css'
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentUser } from '../../store/session';
-import { setLeaveServerModal, setShowServerAdminModal } from '../../store/ui';
+import { getCurrentUser } from '../../../store/session';
+import { setCreateChannelModal, setLeaveServerModal, setShowServerAdminModal } from '../../../store/ui';
 
 const ServerSettings = ({serverInfo}) => {
   const dispatch = useDispatch();
@@ -15,9 +15,9 @@ const ServerSettings = ({serverInfo}) => {
     dispatch(setShowServerAdminModal(true));
   }
 
-  const handleLeave = (e) => {
+  const handleForm = (modalSetter) => (e) => {
     e.preventDefault();
-    dispatch(setLeaveServerModal(true))
+    dispatch(modalSetter(true))
     document.querySelector('.server-settings-dropdown').click();
   }
 
@@ -38,7 +38,10 @@ const ServerSettings = ({serverInfo}) => {
                   </path>
                 </svg>
               </div>
-              <div className="server-setting-option disabled">
+              <div 
+                className="server-setting-option"
+                onClick={handleForm(setCreateChannelModal)}
+              >
                 <div className="option-description">
                   Create Channel
                 </div>
@@ -50,7 +53,7 @@ const ServerSettings = ({serverInfo}) => {
             </>
           : <div 
               className="server-setting-option dangerous"
-              onClick={handleLeave}
+              onClick={handleForm(setLeaveServerModal)}
             >
               <div className="option-description">
                 Leave Server
