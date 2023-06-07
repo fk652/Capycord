@@ -25,7 +25,7 @@ ___
 
 Users can manage their friends, filter by their online status, and manage sent and incoming friend requests. Friend listings are updated live when any friend's status changes or when friends get added or deleted.
 
-![friends screenshot](./frontend/src/assets/readme_images/friends.png)
+<img src="./frontend/src/assets/readme_images/friends.gif" width="1000">
 
 HomePage component fetches the necessary friends and requests data, and renders components to display it.
 
@@ -143,7 +143,7 @@ const FriendsDisplay = () => {
 
 Servers are where groups of people can text each other. Can also view the members listing and get live updates on member status changes and listing updates.
 
-![server screenshot](./frontend/src/assets/readme_images/server.png)
+<img src="./frontend/src/assets/readme_images/servers.gif" width="1000">
 
 The ServerPage component fetches necessary channel and message data, and renders components to display it.
 
@@ -261,7 +261,7 @@ const ServerPage = () => {
 
 Users can message each other within server channels. Can post, edit, and delete messages which gets updated live for everyone else currently viewing the channel.
 
-![messages screenshot](./frontend/src/assets/readme_images/chat.png)
+<img src="./frontend/src/assets/readme_images/messages.gif" width="1000">
 
 MessageDisplay subcomponents will display the fetched members and messages data.  
 MessageList subcomponents display MessageItems and a MessageInput for submitting new messages.  
@@ -284,7 +284,9 @@ const MessageDisplay = () => {
 
 ### **4. Live Notifications**
 
-Live notification updates for change in members, friends, requests, messages, and more. This makes up the live service aspect of the application.
+Real time updates for change in members, friends, requests, messages, and more. This makes up the live service aspect of the application.
+
+<img src="./frontend/src/assets/readme_images/notifications.gif" width="1000">
 
 Implemented in the Rails backend using Action Cable, and using an Action Cable npm library in the React frontend. Uses a redis database to manage web socket connections.
 
