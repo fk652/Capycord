@@ -39,7 +39,7 @@ const ServerSettings = ({serverInfo}) => {
                 </svg>
               </div>
               <div 
-                className="server-setting-option"
+                className="server-setting-option disabled"
                 onClick={handleForm(setCreateChannelModal)}
               >
                 <div className="option-description">

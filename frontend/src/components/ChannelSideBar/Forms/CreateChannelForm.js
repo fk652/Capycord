@@ -25,7 +25,9 @@ const CreateChannelForm = ({serverId, onClose}) => {
           </svg>
         </div>
       </div>
-      
+      <div className="form-input-container">
+        
+      </div>
       <div className="delete-form-options">
         <button className="reset-button cancel" onClick={onClose}>
           <div>Cancel</div>

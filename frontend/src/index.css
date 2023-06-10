@@ -29,6 +29,7 @@ a {
 
 body {
   height: 100vh;
+  height: 100svh;
   width: 100vw;
   display: flex;
   flex-wrap: wrap;
@@ -36,7 +37,7 @@ body {
   background-color: #1a1b1e;
 	color: #f2f3f5;
   
-  overflow: hidden auto;
+  overflow: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -47,9 +48,11 @@ body::-webkit-scrollbar {
 
 .app-container {
   display: flex;
+  justify-content: baseline;
   width: 100vw;
   height: 100vh;
-  justify-content: baseline;
+  height: 100svh;
+  overflow: hidden;
 }
 
 .app-container.hide {

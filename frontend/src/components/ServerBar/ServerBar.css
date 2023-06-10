@@ -2,6 +2,7 @@
   min-width: 72px;
   max-width: 72px;
   height: calc(100vh - 12px);
+  height: calc(100svh - 12px);
   background-color: #1e1f22;
 
   overflow: hidden scroll;
