@@ -55,8 +55,8 @@ const ChannelSideBar = () => {
 
   useEffect(() => {
     return () => {
-      if (showLeaveModal) dispatch(setLeaveServerModal(false));
-      if (showCreateChannelModal) dispatch(setCreateChannelModal(false));
+      dispatch(setLeaveServerModal(false));
+      dispatch(setCreateChannelModal(false));
     }
   }, [])
 

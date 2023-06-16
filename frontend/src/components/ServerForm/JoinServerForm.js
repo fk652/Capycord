@@ -100,7 +100,7 @@ const JoinServerForm = () => {
           required
         />
         <div className="helper-text">
-          Demo server ids should range from 1-12
+          Demo server ids should range from 1-20
         </div>
         <div className="helper-text">
           Server ids can also be found in the url link (e.g: /server/:server_id)
