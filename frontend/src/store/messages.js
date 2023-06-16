@@ -6,6 +6,7 @@ const RESET_MESSAGES = 'messages/resetMessages';
 const SET_MESSAGES = 'messages/setMessages';
 const ADD_MESSAGE = 'messages/addMessage';
 const REMOVE_MESSAGE = 'messages/removeMessage';
+const REMOVE_USER_MESSAGES = 'messages/removeUserMessages';
 
 export const resetMessages = () => ({
   type: RESET_MESSAGES
@@ -24,6 +25,11 @@ export const addMessage = (message) => ({
 export const removeMessage = (messageId) => ({
   type: REMOVE_MESSAGE,
   messageId
+})
+
+export const removeUserMessages = (authorId) => ({
+  type: REMOVE_USER_MESSAGES,
+  authorId
 })
 
 export const getMessages = (state) => {
@@ -90,6 +96,8 @@ export const updateMessage = (message) => async dispatch => {
 const initialState = null
 
 const messagesReducer = (state = initialState, action) => {
+  const newState = {...state};
+  
   switch (action.type) {
     case RESET_MESSAGES:
       return initialState;
@@ -98,9 +106,13 @@ const messagesReducer = (state = initialState, action) => {
     case ADD_MESSAGE:
       return {...state, [action.message.id]: action.message}
     case REMOVE_MESSAGE:
-      const newState = {...state};
       delete newState[action.messageId];
       return newState
+    case REMOVE_USER_MESSAGES:
+      for (const [id, message] of Object.entries(newState)) {
+        if (message.authorId === action.authorId) delete newState[id];
+      }
+      return newState;
     default:
       return state;
   }

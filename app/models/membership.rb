@@ -24,6 +24,14 @@ class Membership < ApplicationRecord
   after_validation :position,
     inclusion: { in: POSITIONS, message: "'%{value}' is not a valid position"}
 
+  before_destroy :delete_messages
+
   belongs_to :member, class_name: :User
   belongs_to :server
+
+  private
+  def delete_messages 
+    channels = self.server.channels
+    Message.where(author_id: self.member_id, channel_id: [channels]).delete_all
+  end
 end

@@ -5,7 +5,7 @@ import { Redirect, useHistory, useParams } from "react-router-dom";
 import { addChannel, fetchChannels, removeChannel, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
 import { getHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
-import { addMessage, fetchMessages, removeMessage, resetMessages } from '../../store/messages';
+import { addMessage, fetchMessages, removeMessage, removeUserMessages, resetMessages } from '../../store/messages';
 import { getCurrentUser } from '../../store/session';
 import MainSideBar from '../MainSideBar';
 import MessageDisplay from '../MessageDisplay';
@@ -40,6 +40,7 @@ const ServerPage = () => {
               break;
             case "DELETE_MEMBER":
               dispatch(removeMember(id));
+              dispatch(removeUserMessages(id));
               break;
             case "ADD_MEMBER":
               dispatch(addMember(member));
