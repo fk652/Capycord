@@ -14,7 +14,7 @@
   border-radius: 8px;
   border-color: transparent;
   background: #4e50584c;
-  cursor: pointer;
+  /* cursor: pointer; */
   padding: 16px 10px;
   margin: 0 10px 0 20px;
 }
@@ -50,8 +50,7 @@
 .friend-item-username {
   font-weight: 900;
   color: #f2f3f5;
-  padding-bottom: 1px;
-
+  line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -72,7 +71,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding-bottom: 1px;
+  line-height: 16px;
 }
 
 .friend-item-options {
@@ -102,6 +101,10 @@
   max-height: 20px;
   min-height: 20px;
   color: #b5bac1;
+}
+
+.friend-item-action:hover {
+  cursor: pointer;
 }
 
 .friend-item-action:hover .action-icon {

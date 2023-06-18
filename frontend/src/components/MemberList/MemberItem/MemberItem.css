@@ -11,7 +11,7 @@
   border-radius: 8px;
   border-color: transparent;
   background: #4e50584c;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .member-item-display {
@@ -27,7 +27,7 @@
   color: #b5bac1;
 }
 
-.member-list-item:hover .member-item-tag {
+/* .member-list-item:hover .member-item-tag {
   display: inline;
 }
 
@@ -40,7 +40,7 @@
 
 .member-list-item:hover .member-item-name-wrapper {
   flex-wrap: wrap;
-}
+} */
 
 .member-item-details {
   display: flex;
@@ -60,14 +60,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   display: inline;
-  padding-bottom: 1px;
+  line-height: 18px;
 }
 
 .member-item-status {
   color: #949ba4;
   font-size: 12px;
+  line-height: 14px;
   font-weight: 500;
-  margin-top: 5px;
+  margin-top: 2px;
   max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
