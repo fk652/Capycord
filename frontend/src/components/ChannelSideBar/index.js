@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import { DropdownModal, ServerFormModal, SettingPageModal } from '../../context/Modal';
-import { getCreateChannelModal, getLeaveServerModal, getShowServerAdminModal, setCreateChannelModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
+import { getCreateChannelModal, getLeaveServerModal, getNewChannel, getShowServerAdminModal, setCreateChannelModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 import ChannelListItem from './ChannelListItem';
 import ServerSettings from './ServerSettings';
 import ServerAdminPage from '../ServerAdminPage';
@@ -19,6 +19,7 @@ const ChannelSideBar = () => {
   const {serverId, channelId} = useParams();
   let channels = useSelector(getChannels);
   let channelServerId = useSelector(getChannelServerId);
+  let newChannelId = useSelector(getNewChannel);
   const serverInfo = useSelector(getServer(serverId));
   if (serverInfo) document.title = `Capycord | ${serverInfo.name}`
 
@@ -52,6 +53,11 @@ const ChannelSideBar = () => {
     const listEle = document.querySelector('.channel-list');
     if (listEle) listEle.scrollTo(0, 0);
   }, [serverId, channelServerId])
+
+  useEffect(() => {
+    const listEle = document.querySelector('.channel-list');
+    if (listEle) listEle.scrollTo(0, listEle.scrollHeight);
+  }, [newChannelId])
 
   useEffect(() => {
     return () => {

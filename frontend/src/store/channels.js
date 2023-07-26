@@ -1,6 +1,6 @@
 import csrfFetch from "./csrf";
 import { unauthorizedSession } from "./session";
-import { setHomeRedirect } from "./ui";
+import { setHomeRedirect, setNewChannel } from "./ui";
 
 const RESET_CHANNELS = 'channels/resetChannels';
 const SET_CHANNELS = 'channels/setChannels';
@@ -61,6 +61,9 @@ export const createChannel = (channelData) => async dispatch => {
     })
 
     // add channel dispatch handled with broadcast subscription
+    const data = await response.json();
+    dispatch(setNewChannel(data.id));
+
     return response;
   } catch (res) {
     if (res.status === 401) dispatch(unauthorizedSession());

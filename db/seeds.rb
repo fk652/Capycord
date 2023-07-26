@@ -196,7 +196,7 @@ ApplicationRecord.transaction do
   servers.each do |server|
     rand(3..5).times do
       channels << Channel.create!({
-        name: Faker::JapaneseMedia::OnePiece.unique.island,
+        name: Faker::JapaneseMedia::OnePiece.unique.island.downcase.parameterize,
         server_id: server.id,
         created_at: rand(5.0...10.0).days.ago
       })

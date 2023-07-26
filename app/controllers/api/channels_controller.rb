@@ -2,6 +2,8 @@ class Api::ChannelsController < ApplicationController
   before_action :require_logged_in
   before_action :verify_server, only: [:create]
   before_action :verify_owner, only: [:destroy, :update]
+
+  wrap_parameters include: Channel.attribute_names + ['serverId', 'channelType']
   
   def index
     @channels = current_user.server_memberships.find(params[:server_id]).channels
@@ -23,7 +25,7 @@ class Api::ChannelsController < ApplicationController
         **from_template('api/channels/show', channel: @channel)
       )
       
-      head :no_content
+      render json: { id: @channel.id }
     else
       render json: { errors: @channel.errors }, status: :unprocessable_entity
     end

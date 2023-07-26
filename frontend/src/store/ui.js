@@ -19,6 +19,7 @@ const SET_SERVER_ADMIN_TAB = "ui/setSelectedServerAdminTab";
 const SET_LEAVE_SERVER_MODAL = "ui/setLeaveServerModal";
 const SET_CREATE_CHANNEL_MODAL = "ui/setCreateChannelModal";
 const SET_DELETED_SERVER_ID = "ui/setDeletedServerId";
+const SET_DELETED_CHANNEL_ID = "ui/setDeletedChannelId";
 const SET_QUICK_DELETE = "ui/setQuickDelete";
 
 export const resetUi = () => ({
@@ -125,6 +126,11 @@ export const setDeletedServerId = (id) => ({
   id
 })
 
+export const setDeletedChannelId = (id) => ({
+  type: SET_DELETED_CHANNEL_ID,
+  id
+})
+
 export const setQuickDelete = (toggle) => ({
   type: SET_QUICK_DELETE,
   toggle
@@ -211,6 +217,10 @@ export const getDeletedServerId = (state) => {
   return state.ui.deletedServerId
 }
 
+export const getDeletedChannelId = (state) => {
+  return state.ui.deletedChannelId
+}
+
 export const getQuickDelete = (state) => {
   return state.ui.quickDelete
 }
@@ -236,6 +246,7 @@ const initialState = {
   showLeaveServerModal: false,
   showCreateChannelModal: false,
   deletedServerId: null,
+  deletedChannelId: null,
   quickDelete: false
 }
 
@@ -283,6 +294,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showCreateChannelModal: action.toggle}
     case SET_DELETED_SERVER_ID:
       return {...state, deletedServerId: action.id}
+    case SET_DELETED_CHANNEL_ID:
+      return {...state, deletedChannelId: action.id}
     case SET_QUICK_DELETE:
       return {...state, quickDelete: action.toggle}
     default:

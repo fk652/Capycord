@@ -297,7 +297,6 @@ def destroy
   if @server.destroy
     # broadcast deleted server to every member, through users channel
     @server.members.each do |member|
-      p @server.id
       UsersChannel.broadcast_to(
         member,
         type: 'DELETE_SERVER',

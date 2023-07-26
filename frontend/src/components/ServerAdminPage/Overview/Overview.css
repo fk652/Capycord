@@ -198,6 +198,10 @@
   margin-bottom: 8px;
 }
 
+.overview-option-label.highlight {
+  color: #dbdee1;
+}
+
 .overview-input {
   color: #dbdee1;
   margin-bottom: 0;

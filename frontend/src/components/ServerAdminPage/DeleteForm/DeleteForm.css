@@ -15,6 +15,7 @@
   color: #f2f3f5;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .delete-form-text {

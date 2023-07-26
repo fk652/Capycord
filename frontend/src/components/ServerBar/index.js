@@ -2,7 +2,7 @@ import './ServerBar.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getDeletedServerId, getNewServer, getSelectedServer, getShowServerModal, setDeletedServerId, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { getDeletedServerId, getNewChannel, getNewServer, getSelectedServer, getShowServerModal, setDeletedServerId, setNewChannel, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerListIcon from './ServerListIcon';
@@ -22,6 +22,7 @@ const ServerBar = () => {
   const [top, setTop] = useState(0);
   const [currentModal, setCurrentModal] = useState(null);
   const newServerId = useSelector(getNewServer);
+  const newChannelId = useSelector(getNewChannel);
   const deletedServerId = useSelector(getDeletedServerId);
   const showServerFormModal = useSelector(getShowServerModal);
 
@@ -60,6 +61,13 @@ const ServerBar = () => {
       dispatch(setNewServer(null));
     }
   }, [newServerId])
+
+  useEffect(() => {
+    if (newChannelId) {
+      history.push(`/server/${serverId}/${newChannelId}`);
+      dispatch(setNewChannel(null));
+    }
+  }, [newChannelId])
 
   useEffect(() => {
     if (deletedServerId) {
