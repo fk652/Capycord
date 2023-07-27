@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useHistory, useParams } from "react-router-dom";
 import { addChannel, fetchChannels, removeChannel, resetChannels } from '../../store/channels';
 import { addMember, fetchMembers, removeMember, resetMembers } from '../../store/members';
-import { getHomeRedirect, setScroll, setSelectedServer } from '../../store/ui';
+import { getHomeRedirect, setDeletedChannelId, setScroll, setSelectedServer } from '../../store/ui';
 import { addMessage, fetchMessages, removeMessage, removeUserMessages, resetMessages } from '../../store/messages';
 import { getCurrentUser } from '../../store/session';
 import MainSideBar from '../MainSideBar';
@@ -50,6 +50,7 @@ const ServerPage = () => {
               break;
             case "DELETE_CHANNEL":
               dispatch(removeChannel(id));
+              dispatch(setDeletedChannelId(id));
               break;
             case "UPDATE_CHANNEL":
               dispatch(addChannel(channel));

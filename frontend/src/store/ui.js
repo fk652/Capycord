@@ -16,6 +16,7 @@ const SET_FRIEND_SEARCH = "ui/setFriendSearch";
 const SET_EDIT_MESSAGE_ID = "ui/setEditMessageId";
 const SET_SHOW_SERVER_ADMIN_MODAL = "ui/setShowServerAdminModal";
 const SET_SERVER_ADMIN_TAB = "ui/setSelectedServerAdminTab";
+const SET_CHANNEL_SETTINGS_ID = "ui/setChannelSettingsId";
 const SET_LEAVE_SERVER_MODAL = "ui/setLeaveServerModal";
 const SET_CREATE_CHANNEL_MODAL = "ui/setCreateChannelModal";
 const SET_DELETED_SERVER_ID = "ui/setDeletedServerId";
@@ -109,6 +110,11 @@ export const setShowServerAdminModal = (toggle) => ({
 export const setServerAdminTab = (tab) => ({
   type: SET_SERVER_ADMIN_TAB,
   tab
+})
+
+export const setChannelSettingsId = (channelId) => ({
+  type: SET_CHANNEL_SETTINGS_ID,
+  channelId
 })
 
 export const setLeaveServerModal = (toggle) => ({
@@ -205,6 +211,10 @@ export const getServerAdminTab = (state) => {
   return state.ui.serverAdminTab
 }
 
+export const getChannelSettingsId = (state) => {
+  return state.ui.channelSettingsId
+}
+
 export const getLeaveServerModal = (state) => {
   return state.ui.showLeaveServerModal
 }
@@ -243,6 +253,7 @@ const initialState = {
   editMessageId: null,
   showServerAdminModal: false,
   serverAdminTab: "Overview",
+  channelSettingsId: null,
   showLeaveServerModal: false,
   showCreateChannelModal: false,
   deletedServerId: null,
@@ -288,6 +299,8 @@ const uiReducer = (state = initialState, action) => {
       return {...state, showServerAdminModal: action.toggle}
     case SET_SERVER_ADMIN_TAB: 
       return {...state, serverAdminTab: action.tab}
+    case SET_CHANNEL_SETTINGS_ID:
+      return {...state, channelSettingsId: action.channelId}
     case SET_LEAVE_SERVER_MODAL:
       return {...state, showLeaveServerModal: action.toggle}
     case SET_CREATE_CHANNEL_MODAL:

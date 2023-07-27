@@ -184,6 +184,10 @@
   cursor: pointer;
 }
 
+.edit-channel-button:focus {
+  outline: none;
+}
+
 .edit-button-icon {
   display: inline;
   margin-right: 6px;

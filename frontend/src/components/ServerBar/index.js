@@ -2,7 +2,7 @@ import './ServerBar.css';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { getDeletedServerId, getNewChannel, getNewServer, getSelectedServer, getShowServerModal, setDeletedServerId, setNewChannel, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
+import { getDeletedChannelId, getDeletedServerId, getNewChannel, getNewServer, getSelectedServer, getShowServerModal, setDeletedChannelId, setDeletedServerId, setNewChannel, setNewServer, setServerFormPage, setServerFormSlide, setShowServerModal } from '../../store/ui';
 import { addServer, fetchServers, getServers, removeServer, resetServers } from '../../store/servers';
 import { ServerFormModal, ServerToolTip } from "../../context/Modal";
 import ServerListIcon from './ServerListIcon';
@@ -14,7 +14,7 @@ const ServerBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const {serverId} = useParams();
+  const {serverId, channelId} = useParams();
   const selected = useSelector(getSelectedServer);
   const servers = useSelector(getServers);
 
@@ -24,6 +24,7 @@ const ServerBar = () => {
   const newServerId = useSelector(getNewServer);
   const newChannelId = useSelector(getNewChannel);
   const deletedServerId = useSelector(getDeletedServerId);
+  const deletedChannelId = useSelector(getDeletedChannelId);
   const showServerFormModal = useSelector(getShowServerModal);
 
   useEffect(() => {
@@ -75,6 +76,13 @@ const ServerBar = () => {
       dispatch(setDeletedServerId(null));
     }
   }, [deletedServerId])
+
+  useEffect(() => {
+    if (deletedChannelId) {
+      if (channelId === deletedChannelId.toString()) history.push(`/server/${serverId}`);
+      dispatch(setDeletedChannelId(null));
+    }
+  }, [deletedChannelId])
 
   const toggleSelected = (e) => {
     if (e.target.dataset.key) {

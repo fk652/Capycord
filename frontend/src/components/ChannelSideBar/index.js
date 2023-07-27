@@ -5,7 +5,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import { getChannels, getChannelServerId } from '../../store/channels';
 import { getServer } from '../../store/servers';
 import { DropdownModal, ServerFormModal, SettingPageModal } from '../../context/Modal';
-import { getCreateChannelModal, getLeaveServerModal, getNewChannel, getShowServerAdminModal, setCreateChannelModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
+import { getChannelSettingsId, getCreateChannelModal, getLeaveServerModal, getNewChannel, getShowServerAdminModal, setChannelSettingsId, setCreateChannelModal, setLeaveServerModal, setServerFormSlide, setShowServerAdminModal } from '../../store/ui';
 import ChannelListItem from './ChannelListItem';
 import ServerSettings from './ServerSettings';
 import ServerAdminPage from '../ServerAdminPage';
@@ -27,6 +27,7 @@ const ChannelSideBar = () => {
   const showServerAdminPage = useSelector(getShowServerAdminModal);
   const showLeaveModal = useSelector(getLeaveServerModal);
   const showCreateChannelModal = useSelector(getCreateChannelModal);
+  const channelSettingsId = useSelector(getChannelSettingsId);
 
   const leaveHandler = () => {
     const modalPage = document.querySelector('.setting-page-modal');
@@ -40,6 +41,7 @@ const ChannelSideBar = () => {
     appContainer.addEventListener("animationend", (e) => {
       appContainer.classList.remove('show');
       dispatch(setShowServerAdminModal(false));
+      dispatch(setChannelSettingsId(null));
     }, {once: true});
   }
 
@@ -148,6 +150,12 @@ const ChannelSideBar = () => {
       { showServerAdminPage && (
         <SettingPageModal onClose={leaveHandler}>
           <ServerAdminPage serverInfo={serverInfo} onClose={leaveHandler}/>
+        </SettingPageModal>
+      )}
+
+      { channelSettingsId && (
+        <SettingPageModal onClose={leaveHandler}>
+          <ServerAdminPage serverInfo={serverInfo} channelSettingsId={channelSettingsId} onClose={leaveHandler}/>
         </SettingPageModal>
       )}
     </>

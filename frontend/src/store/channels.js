@@ -70,9 +70,9 @@ export const createChannel = (channelData) => async dispatch => {
   }
 }
 
-export const updateChannel = (channelData) => async dispatch => {
+export const updateChannel = (channelData, id) => async dispatch => {
   try {
-    const response = await csrfFetch(`/api/channels/${channelData.id}`, {
+    const response = await csrfFetch(`/api/channels/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(channelData)
     })

@@ -5,13 +5,17 @@ import { getServerAdminTab, setServerAdminTab, setServerFormSlide } from '../../
 import { ServerFormModal } from '../../context/Modal';
 import DeleteForm from './DeleteForm';
 import Overview from './Overview';
+import { getChannel } from '../../store/channels';
+import ChannelOverview from './Overview/ChannelOverview';
 
-const ServerAdminPage = ({serverInfo, onClose}) => {
+const ServerAdminPage = ({serverInfo, channelSettingsId, onClose}) => {
   const dispatch = useDispatch();
   const selectedTab = useSelector(getServerAdminTab);
   const [showModal, setShowModal] = useState(false);
   
   document.title = `Capycord | ${selectedTab} | ${serverInfo.name}`;
+
+  const channelInfo = useSelector(getChannel(channelSettingsId));
 
   const adminOptions = document.querySelectorAll('.admin-sidebar-option');
   let selectedOption = null;
@@ -30,7 +34,8 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
     switch (selectedTab) {
       case "Overview":
         return (
-          <Overview serverInfo={serverInfo} />
+          channelInfo ? <ChannelOverview channelInfo={channelInfo} />
+                      : <Overview serverInfo={serverInfo} />
         )
       default:
         return null;
@@ -65,7 +70,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
         <div className="admin-sidebar">
           <div className="admin-sidebar-options-wrapper">
             <div className="admin-sidebar-option-header">
-              {serverInfo.name}
+              {channelInfo ? `# ${channelInfo.name}` : serverInfo.name}
             </div>
             <div 
               className="admin-sidebar-option"
@@ -78,7 +83,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
               className="admin-sidebar-option icon-option"
               onClick={handleDelete}
             >
-              Delete Server
+              {channelInfo ? "Delete Channel" : "Delete Server"}
               <svg role="img" width="16" height="16" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M15 3.999V2H9V3.999H3V5.999H21V3.999H15Z">
                 </path>
@@ -113,7 +118,7 @@ const ServerAdminPage = ({serverInfo, onClose}) => {
 
       {showModal && (
         <ServerFormModal onClose={closeForm}>
-          <DeleteForm serverId={serverInfo.id} onClose={closeForm} adminClose={onClose} />
+          <DeleteForm serverInfo={serverInfo} channelInfo={channelInfo} onClose={closeForm} adminClose={onClose} />
         </ServerFormModal>
       )}
     </div>
