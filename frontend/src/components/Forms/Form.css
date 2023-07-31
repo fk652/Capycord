@@ -107,6 +107,11 @@ button:hover {
   cursor: pointer;
 }
 
+.login-link a:hover,
+.signup-link a:hover {
+  text-decoration: underline;
+}
+
 @keyframes enter {
   from {
     opacity: 0;
