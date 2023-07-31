@@ -157,11 +157,15 @@
 
 .first-message-header.channel {
   margin: 8px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .first-message-subtext.channel {
   margin: 0;
   font-size: 16px;
+  word-break: break-all;
 }
 
 .channel-settings {

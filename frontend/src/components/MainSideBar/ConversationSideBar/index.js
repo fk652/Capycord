@@ -14,9 +14,6 @@ const ConversationSideBar = () => {
       <div className="conversation-list">
         <div className="divider" />
         <div>
-          <h2>
-            <strong>Direct Messaging not implemented yet</strong>
-          </h2>
           <br />
           <h2>10 FACTS ABOUT CAPYBARAS: THE WORLD’S LARGEST RODENTS</h2>
           <br />

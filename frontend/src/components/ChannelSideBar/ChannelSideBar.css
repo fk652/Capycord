@@ -103,11 +103,20 @@
   align-items: center;
   margin-left: 10px;
   min-width: 90px;
+  max-width: calc(100% - 35px);
+}
+
+.channel-type-icon {
+  min-width: 20px;
 }
 
 .channel-name {
   font-size: 16px;
+  line-height: 18px;
   margin-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .channel-options {

@@ -108,8 +108,8 @@ const ChannelListItem = ({id, name, type, selected}) => {
     >
       <div className="channel-header">
         <div className="channel-type-icon">
-        </div> 
           {icon}
+        </div> 
         <div className="channel-name">
           {name}
         </div>

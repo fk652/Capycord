@@ -48,6 +48,7 @@
   overflow: hidden scroll;
   scrollbar-width: 5px;
   scrollbar-color: #1a1b1e;
+  padding: 0 5px;
 }
 
 .divider {
